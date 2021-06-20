@@ -1,25 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { ApolloProvider } from "@apollo/client/react";
 
-function App() {
+import "./app.css";
+
+// Initialise apollo client + firebase
+import client from "./lib/apollo";
+import "./lib/firebase";
+
+import Timeline from "./routes/timeline";
+import Publish from "./routes/publish";
+import Share from "./routes/share";
+import Settings from "./routes/settings";
+import Login from "./routes/login";
+
+import AuthWrap from "./components/authWrap";
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ApolloProvider client={client}>
+      <Router>
+        <AuthWrap>
+          <Switch>
+            <Route path="/settings">
+              <Settings />
+            </Route>
+            <Route path="/publish">
+              <Publish />
+            </Route>
+            <Route path="/share">
+              <Share />
+            </Route>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <Route path="/">
+              <Timeline />
+            </Route>
+          </Switch>
+        </AuthWrap>
+      </Router>
+    </ApolloProvider>
   );
 }
-
-export default App;
