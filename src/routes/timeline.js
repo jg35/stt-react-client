@@ -11,43 +11,34 @@ import Preview from "../components/timeline/preview";
 import ScrollNavigator from "../components/timeline/scrollNavigator";
 
 import { generateTimeline } from "../lib/timeline";
-import { cloneDeep, isEqual, sortBy, values, debounce } from "lodash";
+import { cloneDeep, debounce } from "lodash";
 
 export default function Timeline() {
   const { data } = useQuery(FETCH_TIMELINE);
   const [updateVersion] = useMutation(UPDATE_VERSION);
   const [fragments, setFragments] = useState(null);
   const [timeline, setTimeline] = useState(null);
-  const [apiFragmentOrder, setApiFragmentOrder] = useState({});
-  const [localFragmentOrder, setLocalFragmentOrder] = useState(null);
+  const [version, setVersion] = useState({});
+  const [order, setOrder] = useState(null);
 
   useEffect(() => {
     if (data) {
       const user = data.stt_user[0];
-      const version = user.versions[0];
-      const [fragments, timeline] = generateTimeline(
-        data.stt_user[0],
-        data.stt_worldEvent
-      );
+      const [fragments, timeline] = generateTimeline(user, data.stt_worldEvent);
       setTimeline(timeline);
       setFragments(fragments);
-      setApiFragmentOrder(
-        version.fragmentOrder.reduce((obj, fragId, index) => {
-          obj[fragId] = { id: fragId, order: index };
-          return obj;
-        }, {})
-      );
+      setVersion(user.versions[0]);
     }
   }, [data]);
 
   const sortHandler = useCallback(
     debounce(
-      (fragmentOrder, id) =>
+      (order, id) =>
         updateVersion({
           variables: {
             id,
             data: {
-              fragmentOrder,
+              fragmentOrder: order,
             },
           },
         }),
@@ -56,29 +47,17 @@ export default function Timeline() {
     []
   );
 
-  useEffect(() => {
-    if (localFragmentOrder && !isEqual(apiFragmentOrder, localFragmentOrder)) {
-      const newOrder = sortBy(values(localFragmentOrder), ["order"]).map(
-        (f) => f.id
-      );
-      setFragments(
-        newOrder.map((fragId) => fragments.find((f) => f.id === fragId))
-      );
-      sortHandler(newOrder, data.stt_user[0].versions[0].id);
-    }
-  }, [localFragmentOrder]);
-
-  function setFragmentOrder(fragmentGroupOrderedIds, sectionIndex) {
-    const newOrder = cloneDeep(localFragmentOrder || apiFragmentOrder);
-    const offset = timeline
-      .slice(0, sectionIndex)
-      .map((t) => t.fragments.length)
-      .reduce((total, length) => total + length, 0);
-
+  function setFragmentOrder(fragmentGroupOrderedIds, firstFragmentId) {
+    const newOrder = cloneDeep(order || version.fragmentOrder);
+    const offset = newOrder[firstFragmentId];
     fragmentGroupOrderedIds.forEach((id, index) => {
-      newOrder[id] = { id, order: index + offset };
+      newOrder[id] = index + offset;
     });
-    setLocalFragmentOrder(newOrder);
+    setFragments(
+      [...fragments].sort((a, b) => (newOrder[a.id] < newOrder[b.id] ? -1 : 1))
+    );
+    sortHandler(newOrder, version.id);
+    setOrder(newOrder);
   }
 
   return (
@@ -97,7 +76,12 @@ export default function Timeline() {
                       <Section
                         key={i}
                         section={timelineSection}
-                        setFragmentOrder={(order) => setFragmentOrder(order, i)}
+                        setFragmentOrder={(newOrder) =>
+                          setFragmentOrder(
+                            newOrder,
+                            timelineSection.firstFragmentId
+                          )
+                        }
                       />
                     ))}
                   </main>
