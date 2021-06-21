@@ -22,7 +22,11 @@ export default function MainMenu() {
                 <span className="block">{currentUser.displayName}</span>
                 <span className="text-gray">{currentUser.email}</span>
               </div>
-              <img src={currentUser.photoURL} className="w-10 h-10 rounded" />
+              <img
+                src={currentUser.photoURL}
+                alt={currentUser.displayName}
+                className="w-10 h-10 rounded"
+              />
             </div>
           </NavLink>,
         ],
@@ -33,7 +37,6 @@ export default function MainMenu() {
           >
             Settings <Svg name="settings" css="ml-2" />
           </NavLink>,
-          ,
         ],
         [
           <button className="fill text-right" onClick={() => signOut()}>

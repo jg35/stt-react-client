@@ -22,7 +22,7 @@ export default function FragmentList({ fragments, setFragmentOrder }) {
       setOrderedFragments(reorderedFragments);
       setFragmentOrder(reorderedFragments.map((frag) => frag.id));
     },
-    [orderedFragments]
+    [orderedFragments, setFragmentOrder]
   );
 
   if (orderedFragments) {

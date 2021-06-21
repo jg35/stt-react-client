@@ -13,7 +13,7 @@ export default function Login() {
   const status = data.authState.status;
 
   if (status === "loading") {
-    console.log("show loading...");
+    // console.log("show loading...");
   } else if (status === "out") {
     return (
       <div className="flex flex-col min-h-screen justify-center items-center">

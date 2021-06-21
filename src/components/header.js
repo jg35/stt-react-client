@@ -6,8 +6,6 @@ import Svg from "./svg";
 import Button from "./button";
 
 import MainMenu from "./mainMenu";
-
-import colors from "../lib/colors";
 import { FETCH_LOCAL_UI_STATE } from "../lib/gql";
 import { uiStateVar } from "../lib/apollo";
 

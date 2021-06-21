@@ -10,7 +10,6 @@ firebase.initializeApp({
 firebase.auth().onAuthStateChanged(async (user) => {
   if (user) {
     const { displayName, email, uid: firebaseId, photoURL } = user;
-    console.log(user);
     const userDetails = {
       displayName,
       email,

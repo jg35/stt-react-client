@@ -12,10 +12,10 @@ export default function AuthWrap({ children }) {
 
   switch (data.authState.status) {
     case "loading":
-      console.log("show loading...");
+      // console.log("show loading...");
       return null;
     case "in":
-      console.log("user logged in...");
+      // console.log("user logged in...");
       return children;
     case "out":
     default:

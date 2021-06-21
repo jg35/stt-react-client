@@ -51,7 +51,7 @@ export default function Timeline() {
     const newOrder = cloneDeep(order || version.fragmentOrder);
     const offset = newOrder[firstFragmentId];
     fragmentGroupOrderedIds.forEach((id, index) => {
-      newOrder[id] = index + offset;
+      newOrder[id] = index + (offset || 0);
     });
     setFragments(
       [...fragments].sort((a, b) => (newOrder[a.id] < newOrder[b.id] ? -1 : 1))

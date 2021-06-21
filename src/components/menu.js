@@ -31,7 +31,6 @@ export default function Menu({ sections, toggle, compact = false }) {
                   sectionIndex === sections.length - 1 &&
                   itemIndex === sectionItems.length - 1
                 ) {
-                  console.log("last one dude!");
                   radiusCss = "rounded-b-lg";
                 }
                 return (
