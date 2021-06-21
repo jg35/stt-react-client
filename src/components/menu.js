@@ -1,40 +1,51 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
-
 import Button from "./button";
-import Svg from "./svg";
-import Auth from "./auth";
 
-export default function Menu() {
+export default function Menu({ sections, toggle, compact = false }) {
   const [open, setOpen] = useState(false);
-
-  const menuItems = [
-    <Auth />,
-    <Button
-      onClick={() => setOpen(!open)}
-      minimal
-      css="fill p-2 flex justify-end items-center"
-    >
-      <Svg name="preview" /> Preview
-    </Button>,
-    <NavLink className="fill text-right p-2" to="settings">
-      Settings
-    </NavLink>,
-  ];
   return (
     <div className="relative">
-      <Button onClick={() => setOpen(!open)} minimal>
-        <Svg name="menu" />
+      <Button css="bg-transparent" onClick={() => setOpen(!open)} minimal>
+        {toggle}
       </Button>
       {open && (
-        <div className="animate-fade-in absolute right-0 flex flex-col items-end bg-white rounded-md shadow-lg z-10">
-          {menuItems.map((item, i) => (
+        <div
+          style={{ boxShadow: "0 0 12px 2px rgba(0, 0, 0, 0.1)" }}
+          className={`animate-fade-in absolute right-0 flex flex-col items-end rounded-lg z-10 bg-white  ${
+            compact ? "w-40" : "w-64"
+          }`}
+        >
+          {sections.map((sectionItems, sectionIndex) => (
             <div
-              key={i}
-              className="hover:bg-lightestGray text-right cursor-pointer h-10 flex justify-right items-center w-40"
-              onClick={() => setOpen(false)}
+              key={sectionIndex}
+              className={`w-full ${
+                sectionIndex !== sections.length - 1 &&
+                "border-b border-lightGray "
+              }`}
             >
-              {item}
+              {sectionItems.map((item, itemIndex) => {
+                let radiusCss = "";
+                if (sectionIndex === 0 && itemIndex === 0) {
+                  radiusCss = "rounded-t-lg";
+                } else if (
+                  sectionIndex === sections.length - 1 &&
+                  itemIndex === sectionItems.length - 1
+                ) {
+                  console.log("last one dude!");
+                  radiusCss = "rounded-b-lg";
+                }
+                return (
+                  <div
+                    key={itemIndex}
+                    className={`hover:bg-lightestGray text-right cursor-pointer min-h-10 flex justify-right items-center w-full ${
+                      compact ? "p-1" : "p-2"
+                    } ${radiusCss}`}
+                    onClick={() => setOpen(false)}
+                  >
+                    {item}
+                  </div>
+                );
+              })}
             </div>
           ))}
         </div>

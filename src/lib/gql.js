@@ -6,6 +6,12 @@ export const FETCH_LOCAL_AUTH_STATE = gql`
   }
 `;
 
+export const FETCH_LOCAL_UI_STATE = gql`
+  query {
+    uiState @client
+  }
+`;
+
 export const FETCH_TIMELINE = gql`
   query {
     stt_worldEvent {
@@ -49,6 +55,16 @@ export const FETCH_TIMELINE = gql`
 export const UPDATE_FRAGMENT = gql`
   mutation ($id: Int!, $data: stt_fragment_set_input) {
     update_stt_fragment_by_pk(pk_columns: { id: $id }, _set: $data) {
+      id
+      hidden
+      order
+    }
+  }
+`;
+
+export const DELETE_FRAGMENT = gql`
+  mutation ($id: Int!) {
+    delete_stt_fragment_by_pk(id: $id) {
       id
     }
   }

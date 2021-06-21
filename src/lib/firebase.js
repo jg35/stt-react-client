@@ -9,7 +9,14 @@ firebase.initializeApp({
 
 firebase.auth().onAuthStateChanged(async (user) => {
   if (user) {
-    const firebaseId = user.uid;
+    const { displayName, email, uid: firebaseId, photoURL } = user;
+    console.log(user);
+    const userDetails = {
+      displayName,
+      email,
+      firebaseId,
+      photoURL,
+    };
     const token = await user.getIdToken();
     const idTokenResult = await user.getIdTokenResult();
     const hasuraClaims = idTokenResult.claims["https://hasura.io/jwt/claims"];
@@ -30,15 +37,16 @@ firebase.auth().onAuthStateChanged(async (user) => {
         )
         .then(async () => {
           // Force refresh the token to get the updated claims
+
           const token = await user.getIdToken(true);
-          authStateVar({ status: "in", token });
+          authStateVar({ status: "in", token, userDetails });
         })
         .catch(() => {
           // Need to handle this better. For now just sign out so they can try and login again
           // signOut()
         });
     } else {
-      authStateVar({ status: "in", token, firebaseId });
+      authStateVar({ status: "in", token, userDetails });
     }
   } else {
     authStateVar({ status: "out" });

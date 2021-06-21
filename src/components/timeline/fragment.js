@@ -1,15 +1,8 @@
 import React from "react";
 import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
-import ChapterMarker from "./chapter";
-const style = {
-  // border: "1px dashed gray",
-  // padding: "0.5rem 1rem",
-  // marginBottom: ".5rem",
-  margin: ".25rem",
-  backgroundColor: "white",
-  cursor: "move",
-};
+import ChapterFragment from "./chapterFragment";
+import MemoryFragment from "./memoryFragment";
 
 export default function Fragment({ id, index, moveFragment, fragment }) {
   const ref = useRef(null);
@@ -68,17 +61,20 @@ export default function Fragment({ id, index, moveFragment, fragment }) {
       isDragging: monitor.isDragging(),
     }),
   });
-  const opacity = isDragging ? 1 : 1;
+  // const opacity = isDragging ? 1 : 1;
   drag(drop(ref));
   return (
-    <div ref={ref} className="p-3" data-handler-id={handlerId}>
-      <div className="rounded py-1 px-2 bg-white h-24 shadow">
+    <div
+      ref={ref}
+      className="p-3 cursor-move"
+      data-handler-id={handlerId}
+      data-fragment-id={fragment.id}
+    >
+      <div className="rounded p-2 bg-white min-h-full shadow">
         {fragment.type === "CHAPTER" && (
-          <ChapterMarker title={fragment.content} />
+          <ChapterFragment title={fragment.content} />
         )}
-        {fragment.type === "TEXT" && (
-          <div className="w-80">{fragment.content}</div>
-        )}
+        {fragment.type === "TEXT" && <MemoryFragment fragment={fragment} />}
       </div>
     </div>
   );

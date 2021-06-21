@@ -1,54 +1,32 @@
-import React, { useState, useCallback, useEffect, useMemo } from "react";
-import { isEqual } from "lodash";
+import React, { useCallback, useState, useEffect } from "react";
 import update from "immutability-helper";
-import { useMutation } from "@apollo/client";
-import { UPDATE_VERSION } from "../../lib/gql";
 import Fragment from "./fragment";
 
-export default function FragmentList({ fragments }) {
-  const [updateVersion] = useMutation(UPDATE_VERSION);
-  const [sortedFragments, setSortedFragments] = useState(null);
-
-  function handleSort(fragmentOrder) {
-    updateVersion({
-      variables: {
-        id: 34,
-        data: {
-          fragmentOrder,
-        },
-      },
-    });
-  }
+export default function FragmentList({ fragments, setFragmentOrder }) {
+  const [orderedFragments, setOrderedFragments] = useState([...fragments]);
 
   useEffect(() => {
-    if (fragments && !sortedFragments) {
-      setSortedFragments([...fragments]);
-    }
-  }, [fragments, sortedFragments]);
+    setOrderedFragments(fragments);
+  }, [fragments]);
 
   const moveFragment = useCallback(
     (dragIndex, targetIndex) => {
-      const changedFragment = sortedFragments[dragIndex];
+      const changedFragment = orderedFragments[dragIndex];
 
-      const reorderedFragments = update(sortedFragments, {
+      const reorderedFragments = update(orderedFragments, {
         $splice: [
           [dragIndex, 1],
           [targetIndex, 0, changedFragment],
         ],
       });
-      const newOrder = reorderedFragments.map((frag) => frag.id);
-      const currentOrder = sortedFragments.map((frag) => frag.id);
-
-      if (!isEqual(newOrder, currentOrder)) {
-        handleSort(newOrder);
-        setSortedFragments(reorderedFragments);
-      }
+      setOrderedFragments(reorderedFragments);
+      setFragmentOrder(reorderedFragments.map((frag) => frag.id));
     },
-    [sortedFragments]
+    [orderedFragments]
   );
 
-  if (sortedFragments) {
-    return sortedFragments.map((fragment, index) => (
+  if (orderedFragments) {
+    return orderedFragments.map((fragment, index) => (
       <Fragment
         key={fragment.id}
         index={index}

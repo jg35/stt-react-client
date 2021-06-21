@@ -19,11 +19,6 @@ export default function ScrollNavigator({ years }) {
     const match = document.querySelector(`section[data-season-year="${year}"]`);
     if (match) {
       match.scrollIntoView({ behavior: "smooth" });
-      // console.log(match.offsetTop);
-      // window.scrollTo({
-      //   top: match.offsetTop,
-      //   behavior: "smooth",
-      // });
     }
   }
 
@@ -43,7 +38,7 @@ export default function ScrollNavigator({ years }) {
       {years.map((year, index) => {
         if (hoverYear && hoverYear === year.year) {
           return (
-            <YearWrap>
+            <YearWrap key={index}>
               <div
                 className="bg-white font-medium cursor-pointer text-center border-b-2 py-1/2 px-1 border-black animate-expand"
                 onClick={() => scrollToYear(year.year)}
@@ -56,18 +51,27 @@ export default function ScrollNavigator({ years }) {
           // First, last, divisible by 5 or containing fragments
           index === 0 ||
           index === years.length - 1 ||
-          year.year % 5 === 0 ||
-          year.fragments
+          year.year % 5 === 0
         ) {
           return (
-            <YearWrap year={year.year}>
-              <div className="bg-white text-center">{year.year}</div>
+            <YearWrap year={year.year} key={index}>
+              <div
+                className={`bg-white text-center ${
+                  year.fragments && "font-medium"
+                }`}
+              >
+                {year.year}
+              </div>
             </YearWrap>
           );
         } else {
           return (
-            <YearWrap year={year.year}>
-              <span className=" w-1.5 h-1.5 rounded bg-gray "></span>
+            <YearWrap year={year.year} key={index}>
+              <span
+                className={`w-1.5 h-1.5 rounded ${
+                  year.fragments ? "bg-black" : "bg-gray"
+                }`}
+              ></span>
             </YearWrap>
           );
         }

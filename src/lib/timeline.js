@@ -105,5 +105,5 @@ export function generateTimeline(user, worldEvents) {
     seasonTimeline.push(season);
     currentSeason = currentSeason.plus({ months: 3 });
   }
-  return seasonTimeline;
+  return [fragments, seasonTimeline];
 }

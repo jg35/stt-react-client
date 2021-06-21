@@ -5,7 +5,7 @@ import UserEvent from "./userEvent";
 import WorldEvent from "./worldEvent";
 import Button from "../button";
 
-export default function Section({ section }) {
+export default function Section({ section, setFragmentOrder }) {
   return (
     <section
       className="py-10 pl-3 pr-6 border-b border-lightGray"
@@ -32,7 +32,10 @@ export default function Section({ section }) {
         ))}
       </div>
       <div className="flex flex-wrap mt-6">
-        <FragmentList fragments={section.fragments} />
+        <FragmentList
+          fragments={section.fragments}
+          setFragmentOrder={setFragmentOrder}
+        />
       </div>
     </section>
   );

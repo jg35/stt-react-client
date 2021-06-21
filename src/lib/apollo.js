@@ -30,6 +30,7 @@ const authMiddleware = new ApolloLink((operation, forward) => {
 });
 
 export const authStateVar = makeVar({ status: "loading" });
+export const uiStateVar = makeVar({ showPreview: false });
 
 export default new ApolloClient({
   cache: new InMemoryCache({
@@ -39,6 +40,11 @@ export default new ApolloClient({
           authState: {
             read() {
               return authStateVar();
+            },
+          },
+          uiState: {
+            read() {
+              return uiStateVar();
             },
           },
         },
