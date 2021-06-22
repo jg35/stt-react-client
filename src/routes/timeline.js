@@ -47,17 +47,40 @@ export default function Timeline() {
     []
   );
 
-  function setFragmentOrder(fragmentGroupOrderedIds, firstFragmentId) {
+  function setFragmentOrder(
+    fragmentGroupOrderedIds,
+    firstFragmentId,
+    debounce = true
+  ) {
     const newOrder = cloneDeep(order || version.fragmentOrder);
     const offset = newOrder[firstFragmentId];
     fragmentGroupOrderedIds.forEach((id, index) => {
       newOrder[id] = index + (offset || 0);
     });
+    const syncedOrder = {};
+    // Any deleted fragments
+    fragments.forEach((f) => {
+      syncedOrder[f.id] = newOrder[f.id];
+    });
     setFragments(
-      [...fragments].sort((a, b) => (newOrder[a.id] < newOrder[b.id] ? -1 : 1))
+      [...fragments].sort((a, b) =>
+        syncedOrder[a.id] < syncedOrder[b.id] ? -1 : 1
+      )
     );
-    sortHandler(newOrder, version.id);
-    setOrder(newOrder);
+    if (debounce) {
+      sortHandler(syncedOrder, version.id);
+    } else {
+      updateVersion({
+        variables: {
+          id: version.id,
+          data: {
+            fragmentOrder: syncedOrder,
+          },
+        },
+      });
+    }
+
+    setOrder(syncedOrder);
   }
 
   return (

@@ -1,3 +1,4 @@
+import { isEqual } from "lodash";
 import { DateTime } from "luxon";
 
 function getHemisphere(countryCode) {
@@ -62,16 +63,12 @@ function getAgeInSeason(dob, season) {
 }
 
 export function generateTimeline(user, worldEvents) {
-  console.time("generateTimeline");
   const fragmentOrder = user.versions[0].fragmentOrder;
   const nowMs = DateTime.now().valueOf();
   const dob = DateTime.fromISO(user.dob);
   let currentSeason = getCurrentSeason(dob.day, dob.month, dob.year);
   const seasonTimeline = [];
-  // TODO - this is effin slow
-  const fragments = [...user.fragments].sort((a, b) =>
-    fragmentOrder[a.id] < fragmentOrder[b.id] ? -1 : 1
-  );
+
   while (currentSeason.valueOf() < nowMs) {
     const season = {
       startDate: currentSeason.valueOf(),
@@ -91,10 +88,24 @@ export function generateTimeline(user, worldEvents) {
       ),
       age: getAgeInSeason(dob, currentSeason),
     };
-    season.fragments = fragments.filter((fragment) => {
+    season.fragments = user.fragments.filter((fragment) => {
       const fragmentMs = DateTime.fromISO(fragment.date).valueOf();
       return fragmentMs >= season.startDate && fragmentMs <= season.endDate;
     });
+    const dateOrder = season.fragments.map((f) => f.id);
+    season.fragments.sort((a, b) => {
+      return fragmentOrder[a.id] < fragmentOrder[b.id] ? -1 : 1;
+    });
+    const sortOrder = season.fragments.map((f) => f.id);
+    season.orderType = "AUTO";
+    if (dateOrder.length && sortOrder.length) {
+      console.log(dateOrder, sortOrder);
+      const diff = !isEqual(dateOrder, sortOrder);
+      if (diff) {
+        season.orderType = "MANUAL";
+      }
+    }
+
     season.firstFragmentId = season.fragments[0]
       ? season.fragments[0].id
       : null;
@@ -109,6 +120,10 @@ export function generateTimeline(user, worldEvents) {
     seasonTimeline.push(season);
     currentSeason = currentSeason.plus({ months: 3 });
   }
+
+  const fragments = [...user.fragments].sort((a, b) => {
+    return fragmentOrder[a.id] < fragmentOrder[b.id] ? -1 : 1;
+  });
   console.timeEnd("generateTimeline");
   return [fragments, seasonTimeline];
 }

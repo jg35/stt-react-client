@@ -3,6 +3,7 @@ import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import ChapterFragment from "./chapterFragment";
 import MemoryFragment from "./memoryFragment";
+import colors from "../../lib/colors";
 
 export default function Fragment({ id, index, moveFragment, fragment }) {
   const ref = useRef(null);
@@ -66,11 +67,14 @@ export default function Fragment({ id, index, moveFragment, fragment }) {
   return (
     <div
       ref={ref}
-      className="p-3 cursor-move"
+      style={{
+        borderColor: !isDragging ? "transparent" : colors.gray,
+      }}
+      className={`p-2 cursor-move rounded animate-fade-in border-2 border-dashed w-1/3`}
       data-handler-id={handlerId}
       data-fragment-id={fragment.id}
     >
-      <div className="rounded p-2 bg-white min-h-full shadow">
+      <div className="rounded p-2 bg-white h-20 shadow z-10">
         {fragment.type === "CHAPTER" && (
           <ChapterFragment title={fragment.content} />
         )}

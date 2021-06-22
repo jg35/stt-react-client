@@ -21,6 +21,20 @@ export default function MemoryFragment({ fragment }) {
     });
   }
 
+  function deleteHandler() {
+    deleteFragment({
+      variables: { id: fragment.id },
+      update(cache) {
+        const normalizedId = cache.identify({
+          id: fragment.id,
+          __typename: "stt_fragment",
+        });
+        cache.evict({ id: normalizedId });
+        cache.gc();
+      },
+    });
+  }
+
   const sections = [
     [
       <Button
@@ -54,7 +68,7 @@ export default function MemoryFragment({ fragment }) {
       <Button
         minimal
         css="w-full justify-end items-center"
-        onClick={() => deleteFragment({ variables: { id: fragment.id } })}
+        onClick={() => deleteHandler()}
       >
         Delete
         <Svg
@@ -68,7 +82,7 @@ export default function MemoryFragment({ fragment }) {
     ],
   ];
   return (
-    <div className="w-72 h-full flex flex-col">
+    <>
       <div className="pb-2 flex justify-end items-center">
         {fragment.hidden && (
           <Svg
@@ -88,7 +102,11 @@ export default function MemoryFragment({ fragment }) {
           sections={sections}
         />
       </div>
-      <div className="text-md truncate px-1">{fragment.content}</div>
-    </div>
+      <div className="relative h-6">
+        <div className="absolute w-full truncate text-md px-1">
+          {fragment.content}
+        </div>
+      </div>
+    </>
   );
 }

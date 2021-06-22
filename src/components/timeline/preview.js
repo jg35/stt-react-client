@@ -19,8 +19,8 @@ export default function Preview({ fragments }) {
     return (
       <div className="pl-3 pr-1 pb-4 max-h-full w-2/5 relative">
         <div className="relative h-full" style={{ width: "calc(100% - 20px)" }}>
-          <div className="absolute left-0 top-0 shadow-lg rounded-lg bg-white h-full p-10 z-40">
-            <div className="max-h-full overflow-scroll js-preview-scroll-container">
+          <div className="absolute left-0 top-0 shadow-lg rounded-lg bg-white h-full py-10 px-3 z-40">
+            <div className="max-h-full overflow-scroll js-preview-scroll-container px-7">
               {fragments
                 .filter((f) => !f.hidden)
                 .sort((a, b) => (a.order < b.order ? -1 : 1))
@@ -28,7 +28,7 @@ export default function Preview({ fragments }) {
                   if (frag.type === "CHAPTER") {
                     return (
                       <h1
-                        className="text-center text-4xl my-20"
+                        className="text-center text-4xl my-20 cursor-pointer"
                         key={index}
                         onClick={() => scrollToFragment(frag.id)}
                         data-preview-fragment-id={frag.id}
@@ -39,7 +39,7 @@ export default function Preview({ fragments }) {
                   } else {
                     return (
                       <p
-                        className="mb-4"
+                        className="mb-4 cursor-pointer"
                         key={index}
                         onClick={() => scrollToFragment(frag.id)}
                         data-preview-fragment-id={frag.id}

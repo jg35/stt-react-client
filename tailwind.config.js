@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       animation: {
-        "fade-in": "fade-in ease-in 500ms forwards",
+        "fade-in": "fade-in ease-in 500ms ",
         expand: "expand 400ms forwards",
       },
       keyframes: {
@@ -33,6 +33,7 @@ module.exports = {
       lightBlue: "#EBEEF2",
       gold: "#8B866E",
       lightGold: "#F3F3F0",
+      darkGray: "#666666",
     },
   },
   variants: {

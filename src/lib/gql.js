@@ -23,7 +23,7 @@ export const FETCH_TIMELINE = gql`
     stt_user {
       location
       dob
-      fragments {
+      fragments(order_by: { date: asc, id: asc }) {
         id
         content
         date
@@ -32,7 +32,6 @@ export const FETCH_TIMELINE = gql`
         mediaUrl
         mediaCaption
         questionId
-        sortDate
         hidden
         complete
         tag
