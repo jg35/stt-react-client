@@ -20,33 +20,53 @@ export const FETCH_TIMELINE = gql`
       date
       country
     }
+    stt_userEvent {
+      id
+      title
+      date
+    }
+    stt_fragment(order_by: { date: asc, id: asc }) {
+      id
+      content
+      date
+      dateType
+      type
+      mediaUrl
+      mediaCaption
+      questionId
+      hidden
+      complete
+      tag
+      createdAt
+      updatedAt
+    }
     stt_user {
       location
       dob
-      fragments(order_by: { date: asc, id: asc }) {
-        id
-        content
-        date
-        dateType
-        type
-        mediaUrl
-        mediaCaption
-        questionId
-        hidden
-        complete
-        tag
-        createdAt
-        updatedAt
-      }
-      events {
-        title
-        date
-        createdAt
-      }
       versions {
         id
         fragmentOrder
       }
+    }
+  }
+`;
+
+export const INSERT_FRAGMENT = gql`
+  mutation ($data: stt_fragment_insert_input!) {
+    insert_stt_fragment_one(object: $data) {
+      id
+      content
+      date
+      dateType
+      type
+      mediaUrl
+      mediaCaption
+      questionId
+      hidden
+      complete
+      tag
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -56,7 +76,8 @@ export const UPDATE_FRAGMENT = gql`
     update_stt_fragment_by_pk(pk_columns: { id: $id }, _set: $data) {
       id
       hidden
-      order
+      content
+      date
     }
   }
 `;
@@ -64,6 +85,38 @@ export const UPDATE_FRAGMENT = gql`
 export const DELETE_FRAGMENT = gql`
   mutation ($id: Int!) {
     delete_stt_fragment_by_pk(id: $id) {
+      id
+    }
+  }
+`;
+
+export const INSERT_USER_EVENT = gql`
+  mutation ($data: stt_userEvent_insert_input!) {
+    insert_stt_userEvent_one(object: $data) {
+      id
+      title
+      date
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+export const UPDATE_USER_EVENT = gql`
+  mutation ($id: Int!, $data: stt_userEvent_set_input) {
+    update_stt_userEvent_by_pk(pk_columns: { id: $id }, _set: $data) {
+      id
+      title
+      date
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+export const DELETE_USER_EVENT = gql`
+  mutation ($id: Int!) {
+    delete_stt_userEvent_by_pk(id: $id) {
       id
     }
   }

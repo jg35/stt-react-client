@@ -3,19 +3,15 @@ import React, { useState } from "react";
 import FragmentList from "./fragmentList";
 import UserEvent from "./userEvent";
 import WorldEvent from "./worldEvent";
+import SectionCaptureActions from "./sectionCaptureActions";
 import Button from "../button";
-import { DateTime } from "luxon";
 
 export default function Section({ section, setFragmentOrder }) {
   const [showActions, setShowActions] = useState(false);
 
   function reorderByDate() {
     const newOrder = [...section.fragments]
-      .sort(
-        (a, b) =>
-          DateTime.fromISO(a.date).valueOf() -
-            DateTime.fromISO(b.date).valueOf() || a.id - b.id
-      )
+      .sort((a, b) => a.date - b.date || a.id - b.id)
       .map((f) => f.id);
     setFragmentOrder(newOrder, section.firstFragmentId, false);
   }
@@ -34,14 +30,10 @@ export default function Section({ section, setFragmentOrder }) {
           </h1>
         </div>
         <div>
-          {showActions && (
-            <div className="flex animate-fade-in">
-              <Button css="mr-3">Add memory</Button>
-              <Button css="mr-3">Add event</Button>
-              <Button css="mr-3">Add photo</Button>
-              <Button css="mr-3">Add chapter</Button>
-            </div>
-          )}
+          <SectionCaptureActions
+            show={showActions}
+            startDate={section.startDate}
+          />
         </div>
       </header>
       {(section.events.length || section.worldEvents.length) > 0 && (

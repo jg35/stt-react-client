@@ -6,6 +6,7 @@ import { FETCH_TIMELINE, UPDATE_VERSION } from "../lib/gql";
 
 import Page from "../components/page";
 
+import CaptureModal from "../components/capture/captureModal";
 import Section from "../components/timeline/section";
 import Preview from "../components/timeline/preview";
 import ScrollNavigator from "../components/timeline/scrollNavigator";
@@ -24,7 +25,12 @@ export default function Timeline() {
   useEffect(() => {
     if (data) {
       const user = data.stt_user[0];
-      const [fragments, timeline] = generateTimeline(user, data.stt_worldEvent);
+      const [fragments, timeline] = generateTimeline(
+        user,
+        data.stt_userEvent,
+        data.stt_worldEvent,
+        data.stt_fragment
+      );
       setTimeline(timeline);
       setFragments(fragments);
       setVersion(user.versions[0]);
@@ -136,6 +142,7 @@ export default function Timeline() {
         </div>
         {fragments && <Preview fragments={fragments} />}
       </div>
+      <CaptureModal />
     </Page>
   );
 }

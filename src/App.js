@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ApolloProvider } from "@apollo/client/react";
 
+import "react-datepicker/dist/react-datepicker.css";
 import "./app.css";
 
 // Initialise apollo client + firebase

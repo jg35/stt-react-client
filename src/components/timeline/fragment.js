@@ -1,6 +1,7 @@
 import React from "react";
 import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
+import FragmentHeader from "./fragmentHeader";
 import ChapterFragment from "./chapterFragment";
 import MemoryFragment from "./memoryFragment";
 import colors from "../../lib/colors";
@@ -69,12 +70,14 @@ export default function Fragment({ id, index, moveFragment, fragment }) {
       ref={ref}
       style={{
         borderColor: !isDragging ? "transparent" : colors.gray,
+        maxWidth: "30rem",
       }}
       className={`p-2 cursor-move rounded animate-fade-in border-2 border-dashed w-1/3`}
       data-handler-id={handlerId}
       data-fragment-id={fragment.id}
     >
-      <div className="rounded p-2 bg-white h-20 shadow z-10">
+      <div className="rounded p-2 pb-4 bg-white min-h-full shadow z-10">
+        <FragmentHeader fragment={fragment} />
         {fragment.type === "CHAPTER" && (
           <ChapterFragment title={fragment.content} />
         )}

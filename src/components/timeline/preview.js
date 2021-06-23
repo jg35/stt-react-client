@@ -19,8 +19,8 @@ export default function Preview({ fragments }) {
     return (
       <div className="pl-3 pr-1 pb-4 max-h-full w-2/5 relative">
         <div className="relative h-full" style={{ width: "calc(100% - 20px)" }}>
-          <div className="absolute left-0 top-0 shadow-lg rounded-lg bg-white h-full py-10 px-3 z-40">
-            <div className="max-h-full overflow-scroll js-preview-scroll-container px-7">
+          <div className="absolute left-0 top-0 shadow-lg rounded-lg bg-white h-full w-full py-10 px-3 z-20">
+            <div className="h-full overflow-scroll js-preview-scroll-container px-7">
               {fragments
                 .filter((f) => !f.hidden)
                 .sort((a, b) => (a.order < b.order ? -1 : 1))
@@ -54,8 +54,8 @@ export default function Preview({ fragments }) {
               chapters={fragments.filter((f) => f.type === "CHAPTER")}
             />
           </div>
-          <div className="shadow-lg rounded-lg bg-white h-full w-full p-10 absolute left-3 z-30"></div>
-          <div className="shadow-xl rounded-lg bg-white h-full w-full p-10 absolute left-6 z-20"></div>
+          <div className="shadow-lg rounded-lg bg-white h-full w-full p-10 absolute left-3 z-10"></div>
+          <div className="shadow-xl rounded-lg bg-white h-full w-full p-10 absolute left-6"></div>
         </div>
       </div>
     );

@@ -8,13 +8,13 @@ function getHemisphere(countryCode) {
 
 function getCurrentSeason(day, month, currentYear) {
   if (month <= 2 || (month === 3 && day <= 20)) {
-    return DateTime.local(currentYear - 1, 12, 21);
+    return DateTime.utc(currentYear - 1, 12, 21);
   } else if (month <= 5 || (month === 6 && day <= 20)) {
-    return DateTime.local(currentYear, 3, 21);
+    return DateTime.utc(currentYear, 3, 21);
   } else if (month <= 8 || (month === 9 && day <= 20)) {
-    return DateTime.local(currentYear, 6, 21);
+    return DateTime.utc(currentYear, 6, 21);
   } else {
-    return DateTime.local(currentYear, 9, 21);
+    return DateTime.utc(currentYear, 9, 21);
   }
 }
 
@@ -62,20 +62,21 @@ function getAgeInSeason(dob, season) {
   }
 }
 
-export function generateTimeline(user, worldEvents) {
+export function generateTimeline(user, userEvents, worldEvents, fragments) {
+  console.time("generateTimeline");
   const fragmentOrder = user.versions[0].fragmentOrder;
-  const nowMs = DateTime.now().valueOf();
+  const now = DateTime.utc().toISODate();
   const dob = DateTime.fromISO(user.dob);
   let currentSeason = getCurrentSeason(dob.day, dob.month, dob.year);
   const seasonTimeline = [];
 
-  while (currentSeason.valueOf() < nowMs) {
+  while (currentSeason.toISODate() < now) {
     const season = {
-      startDate: currentSeason.valueOf(),
+      startDate: currentSeason.toISODate(),
       endDate: currentSeason
         .plus({ months: 3 })
         .minus({ seconds: 1 })
-        .valueOf(),
+        .toISODate(),
       year:
         currentSeason.month === 12
           ? currentSeason.year + 1
@@ -88,9 +89,10 @@ export function generateTimeline(user, worldEvents) {
       ),
       age: getAgeInSeason(dob, currentSeason),
     };
-    season.fragments = user.fragments.filter((fragment) => {
-      const fragmentMs = DateTime.fromISO(fragment.date).valueOf();
-      return fragmentMs >= season.startDate && fragmentMs <= season.endDate;
+    season.fragments = fragments.filter((fragment) => {
+      return (
+        fragment.date >= season.startDate && fragment.date <= season.endDate
+      );
     });
     const dateOrder = season.fragments.map((f) => f.id);
     season.fragments.sort((a, b) => {
@@ -99,7 +101,6 @@ export function generateTimeline(user, worldEvents) {
     const sortOrder = season.fragments.map((f) => f.id);
     season.orderType = "AUTO";
     if (dateOrder.length && sortOrder.length) {
-      console.log(dateOrder, sortOrder);
       const diff = !isEqual(dateOrder, sortOrder);
       if (diff) {
         season.orderType = "MANUAL";
@@ -109,21 +110,19 @@ export function generateTimeline(user, worldEvents) {
     season.firstFragmentId = season.fragments[0]
       ? season.fragments[0].id
       : null;
-    season.events = user.events.filter((event) => {
-      const eventMs = DateTime.fromISO(event.date).valueOf();
-      return eventMs >= season.startDate && eventMs <= season.endDate;
+    season.events = userEvents.filter((event) => {
+      return event.date >= season.startDate && event.date <= season.endDate;
     });
     season.worldEvents = worldEvents.filter((event) => {
-      const eventMs = DateTime.fromISO(event.date).valueOf();
-      return eventMs >= season.startDate && eventMs <= season.endDate;
+      return event.date >= season.startDate && event.date <= season.endDate;
     });
     seasonTimeline.push(season);
     currentSeason = currentSeason.plus({ months: 3 });
   }
 
-  const fragments = [...user.fragments].sort((a, b) => {
+  const sortedFragments = [...fragments].sort((a, b) => {
     return fragmentOrder[a.id] < fragmentOrder[b.id] ? -1 : 1;
   });
   console.timeEnd("generateTimeline");
-  return [fragments, seasonTimeline];
+  return [sortedFragments, seasonTimeline];
 }
