@@ -1,5 +1,6 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
+import { getImgIxSrc } from "../../lib/util";
 import { FETCH_LOCAL_UI_STATE } from "../../lib/gql";
 
 import ChapterNavigator from "./chapterNavigator";
@@ -36,10 +37,24 @@ export default function Preview({ fragments }) {
                         {frag.content}
                       </h1>
                     );
+                  } else if (frag.type === "PHOTO") {
+                    return (
+                      <figure className="my-8" key={index}>
+                        <img
+                          src={`${getImgIxSrc(frag.mediaUrl)}?width=600`}
+                          className="w-full shadow"
+                          onClick={() => scrollToFragment(frag.id)}
+                          data-preview-fragment-id={frag.id}
+                        />
+                        <figcaption className="text-center">
+                          {frag.mediaCaption}
+                        </figcaption>
+                      </figure>
+                    );
                   } else {
                     return (
                       <p
-                        className="mb-4 cursor-pointer"
+                        className="mb-4 cursor-pointer whitespace-pre-wrap"
                         key={index}
                         onClick={() => scrollToFragment(frag.id)}
                         data-preview-fragment-id={frag.id}

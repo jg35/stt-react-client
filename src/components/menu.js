@@ -10,8 +10,8 @@ export default function Menu({ sections, toggle, compact = false }) {
       </Button>
       {open && (
         <div
-          style={{ boxShadow: "0 0 12px 2px rgba(0, 0, 0, 0.1)" }}
-          className={`absolute right-0 flex flex-col items-end rounded-lg z-30 bg-white  ${
+          style={{ boxShadow: "0 0 6px 2px rgba(0, 0, 0, 0.1)" }}
+          className={`absolute right-0 flex flex-col items-end rounded z-30 bg-white  ${
             compact ? "w-40" : "w-64"
           }`}
         >

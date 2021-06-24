@@ -30,10 +30,7 @@ export default function Section({ section, setFragmentOrder }) {
           </h1>
         </div>
         <div>
-          <SectionCaptureActions
-            show={showActions}
-            startDate={section.startDate}
-          />
+          <SectionCaptureActions show={showActions} date={section.startDate} />
         </div>
       </header>
       {(section.events.length || section.worldEvents.length) > 0 && (

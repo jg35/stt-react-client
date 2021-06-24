@@ -5,28 +5,28 @@ import {
   showCreateUserEventForm,
 } from "../../lib/apollo";
 
-export default function SectionCaptureActions({ show, startDate }) {
+export default function SectionCaptureActions({ show, date }) {
   if (show) {
     return (
       <div className="flex animate-fade-in">
+        <Button css="mr-3" onClick={() => showCreateUserEventForm({ date })}>
+          Add memorable event
+        </Button>
         <Button
           css="mr-3"
-          onClick={() => showCreateFragmentForm("TEXT", startDate)}
+          onClick={() => showCreateFragmentForm({ type: "TEXT", date })}
         >
           Add memory
         </Button>
-        <Button css="mr-3" onClick={() => showCreateUserEventForm(startDate)}>
-          Add event
-        </Button>
         <Button
           css="mr-3"
-          onClick={() => showCreateFragmentForm("PHOTO", startDate)}
+          onClick={() => showCreateFragmentForm({ type: "PHOTO", date })}
         >
           Add photo
         </Button>
         <Button
           css="mr-3"
-          onClick={() => showCreateFragmentForm("CHAPTER", startDate)}
+          onClick={() => showCreateFragmentForm({ type: "CHAPTER", date })}
         >
           Add chapter
         </Button>

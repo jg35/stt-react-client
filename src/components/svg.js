@@ -8,19 +8,23 @@ export default function Svg({
   height = 24,
   color = "#000000",
   css = "",
+  rotate = 0,
+  title = "",
 }) {
   const icon = icons[name];
 
   if (icon) {
     return (
-      <svg
-        height={height}
-        width={width}
-        viewBox={icon.viewBox || "0 0 24 24"}
-        className={css}
-      >
-        {icon.path(color)}
-      </svg>
+      <div title={title} className="flex items-center justify-center">
+        <svg
+          height={height}
+          width={width}
+          viewBox={icon.viewBox || "0 0 24 24"}
+          className={css}
+        >
+          {icon.path(color, rotate)}
+        </svg>
+      </div>
     );
   }
   return null;

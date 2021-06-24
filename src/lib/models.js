@@ -8,14 +8,15 @@ export const fragment = ({
   type,
   content: content || "",
   date,
+  dateType: date ? "AUTO" : null,
   questionId,
   tag,
   mediaUrl: null,
   mediaCaption: "",
 });
 
-export const userEvent = ({ date = null }) => ({
+export const userEvent = (initialValue) => ({
   title: "",
-  date,
+  date: initialValue.date || null,
   type: "EVENT",
 });

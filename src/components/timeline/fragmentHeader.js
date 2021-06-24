@@ -1,4 +1,5 @@
 import React from "react";
+import { DateTime } from "luxon";
 import colors from "../../lib/colors";
 import Svg from "../svg";
 import Button from "../button";
@@ -10,6 +11,7 @@ import { showEditFragmentForm } from "../../lib/apollo";
 export default function FragmentActions({ fragment }) {
   const [updateFragment] = useMutation(UPDATE_FRAGMENT);
   const [deleteFragment] = useMutation(DELETE_FRAGMENT);
+  const formatDate = DateTime.fromISO(fragment.date).toFormat("ccc d MMM yyyy");
 
   function setVisibility(hidden) {
     updateFragment({
@@ -36,6 +38,21 @@ export default function FragmentActions({ fragment }) {
     });
   }
 
+  // function getIcon() {
+  //   switch (fragment.type) {
+  //     case "PHOTO":
+  //       return <Svg name="photo" width="16" height="16" color={colors.black} />;
+  //     case "TEXT":
+  //       return (
+  //         <Svg name="writing" width="16" height="16" color={colors.black} />
+  //       );
+  //     case "CHAPTER":
+  //       return (
+  //         <Svg name="chapter" width="18" height="18" color={colors.black} />
+  //       );
+  //   }
+  // }
+
   const sections = [
     [
       <Button
@@ -49,7 +66,7 @@ export default function FragmentActions({ fragment }) {
           css="ml-2"
           width="18"
           height="18"
-          color={colors.darkGray}
+          color={colors.gray}
         />
       </Button>,
     ],
@@ -65,7 +82,7 @@ export default function FragmentActions({ fragment }) {
           css="ml-2"
           width="18"
           height="18"
-          color={colors.darkGray}
+          color={colors.gray}
         />
       </Button>,
     ],
@@ -84,31 +101,51 @@ export default function FragmentActions({ fragment }) {
           css="ml-2"
           width="16"
           height="16"
-          color={colors.darkGray}
+          color={colors.gray}
         />
       </Button>,
     ]);
   }
 
   return (
-    <div className="pb-2 flex justify-end items-center">
-      {fragment.hidden && (
+    <div className="pb-2 flex justify-between items-center">
+      <div className="text-sm text-center text-gray font-bold flex cursor-default">
         <Svg
-          css="cursor-default"
-          title="Memory is private"
-          name="private"
-          color={colors.gray}
+          css="cursor-default mr-2"
+          name="calendar"
           width="18"
           height="18"
+          color={colors.gray}
         />
-      )}
-      <Menu
-        compact
-        toggle={
-          <Svg name="overflow" color={colors.gray} width="24" height="24" />
-        }
-        sections={sections}
-      />
+        {`${formatDate}${fragment.dateType === "AUTO" ? " (auto)" : ""}`}
+      </div>
+      <div style={{ minWidth: "4rem" }}></div>
+      <div
+        className="flex items-center justify-end"
+        style={{ minWidth: "4rem" }}
+      >
+        {fragment.hidden && (
+          <div
+            className="px-2 py-1 cursor-default"
+            title="This memory won't be included in your book"
+          >
+            <Svg
+              css="cursor-default"
+              name="private"
+              color={colors.gray}
+              width="18"
+              height="18"
+            />
+          </div>
+        )}
+        <Menu
+          compact
+          toggle={
+            <Svg name="overflow" color={colors.black} width="24" height="24" />
+          }
+          sections={sections}
+        />
+      </div>
     </div>
   );
 }

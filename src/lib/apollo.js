@@ -33,7 +33,7 @@ const authMiddleware = new ApolloLink((operation, forward) => {
 
 export const authStateVar = makeVar({ status: "loading" });
 export const uiStateVar = makeVar({
-  timelinePeriod: "SEASON",
+  timelinePeriod: "YEAR",
   showPreview: true,
   capture: {
     showModal: false,
@@ -66,28 +66,26 @@ export default new ApolloClient({
   link: concat(authMiddleware, httpLink),
 });
 
-export function showCreateFragmentForm(type, startDate) {
+export function showCreateFragmentForm(initialValue = {}) {
   uiStateVar({
     ...uiStateVar(),
     ...{
       capture: {
         showModal: true,
-        item: fragment({
-          type,
-          date: startDate,
-        }),
+        item: fragment(initialValue),
       },
     },
   });
 }
 
-export function showCreateUserEventForm(startDate) {
+export function showCreateUserEventForm(initialValue = {}) {
+  console.log(initialValue);
   uiStateVar({
     ...uiStateVar(),
     ...{
       capture: {
         showModal: true,
-        item: userEvent({ date: startDate }),
+        item: userEvent(initialValue),
       },
     },
   });

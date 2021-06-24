@@ -14,13 +14,13 @@ export const FETCH_LOCAL_UI_STATE = gql`
 
 export const FETCH_TIMELINE = gql`
   query {
-    stt_worldEvent {
+    stt_worldEvent(order_by: { date: asc, id: asc }) {
       id
       title
       date
       country
     }
-    stt_userEvent {
+    stt_userEvent(order_by: { date: asc, id: asc }) {
       id
       title
       date
@@ -78,6 +78,10 @@ export const UPDATE_FRAGMENT = gql`
       hidden
       content
       date
+      dateType
+      mediaUrl
+      mediaCaption
+      tag
     }
   }
 `;
@@ -127,6 +131,17 @@ export const UPDATE_VERSION = gql`
     update_stt_version_by_pk(pk_columns: { id: $id }, _set: $data) {
       id
       fragmentOrder
+    }
+  }
+`;
+
+export const FETCH_QUESTIONS = gql`
+  query {
+    stt_question {
+      id
+      title
+      placeholder
+      tag
     }
   }
 `;

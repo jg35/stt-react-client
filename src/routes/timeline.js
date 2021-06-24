@@ -11,6 +11,7 @@ import {
 import Page from "../components/page";
 
 import CaptureModal from "../components/capture/captureModal";
+import CaptureHeader from "../components/capture/captureHeader";
 import Section from "../components/timeline/section";
 import Preview from "../components/timeline/preview";
 import Button from "../components/button";
@@ -18,7 +19,7 @@ import ScrollNavigator from "../components/timeline/scrollNavigator";
 
 import { generateTimeline } from "../lib/timeline";
 import { changeTimelinePeriod } from "../lib/apollo";
-import { cloneDeep, debounce } from "lodash";
+import { cloneDeep, debounce, uniq } from "lodash";
 
 export default function Timeline() {
   const { data } = useQuery(FETCH_TIMELINE);
@@ -103,12 +104,19 @@ export default function Timeline() {
     <Page>
       <div className="flex max-h-full">
         <div className="flex-1">
-          <div className="h-1/6 shadow rounded-lg bg-white p-6">
-            <h1>Capture zone</h1>
+          <div className="h-32 shadow rounded-lg bg-white p-4 flex">
+            {fragments && (
+              <CaptureHeader
+                questionsAnswered={uniq(fragments.map((f) => f.questionId))}
+              />
+            )}
           </div>
           <DndProvider backend={HTML5Backend}>
             {timeline ? (
-              <div className="flex h-5/6 py-4">
+              <div
+                className="flex py-4"
+                style={{ height: "calc(100% - 8rem)" }}
+              >
                 <div className="flex shadow-lg min-w-full rounded-lg bg-white px-3">
                   <main className="flex-1 mr-2 max-h-full overflow-auto js-timeline-scroll-container relative">
                     {timeline.map((timelineSection, i) => (
@@ -128,12 +136,12 @@ export default function Timeline() {
                         View timeline in:
                       </span>
                       <Button
-                        onClick={() => changeTimelinePeriod("MONTH")}
-                        css={`mx-2 ${
-                          timelinePeriod === "MONTH" && "underline"
-                        }`}
+                        onClick={() => changeTimelinePeriod("YEAR")}
+                        css={`
+                          ${timelinePeriod === "YEAR" && "underline"}
+                        `}
                       >
-                        Months
+                        Years
                       </Button>
                       <Button
                         onClick={() => changeTimelinePeriod("SEASON")}
@@ -144,12 +152,12 @@ export default function Timeline() {
                         Seasons
                       </Button>
                       <Button
-                        onClick={() => changeTimelinePeriod("YEAR")}
-                        css={`
-                          ${timelinePeriod === "YEAR" && "underline"}
-                        `}
+                        onClick={() => changeTimelinePeriod("MONTH")}
+                        css={`mx-2 ${
+                          timelinePeriod === "MONTH" && "underline"
+                        }`}
                       >
-                        Years
+                        Months
                       </Button>
                     </div>
                   </main>

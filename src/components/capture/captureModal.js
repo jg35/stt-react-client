@@ -3,7 +3,6 @@ import { useQuery, useMutation, gql } from "@apollo/client";
 import { FETCH_LOCAL_UI_STATE } from "../../lib/gql";
 import { omit } from "lodash";
 import Button from "../button";
-import Svg from "../svg";
 import { uiStateVar } from "../../lib/apollo";
 import {
   INSERT_FRAGMENT,
@@ -15,6 +14,7 @@ import {
 import TextForm from "./textForm";
 import ChapterForm from "./chapterForm";
 import EventForm from "./eventForm";
+import PhotoForm from "./photoForm";
 
 export default function CaptureModal() {
   const { data } = useQuery(FETCH_LOCAL_UI_STATE);
@@ -140,7 +140,7 @@ export default function CaptureModal() {
               : "h-auto w-2/5 max-w-2xl"
           }`}
         >
-          <div className="flex-1">
+          <div className="flex-1 flex flex-col">
             {item.type === "TEXT" && (
               <TextForm item={editItem} setItem={setEditItem} />
             )}
@@ -150,13 +150,11 @@ export default function CaptureModal() {
             {item.type === "CHAPTER" && (
               <ChapterForm item={editItem} setItem={setEditItem} />
             )}
+            {item.type === "PHOTO" && (
+              <PhotoForm item={editItem} setItem={setEditItem} />
+            )}
           </div>
 
-          {/* <div className="flex justify-end py-2">
-            <Button onClick={setFullScreen}>
-              <Svg name={fullScreen ? "compress" : "fullscreen"} />
-            </Button>
-          </div> */}
           <div className="flex justify-end pt-6 mt-6 border-t border-lightGray">
             <Button
               minimal

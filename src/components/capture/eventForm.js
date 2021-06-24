@@ -5,12 +5,13 @@ export default function EventForm({ item, setItem }) {
   const [jsDate, setJsDate] = useState(null);
 
   useEffect(() => {
-    setJsDate(item.date ? new Date(item.date) : new Date());
+    console.log(item.date);
+    setJsDate(item.date ? new Date(item.date) : null);
   }, [item]);
 
   // TODO - datepicker earliest date should be DOB, latest date should be current date
   return (
-    jsDate && (
+    item && (
       <>
         <h1 className="modal-title">{item.id ? "Edit event" : "Add event"}</h1>
         <div className="form-control">
@@ -18,7 +19,7 @@ export default function EventForm({ item, setItem }) {
           <input
             autoFocus
             placeholder="Enter event name"
-            className="input mb-2 mt-1"
+            className="input mb-6 mt-1"
             type="text"
             onChange={(e) => setItem({ ...item, title: e.target.value })}
             value={item.title}

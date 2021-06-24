@@ -9,11 +9,11 @@ firebase.initializeApp({
 
 firebase.auth().onAuthStateChanged(async (user) => {
   if (user) {
-    const { displayName, email, uid: firebaseId, photoURL } = user;
+    const { displayName, email, uid: id, photoURL } = user;
     const userDetails = {
       displayName,
       email,
-      firebaseId,
+      id,
       photoURL,
     };
     const token = await user.getIdToken();
