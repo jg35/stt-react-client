@@ -33,6 +33,7 @@ const authMiddleware = new ApolloLink((operation, forward) => {
 
 export const authStateVar = makeVar({ status: "loading" });
 export const uiStateVar = makeVar({
+  timelinePeriod: "SEASON",
   showPreview: true,
   capture: {
     showModal: false,
@@ -112,6 +113,15 @@ export function showEditUserEventForm(userEvent) {
         showModal: true,
         item: { ...userEvent, type: "EVENT" },
       },
+    },
+  });
+}
+
+export function changeTimelinePeriod(timelinePeriod) {
+  uiStateVar({
+    ...uiStateVar(),
+    ...{
+      timelinePeriod,
     },
   });
 }

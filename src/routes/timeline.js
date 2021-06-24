@@ -2,25 +2,34 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { FETCH_TIMELINE, UPDATE_VERSION } from "../lib/gql";
+import {
+  FETCH_TIMELINE,
+  UPDATE_VERSION,
+  FETCH_LOCAL_UI_STATE,
+} from "../lib/gql";
 
 import Page from "../components/page";
 
 import CaptureModal from "../components/capture/captureModal";
 import Section from "../components/timeline/section";
 import Preview from "../components/timeline/preview";
+import Button from "../components/button";
 import ScrollNavigator from "../components/timeline/scrollNavigator";
 
 import { generateTimeline } from "../lib/timeline";
+import { changeTimelinePeriod } from "../lib/apollo";
 import { cloneDeep, debounce } from "lodash";
 
 export default function Timeline() {
   const { data } = useQuery(FETCH_TIMELINE);
+  const { data: uiStateData } = useQuery(FETCH_LOCAL_UI_STATE);
   const [updateVersion] = useMutation(UPDATE_VERSION);
   const [fragments, setFragments] = useState(null);
   const [timeline, setTimeline] = useState(null);
   const [version, setVersion] = useState({});
   const [order, setOrder] = useState(null);
+
+  const timelinePeriod = uiStateData.uiState.timelinePeriod;
 
   useEffect(() => {
     if (data) {
@@ -29,13 +38,14 @@ export default function Timeline() {
         user,
         data.stt_userEvent,
         data.stt_worldEvent,
-        data.stt_fragment
+        data.stt_fragment,
+        timelinePeriod
       );
       setTimeline(timeline);
       setFragments(fragments);
       setVersion(user.versions[0]);
     }
-  }, [data]);
+  }, [data, uiStateData]);
 
   const sortHandler = useCallback(
     debounce(
@@ -100,7 +110,7 @@ export default function Timeline() {
             {timeline ? (
               <div className="flex h-5/6 py-4">
                 <div className="flex shadow-lg min-w-full rounded-lg bg-white px-3">
-                  <main className="flex-1 mr-2 max-h-full overflow-auto js-timeline-scroll-container">
+                  <main className="flex-1 mr-2 max-h-full overflow-auto js-timeline-scroll-container relative">
                     {timeline.map((timelineSection, i) => (
                       <Section
                         key={i}
@@ -113,6 +123,35 @@ export default function Timeline() {
                         }
                       />
                     ))}
+                    <div className="h-10 bg-white sticky bottom-4 w-max flex items-center shadow-lg py-6 px-4 rounded border">
+                      <span className="font-medium mr-2">
+                        View timeline in:
+                      </span>
+                      <Button
+                        onClick={() => changeTimelinePeriod("MONTH")}
+                        css={`mx-2 ${
+                          timelinePeriod === "MONTH" && "underline"
+                        }`}
+                      >
+                        Months
+                      </Button>
+                      <Button
+                        onClick={() => changeTimelinePeriod("SEASON")}
+                        css={`mx-2 ${
+                          timelinePeriod === "SEASON" && "underline"
+                        }`}
+                      >
+                        Seasons
+                      </Button>
+                      <Button
+                        onClick={() => changeTimelinePeriod("YEAR")}
+                        css={`
+                          ${timelinePeriod === "YEAR" && "underline"}
+                        `}
+                      >
+                        Years
+                      </Button>
+                    </div>
                   </main>
                   <div className="w-12 max-h-full">
                     <ScrollNavigator

@@ -6,7 +6,7 @@ function getHemisphere(countryCode) {
   return countryCode === "GB" ? "NORTH" : "SOUTH";
 }
 
-function getCurrentSeason(day, month, currentYear) {
+function getDateOfBirthSeason(day, month, currentYear) {
   if (month <= 2 || (month === 3 && day <= 20)) {
     return DateTime.utc(currentYear - 1, 12, 21);
   } else if (month <= 5 || (month === 6 && day <= 20)) {
@@ -15,6 +15,32 @@ function getCurrentSeason(day, month, currentYear) {
     return DateTime.utc(currentYear, 6, 21);
   } else {
     return DateTime.utc(currentYear, 9, 21);
+  }
+}
+
+function getFirstPeriod(dateOfBirth, timespan) {
+  switch (timespan) {
+    case "MONTH":
+      return dateOfBirth.startOf("day");
+    case "YEAR":
+      return DateTime.utc(dateOfBirth.year);
+    case "SEASON":
+      return getDateOfBirthSeason(
+        dateOfBirth.day,
+        dateOfBirth.month,
+        dateOfBirth.year
+      );
+  }
+}
+
+function getNextPeriod(currentPeriod, timespan) {
+  switch (timespan) {
+    case "MONTH":
+      return currentPeriod.plus({ months: 1 });
+    case "YEAR":
+      return currentPeriod.plus({ years: 1 });
+    case "SEASON":
+      return currentPeriod.plus({ months: 3 });
   }
 }
 
@@ -27,29 +53,44 @@ function getSeasonTitle(
   const hemisphere = getHemisphere(location);
   let seasonName;
   switch (seasonStartMonth) {
-    case 3:
+    case "March":
       seasonName = hemisphere === "SOUTH" ? "Autumn" : "Spring";
       break;
-    case 6:
+    case "June":
       seasonName = hemisphere === "SOUTH" ? "Winter" : "Summer";
       break;
-    case 9:
+    case "September":
       seasonName = hemisphere === "SOUTH" ? "Spring" : "Autumn";
       break;
-    case 12:
+    case "December":
       seasonName = hemisphere === "SOUTH" ? "Summer" : "Winter";
       break;
     default:
       break;
   }
-  if (seasonStartMonth === 12) {
+  if (seasonStartMonth === "December") {
     return `${seasonName} ${seasonStartYear}/${seasonNextYear}`;
   }
   return `${seasonName} ${seasonStartYear}`;
 }
 
-function getAgeInSeason(dob, season) {
-  const diff = season.diff(dob, ["years", "months"]);
+function getPeriodTitle(location, currentPeriod, timespan) {
+  const currentMonth = currentPeriod.toFormat("MMMM");
+  const currentYear = currentPeriod.toFormat("yyyy");
+  const nextYear = currentPeriod.plus({ years: 1 }).toFormat("yy");
+
+  switch (timespan) {
+    case "YEAR":
+      return currentYear;
+    case "MONTH":
+      return `${currentMonth} ${currentYear}`;
+    case "SEASON":
+      return getSeasonTitle(location, currentMonth, currentYear, nextYear);
+  }
+}
+
+function getPeriodAge(dateOfBirth, currentPeriod) {
+  const diff = currentPeriod.diff(dateOfBirth, ["years", "months"]);
   const { years, months } = diff.toObject();
   const ageMonths = Math.floor(months);
   let ageYears = Math.floor(years);
@@ -62,67 +103,73 @@ function getAgeInSeason(dob, season) {
   }
 }
 
-export function generateTimeline(user, userEvents, worldEvents, fragments) {
+export function generateTimeline(
+  user,
+  userEvents,
+  worldEvents,
+  fragments,
+  timespan = "YEAR"
+) {
   console.time("generateTimeline");
   const fragmentOrder = user.versions[0].fragmentOrder;
   const now = DateTime.utc().toISODate();
-  const dob = DateTime.fromISO(user.dob);
-  let currentSeason = getCurrentSeason(dob.day, dob.month, dob.year);
-  const seasonTimeline = [];
+  const dateOfBirth = DateTime.fromISO(user.dob);
+  // let currentSeason = getCurrentSeason(dob.day, dob.month, dob.year);
+  let currentPeriod = getFirstPeriod(dateOfBirth, timespan);
+  const timeline = [];
 
-  while (currentSeason.toISODate() < now) {
-    const season = {
-      startDate: currentSeason.toISODate(),
-      endDate: currentSeason
-        .plus({ months: 3 })
-        .minus({ seconds: 1 })
-        .toISODate(),
+  while (currentPeriod.toISODate() < now) {
+    const nextPeriod = getNextPeriod(currentPeriod, timespan);
+    const timePeriod = {
+      startDate: currentPeriod.toISODate(),
+      endDate: nextPeriod.minus({ seconds: 1 }).toISODate(),
       year:
-        currentSeason.month === 12
-          ? currentSeason.year + 1
-          : currentSeason.year,
-      title: getSeasonTitle(
-        user.location,
-        currentSeason.month,
-        currentSeason.toFormat("yy"),
-        currentSeason.plus({ years: 1 }).toFormat("yy")
-      ),
-      age: getAgeInSeason(dob, currentSeason),
+        timespan === "SEASON" && currentPeriod.month === 12
+          ? currentPeriod.year + 1
+          : currentPeriod.year,
+      title: getPeriodTitle(user.location, currentPeriod, timespan),
+      age: getPeriodAge(dateOfBirth, currentPeriod, timespan),
     };
-    season.fragments = fragments.filter((fragment) => {
+    timePeriod.fragments = fragments.filter((fragment) => {
       return (
-        fragment.date >= season.startDate && fragment.date <= season.endDate
+        fragment.date >= timePeriod.startDate &&
+        fragment.date <= timePeriod.endDate
       );
     });
-    const dateOrder = season.fragments.map((f) => f.id);
-    season.fragments.sort((a, b) => {
+    const dateOrder = timePeriod.fragments.map((f) => f.id);
+    timePeriod.fragments.sort((a, b) => {
       return fragmentOrder[a.id] < fragmentOrder[b.id] ? -1 : 1;
     });
-    const sortOrder = season.fragments.map((f) => f.id);
-    season.orderType = "AUTO";
+    const sortOrder = timePeriod.fragments.map((f) => f.id);
+    timePeriod.orderType = "AUTO";
     if (dateOrder.length && sortOrder.length) {
       const diff = !isEqual(dateOrder, sortOrder);
       if (diff) {
-        season.orderType = "MANUAL";
+        timePeriod.orderType = "MANUAL";
       }
     }
 
-    season.firstFragmentId = season.fragments[0]
-      ? season.fragments[0].id
+    timePeriod.firstFragmentId = timePeriod.fragments[0]
+      ? timePeriod.fragments[0].id
       : null;
-    season.events = userEvents.filter((event) => {
-      return event.date >= season.startDate && event.date <= season.endDate;
+    timePeriod.events = userEvents.filter((event) => {
+      return (
+        event.date >= timePeriod.startDate && event.date <= timePeriod.endDate
+      );
     });
-    season.worldEvents = worldEvents.filter((event) => {
-      return event.date >= season.startDate && event.date <= season.endDate;
+    timePeriod.worldEvents = worldEvents.filter((event) => {
+      return (
+        event.date >= timePeriod.startDate && event.date <= timePeriod.endDate
+      );
     });
-    seasonTimeline.push(season);
-    currentSeason = currentSeason.plus({ months: 3 });
+    timeline.push(timePeriod);
+
+    currentPeriod = nextPeriod;
   }
 
   const sortedFragments = [...fragments].sort((a, b) => {
     return fragmentOrder[a.id] < fragmentOrder[b.id] ? -1 : 1;
   });
   console.timeEnd("generateTimeline");
-  return [sortedFragments, seasonTimeline];
+  return [sortedFragments, timeline];
 }

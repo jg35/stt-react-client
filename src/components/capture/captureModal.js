@@ -158,10 +158,18 @@ export default function CaptureModal() {
             </Button>
           </div> */}
           <div className="flex justify-end pt-6 mt-6 border-t border-lightGray">
-            <Button minimal css="text-lg mr-2 w-32 py-2" onClick={closeModal}>
+            <Button
+              minimal
+              css="text-lg mr-2 w-32 py-2 duration-300"
+              onClick={closeModal}
+            >
               Cancel
             </Button>
-            <Button css="text-lg w-32 py-2" onClick={save} cta>
+            <Button
+              css="text-lg w-32 py-2 duration-300 ease-in"
+              onClick={save}
+              cta
+            >
               {item.id ? "Update" : "Add"}
             </Button>
           </div>

@@ -56,7 +56,7 @@
   }
 
   .modal-title {
-    @apply text-xl mb-6;
+    @apply text-2xl mb-6;
   }
 
   /* React datepicker */

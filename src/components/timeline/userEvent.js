@@ -31,7 +31,10 @@ export default function UserEvent({ event }) {
       {event.title}
       <div
         className="p-1 cursor-pointer"
-        onClick={deleteHandler}
+        onClick={(e) => {
+          e.stopPropagation();
+          deleteHandler();
+        }}
         onMouseEnter={() => setActive(true)}
         onMouseLeave={() => setActive(false)}
       >
