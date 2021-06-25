@@ -102,14 +102,26 @@ function getPeriodAge(dateOfBirth, currentPeriod) {
   }
 }
 
+function sortFragments(fragments) {
+  return [...fragments].sort((a, b) => {
+    if (a.date === b.date) {
+      return a.id < b.id ? -1 : 1;
+    }
+    return a.date < b.date ? -1 : 1;
+  });
+}
+
 export function generateTimeline(
-  user,
-  userEvents,
-  worldEvents,
-  fragments,
+  {
+    stt_user_by_pk: user,
+    stt_userEvent: userEvents,
+    stt_worldEvent: worldEvents,
+    stt_fragment: fragments,
+  },
   timespan = "YEAR"
 ) {
   console.time("generateTimeline");
+  const sortedFragments = sortFragments(fragments);
 
   const now = DateTime.utc().toISODate();
   const dateOfBirth = DateTime.fromISO(user.dob);
@@ -128,7 +140,7 @@ export function generateTimeline(
       title: getPeriodTitle(user.location, currentPeriod, timespan),
       age: getPeriodAge(dateOfBirth, currentPeriod, timespan),
     };
-    timePeriod.fragments = fragments.filter((fragment, i) => {
+    timePeriod.fragments = sortedFragments.filter((fragment, i) => {
       return (
         fragment.date >= timePeriod.startDate &&
         fragment.date <= timePeriod.endDate
@@ -151,5 +163,5 @@ export function generateTimeline(
   }
 
   console.timeEnd("generateTimeline");
-  return timeline;
+  return [timeline, sortedFragments];
 }

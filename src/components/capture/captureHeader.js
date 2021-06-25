@@ -6,10 +6,8 @@ import {
   showCreateFragmentForm,
   showCreateUserEventForm,
 } from "../../lib/apollo";
-import colors from "../../lib/colors";
 import Button from "../button";
 import Svg from "../svg";
-import Menu from "../menu";
 import TagSelect from "./tagSelect";
 
 export default function CaptureHeader({ questionsAnswered }) {

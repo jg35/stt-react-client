@@ -12,20 +12,23 @@ export const FETCH_LOCAL_UI_STATE = gql`
   }
 `;
 
-export const FETCH_TIMELINE = gql`
-  query {
+export const FETCH_TIMELINE_VIEW = gql`
+  query ($userId: String!) {
     stt_worldEvent(order_by: { date: asc, id: asc }) {
       id
       title
       date
       country
     }
-    stt_userEvent(order_by: { date: asc, id: asc }) {
+    stt_userEvent(
+      order_by: { date: asc }
+      where: { userId: { _eq: $userId } }
+    ) {
       id
       title
       date
     }
-    stt_fragment {
+    stt_fragment(where: { userId: { _eq: $userId } }) {
       id
       content
       date
@@ -40,9 +43,26 @@ export const FETCH_TIMELINE = gql`
       createdAt
       updatedAt
     }
-    stt_user {
+    stt_user_by_pk(id: $userId) {
       location
       dob
+    }
+    stt_question {
+      id
+      title
+      placeholder
+      tag
+    }
+  }
+`;
+
+export const FETCH_QUESTIONS = gql`
+  query {
+    stt_question {
+      id
+      title
+      placeholder
+      tag
     }
   }
 `;
@@ -126,17 +146,6 @@ export const UPDATE_VERSION = gql`
   mutation ($id: Int!, $data: stt_version_set_input) {
     update_stt_version_by_pk(pk_columns: { id: $id }, _set: $data) {
       id
-    }
-  }
-`;
-
-export const FETCH_QUESTIONS = gql`
-  query {
-    stt_question {
-      id
-      title
-      placeholder
-      tag
     }
   }
 `;
