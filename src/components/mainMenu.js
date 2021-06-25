@@ -17,7 +17,7 @@ export default function MainMenu() {
       sections={[
         [
           <NavLink className="fill text-right" to="account">
-            <div className="flex items-center justify-end">
+            <div className="flex items-center justify-end p-2">
               <div className="mr-2">
                 <span className="block">{currentUser.displayName}</span>
                 <span className="text-gray">{currentUser.email}</span>
@@ -32,14 +32,14 @@ export default function MainMenu() {
         ],
         [
           <NavLink
-            className="fill text-right flex items-center justify-end"
+            className="fill text-right flex items-center justify-end p-2"
             to="settings"
           >
             Settings <Svg name="settings" css="ml-2" />
           </NavLink>,
         ],
         [
-          <button className="fill text-right" onClick={() => signOut()}>
+          <button className="fill text-right p-2" onClick={() => signOut()}>
             Log out
           </button>,
         ],

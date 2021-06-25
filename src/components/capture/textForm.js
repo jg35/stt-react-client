@@ -3,7 +3,13 @@ import DatePicker from "react-datepicker";
 import { useQuery } from "@apollo/client";
 import { FETCH_QUESTIONS } from "../../lib/gql";
 
-export default function TextForm({ setItem, item }) {
+export default function TextForm({
+  setItem,
+  item,
+  creatingFromQuestion,
+  closeModal,
+}) {
+  console.log("creatingFromQuestion", creatingFromQuestion);
   const { data } = useQuery(FETCH_QUESTIONS);
   const [title, setTitle] = useState("");
   const [jsDate, setJsDate] = useState(null);
@@ -13,7 +19,7 @@ export default function TextForm({ setItem, item }) {
       const question = data.stt_question.find((q) => q.id === item.questionId);
       setTitle(question.title);
     } else {
-      setTitle(`${item.id ? "New" : "Edit"} memory`);
+      setTitle(`${item.id ? "Edit" : "New"} memory`);
     }
   }, [data]);
 
@@ -45,6 +51,20 @@ export default function TextForm({ setItem, item }) {
 
       <div className="flex-1">
         <textarea
+          onKeyUp={(e) => {
+            if (
+              creatingFromQuestion &&
+              e.key === "Backspace" &&
+              e.target.value.length === 0
+            ) {
+              closeModal();
+              const input = document.querySelector(".js-question-text-input");
+              if (input) {
+                input.focus();
+              }
+            }
+            return;
+          }}
           autoFocus
           onFocus={function (e) {
             var val = e.target.value;
@@ -57,20 +77,22 @@ export default function TextForm({ setItem, item }) {
           value={item.content}
         />
       </div>
-      <div className="form-control my-4">
-        <label>Date</label>
-        <DatePicker
-          selected={jsDate}
-          onChange={(newDate) => {
-            setJsDate(newDate);
-            setItem({
-              ...item,
-              date: newDate.toISOString().replace(/T.*/, ""),
-              dateType: "MANUAL",
-            });
-          }}
-        />
-      </div>
+      {!creatingFromQuestion && (
+        <div className="form-control my-4">
+          <label>Date</label>
+          <DatePicker
+            selected={jsDate}
+            onChange={(newDate) => {
+              setJsDate(newDate);
+              setItem({
+                ...item,
+                date: newDate.toISOString().replace(/T.*/, ""),
+                dateType: "MANUAL",
+              });
+            }}
+          />
+        </div>
+      )}
     </>
   );
 }

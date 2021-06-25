@@ -10,6 +10,7 @@ import colors from "../../lib/colors";
 import Button from "../button";
 import Svg from "../svg";
 import Menu from "../menu";
+import TagSelect from "./tagSelect";
 
 export default function CaptureHeader({ questionsAnswered }) {
   const { data } = useQuery(FETCH_QUESTIONS);
@@ -85,7 +86,7 @@ export default function CaptureHeader({ questionsAnswered }) {
     return (
       <>
         <div className="w-full h-full bg-white  rounded p-4 border shadow">
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center mb-2">
             <h1 className="text-xl">{currentQuestion.title}</h1>
             {questionOptions.length > 1 && (
               <Button minimal onClick={() => shuffleQuestion()}>
@@ -106,33 +107,18 @@ export default function CaptureHeader({ questionsAnswered }) {
                   });
                   setTimeout(() => {
                     setQuestionAnswer("");
-                    shuffleQuestion();
                   }, 500);
                 }
               }}
-              className="input bg-white pl-0 text-lg pb-0"
+              className="input bg-white p-0 text-lg js-question-text-input"
               style={{ maxWidth: "none" }}
               placeholder={currentQuestion.placeholder}
             />
-            <Menu
-              toggle={
-                <div className="block uppercase font-medium flex text-gray">
-                  <span className="whitespace-nowrap ">
-                    {questionTagCategory}
-                  </span>
-                  <Svg
-                    name="chevron"
-                    rotate={90}
-                    width="14"
-                    height="14"
-                    css="ml-1"
-                    color={colors.gray}
-                  />
-                </div>
-              }
-              sections={[
-                tagOptions.map((t, i) => <TagSelectOption tag={t} key={i} />),
-              ]}
+            <TagSelect
+              currentTag={questionTagCategory}
+              tagOptions={tagOptions}
+              selectTag={setQuestionTagCategory}
+              minimal
             />
           </div>
         </div>

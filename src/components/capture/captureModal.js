@@ -22,7 +22,7 @@ export default function CaptureModal() {
   const [insertUserEvent] = useMutation(INSERT_USER_EVENT);
   const [updateFragment] = useMutation(UPDATE_FRAGMENT);
   const [updateUserEvent] = useMutation(UPDATE_USER_EVENT);
-  const { showModal, item, fullScreen } = data.uiState.capture;
+  const { showModal, item, creatingFromQuestion } = data.uiState.capture;
   const [editItem, setEditItem] = useState(null);
 
   useEffect(() => {
@@ -31,17 +31,10 @@ export default function CaptureModal() {
     }
   }, [item]);
 
-  function setFullScreen() {
-    uiStateVar({
-      ...data.uiState,
-      ...{ capture: { showModal, item: editItem, fullScreen: !fullScreen } },
-    });
-  }
-
   function closeModal() {
     uiStateVar({
       ...data.uiState,
-      ...{ capture: { showModal: false, item: null, fullScreen } },
+      ...{ capture: { showModal: false, item: null } },
     });
   }
 
@@ -140,9 +133,14 @@ export default function CaptureModal() {
               : "h-auto w-2/5 max-w-2xl"
           }`}
         >
-          <div className="flex-1 flex flex-col">
+          <div className="flex-1 flex flex-col relative">
             {item.type === "TEXT" && (
-              <TextForm item={editItem} setItem={setEditItem} />
+              <TextForm
+                item={editItem}
+                setItem={setEditItem}
+                creatingFromQuestion={creatingFromQuestion}
+                closeModal={closeModal}
+              />
             )}
             {item.type === "EVENT" && (
               <EventForm item={editItem} setItem={setEditItem} />

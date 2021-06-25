@@ -5,13 +5,11 @@ export default function Menu({ sections, toggle, compact = false }) {
   const [open, setOpen] = useState(false);
   return (
     <div className="relative">
-      <Button css="bg-transparent" onClick={() => setOpen(!open)} minimal>
-        {toggle}
-      </Button>
+      <button onClick={() => setOpen(!open)}>{toggle}</button>
       {open && (
         <div
           style={{ boxShadow: "0 0 6px 2px rgba(0, 0, 0, 0.1)" }}
-          className={`absolute right-0 flex flex-col items-end rounded z-30 bg-white  ${
+          className={`absolute right-0 top-9 flex flex-col items-end rounded z-30 bg-white  ${
             compact ? "w-40" : "w-64"
           }`}
         >
@@ -36,9 +34,7 @@ export default function Menu({ sections, toggle, compact = false }) {
                 return (
                   <div
                     key={itemIndex}
-                    className={`hover:bg-lightestGray text-right cursor-pointer min-h-10 flex justify-right items-center w-full ${
-                      compact ? "p-1" : "p-2"
-                    } ${radiusCss}`}
+                    className={`hover:bg-lightestGray text-right cursor-pointer min-h-10 flex justify-right items-center w-full ${radiusCss}`}
                     onClick={() => setOpen(false)}
                   >
                     {item}

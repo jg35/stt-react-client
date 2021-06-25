@@ -71,6 +71,7 @@ export function showCreateFragmentForm(initialValue = {}) {
     ...uiStateVar(),
     ...{
       capture: {
+        creatingFromQuestion: !!initialValue.questionId,
         showModal: true,
         item: fragment(initialValue),
       },
