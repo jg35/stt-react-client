@@ -5,15 +5,10 @@ import UserEvent from "./userEvent";
 import WorldEvent from "./worldEvent";
 import SectionCaptureActions from "./sectionCaptureActions";
 import Button from "../button";
-import { sortBy } from "lodash";
 
-export default function Section({ section, setFragmentOrder }) {
+export default function Section({ section }) {
   const [showActions, setShowActions] = useState(false);
 
-  function reorderByDate() {
-    const newOrder = sortBy([...section.fragments], "date").map((f) => f.id);
-    setFragmentOrder(newOrder, false);
-  }
   return (
     <section
       className="py-8 pr-6 border-b border-lightGray"
@@ -46,27 +41,7 @@ export default function Section({ section, setFragmentOrder }) {
       )}
       {section.fragments.length > 0 && (
         <div className="flex flex-wrap mt-4">
-          <FragmentList
-            fragments={section.fragments}
-            setFragmentOrder={setFragmentOrder}
-          />
-        </div>
-      )}
-      {section.fragments.length > 1 && (
-        <div className="flex items-center justify-end rounded m-4 h-8">
-          {section.orderType === "MANUAL" ? (
-            <Button
-              onClick={() => reorderByDate()}
-              minimal
-              css="font-medium  text-darkGray"
-            >
-              Reset to date order
-            </Button>
-          ) : (
-            <span className="font-medium text-darkGray">
-              Sorted by date (auto)
-            </span>
-          )}
+          <FragmentList fragments={section.fragments} />
         </div>
       )}
     </section>

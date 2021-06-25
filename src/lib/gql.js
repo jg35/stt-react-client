@@ -25,7 +25,7 @@ export const FETCH_TIMELINE = gql`
       title
       date
     }
-    stt_fragment(order_by: { date: asc, id: asc }) {
+    stt_fragment {
       id
       content
       date
@@ -43,23 +43,6 @@ export const FETCH_TIMELINE = gql`
     stt_user {
       location
       dob
-      versions {
-        id
-        fragmentOrder
-      }
-    }
-  }
-`;
-
-export const FETCH_USER = gql`
-  query {
-    stt_user {
-      location
-      dob
-      versions {
-        id
-        fragmentOrder
-      }
     }
   }
 `;
@@ -100,16 +83,9 @@ export const UPDATE_FRAGMENT = gql`
 `;
 
 export const DELETE_FRAGMENT = gql`
-  mutation ($id: Int!, $versionId: Int!, $versionData: stt_version_set_input) {
+  mutation ($id: Int!) {
     delete_stt_fragment_by_pk(id: $id) {
       id
-    }
-    update_stt_version_by_pk(
-      pk_columns: { id: $versionId }
-      _set: $versionData
-    ) {
-      id
-      fragmentOrder
     }
   }
 `;
@@ -150,7 +126,6 @@ export const UPDATE_VERSION = gql`
   mutation ($id: Int!, $data: stt_version_set_input) {
     update_stt_version_by_pk(pk_columns: { id: $id }, _set: $data) {
       id
-      fragmentOrder
     }
   }
 `;
