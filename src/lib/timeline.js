@@ -1,4 +1,4 @@
-import { isEqual } from "lodash";
+import { isEqual, flatten } from "lodash";
 import { DateTime } from "luxon";
 
 function getHemisphere(countryCode) {
@@ -111,12 +111,12 @@ export function generateTimeline(
   timespan = "YEAR"
 ) {
   console.time("generateTimeline");
-  const fragmentOrder = user.versions[0].fragmentOrder;
+  const dbOrder = user.versions[0].fragmentOrder;
   const now = DateTime.utc().toISODate();
   const dateOfBirth = DateTime.fromISO(user.dob);
-  // let currentSeason = getCurrentSeason(dob.day, dob.month, dob.year);
   let currentPeriod = getFirstPeriod(dateOfBirth, timespan);
   const timeline = [];
+  let localOrder = [];
 
   while (currentPeriod.toISODate() < now) {
     const nextPeriod = getNextPeriod(currentPeriod, timespan);
@@ -130,28 +130,47 @@ export function generateTimeline(
       title: getPeriodTitle(user.location, currentPeriod, timespan),
       age: getPeriodAge(dateOfBirth, currentPeriod, timespan),
     };
-    timePeriod.fragments = fragments.filter((fragment) => {
+    timePeriod.fragments = fragments.filter((fragment, i) => {
       return (
         fragment.date >= timePeriod.startDate &&
         fragment.date <= timePeriod.endDate
       );
     });
+
+    // Sorting of fragments: start
     const dateOrder = timePeriod.fragments.map((f) => f.id);
+
     timePeriod.fragments.sort((a, b) => {
-      return fragmentOrder[a.id] < fragmentOrder[b.id] ? -1 : 1;
+      const aPos = dbOrder.indexOf(a.id);
+      const bPos = dbOrder.indexOf(b.id);
+      // Fragments with a position come before those that don't
+      if (aPos >= 0 && bPos == -1) {
+        return -1;
+      } else if (aPos === -1 && bPos >= 0) {
+        return 1;
+      } else if (aPos === -1 && bPos === -1) {
+        // If neither have a position, they are sorted by date
+        return a.date < b.date ? -1 : 1;
+      } else {
+        // With both positions present sort by position
+        return aPos < bPos ? -1 : 1;
+      }
     });
+
     const sortOrder = timePeriod.fragments.map((f) => f.id);
+
+    // Now, master order is updated and it contains all fragments. In the UI we can grab the portion of the array
+    localOrder = localOrder.concat(sortOrder);
+
     timePeriod.orderType = "AUTO";
-    if (dateOrder.length && sortOrder.length) {
+    if (dateOrder.length) {
       const diff = !isEqual(dateOrder, sortOrder);
       if (diff) {
         timePeriod.orderType = "MANUAL";
       }
     }
+    // Sorting of fragments: end
 
-    timePeriod.firstFragmentId = timePeriod.fragments[0]
-      ? timePeriod.fragments[0].id
-      : null;
     timePeriod.events = userEvents.filter((event) => {
       return (
         event.date >= timePeriod.startDate && event.date <= timePeriod.endDate
@@ -168,8 +187,8 @@ export function generateTimeline(
   }
 
   const sortedFragments = [...fragments].sort((a, b) => {
-    return fragmentOrder[a.id] < fragmentOrder[b.id] ? -1 : 1;
+    return localOrder.indexOf(a.id) < localOrder.indexOf(b.id) ? -1 : 1;
   });
   console.timeEnd("generateTimeline");
-  return [sortedFragments, timeline];
+  return [sortedFragments, timeline, localOrder];
 }

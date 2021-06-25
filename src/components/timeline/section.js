@@ -5,15 +5,14 @@ import UserEvent from "./userEvent";
 import WorldEvent from "./worldEvent";
 import SectionCaptureActions from "./sectionCaptureActions";
 import Button from "../button";
+import { sortBy } from "lodash";
 
 export default function Section({ section, setFragmentOrder }) {
   const [showActions, setShowActions] = useState(false);
 
   function reorderByDate() {
-    const newOrder = [...section.fragments]
-      .sort((a, b) => a.date - b.date || a.id - b.id)
-      .map((f) => f.id);
-    setFragmentOrder(newOrder, section.firstFragmentId, false);
+    const newOrder = sortBy([...section.fragments], "date").map((f) => f.id);
+    setFragmentOrder(newOrder, false);
   }
   return (
     <section

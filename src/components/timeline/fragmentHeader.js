@@ -4,13 +4,14 @@ import colors from "../../lib/colors";
 import Svg from "../svg";
 import Button from "../button";
 import Menu from "../menu";
-import { useMutation } from "@apollo/client";
-import { UPDATE_FRAGMENT, DELETE_FRAGMENT } from "../../lib/gql";
+import { useMutation, useQuery } from "@apollo/client";
+import { UPDATE_FRAGMENT, DELETE_FRAGMENT, FETCH_USER } from "../../lib/gql";
 import { showEditFragmentForm } from "../../lib/apollo";
 
 export default function FragmentActions({ fragment }) {
   const [updateFragment] = useMutation(UPDATE_FRAGMENT);
   const [deleteFragment] = useMutation(DELETE_FRAGMENT);
+  const { data } = useQuery(FETCH_USER);
   const formatDate = DateTime.fromISO(fragment.date).toFormat("ccc d MMM yyyy");
 
   function setVisibility(hidden) {
@@ -26,7 +27,15 @@ export default function FragmentActions({ fragment }) {
 
   function deleteHandler() {
     deleteFragment({
-      variables: { id: fragment.id },
+      variables: {
+        id: fragment.id,
+        versionId: data.stt_user[0].versions[0].id,
+        versionData: {
+          fragmentOrder: data.stt_user[0].versions[0].fragmentOrder.filter(
+            (fragId) => fragId !== fragment.id
+          ),
+        },
+      },
       update(cache) {
         const normalizedId = cache.identify({
           id: fragment.id,

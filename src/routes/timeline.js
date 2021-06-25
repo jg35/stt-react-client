@@ -28,14 +28,14 @@ export default function Timeline() {
   const [fragments, setFragments] = useState(null);
   const [timeline, setTimeline] = useState(null);
   const [version, setVersion] = useState({});
-  const [order, setOrder] = useState(null);
+  const [fragmentOrder, setFragmentOrder] = useState(null);
 
   const timelinePeriod = uiStateData.uiState.timelinePeriod;
 
   useEffect(() => {
     if (data) {
       const user = data.stt_user[0];
-      const [fragments, timeline] = generateTimeline(
+      const [fragments, timeline, order] = generateTimeline(
         user,
         data.stt_userEvent,
         data.stt_worldEvent,
@@ -45,6 +45,7 @@ export default function Timeline() {
       setTimeline(timeline);
       setFragments(fragments);
       setVersion(user.versions[0]);
+      setFragmentOrder(order);
     }
   }, [data, uiStateData]);
 
@@ -64,40 +65,38 @@ export default function Timeline() {
     []
   );
 
-  function setFragmentOrder(
-    fragmentGroupOrderedIds,
-    firstFragmentId,
-    debounce = true
-  ) {
-    const newOrder = cloneDeep(order || version.fragmentOrder);
-    const offset = newOrder[firstFragmentId];
-    fragmentGroupOrderedIds.forEach((id, index) => {
-      newOrder[id] = index + (offset || 0);
-    });
-    const syncedOrder = {};
-    // Any deleted fragments
-    fragments.forEach((f) => {
-      syncedOrder[f.id] = newOrder[f.id];
-    });
-    setFragments(
-      [...fragments].sort((a, b) =>
-        syncedOrder[a.id] < syncedOrder[b.id] ? -1 : 1
-      )
-    );
+  function setFragmentOrderHandler(sectionOrder, debounce = true) {
+    let deleteCount = sectionOrder.length;
+    let startIndex;
+    for (let i = 0; i < fragmentOrder.length; i++) {
+      if (sectionOrder.includes(fragmentOrder[i])) {
+        startIndex = i;
+        break;
+      }
+    }
+    let newOrder = [...fragmentOrder];
+    newOrder.splice(startIndex, deleteCount, ...sectionOrder);
+
     if (debounce) {
-      sortHandler(syncedOrder, version.id);
+      sortHandler(newOrder, version.id);
     } else {
       updateVersion({
         variables: {
           id: version.id,
           data: {
-            fragmentOrder: syncedOrder,
+            fragmentOrder: newOrder,
           },
         },
       });
     }
 
-    setOrder(syncedOrder);
+    setFragmentOrder(newOrder);
+
+    setFragments(
+      [...fragments].sort((a, b) =>
+        newOrder.indexOf(a.id) < newOrder.indexOf(b.id) ? -1 : 1
+      )
+    );
   }
 
   return (
@@ -123,12 +122,7 @@ export default function Timeline() {
                       <Section
                         key={i}
                         section={timelineSection}
-                        setFragmentOrder={(newOrder) =>
-                          setFragmentOrder(
-                            newOrder,
-                            timelineSection.firstFragmentId
-                          )
-                        }
+                        setFragmentOrder={setFragmentOrderHandler}
                       />
                     ))}
                     <div className="h-10 bg-white sticky bottom-4 w-max flex items-center shadow-lg py-6 px-4 rounded border">
