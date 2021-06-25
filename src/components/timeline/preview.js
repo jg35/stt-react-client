@@ -24,7 +24,6 @@ export default function Preview({ fragments }) {
             <div className="h-full overflow-scroll js-preview-scroll-container px-7">
               {fragments
                 .filter((f) => !f.hidden)
-                .sort((a, b) => (a.order < b.order ? -1 : 1))
                 .map((frag, index) => {
                   if (frag.type === "CHAPTER") {
                     return (

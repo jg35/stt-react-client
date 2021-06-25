@@ -26,10 +26,12 @@ export default function UserEvent({ event }) {
   return (
     <div
       className="bg-lightBlue text-blue rounded-2xl py-1.5 pl-3 pr-2 mr-4 flex items-center cursor-pointer my-2"
+      title="Edit event"
       onClick={() => showEditUserEventForm(event)}
     >
       {event.title}
       <div
+        title="Delete event"
         className="p-1 cursor-pointer"
         onClick={(e) => {
           e.stopPropagation();

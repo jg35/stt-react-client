@@ -80,7 +80,6 @@ export function showCreateFragmentForm(initialValue = {}) {
 }
 
 export function showCreateUserEventForm(initialValue = {}) {
-  console.log(initialValue);
   uiStateVar({
     ...uiStateVar(),
     ...{

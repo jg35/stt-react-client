@@ -5,7 +5,6 @@ export default function EventForm({ item, setItem }) {
   const [jsDate, setJsDate] = useState(null);
 
   useEffect(() => {
-    console.log(item.date);
     setJsDate(item.date ? new Date(item.date) : null);
   }, [item]);
 

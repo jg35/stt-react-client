@@ -9,7 +9,6 @@ export default function TextForm({
   creatingFromQuestion,
   closeModal,
 }) {
-  console.log("creatingFromQuestion", creatingFromQuestion);
   const { data } = useQuery(FETCH_QUESTIONS);
   const [title, setTitle] = useState("");
   const [jsDate, setJsDate] = useState(null);
