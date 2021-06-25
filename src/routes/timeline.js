@@ -13,11 +13,9 @@ import { AuthContext } from "../components/authWrap";
 import ScrollNavigator from "../components/timeline/scrollNavigator";
 
 import { generateTimeline } from "../lib/timeline";
-
-import { uniq } from "lodash";
 import TimePeriodSelector from "../components/timeline/timePeriodSelector";
 
-import Skeleton from "../components/skeleton";
+import TimelineSkeleton from "../components/timeline/timelineSkeleton";
 
 export default function Timeline() {
   const user = useContext(AuthContext);
@@ -49,13 +47,7 @@ export default function Timeline() {
       <div className="flex h-full">
         <div className="flex-1">
           <div className="h-32 shadow rounded-lg bg-white p-4 flex">
-            {fragments ? (
-              <CaptureHeader
-                questionsAnswered={uniq(fragments.map((f) => f.questionId))}
-              />
-            ) : (
-              <Skeleton />
-            )}
+            <CaptureHeader init={!loading} />
           </div>
           <div className="flex py-4" style={{ height: "calc(100% - 8rem)" }}>
             <div className="flex shadow-lg min-w-full rounded-lg bg-white px-3">
@@ -88,14 +80,14 @@ export default function Timeline() {
                   </div>
                 </>
               ) : (
-                <Skeleton />
+                <TimelineSkeleton />
               )}
             </div>
           </div>
         </div>
         <Preview fragments={fragments} />
       </div>
-      <CaptureModal />
+      <CaptureModal init={!loading} />
     </Page>
   );
 }

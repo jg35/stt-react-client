@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { useQuery, useMutation, gql } from "@apollo/client";
-import { FETCH_LOCAL_UI_STATE } from "../../lib/gql";
+import React, { useState, useEffect, useContext } from "react";
+import { useQuery, useLazyQuery, useMutation, gql } from "@apollo/client";
+import { FETCH_LOCAL_UI_STATE, FETCH_CAPTURE_MODAL } from "../../lib/gql";
 import { omit } from "lodash";
 import Button from "../button";
 import { uiStateVar } from "../../lib/apollo";
@@ -15,15 +15,29 @@ import TextForm from "./textForm";
 import ChapterForm from "./chapterForm";
 import EventForm from "./eventForm";
 import PhotoForm from "./photoForm";
+import { AuthContext } from "../authWrap";
 
-export default function CaptureModal() {
+export default function CaptureModal({ init }) {
+  const user = useContext(AuthContext);
   const { data } = useQuery(FETCH_LOCAL_UI_STATE);
+  const [getCaptureModal, { data: captureModal }] = useLazyQuery(
+    FETCH_CAPTURE_MODAL,
+    {
+      variables: { userId: user.id },
+    }
+  );
   const [insertFragment] = useMutation(INSERT_FRAGMENT);
   const [insertUserEvent] = useMutation(INSERT_USER_EVENT);
   const [updateFragment] = useMutation(UPDATE_FRAGMENT);
   const [updateUserEvent] = useMutation(UPDATE_USER_EVENT);
   const { showModal, item, creatingFromQuestion } = data.uiState.capture;
   const [editItem, setEditItem] = useState(null);
+
+  useEffect(() => {
+    if (init && !captureModal) {
+      getCaptureModal();
+    }
+  }, [init]);
 
   useEffect(() => {
     if (item) {
@@ -140,6 +154,7 @@ export default function CaptureModal() {
                 setItem={setEditItem}
                 creatingFromQuestion={creatingFromQuestion}
                 closeModal={closeModal}
+                questions={captureModal.stt_question}
               />
             )}
             {item.type === "EVENT" && (

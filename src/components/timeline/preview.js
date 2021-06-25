@@ -4,6 +4,7 @@ import { getImgIxSrc } from "../../lib/util";
 import { FETCH_LOCAL_UI_STATE } from "../../lib/gql";
 
 import ChapterNavigator from "./chapterNavigator";
+import PreivewSkeleton from "./previewSkeleton";
 
 export default function Preview({ fragments }) {
   const { data } = useQuery(FETCH_LOCAL_UI_STATE);
@@ -21,7 +22,7 @@ export default function Preview({ fragments }) {
       <div className="pl-3 pr-1 pb-4 h-full max-h-full w-2/5 relative">
         <div className="relative h-full" style={{ width: "calc(100% - 20px)" }}>
           <div className="absolute left-0 top-0 shadow-lg rounded-lg bg-white h-full w-full py-10 px-3 z-20">
-            {fragments && (
+            {fragments ? (
               <>
                 <div className="h-full overflow-scroll js-preview-scroll-container px-7">
                   {fragments
@@ -70,6 +71,8 @@ export default function Preview({ fragments }) {
                   chapters={fragments.filter((f) => f.type === "CHAPTER")}
                 />
               </>
+            ) : (
+              <PreivewSkeleton />
             )}
           </div>
           <div className="shadow-lg rounded-lg bg-white h-full w-full p-10 absolute left-3 z-10"></div>

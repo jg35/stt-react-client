@@ -56,13 +56,48 @@ export const FETCH_TIMELINE_VIEW = gql`
   }
 `;
 
-export const FETCH_QUESTIONS = gql`
-  query {
+export const FETCH_CAPTURE_HEADER = gql`
+  query ($userId: String!) {
     stt_question {
       id
       title
       placeholder
       tag
+    }
+    stt_fragment(where: { userId: { _eq: $userId } }) {
+      id
+      content
+      date
+      dateType
+      type
+      mediaUrl
+      mediaCaption
+      questionId
+      hidden
+      complete
+      tag
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+export const FETCH_CAPTURE_MODAL = gql`
+  query ($userId: String!) {
+    stt_fragment(where: { userId: { _eq: $userId } }) {
+      id
+      content
+      date
+      dateType
+      type
+      mediaUrl
+      mediaCaption
+      questionId
+      hidden
+      complete
+      tag
+      createdAt
+      updatedAt
     }
   }
 `;

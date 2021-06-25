@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useQuery } from "@apollo/client";
+import React, { useEffect, useState, useContext } from "react";
+import { useLazyQuery } from "@apollo/client";
 import { uniq } from "lodash";
-import { FETCH_QUESTIONS } from "../../lib/gql";
+import { FETCH_CAPTURE_HEADER } from "../../lib/gql";
 import {
   showCreateFragmentForm,
   showCreateUserEventForm,
@@ -9,17 +9,33 @@ import {
 import Button from "../button";
 import Svg from "../svg";
 import TagSelect from "./tagSelect";
+import CaptureHeaderSkeleton from "./captureHeaderSkeleton";
+import { AuthContext } from "../authWrap";
 
-export default function CaptureHeader({ questionsAnswered }) {
-  const { data } = useQuery(FETCH_QUESTIONS);
+export default function CaptureHeader({ init }) {
+  const user = useContext(AuthContext);
+  const [getCaptureHeader, { loading, data }] = useLazyQuery(
+    FETCH_CAPTURE_HEADER,
+    {
+      variables: { userId: user.id },
+    }
+  );
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [tagOptions, setTagOptions] = useState([]);
   const [questionOptions, setQuestionOptions] = useState([]);
   const [questionTagCategory, setQuestionTagCategory] = useState("all");
   const [questionAnswer, setQuestionAnswer] = useState("");
+  const [questionsAnswered, setQuestionsAnswered] = useState();
+
+  useEffect(() => {
+    if (init && !data) {
+      getCaptureHeader();
+    }
+  }, [init]);
 
   useEffect(() => {
     if (data) {
+      const questionsAnswered = uniq(data.stt_fragment.map((f) => f.id));
       const options = data.stt_question.filter(
         (q) =>
           // Has already answered question
@@ -27,6 +43,7 @@ export default function CaptureHeader({ questionsAnswered }) {
           // Matches current tag category
           (questionTagCategory === "all" || q.tag === questionTagCategory)
       );
+      setQuestionsAnswered(questionsAnswered);
       setQuestionOptions(options);
     }
   }, [questionTagCategory, data]);
@@ -143,5 +160,5 @@ export default function CaptureHeader({ questionsAnswered }) {
       </>
     );
   }
-  return null;
+  return <CaptureHeaderSkeleton />;
 }

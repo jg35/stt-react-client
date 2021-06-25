@@ -1,26 +1,25 @@
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import { useQuery } from "@apollo/client";
-import { FETCH_QUESTIONS } from "../../lib/gql";
 
 export default function TextForm({
   setItem,
   item,
   creatingFromQuestion,
   closeModal,
+  questions,
 }) {
-  const { data } = useQuery(FETCH_QUESTIONS);
   const [title, setTitle] = useState("");
   const [jsDate, setJsDate] = useState(null);
 
   useEffect(() => {
-    if (data && item.questionId) {
-      const question = data.stt_question.find((q) => q.id === item.questionId);
+    if (questions.length && item.questionId) {
+      const question = questions.find((q) => q.id === item.questionId);
       setTitle(question.title);
     } else {
       setTitle(`${item.id ? "Edit" : "New"} memory`);
     }
-  }, [data]);
+  }, [questions]);
 
   useEffect(() => {
     setJsDate(item.date ? new Date(item.date) : null);
