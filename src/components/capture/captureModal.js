@@ -138,6 +138,13 @@ export default function CaptureModal({ init }) {
       <div
         className="animate-fade-in absolute w-full h-full bg-lightestGray left-0 top-0 z-50 bg-opacity-90 flex justify-center items-center"
         onClick={closeModal}
+        onKeyUp={(e) => {
+          console.log(e.key);
+          if (e.key === "Escape") {
+            closeModal();
+          }
+          return true;
+        }}
       >
         <div
           onClick={(e) => e.stopPropagation()}

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
-import { useQuery } from "@apollo/client";
 
 export default function TextForm({
   setItem,
@@ -19,7 +18,7 @@ export default function TextForm({
     } else {
       setTitle(`${item.id ? "Edit" : "New"} memory`);
     }
-  }, [questions]);
+  }, [questions, item]);
 
   useEffect(() => {
     setJsDate(item.date ? new Date(item.date) : null);

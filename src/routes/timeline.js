@@ -40,7 +40,7 @@ export default function Timeline() {
       setTimeline(timeline);
       setFragments(sortedFragments);
     }
-  }, [data]);
+  }, [data, timelinePeriod]);
 
   return (
     <Page>

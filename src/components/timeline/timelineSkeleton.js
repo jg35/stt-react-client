@@ -5,7 +5,7 @@ export default function TimelineSkeleton() {
     );
   }
   return (
-    <div class="w-full overflow-scroll mx-2">
+    <div class="w-full overflow-scroll mx-1">
       <Block />
       <Block />
       <Block />

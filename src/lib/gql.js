@@ -99,6 +99,12 @@ export const FETCH_CAPTURE_MODAL = gql`
       createdAt
       updatedAt
     }
+    stt_question {
+      id
+      title
+      placeholder
+      tag
+    }
   }
 `;
 
