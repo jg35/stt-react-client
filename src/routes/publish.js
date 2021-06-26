@@ -1,7 +1,7 @@
 import React from "react";
 // import { useQuery } from "@apollo/client"
-// import { getTimeline } from "../lib/gql"
-import Page from "../components/page";
+// import { getTimeline } from "~/lib/gql"
+import Page from "~/components/page";
 
 export default function Publish() {
   // const { data } = useQuery(getTimeline())

@@ -1,9 +1,6 @@
 import React from "react";
 import Button from "../button";
-import {
-  showCreateFragmentForm,
-  showCreateUserEventForm,
-} from "../../lib/apollo";
+import { showCreateFragmentForm, showCreateUserEventForm } from "~/lib/apollo";
 
 export default function SectionCaptureActions({ show, date }) {
   if (show) {

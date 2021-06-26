@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useQuery, useLazyQuery, useMutation, gql } from "@apollo/client";
-import { FETCH_LOCAL_UI_STATE, FETCH_CAPTURE_MODAL } from "../../lib/gql";
+import { FETCH_LOCAL_UI_STATE, FETCH_CAPTURE_MODAL } from "~/lib/gql";
 import { omit } from "lodash";
 import Button from "../button";
-import { uiStateVar } from "../../lib/apollo";
+import { uiStateVar } from "~/lib/apollo";
 import {
   INSERT_FRAGMENT,
   INSERT_USER_EVENT,
   UPDATE_FRAGMENT,
   UPDATE_USER_EVENT,
-} from "../../lib/gql";
+} from "~/lib/gql";
 
 import TextForm from "./textForm";
 import ChapterForm from "./chapterForm";
@@ -53,7 +53,6 @@ export default function CaptureModal({ init }) {
   }
 
   function save() {
-    editItem.userId = "DdU0u5ivF2bH4eqEsHTtNgUGCki1";
     switch (editItem.type) {
       case "TEXT":
       case "CHAPTER":
@@ -85,7 +84,13 @@ export default function CaptureModal({ init }) {
         } else {
           updateFragment({
             variables: {
-              data: omit(editItem, ["__typename", "createdAt"]),
+              data: omit(editItem, [
+                "__typename",
+                "id",
+                "userId",
+                "createdAt",
+                "updatedAt",
+              ]),
               id: editItem.id,
             },
           }).then(() => closeModal());

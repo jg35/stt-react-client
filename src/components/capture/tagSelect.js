@@ -2,7 +2,7 @@ import React from "react";
 
 import Menu from "../menu";
 import Svg from "../svg";
-import colors from "../../lib/colors";
+import colors from "~/lib/colors";
 
 function TagSelectOption({ tag, selectTag }) {
   return (

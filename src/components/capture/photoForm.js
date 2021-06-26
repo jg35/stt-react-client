@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import DatePicker from "react-datepicker";
-import { FETCH_LOCAL_AUTH_STATE } from "../../lib/gql";
+import { FETCH_LOCAL_AUTH_STATE } from "~/lib/gql";
 import Uppy from "../uppy";
-import { getImgIxSrc } from "../../lib/util";
+import { getImgIxSrc } from "~/lib/util";
 import Button from "../button";
 
 export default function PhotoForm({ item, setItem }) {

@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "../button";
-import { changeTimelinePeriod } from "../../lib/apollo";
+import { changeTimelinePeriod } from "~/lib/apollo";
 
 export default function TimePeriodSelector({ timelinePeriod }) {
   return (

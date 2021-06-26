@@ -1,7 +1,7 @@
 import { createContext } from "react";
 import { Redirect, useRouteMatch } from "react-router";
 import { useQuery } from "@apollo/client";
-import { FETCH_LOCAL_AUTH_STATE } from "../lib/gql";
+import { FETCH_LOCAL_AUTH_STATE } from "~/lib/gql";
 
 export const AuthContext = createContext({});
 

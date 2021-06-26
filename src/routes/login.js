@@ -1,10 +1,10 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { useQuery } from "@apollo/client";
-import { FETCH_LOCAL_AUTH_STATE } from "../lib/gql";
-import { signInWithGoogle } from "../lib/auth";
+import { FETCH_LOCAL_AUTH_STATE } from "~/lib/gql";
+import { signInWithGoogle } from "~/lib/auth";
 
-import Button from "../components/button";
+import Button from "~/components/button";
 
 export default function Login() {
   const history = useHistory();

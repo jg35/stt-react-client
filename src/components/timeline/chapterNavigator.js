@@ -58,28 +58,26 @@ export default function ScrollNavigator({ chapters }) {
   return (
     <div className="relative flex justify-center items-between w-full h-10 px-3">
       <TimelineMarker />
-      {chapters
-        .sort((a, b) => (a.date < b.date ? -1 : 1))
-        .map((chapter, index) => {
-          if (hoverChapter && hoverChapter === chapter.id) {
-            return (
-              <ChapterWrap chapterId={chapter.id} key={index}>
-                <div
-                  className="bg-white font-medium cursor-pointer text-center border-b-2 py-1/2 px-1 border-black animate-expand"
-                  onClick={() => scrollToFragment(chapter.id)}
-                >
-                  {chapter.content}
-                </div>
-              </ChapterWrap>
-            );
-          } else {
-            return (
-              <ChapterWrap chapterId={chapter.id} key={index}>
-                <Svg name="chapter" />
-              </ChapterWrap>
-            );
-          }
-        })}
+      {chapters.map((chapter, index) => {
+        if (hoverChapter && hoverChapter === chapter.id) {
+          return (
+            <ChapterWrap chapterId={chapter.id} key={index}>
+              <div
+                className="bg-white font-medium cursor-pointer text-center border-b-2 py-1/2 px-1 border-black animate-expand"
+                onClick={() => scrollToFragment(chapter.id)}
+              >
+                {chapter.content}
+              </div>
+            </ChapterWrap>
+          );
+        } else {
+          return (
+            <ChapterWrap chapterId={chapter.id} key={index}>
+              <Svg name="chapter" />
+            </ChapterWrap>
+          );
+        }
+      })}
     </div>
   );
 }

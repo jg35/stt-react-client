@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 import Svg from "../svg";
-import colors from "../../lib/colors";
-import { DELETE_USER_EVENT } from "../../lib/gql";
-import { showEditUserEventForm } from "../../lib/apollo";
+import colors from "~/lib/colors";
+import { DELETE_USER_EVENT } from "~/lib/gql";
+import { showEditUserEventForm } from "~/lib/apollo";
 
 export default function UserEvent({ event }) {
   const [active, setActive] = useState(false);

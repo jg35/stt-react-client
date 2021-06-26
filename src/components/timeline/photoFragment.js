@@ -1,6 +1,6 @@
 import React from "react";
 
-import { getImgIxSrc } from "../../lib/util";
+import { getImgIxSrc } from "~/lib/util";
 
 export default function PhotoFragment({ fragment }) {
   return (

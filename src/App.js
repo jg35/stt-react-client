@@ -3,19 +3,19 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ApolloProvider } from "@apollo/client/react";
 
 import "react-datepicker/dist/react-datepicker.css";
-import "./app.css";
+import "~/app.css";
 
 // Initialise apollo client + firebase
-import client from "./lib/apollo";
-import "./lib/firebase";
+import client from "~/lib/apollo";
+import "~/lib/firebase";
 
-import Timeline from "./routes/timeline";
-import Publish from "./routes/publish";
-import Share from "./routes/share";
-import Settings from "./routes/settings";
-import Login from "./routes/login";
+import Timeline from "~/routes/timeline";
+import Publish from "~/routes/publish";
+import Share from "~/routes/share";
+import Settings from "~/routes/settings";
+import Login from "~/routes/login";
 
-import AuthWrap from "./components/authWrap";
+import AuthWrap from "~/components/authWrap";
 
 export default function App() {
   return (

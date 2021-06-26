@@ -1,8 +1,8 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { useQuery } from "@apollo/client";
-import { FETCH_LOCAL_AUTH_STATE } from "../lib/gql";
-import { signOut } from "../lib/auth";
+import { FETCH_LOCAL_AUTH_STATE } from "~/lib/gql";
+import { signOut } from "~/lib/auth";
 
 import Svg from "./svg";
 import Menu from "./menu";

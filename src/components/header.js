@@ -6,8 +6,8 @@ import Svg from "./svg";
 import Button from "./button";
 
 import MainMenu from "./mainMenu";
-import { FETCH_LOCAL_UI_STATE } from "../lib/gql";
-import { uiStateVar } from "../lib/apollo";
+import { FETCH_LOCAL_UI_STATE } from "~/lib/gql";
+import { uiStateVar } from "~/lib/apollo";
 
 export default function Header({ minimal = false }) {
   const isTimeline = useRouteMatch("/");

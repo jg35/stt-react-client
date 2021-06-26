@@ -1,21 +1,21 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useQuery } from "@apollo/client";
-import { FETCH_TIMELINE_VIEW, FETCH_LOCAL_UI_STATE } from "../lib/gql";
+import { FETCH_TIMELINE_VIEW, FETCH_LOCAL_UI_STATE } from "~/lib/gql";
 
-import Page from "../components/page";
+import Page from "~/components/page";
 
-import CaptureModal from "../components/capture/captureModal";
-import CaptureHeader from "../components/capture/captureHeader";
-import Section from "../components/timeline/section";
-import Preview from "../components/timeline/preview";
-import { AuthContext } from "../components/authWrap";
+import CaptureModal from "~/components/capture/captureModal";
+import CaptureHeader from "~/components/capture/captureHeader";
+import Section from "~/components/timeline/section";
+import Preview from "~/components/timeline/preview";
+import { AuthContext } from "~/components/authWrap";
 
-import ScrollNavigator from "../components/timeline/scrollNavigator";
+import ScrollNavigator from "~/components/timeline/scrollNavigator";
 
-import { generateTimeline } from "../lib/timeline";
-import TimePeriodSelector from "../components/timeline/timePeriodSelector";
+import { generateTimeline } from "~/lib/timeline";
+import TimePeriodSelector from "~/components/timeline/timePeriodSelector";
 
-import TimelineSkeleton from "../components/timeline/timelineSkeleton";
+import TimelineSkeleton from "~/components/timeline/timelineSkeleton";
 
 export default function Timeline() {
   const user = useContext(AuthContext);

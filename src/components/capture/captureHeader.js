@@ -1,11 +1,8 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useLazyQuery } from "@apollo/client";
 import { uniq } from "lodash";
-import { FETCH_CAPTURE_HEADER } from "../../lib/gql";
-import {
-  showCreateFragmentForm,
-  showCreateUserEventForm,
-} from "../../lib/apollo";
+import { FETCH_CAPTURE_HEADER } from "~/lib/gql";
+import { showCreateFragmentForm, showCreateUserEventForm } from "~/lib/apollo";
 import Button from "../button";
 import Svg from "../svg";
 import TagSelect from "./tagSelect";

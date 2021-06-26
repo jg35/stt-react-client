@@ -1,7 +1,7 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { getImgIxSrc } from "../../lib/util";
-import { FETCH_LOCAL_UI_STATE } from "../../lib/gql";
+import { getImgIxSrc } from "~/lib/util";
+import { FETCH_LOCAL_UI_STATE } from "~/lib/gql";
 
 import ChapterNavigator from "./chapterNavigator";
 import PreivewSkeleton from "./previewSkeleton";

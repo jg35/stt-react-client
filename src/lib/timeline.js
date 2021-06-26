@@ -102,9 +102,13 @@ function getPeriodAge(dateOfBirth, currentPeriod) {
   }
 }
 
-function sortFragments(fragments) {
+export function sortByDateOrId(fragments) {
   return [...fragments].sort((a, b) => {
-    if (a.date === b.date) {
+    if (!a.date) {
+      return 1;
+    } else if (!b.date) {
+      return -1;
+    } else if (a.date === b.date) {
       return a.id < b.id ? -1 : 1;
     }
     return a.date < b.date ? -1 : 1;
@@ -121,7 +125,7 @@ export function generateTimeline(
   timespan = "YEAR"
 ) {
   console.time("generateTimeline");
-  const sortedFragments = sortFragments(fragments);
+  const sortedFragments = sortByDateOrId(fragments);
 
   const now = DateTime.utc().toISODate();
   const dateOfBirth = DateTime.fromISO(user.dob);

@@ -1,3 +1,5 @@
+const CracoAlias = require("craco-alias");
+
 // craco.config.js
 module.exports = {
   style: {
@@ -5,4 +7,16 @@ module.exports = {
       plugins: [require("tailwindcss"), require("autoprefixer")],
     },
   },
+  plugins: [
+    {
+      plugin: CracoAlias,
+      options: {
+        source: "options",
+        baseUrl: "./",
+        aliases: {
+          "~": "./src",
+        },
+      },
+    },
+  ],
 };
