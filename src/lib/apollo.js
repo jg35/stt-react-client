@@ -31,16 +31,19 @@ const authMiddleware = new ApolloLink((operation, forward) => {
   return forward(operation);
 });
 
+const uiState = localStorage.getItem("uiState");
 export const authStateVar = makeVar({ status: "loading" });
-export const uiStateVar = makeVar({
-  timelinePeriod: "YEAR",
-  showPreview: false,
-  capture: {
-    showModal: false,
-    item: null,
-    event: null,
-  },
-});
+export const uiStateVar = makeVar(
+  (uiState && JSON.parse(uiState)) || {
+    timelinePeriod: "YEAR",
+    showPreview: false,
+    capture: {
+      showModal: false,
+      item: null,
+      event: null,
+    },
+  }
+);
 
 export default new ApolloClient({
   connectToDevTools: true,
@@ -65,6 +68,15 @@ export default new ApolloClient({
   }),
   link: concat(authMiddleware, httpLink),
 });
+
+export const setUIStateVar = (newValues) => {
+  const updateAuthState = {
+    ...uiStateVar(),
+    ...newValues,
+  };
+  uiStateVar(updateAuthState);
+  localStorage.setItem("uiState", JSON.stringify(updateAuthState));
+};
 
 export function showCreateFragmentForm(initialValue = {}) {
   uiStateVar({
@@ -111,15 +123,6 @@ export function showEditUserEventForm(userEvent) {
         showModal: true,
         item: { ...userEvent, type: "EVENT" },
       },
-    },
-  });
-}
-
-export function changeTimelinePeriod(timelinePeriod) {
-  uiStateVar({
-    ...uiStateVar(),
-    ...{
-      timelinePeriod,
     },
   });
 }

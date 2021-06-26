@@ -7,7 +7,7 @@ import Button from "~/components/button";
 
 import MainMenu from "~/components/mainMenu";
 import { FETCH_LOCAL_UI_STATE } from "~/lib/gql";
-import { uiStateVar } from "~/lib/apollo";
+import { setUIStateVar } from "~/lib/apollo";
 
 export default function Header({ minimal = false }) {
   const isTimeline = useRouteMatch("/");
@@ -48,12 +48,9 @@ export default function Header({ minimal = false }) {
       <div className="flex">
         {isTimeline && isTimeline.isExact && (
           <Button
-            onClick={() => {
-              uiStateVar({
-                ...data.uiState,
-                ...{ showPreview: !data.uiState.showPreview },
-              });
-            }}
+            onClick={() =>
+              setUIStateVar({ showPreview: !data.uiState.showPreview })
+            }
           >
             {`${data.uiState.showPreview ? "Hide" : "Show"} Preview`}
           </Button>
