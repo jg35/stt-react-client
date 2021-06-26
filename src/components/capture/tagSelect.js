@@ -49,11 +49,11 @@ export default function TagSelect({
           />
         </div>
       }
-      sections={[
-        tagOptions.map((t, i) => (
-          <TagSelectOption tag={t} key={i} selectTag={selectTag} />
-        )),
-      ]}
+      items={tagOptions.map((t, i) => {
+        return {
+          component: <TagSelectOption tag={t} key={i} selectTag={selectTag} />,
+        };
+      })}
     />
   );
 }

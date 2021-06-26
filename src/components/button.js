@@ -22,7 +22,7 @@ export default function Button({
     <button
       disabled={disabled}
       type={type}
-      className={`flex rounded px-2 py-1 ${variantCSS} ${css} ${
+      className={`flex items-center rounded px-2 py-1 ${variantCSS} ${css} ${
         CONTENT_IS_TEXT ? "justify-center" : "justify-start"
       }`}
       onClick={onClick}

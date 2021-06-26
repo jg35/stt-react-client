@@ -14,35 +14,41 @@ export default function MainMenu() {
   return (
     <Menu
       toggle={<Svg name="menu" />}
-      sections={[
-        [
-          <NavLink className="fill text-right" to="account">
-            <div className="flex items-center justify-end p-2">
-              <div className="mr-2">
-                <span className="block">{currentUser.displayName}</span>
-                <span className="text-gray">{currentUser.email}</span>
+      items={[
+        {
+          component: (
+            <NavLink className="fill text-right" to="account">
+              <div className="flex items-center justify-end p-2">
+                <div className="mr-2">
+                  <span className="block">{currentUser.displayName}</span>
+                  <span className="text-gray">{currentUser.email}</span>
+                </div>
+                <img
+                  src={currentUser.photoURL}
+                  alt={currentUser.displayName}
+                  className="w-10 h-10 rounded"
+                />
               </div>
-              <img
-                src={currentUser.photoURL}
-                alt={currentUser.displayName}
-                className="w-10 h-10 rounded"
-              />
-            </div>
-          </NavLink>,
-        ],
-        [
-          <NavLink
-            className="fill text-right flex items-center justify-end p-2"
-            to="settings"
-          >
-            Settings <Svg name="settings" css="ml-2" />
-          </NavLink>,
-        ],
-        [
-          <button className="fill text-right p-2" onClick={() => signOut()}>
-            Log out
-          </button>,
-        ],
+            </NavLink>
+          ),
+        },
+        {
+          component: (
+            <NavLink
+              className="fill text-right flex items-center justify-end p-2"
+              to="settings"
+            >
+              Settings <Svg name="settings" css="ml-2" />
+            </NavLink>
+          ),
+        },
+        {
+          component: (
+            <button className="fill text-right p-2" onClick={() => signOut()}>
+              Log out
+            </button>
+          ),
+        },
       ]}
     />
   );

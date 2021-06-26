@@ -4,10 +4,11 @@ import Svg from "~/components/svg";
 import colors from "~/lib/colors";
 import { DELETE_USER_EVENT } from "~/lib/gql";
 import { showEditUserEventForm } from "~/lib/apollo";
+import LoadingSpinner from "~/components/loadingSpinner";
 
 export default function UserEvent({ event }) {
   const [active, setActive] = useState(false);
-  const [removeUserEvent] = useMutation(DELETE_USER_EVENT);
+  const [removeUserEvent, { loading }] = useMutation(DELETE_USER_EVENT);
 
   function deleteHandler() {
     removeUserEvent({
@@ -32,7 +33,7 @@ export default function UserEvent({ event }) {
       {event.title}
       <div
         title="Delete event"
-        className="p-1 cursor-pointer"
+        className="p-1 ml-2 cursor-pointer"
         onClick={(e) => {
           e.stopPropagation();
           deleteHandler();
@@ -40,13 +41,16 @@ export default function UserEvent({ event }) {
         onMouseEnter={() => setActive(true)}
         onMouseLeave={() => setActive(false)}
       >
-        <Svg
-          name="cancel"
-          css="ml-2"
-          width="16"
-          height="16"
-          color={active ? colors.blue : "#bbc6d2"}
-        />
+        {!loading ? (
+          <Svg
+            name="cancel"
+            width="16"
+            height="16"
+            color={active ? colors.blue : "#bbc6d2"}
+          />
+        ) : (
+          <LoadingSpinner color={colors.blue} loading={loading} css="h-4 w-4" />
+        )}
       </div>
     </div>
   );

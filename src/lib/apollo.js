@@ -2,10 +2,11 @@ import {
   ApolloClient,
   HttpLink,
   ApolloLink,
+  from,
   InMemoryCache,
-  concat,
   makeVar,
 } from "@apollo/client";
+// import { asyncMap } from "@apollo/client/utilities";
 
 import { FragmentSchema, EventSchema } from "~/lib/yup";
 
@@ -14,6 +15,7 @@ const httpLink = new HttpLink({
 });
 
 const authMiddleware = new ApolloLink((operation, forward) => {
+  // setUIStateVar({ loading: true }, { persist: false });
   // This gets called every time there is a request
   const authState = authStateVar();
 
@@ -31,11 +33,19 @@ const authMiddleware = new ApolloLink((operation, forward) => {
   return forward(operation);
 });
 
+// const endMiddleware = new ApolloLink((operation, forward) => {
+//   return asyncMap(forward(operation), async (response) => {
+//     setUIStateVar({ loading: false }, { persist: false });
+//     return response;
+//   });
+// });
+
 const uiState = localStorage.getItem("uiState");
 export const authStateVar = makeVar({ status: "loading" });
 export const uiStateVar = makeVar(
-  (uiState && JSON.parse(uiState)) || {
+  (uiState && { ...JSON.parse(uiState), loading: false }) || {
     timelinePeriod: "YEAR",
+    // loading: false,
     showPreview: false,
     capture: {
       showModal: false,
@@ -66,16 +76,18 @@ export default new ApolloClient({
       },
     },
   }),
-  link: concat(authMiddleware, httpLink),
+  link: from([authMiddleware, httpLink]),
 });
 
-export const setUIStateVar = (newValues) => {
+export const setUIStateVar = (newValues, options = { persist: true }) => {
   const updateAuthState = {
     ...uiStateVar(),
     ...newValues,
   };
   uiStateVar(updateAuthState);
-  localStorage.setItem("uiState", JSON.stringify(updateAuthState));
+  if (options.persist) {
+    localStorage.setItem("uiState", JSON.stringify(updateAuthState));
+  }
 };
 
 export function showCreateFragmentForm(initialValue = {}) {

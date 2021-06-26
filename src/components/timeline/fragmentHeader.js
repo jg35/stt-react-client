@@ -7,14 +7,17 @@ import Menu from "~/components/menu";
 import { useMutation } from "@apollo/client";
 import { UPDATE_FRAGMENT, DELETE_FRAGMENT } from "~/lib/gql";
 import { showEditFragmentForm } from "~/lib/apollo";
+import LoadingSpinner from "~/components/loadingSpinner";
 
 export default function FragmentActions({ fragment }) {
-  const [updateFragment] = useMutation(UPDATE_FRAGMENT);
-  const [deleteFragment] = useMutation(DELETE_FRAGMENT);
+  const [updateFragment, { loading: updateFragmentLoading }] =
+    useMutation(UPDATE_FRAGMENT);
+  const [deleteFragment, { loading: deleteFragmentLoading }] =
+    useMutation(DELETE_FRAGMENT);
   const formatDate = DateTime.fromISO(fragment.date).toFormat("ccc d MMM yyyy");
 
   function setVisibility(hidden) {
-    updateFragment({
+    return updateFragment({
       variables: {
         id: fragment.id,
         data: {
@@ -25,7 +28,7 @@ export default function FragmentActions({ fragment }) {
   }
 
   function deleteHandler() {
-    deleteFragment({
+    return deleteFragment({
       variables: {
         id: fragment.id,
       },
@@ -55,58 +58,83 @@ export default function FragmentActions({ fragment }) {
   //   }
   // }
 
-  const sections = [
-    [
-      <Button
-        minimal
-        css="w-full justify-end items-center"
-        onClick={() => showEditFragmentForm(fragment)}
-      >
-        Edit
-        <Svg
-          name="edit"
-          css="ml-2"
-          width="18"
-          height="18"
-          color={colors.gray}
-        />
-      </Button>,
-    ],
-    [
-      <Button
-        minimal
-        css="w-full justify-end items-center"
-        onClick={() => deleteHandler()}
-      >
-        Delete
-        <Svg
-          name="delete"
-          css="ml-2"
-          width="18"
-          height="18"
-          color={colors.gray}
-        />
-      </Button>,
-    ],
+  const items = [
+    {
+      component: (
+        <Button minimal css="w-full justify-between items-center">
+          Edit
+          <Svg
+            name="edit"
+            css="ml-2"
+            width="18"
+            height="18"
+            color={colors.darkGray}
+          />
+        </Button>
+      ),
+      onClick: () => showEditFragmentForm(fragment),
+    },
+    {
+      closeOnClick: false,
+      component: (
+        <Button minimal css="w-full justify-between items-center">
+          {!deleteFragmentLoading && <span>Delete</span>}
+          {deleteFragmentLoading && (
+            <span className="animate-pulse">Deleting...</span>
+          )}
+          {!deleteFragmentLoading && (
+            <Svg
+              name="delete"
+              css="ml-2"
+              width="18"
+              height="18"
+              color={colors.darkGray}
+            />
+          )}
+          <LoadingSpinner loading={deleteFragmentLoading} />
+        </Button>
+      ),
+      onClick: (close) => {
+        deleteHandler().then(() => close());
+      },
+    },
   ];
 
   if (fragment.type !== "CHAPTER") {
-    sections.unshift([
-      <Button
-        minimal
-        css="w-full justify-end items-center"
-        onClick={() => setVisibility(!fragment.hidden)}
-      >
-        {fragment.hidden ? "Make  public" : "Make  private"}
-        <Svg
-          name={fragment.hidden ? "public" : "private"}
-          css="ml-2"
-          width="16"
-          height="16"
-          color={colors.gray}
-        />
-      </Button>,
-    ]);
+    items.unshift({
+      closeOnClick: false,
+      component: (
+        <Button minimal css={`w-full justify-between items-center`}>
+          <div>
+            {!updateFragmentLoading && (
+              <span className="">
+                {fragment.hidden ? "Make public" : "Make private"}
+              </span>
+            )}
+            {updateFragmentLoading && (
+              <span className="animate-pulse">
+                {fragment.hidden ? "Making public..." : "Making private..."}
+              </span>
+            )}
+          </div>
+          <div className="flex">
+            <LoadingSpinner loading={updateFragmentLoading} />
+            {!updateFragmentLoading && (
+              <Svg
+                name={fragment.hidden ? "public" : "private"}
+                css="ml-2"
+                width="16"
+                height="16"
+                color={colors.darkGray}
+              />
+            )}
+          </div>
+        </Button>
+      ),
+      onClick: (close) => {
+        setVisibility(!fragment.hidden).then(() => close());
+      },
+    });
   }
 
   return (
@@ -141,11 +169,12 @@ export default function FragmentActions({ fragment }) {
           </div>
         )}
         <Menu
+          autoClose={false}
           compact
           toggle={
             <Svg name="overflow" color={colors.black} width="24" height="24" />
           }
-          sections={sections}
+          items={items}
         />
       </div>
     </div>
