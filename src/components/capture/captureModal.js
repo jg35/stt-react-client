@@ -32,7 +32,12 @@ export default function CaptureModal() {
   }, [item]);
 
   useEffect(() => {
-    if (item && item.type === "TEXT" && originatesFromQuestion) {
+    if (
+      item &&
+      item.type === "TEXT" &&
+      originatesFromQuestion &&
+      questionData
+    ) {
       const question = questionData.stt_question.find(
         (q) => q.id === item.questionId
       );

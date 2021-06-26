@@ -32,7 +32,9 @@ export default function CaptureHeader({ init }) {
 
   useEffect(() => {
     if (data) {
-      const questionsAnswered = uniq(data.stt_fragment.map((f) => f.id));
+      const questionsAnswered = uniq(
+        data.stt_fragment.filter((f) => !!f.questionId).map((f) => f.questionId)
+      );
       const options = data.stt_question.filter(
         (q) =>
           // Has already answered question
@@ -90,57 +92,51 @@ export default function CaptureHeader({ init }) {
     }
   }, [currentQuestion]);
 
-  function TagSelectOption({ tag }) {
-    return (
-      <div
-        className="text-right uppercase w-full"
-        onClick={() => setQuestionTagCategory(tag)}
-      >
-        {tag}
-      </div>
-    );
-  }
-
-  if (currentQuestion) {
+  if (data) {
     return (
       <>
         <div className="w-full h-full bg-white  rounded p-4 border shadow">
-          <div className="flex justify-between items-center mb-2">
-            <h1 className="text-xl">{currentQuestion.title}</h1>
-            {questionOptions.length > 1 && (
-              <Button minimal onClick={() => shuffleQuestion()}>
-                <Svg name="shuffle" width="20" height="20"></Svg>
-              </Button>
-            )}
-          </div>
-          <div className="flex justify-between items-center">
-            <input
-              value={questionAnswer}
-              onChange={(e) => {
-                setQuestionAnswer(e.target.value);
-                if (e.target.value.length > 15) {
-                  showCreateFragmentForm({
-                    type: "TEXT",
-                    content: e.target.value,
-                    questionId: currentQuestion.id,
-                  });
-                  setTimeout(() => {
-                    setQuestionAnswer("");
-                  }, 500);
-                }
-              }}
-              className="input bg-white p-0 text-lg js-question-text-input"
-              style={{ maxWidth: "none" }}
-              placeholder={currentQuestion.placeholder}
-            />
-            <TagSelect
-              currentTag={questionTagCategory}
-              tagOptions={tagOptions}
-              selectTag={setQuestionTagCategory}
-              minimal
-            />
-          </div>
+          {currentQuestion && (
+            <>
+              <div className="flex justify-between items-center mb-2">
+                <h1 className="text-xl">{currentQuestion.title}</h1>
+                {questionOptions.length > 1 && (
+                  <Button minimal onClick={() => shuffleQuestion()}>
+                    <Svg name="shuffle" width="20" height="20"></Svg>
+                  </Button>
+                )}
+              </div>
+              <div className="flex justify-between items-center">
+                <input
+                  value={questionAnswer}
+                  onChange={(e) => {
+                    setQuestionAnswer(e.target.value);
+                    if (e.target.value.length > 15) {
+                      showCreateFragmentForm({
+                        type: "TEXT",
+                        content: e.target.value,
+                        questionId: currentQuestion.id,
+                      });
+                      setTimeout(() => {
+                        setQuestionAnswer("");
+                      }, 500);
+                    }
+                  }}
+                  className="input bg-white p-0 text-lg js-question-text-input"
+                  style={{ maxWidth: "none" }}
+                  placeholder={currentQuestion.placeholder}
+                />
+                <TagSelect
+                  currentTag={questionTagCategory}
+                  tagOptions={tagOptions}
+                  selectTag={setQuestionTagCategory}
+                  minimal
+                />
+              </div>
+            </>
+          )}
         </div>
+
         <div className="flex">
           <Button
             css="ml-3 items-center font-medium px-4 w-24"

@@ -133,6 +133,7 @@ export const UPDATE_FRAGMENT = gql`
       mediaUrl
       mediaCaption
       tag
+      questionId
     }
   }
 `;
