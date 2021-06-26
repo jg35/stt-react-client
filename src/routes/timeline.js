@@ -1,6 +1,8 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
+import { debounce } from "lodash";
 import { useQuery } from "@apollo/client";
 import { FETCH_TIMELINE_VIEW, FETCH_LOCAL_UI_STATE } from "~/lib/gql";
+import { setUIStateVar } from "~/lib/apollo";
 
 import Page from "~/components/page";
 
@@ -19,6 +21,7 @@ import TimelineSkeleton from "~/components/timeline/timelineSkeleton";
 
 export default function Timeline() {
   const user = useContext(AuthContext);
+  const timelineScrollContainer = useRef(null);
   const { data: uiStateData } = useQuery(FETCH_LOCAL_UI_STATE);
   const { data, loading } = useQuery(FETCH_TIMELINE_VIEW, {
     variables: {
@@ -42,6 +45,15 @@ export default function Timeline() {
     }
   }, [data, timelinePeriod]);
 
+  useEffect(() => {
+    const lastScrollPosition = uiStateData.uiState.timelineScrollPosition;
+    if (!loading && timelineScrollContainer && lastScrollPosition) {
+      setTimeout(() => {
+        timelineScrollContainer.current.scrollTo(0, lastScrollPosition);
+      });
+    }
+  }, [timelineScrollContainer, loading]);
+
   return (
     <Page>
       <div className="flex h-full">
@@ -53,7 +65,15 @@ export default function Timeline() {
             <div className="flex shadow-lg min-w-full rounded-lg bg-white px-3">
               {timeline ? (
                 <>
-                  <main className="flex-1 mr-2 max-h-full overflow-auto js-timeline-scroll-container relative">
+                  <main
+                    ref={timelineScrollContainer}
+                    className="flex-1 mr-2 max-h-full overflow-auto js-timeline-scroll-container relative"
+                    onScroll={debounce((e) => {
+                      setUIStateVar({
+                        timelineScrollPosition: e.target.scrollTop,
+                      });
+                    }, 1000)}
+                  >
                     {timeline.map((timelineSection, i) => (
                       <Section key={i} section={timelineSection} />
                     ))}
