@@ -44,7 +44,11 @@ export default function EventForm({ item, submitForm, closeModal }) {
             />
           </div>
 
-          <FormActions closeModal={closeModal} itemId={values.id} />
+          <FormActions
+            closeModal={closeModal}
+            itemId={values.id}
+            isSubmitting={isSubmitting}
+          />
         </form>
       )}
     </Formik>

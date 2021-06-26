@@ -57,7 +57,11 @@ export default function TextForm({
             />
           </div>
 
-          <FormActions closeModal={closeModal} itemId={values.id} />
+          <FormActions
+            closeModal={closeModal}
+            itemId={values.id}
+            isSubmitting={isSubmitting}
+          />
         </form>
       )}
     </Formik>

@@ -89,7 +89,11 @@ export default function PhotoForm({ item, submitForm, closeModal }) {
             </>
           )}
 
-          <FormActions closeModal={closeModal} itemId={values.id} />
+          <FormActions
+            closeModal={closeModal}
+            itemId={values.id}
+            isSubmitting={isSubmitting}
+          />
         </form>
       )}
     </Formik>

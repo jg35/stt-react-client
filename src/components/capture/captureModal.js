@@ -52,8 +52,9 @@ export default function CaptureModal() {
   }
 
   function saveFragmentHandler(form) {
+    // TODO - error handling
     if (!form.id) {
-      insertFragment({
+      return insertFragment({
         variables: {
           data: form,
         },
@@ -73,11 +74,12 @@ export default function CaptureModal() {
               },
             },
           });
+
           closeModal();
         },
       });
     } else {
-      updateFragment({
+      return updateFragment({
         variables: {
           data: omit(form, [
             "__typename",
@@ -88,7 +90,9 @@ export default function CaptureModal() {
           ]),
           id: form.id,
         },
-      }).then(() => closeModal());
+      }).then(() => {
+        closeModal();
+      });
     }
   }
 
@@ -98,7 +102,7 @@ export default function CaptureModal() {
       date: form.date,
     };
     if (!form.id) {
-      insertUserEvent({
+      return insertUserEvent({
         variables: {
           data,
         },
@@ -122,7 +126,7 @@ export default function CaptureModal() {
         },
       });
     } else {
-      updateUserEvent({
+      return updateUserEvent({
         variables: {
           data,
           id: form.id,

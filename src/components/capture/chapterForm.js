@@ -20,33 +20,43 @@ export default function ChapterForm({ item, submitForm, closeModal }) {
         handleSubmit,
         isSubmitting,
         setFieldValue,
-      }) => (
-        <form onSubmit={handleSubmit}>
-          <input
-            name="content"
-            className="input mb-6"
-            autoFocus
-            placeholder="Enter chapter name"
-            type="text"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.content}
-          />
-
-          <div className="form-control">
-            <label>Date</label>
-            <DatePicker
-              date={values.date}
-              onChange={(newDate) => {
-                setFieldValue("date", newDate.toISOString().replace(/T.*/, ""));
-                setFieldValue("dateType", "MANUAL");
-              }}
+        status,
+      }) => {
+        return (
+          <form onSubmit={handleSubmit}>
+            <input
+              name="content"
+              className="input mb-6"
+              autoFocus
+              placeholder="Enter chapter name"
+              type="text"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.content}
             />
-          </div>
 
-          <FormActions closeModal={closeModal} itemId={values.id} />
-        </form>
-      )}
+            <div className="form-control">
+              <label>Date</label>
+              <DatePicker
+                date={values.date}
+                onChange={(newDate) => {
+                  setFieldValue(
+                    "date",
+                    newDate.toISOString().replace(/T.*/, "")
+                  );
+                  setFieldValue("dateType", "MANUAL");
+                }}
+              />
+            </div>
+
+            <FormActions
+              isSubmitting={isSubmitting}
+              closeModal={closeModal}
+              itemId={values.id}
+            />
+          </form>
+        );
+      }}
     </Formik>
   );
 }
