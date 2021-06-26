@@ -156,7 +156,7 @@ export default function CaptureModal() {
           onClick={(e) => e.stopPropagation()}
           className={`animate-fade-in m-1 shadow-lg rounded-lg bg-white p-4 flex justify-between flex-col pt-10 pl-10 pr-6 ${
             item.type === "TEXT"
-              ? "h-3/6 w-4/5 max-w-5xl"
+              ? "h-4/6 w-4/5 max-w-5xl"
               : "h-auto w-2/5 max-w-2xl"
           }`}
         >

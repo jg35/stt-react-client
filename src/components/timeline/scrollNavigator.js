@@ -7,7 +7,7 @@ export default function ScrollNavigator({ years, dob }) {
   const [visibleYears, setVisibleYears] = useState([]);
 
   useEffect(() => {
-    const minYearHeight = 40;
+    const minYearHeight = 44;
     const containerHeight = window.innerHeight - 208;
     // // accomadate for showing first and last year (2)
     const displayYears = Math.floor(containerHeight / minYearHeight) - 2;
@@ -71,7 +71,7 @@ export default function ScrollNavigator({ years, dob }) {
         } else if (
           // First, last, divisible by 5 or containing fragments
           index === 0 ||
-          index === years.length - 1 ||
+          index === visibleYears.length - 1 ||
           year.year % 5 === 0
         ) {
           return (
