@@ -2,8 +2,8 @@ import * as Yup from "yup";
 
 export const EventSchema = Yup.object().shape({
   id: Yup.number(),
-  title: Yup.string().required(),
-  date: Yup.string().required(),
+  title: Yup.string().required("Give your event a name").default(""),
+  date: Yup.string().required("Add a date"),
   type: Yup.string().default("EVENT"),
 });
 
@@ -11,7 +11,7 @@ export const FragmentSchema = Yup.object().shape({
   id: Yup.number(),
   content: Yup.string()
     .default("")
-    .test("content", "Content is required", function (value) {
+    .test("content", "Add some text", function (value) {
       if (this.parent.type !== "PHOTO") {
         return !!value;
       }
@@ -21,7 +21,7 @@ export const FragmentSchema = Yup.object().shape({
   dateType: Yup.string().default(null).nullable(),
   mediaCaption: Yup.string().default(null).nullable(),
   mediaUrl: Yup.string()
-    .test("mediaUrl", "Media url is required", function (value) {
+    .test("mediaUrl", "Upload a photo to continue", function (value) {
       if (this.parent.type === "PHOTO") {
         return !!value;
       }

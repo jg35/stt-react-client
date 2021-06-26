@@ -7,6 +7,7 @@ export default function Button({
   cta = false,
   css = "",
   type = "button",
+  disabled = false,
 }) {
   let variantCSS = "";
   if (minimal) {
@@ -19,6 +20,7 @@ export default function Button({
   const CONTENT_IS_TEXT = typeof children === "string";
   return (
     <button
+      disabled={disabled}
       type={type}
       className={`flex rounded px-2 py-1 ${variantCSS} ${css} ${
         CONTENT_IS_TEXT ? "justify-center" : "justify-start"

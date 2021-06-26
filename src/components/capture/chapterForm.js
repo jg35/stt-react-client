@@ -3,6 +3,8 @@ import { Formik } from "formik";
 import { FragmentSchema } from "~/lib/yup";
 import DatePicker from "~/components/capture/datepicker";
 import FormActions from "~/components/capture/formActions";
+import FormError from "~/components/formError";
+import FormInput from "~/components/formInput";
 
 export default function ChapterForm({ item, submitForm, closeModal }) {
   return (
@@ -10,6 +12,8 @@ export default function ChapterForm({ item, submitForm, closeModal }) {
       initialValues={FragmentSchema.cast(item)}
       onSubmit={submitForm}
       validationSchema={FragmentSchema}
+      validateOnChange={false}
+      validateOnBlur={false}
     >
       {({
         values,
@@ -24,22 +28,23 @@ export default function ChapterForm({ item, submitForm, closeModal }) {
       }) => {
         return (
           <form onSubmit={handleSubmit}>
-            <input
-              name="content"
-              className="input mb-6"
-              autoFocus
-              placeholder="Enter chapter name"
-              type="text"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.content}
-            />
+            <div className="form-control">
+              <FormInput
+                name="content"
+                placeholder="Enter chapter name"
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+                value={values.content}
+                error={errors.content}
+              />
+              <FormError error={errors.content} />
+            </div>
 
             <div className="form-control">
               <label>Date</label>
               <DatePicker
                 date={values.date}
-                onChange={(newDate) => {
+                handleChange={(newDate) => {
                   setFieldValue(
                     "date",
                     newDate.toISOString().replace(/T.*/, "")

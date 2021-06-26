@@ -9,8 +9,9 @@ export default function FormActions({ closeModal, itemId, isSubmitting }) {
     submitText = !itemId ? "Add" : "Update";
   }
   return (
-    <div className="flex justify-end pt-6 mt-6 border-t border-lightGray">
+    <div className="flex justify-end pt-6 border-t border-lightGray">
       <Button
+        disabled={isSubmitting}
         minimal
         css="text-lg mr-2 w-36 py-2 duration-300"
         onClick={closeModal}

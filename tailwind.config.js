@@ -34,6 +34,8 @@ module.exports = {
       gold: "#8B866E",
       lightGold: "#F3F3F0",
       darkGray: "#666666",
+      red: "#ff6a66",
+      transparent: "transparent",
     },
   },
   variants: {

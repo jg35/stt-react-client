@@ -49,14 +49,27 @@
   }
   .input {
     max-width: 40rem;
-    @apply outline-none bg-lightestGray p-3 rounded w-full text-xl;
+    @apply outline-none bg-lightestGray p-3 rounded w-full text-xl border border-transparent transition duration-200 ease-in;
   }
+
+  .input-error {
+    @apply border border-red transition duration-200 ease-out;
+  }
+
   .form-control {
     @apply mb-6 flex flex-col;
   }
 
   .modal-title {
     @apply text-2xl mb-6;
+  }
+
+  /* Uppy */
+  .uppy-Dashboard-inner {
+    @apply border border-transparent transition duration-200 ease-in;
+  }
+  .uppy-validate-error .uppy-Dashboard-inner {
+    @apply border border-red transition duration-200 ease-out;
   }
 
   /* React datepicker */

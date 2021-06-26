@@ -140,12 +140,12 @@ export default function CaptureModal() {
       <div
         className="animate-fade-in absolute w-full h-full bg-lightestGray left-0 top-0 z-50 bg-opacity-90 flex justify-center items-center"
         onClick={closeModal}
-        onKeyUp={(e) => {
-          if (e.key === "Escape") {
-            closeModal();
-          }
-          return true;
-        }}
+        // onKeyUp={(e) => {
+        //   if (e.key === "Escape") {
+        //     closeModal();
+        //   }
+        //   return true;
+        // }}
       >
         <div
           onClick={(e) => e.stopPropagation()}
@@ -155,7 +155,7 @@ export default function CaptureModal() {
               : "h-auto w-2/5 max-w-2xl"
           }`}
         >
-          <div className="flex-1 flex flex-col relative">
+          <div className="flex-1 flex flex-col relative h-full">
             <h1 className="modal-title">{formTitle}</h1>
             {item.type === "EVENT" && (
               <EventForm

@@ -3,6 +3,7 @@ import { Formik } from "formik";
 import { FragmentSchema } from "~/lib/yup";
 import DatePicker from "~/components/capture/datepicker";
 import FormActions from "~/components/capture/formActions";
+import FormError from "~/components/formError";
 import TextEditor from "~/components/capture/textEditor";
 
 export default function TextForm({
@@ -16,6 +17,8 @@ export default function TextForm({
       initialValues={FragmentSchema.cast(item)}
       onSubmit={submitForm}
       validationSchema={FragmentSchema}
+      validateOnChange={false}
+      validateOnBlur={false}
     >
       {({
         values,
@@ -27,30 +30,38 @@ export default function TextForm({
         isSubmitting,
         setFieldValue,
       }) => (
-        <form onSubmit={handleSubmit}>
-          <TextEditor
-            onChange={(e) => setFieldValue("content", e.target.value)}
-            value={values.content}
-            onKeyUp={(e) => {
-              if (
-                originatesFromQuestion &&
-                e.key === "Backspace" &&
-                e.target.value.length === 0
-              ) {
-                closeModal();
-                const input = document.querySelector(".js-question-text-input");
-                if (input) {
-                  input.focus();
+        <form onSubmit={handleSubmit} className="flex-1 flex flex-col">
+          <div className="form-control h-full">
+            <TextEditor
+              name="content"
+              handleBlur={handleBlur}
+              handleChange={handleChange}
+              value={values.content}
+              error={errors.content}
+              onKeyUp={(e) => {
+                if (
+                  originatesFromQuestion &&
+                  e.key === "Backspace" &&
+                  e.target.value.length === 0
+                ) {
+                  closeModal();
+                  const input = document.querySelector(
+                    ".js-question-text-input"
+                  );
+                  if (input) {
+                    input.focus();
+                  }
                 }
-              }
-              return;
-            }}
-          />
+                return;
+              }}
+            />
+            <FormError error={errors.content} />
+          </div>
           <div className="form-control">
             <label>Date</label>
             <DatePicker
               date={values.date}
-              onChange={(newDate) => {
+              handleChange={(newDate) => {
                 setFieldValue("date", newDate.toISOString().replace(/T.*/, ""));
                 setFieldValue("dateType", "MANUAL");
               }}

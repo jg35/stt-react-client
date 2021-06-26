@@ -93,6 +93,15 @@ export const FETCH_QUESTIONS = gql`
   }
 `;
 
+export const FETCH_USER = gql`
+  query ($userId: String!) {
+    stt_user_by_pk(id: $userId) {
+      location
+      dob
+    }
+  }
+`;
+
 export const INSERT_FRAGMENT = gql`
   mutation ($data: stt_fragment_insert_input!) {
     insert_stt_fragment_one(object: $data) {

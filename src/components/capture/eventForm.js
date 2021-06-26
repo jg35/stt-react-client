@@ -1,6 +1,9 @@
 import React from "react";
 import { Formik } from "formik";
+
 import { EventSchema } from "~/lib/yup";
+import FormError from "~/components/formError";
+import FormInput from "~/components/formInput";
 import DatePicker from "~/components/capture/datepicker";
 import FormActions from "~/components/capture/formActions";
 
@@ -10,6 +13,8 @@ export default function EventForm({ item, submitForm, closeModal }) {
       initialValues={EventSchema.cast(item)}
       onSubmit={submitForm}
       validationSchema={EventSchema}
+      validateOnChange={false}
+      validateOnBlur={false}
     >
       {({
         values,
@@ -22,26 +27,29 @@ export default function EventForm({ item, submitForm, closeModal }) {
         setFieldValue,
       }) => (
         <form onSubmit={handleSubmit}>
-          <input
-            name="title"
-            className="input mb-6"
-            autoFocus
-            placeholder="Enter event title"
-            type="text"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.title}
-          />
+          <div className="form-control">
+            <FormInput
+              name="title"
+              placeholder="Enter event title"
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+              value={values.title}
+              error={errors.title}
+            />
+            <FormError error={errors.title} />
+          </div>
 
           <div className="form-control">
             <label>Date</label>
             <DatePicker
+              error={errors.date}
               date={values.date}
-              onChange={(newDate) => {
+              handleChange={(newDate) => {
                 setFieldValue("date", newDate.toISOString().replace(/T.*/, ""));
                 setFieldValue("dateType", "MANUAL");
               }}
             />
+            <FormError error={errors.date} />
           </div>
 
           <FormActions
