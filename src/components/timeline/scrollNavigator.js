@@ -1,7 +1,28 @@
 import React, { useState } from "react";
+import { useEffect } from "react/cjs/react.development";
+import { DateTime } from "luxon";
 
-export default function ScrollNavigator({ years }) {
+export default function ScrollNavigator({ years, dob }) {
   const [hoverYear, setHoverYear] = useState(null);
+  const [visibleYears, setVisibleYears] = useState([]);
+
+  useEffect(() => {
+    const minYearHeight = 40;
+    const containerHeight = window.innerHeight - 208;
+    // // accomadate for showing first and last year (2)
+    const displayYears = Math.floor(containerHeight / minYearHeight) - 2;
+    const age = new Date().getFullYear() - DateTime.fromISO(dob).year;
+    const nYears = Math.floor(age / displayYears);
+    const sliceYears = [...years];
+    const firstYear = sliceYears.shift();
+    const lastYear = sliceYears.pop();
+
+    setVisibleYears([
+      firstYear,
+      ...sliceYears.filter((year, i) => i % nYears === 0),
+      lastYear,
+    ]);
+  }, [years]);
 
   function YearWrap({ year, children }) {
     return (
@@ -33,9 +54,9 @@ export default function ScrollNavigator({ years }) {
     );
   }
   return (
-    <div className="relative flex flex-col justify-between items-center w-full h-full py-3 ">
+    <div className="relative flex flex-col justify-between items-center w-full h-full py-3">
       <TimelineMarker />
-      {years.map((year, index) => {
+      {visibleYears.map((year, index) => {
         if (hoverYear && hoverYear === year.year) {
           return (
             <YearWrap key={index}>

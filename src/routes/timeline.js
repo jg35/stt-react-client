@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
-import { debounce } from "lodash";
+import { debounce, values } from "lodash";
 import { useQuery } from "@apollo/client";
+
 import { FETCH_TIMELINE_VIEW, FETCH_LOCAL_UI_STATE } from "~/lib/gql";
 import { setUIStateVar } from "~/lib/apollo";
 
@@ -81,8 +82,9 @@ export default function Timeline() {
                   </main>
                   <div className="w-12 max-h-full">
                     <ScrollNavigator
-                      years={(() => {
-                        const years = timeline.reduce((years, season) => {
+                      dob={data.stt_user_by_pk.dob}
+                      years={values(
+                        timeline.reduce((years, season) => {
                           if (!years[season.year]) {
                             years[season.year] = {
                               year: season.year,
@@ -93,9 +95,8 @@ export default function Timeline() {
                             years[season.year].fragments = true;
                           }
                           return years;
-                        }, {});
-                        return Object.keys(years).map((k) => years[k]);
-                      })()}
+                        }, {})
+                      )}
                     />
                   </div>
                 </>

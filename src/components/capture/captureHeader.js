@@ -46,7 +46,14 @@ export default function CaptureHeader({ init }) {
   }, [questionTagCategory, data]);
 
   useEffect(() => {
-    shuffleQuestion();
+    if (
+      currentQuestion &&
+      !questionOptions.find((q) => q.id === currentQuestion.id)
+    ) {
+      shuffleQuestion();
+    } else if (!currentQuestion) {
+      shuffleQuestion();
+    }
   }, [questionOptions]);
 
   function shuffleQuestion() {

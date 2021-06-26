@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { debounce } from "lodash";
 
 import FragmentList from "~/components/timeline/fragmentList";
 import UserEvent from "~/components/timeline/userEvent";
@@ -14,7 +15,8 @@ export default function Section({ section }) {
       className="py-8 pr-6 border-b border-lightGray"
       data-season-year={section.year}
       onMouseEnter={() => setShowActions(true)}
-      onMouseLeave={() => setShowActions(false)}
+      onMouseOver={debounce(() => setShowActions(true), 200)}
+      onMouseLeave={debounce(() => setShowActions(false), 200)}
     >
       <header className="flex justify-between h-10 pl-2">
         <div className="flex items-center">

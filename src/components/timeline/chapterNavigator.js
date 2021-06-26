@@ -57,7 +57,7 @@ export default function ScrollNavigator({ chapters }) {
   }
   return (
     <div className="relative flex justify-center items-between w-full h-10 px-3">
-      <TimelineMarker />
+      {chapters.length > 0 && <TimelineMarker />}
       {chapters.map((chapter, index) => {
         if (hoverChapter && hoverChapter === chapter.id) {
           return (
