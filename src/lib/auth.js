@@ -1,5 +1,5 @@
 import firebase from "firebase";
-import { authStateVar } from "./apollo";
+import { authStateVar } from "~/lib/apollo";
 const provider = new firebase.auth.GoogleAuthProvider();
 
 export const signInWithGoogle = async () => {

@@ -1,40 +1,52 @@
-import React, { useState, useEffect } from "react";
-import DatePicker from "react-datepicker";
+import React from "react";
+import { Formik } from "formik";
+import { FragmentSchema } from "~/lib/yup";
+import DatePicker from "~/components/capture/datepicker";
+import FormActions from "~/components/capture/formActions";
 
-export default function ChapterForm({ item, setItem }) {
-  const [jsDate, setJsDate] = useState(null);
-
-  useEffect(() => {
-    setJsDate(item.date ? new Date(item.date) : null);
-  }, [item]);
-
+export default function ChapterForm({ item, submitForm, closeModal }) {
   return (
-    <div>
-      <h1 className="modal-title">
-        {item.id ? "Edit chapter" : "Add chapter"}
-      </h1>
-      <input
-        className="input mb-6"
-        autoFocus
-        placeholder="Enter chapter name"
-        type="text"
-        onChange={(e) => setItem({ ...item, content: e.target.value })}
-        value={item.content}
-      />
-      <div className="form-control">
-        <label>Date</label>
-        <DatePicker
-          selected={jsDate}
-          onChange={(newDate) => {
-            setJsDate(newDate);
-            setItem({
-              ...item,
-              date: newDate.toISOString().replace(/T.*/, ""),
-              dateType: "MANUAL",
-            });
-          }}
-        />
-      </div>
-    </div>
+    <Formik
+      initialValues={FragmentSchema.cast(item)}
+      onSubmit={submitForm}
+      validationSchema={FragmentSchema}
+    >
+      {({
+        values,
+        errors,
+        touched,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        isSubmitting,
+        setFieldValue,
+      }) => (
+        <form onSubmit={handleSubmit}>
+          <input
+            name="content"
+            className="input mb-6"
+            autoFocus
+            placeholder="Enter chapter name"
+            type="text"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.content}
+          />
+
+          <div className="form-control">
+            <label>Date</label>
+            <DatePicker
+              date={values.date}
+              onChange={(newDate) => {
+                setFieldValue("date", newDate.toISOString().replace(/T.*/, ""));
+                setFieldValue("dateType", "MANUAL");
+              }}
+            />
+          </div>
+
+          <FormActions closeModal={closeModal} itemId={values.id} />
+        </form>
+      )}
+    </Formik>
   );
 }

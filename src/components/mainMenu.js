@@ -4,8 +4,8 @@ import { useQuery } from "@apollo/client";
 import { FETCH_LOCAL_AUTH_STATE } from "~/lib/gql";
 import { signOut } from "~/lib/auth";
 
-import Svg from "./svg";
-import Menu from "./menu";
+import Svg from "~/components/svg";
+import Menu from "~/components/menu";
 
 export default function MainMenu() {
   const { data } = useQuery(FETCH_LOCAL_AUTH_STATE);

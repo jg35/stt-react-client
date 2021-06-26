@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 
-import FragmentList from "./fragmentList";
-import UserEvent from "./userEvent";
-import WorldEvent from "./worldEvent";
-import SectionCaptureActions from "./sectionCaptureActions";
-import Button from "../button";
+import FragmentList from "~/components/timeline/fragmentList";
+import UserEvent from "~/components/timeline/userEvent";
+import WorldEvent from "~/components/timeline/worldEvent";
+import SectionCaptureActions from "~/components/timeline/sectionCaptureActions";
+import Button from "~/components/button";
 
 export default function Section({ section }) {
   const [showActions, setShowActions] = useState(false);

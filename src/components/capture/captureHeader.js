@@ -3,11 +3,11 @@ import { useLazyQuery } from "@apollo/client";
 import { uniq } from "lodash";
 import { FETCH_CAPTURE_HEADER } from "~/lib/gql";
 import { showCreateFragmentForm, showCreateUserEventForm } from "~/lib/apollo";
-import Button from "../button";
-import Svg from "../svg";
-import TagSelect from "./tagSelect";
-import CaptureHeaderSkeleton from "./captureHeaderSkeleton";
-import { AuthContext } from "../authWrap";
+import Button from "~/components/button";
+import Svg from "~/components/svg";
+import TagSelect from "~/components/capture/tagSelect";
+import CaptureHeaderSkeleton from "~/components/capture/captureHeaderSkeleton";
+import { AuthContext } from "~/components/authWrap";
 
 export default function CaptureHeader({ init }) {
   const user = useContext(AuthContext);

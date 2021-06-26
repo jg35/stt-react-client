@@ -1,6 +1,6 @@
 import firebase from "firebase";
 import axios from "axios";
-import { authStateVar } from "./apollo";
+import { authStateVar } from "~/lib/apollo";
 
 firebase.initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,

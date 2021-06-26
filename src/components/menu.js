@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Button from "./button";
+import Button from "~/components/button";
 
 export default function Menu({ sections, toggle, compact = false }) {
   const [open, setOpen] = useState(false);

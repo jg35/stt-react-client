@@ -37,13 +37,13 @@ const dashboardUppy = new Uppy({
   },
 });
 
-export default function UppyDashboard({ userId, item, setItem }) {
+export default function UppyDashboard({ userId, mediaUrl, onChange }) {
   useEffect(() => {
     dashboardUppy.use(AwsS3, UPPY_AWS_CONFIG(userId));
     // dashboardUppy.use(ImageEditor, { target: Dashboard })
     dashboardUppy.on("upload-success", (file, response) => {
       console.log(file, response);
-      setItem({ ...item, mediaUrl: response.uploadURL });
+      onChange(response.uploadURL);
     });
     return () => {
       dashboardUppy.close();

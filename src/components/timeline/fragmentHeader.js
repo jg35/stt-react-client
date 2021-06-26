@@ -1,9 +1,9 @@
 import React from "react";
 import { DateTime } from "luxon";
 import colors from "~/lib/colors";
-import Svg from "../svg";
-import Button from "../button";
-import Menu from "../menu";
+import Svg from "~/components/svg";
+import Button from "~/components/button";
+import Menu from "~/components/menu";
 import { useMutation } from "@apollo/client";
 import { UPDATE_FRAGMENT, DELETE_FRAGMENT } from "~/lib/gql";
 import { showEditFragmentForm } from "~/lib/apollo";

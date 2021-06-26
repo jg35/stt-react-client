@@ -7,7 +7,7 @@ import {
   makeVar,
 } from "@apollo/client";
 
-import { fragment, userEvent } from "./models";
+import { FragmentSchema, EventSchema } from "~/lib/yup";
 
 const httpLink = new HttpLink({
   uri: process.env.REACT_APP_HASURA_GRAPHQL_API_URL,
@@ -34,7 +34,7 @@ const authMiddleware = new ApolloLink((operation, forward) => {
 export const authStateVar = makeVar({ status: "loading" });
 export const uiStateVar = makeVar({
   timelinePeriod: "YEAR",
-  showPreview: true,
+  showPreview: false,
   capture: {
     showModal: false,
     item: null,
@@ -71,9 +71,9 @@ export function showCreateFragmentForm(initialValue = {}) {
     ...uiStateVar(),
     ...{
       capture: {
-        creatingFromQuestion: !!initialValue.questionId,
+        originatesFromQuestion: !!initialValue.questionId,
         showModal: true,
-        item: fragment(initialValue),
+        item: FragmentSchema.cast(initialValue),
       },
     },
   });
@@ -85,7 +85,7 @@ export function showCreateUserEventForm(initialValue = {}) {
     ...{
       capture: {
         showModal: true,
-        item: userEvent(initialValue),
+        item: EventSchema.cast(initialValue),
       },
     },
   });

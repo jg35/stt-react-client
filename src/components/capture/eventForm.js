@@ -1,43 +1,52 @@
-import React, { useEffect, useState } from "react";
-import DatePicker from "react-datepicker";
+import React from "react";
+import { Formik } from "formik";
+import { EventSchema } from "~/lib/yup";
+import DatePicker from "~/components/capture/datepicker";
+import FormActions from "~/components/capture/formActions";
 
-export default function EventForm({ item, setItem }) {
-  const [jsDate, setJsDate] = useState(null);
-
-  useEffect(() => {
-    setJsDate(item.date ? new Date(item.date) : null);
-  }, [item]);
-
-  // TODO - datepicker earliest date should be DOB, latest date should be current date
+export default function EventForm({ item, submitForm, closeModal }) {
   return (
-    item && (
-      <>
-        <h1 className="modal-title">{item.id ? "Edit event" : "Add event"}</h1>
-        <div className="form-control">
-          <label>Name</label>
+    <Formik
+      initialValues={EventSchema.cast(item)}
+      onSubmit={submitForm}
+      validationSchema={EventSchema}
+    >
+      {({
+        values,
+        errors,
+        touched,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        isSubmitting,
+        setFieldValue,
+      }) => (
+        <form onSubmit={handleSubmit}>
           <input
+            name="title"
+            className="input mb-6"
             autoFocus
-            placeholder="Enter event name"
-            className="input mb-6 mt-1"
+            placeholder="Enter event title"
             type="text"
-            onChange={(e) => setItem({ ...item, title: e.target.value })}
-            value={item.title}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.title}
           />
-        </div>
-        <div className="form-control">
-          <label>Date</label>
-          <DatePicker
-            selected={jsDate}
-            onChange={(newDate) => {
-              setJsDate(newDate);
-              setItem({
-                ...item,
-                date: newDate.toISOString().replace(/T.*/, ""),
-              });
-            }}
-          />
-        </div>
-      </>
-    )
+
+          <div className="form-control">
+            <label>Date</label>
+            <DatePicker
+              date={values.date}
+              onChange={(newDate) => {
+                setFieldValue("date", newDate.toISOString().replace(/T.*/, ""));
+                setFieldValue("dateType", "MANUAL");
+              }}
+            />
+          </div>
+
+          <FormActions closeModal={closeModal} itemId={values.id} />
+        </form>
+      )}
+    </Formik>
   );
 }

@@ -2,10 +2,10 @@ import React from "react";
 import { useRouteMatch } from "react-router";
 import { useQuery } from "@apollo/client";
 import { NavLink } from "react-router-dom";
-import Svg from "./svg";
-import Button from "./button";
+import Svg from "~/components/svg";
+import Button from "~/components/button";
 
-import MainMenu from "./mainMenu";
+import MainMenu from "~/components/mainMenu";
 import { FETCH_LOCAL_UI_STATE } from "~/lib/gql";
 import { uiStateVar } from "~/lib/apollo";
 

@@ -82,23 +82,8 @@ export const FETCH_CAPTURE_HEADER = gql`
   }
 `;
 
-export const FETCH_CAPTURE_MODAL = gql`
-  query ($userId: String!) {
-    stt_fragment(where: { userId: { _eq: $userId } }) {
-      id
-      content
-      date
-      dateType
-      type
-      mediaUrl
-      mediaCaption
-      questionId
-      hidden
-      complete
-      tag
-      createdAt
-      updatedAt
-    }
+export const FETCH_QUESTIONS = gql`
+  query {
     stt_question {
       id
       title

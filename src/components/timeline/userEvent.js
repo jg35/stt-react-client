@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
-import Svg from "../svg";
+import Svg from "~/components/svg";
 import colors from "~/lib/colors";
 import { DELETE_USER_EVENT } from "~/lib/gql";
 import { showEditUserEventForm } from "~/lib/apollo";
