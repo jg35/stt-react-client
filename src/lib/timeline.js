@@ -124,7 +124,6 @@ export function generateTimeline(
   },
   timespan = "YEAR"
 ) {
-  console.time("generateTimeline");
   const sortedFragments = sortByDateOrId(fragments);
 
   const now = DateTime.utc().toISODate();
@@ -135,7 +134,9 @@ export function generateTimeline(
   while (currentPeriod.toISODate() < now) {
     const nextPeriod = getNextPeriod(currentPeriod, timespan);
     const timePeriod = {
-      startDate: currentPeriod.toISODate(),
+      startDate: !timeline.length
+        ? dateOfBirth.toISODate()
+        : currentPeriod.toISODate(),
       endDate: nextPeriod.minus({ seconds: 1 }).toISODate(),
       year:
         timespan === "SEASON" && currentPeriod.month === 12
@@ -166,6 +167,5 @@ export function generateTimeline(
     currentPeriod = nextPeriod;
   }
 
-  console.timeEnd("generateTimeline");
   return [timeline, sortedFragments];
 }
