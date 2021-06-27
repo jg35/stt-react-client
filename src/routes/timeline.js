@@ -19,6 +19,7 @@ import { generateTimeline } from "~/lib/timeline";
 import TimePeriodSelector from "~/components/timeline/timePeriodSelector";
 
 import TimelineSkeleton from "~/components/timeline/timelineSkeleton";
+import OrphanedFragments from "~/components/timeline/orphanedFragments";
 
 export default function Timeline() {
   const user = useContext(AuthContext);
@@ -32,17 +33,20 @@ export default function Timeline() {
 
   const [fragments, setFragments] = useState(null);
   const [timeline, setTimeline] = useState(null);
+  const [orphanedFragments, setOrphanedFragments] = useState([]);
 
   const timelinePeriod = uiStateData.uiState.timelinePeriod;
 
   useEffect(() => {
     if (data) {
-      const [timeline, sortedFragments] = generateTimeline(
+      const [timeline, sortedFragments, undatedMemories] = generateTimeline(
         data,
         timelinePeriod
       );
+
       setTimeline(timeline);
       setFragments(sortedFragments);
+      setOrphanedFragments(undatedMemories);
     }
   }, [data, timelinePeriod]);
 
@@ -50,7 +54,9 @@ export default function Timeline() {
     const lastScrollPosition = uiStateData.uiState.timelineScrollPosition;
     if (!loading && timelineScrollContainer && lastScrollPosition) {
       setTimeout(() => {
-        timelineScrollContainer.current.scrollTo(0, lastScrollPosition);
+        if (timelineScrollContainer.current) {
+          timelineScrollContainer.current.scrollTo(0, lastScrollPosition);
+        }
       });
     }
   }, [timelineScrollContainer, loading]);
@@ -78,7 +84,13 @@ export default function Timeline() {
                     {timeline.map((timelineSection, i) => (
                       <Section key={i} section={timelineSection} />
                     ))}
-                    <TimePeriodSelector timelinePeriod={timelinePeriod} />
+                    {orphanedFragments.length > 0 && (
+                      <OrphanedFragments fragments={orphanedFragments} />
+                    )}
+                    <TimePeriodSelector
+                      timelinePeriod={timelinePeriod}
+                      orphanCount={orphanedFragments.length}
+                    />
                   </main>
                   <div className="w-12 max-h-full">
                     <ScrollNavigator

@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
+import Button from "~/components/button";
 
-export default function Menu({ items, toggle, compact = false }) {
+export default function Menu({
+  items,
+  toggle,
+  compact = false,
+  minimal = true,
+}) {
   const [open, setOpen] = useState(false);
   const [menuItems, setMenuItems] = useState([]);
 
@@ -36,7 +42,9 @@ export default function Menu({ items, toggle, compact = false }) {
   }
   return (
     <div className="relative">
-      <button onClick={() => setOpen(!open)}>{toggle}</button>
+      <Button minimal={minimal} onClick={() => setOpen(!open)}>
+        {toggle}
+      </Button>
       {open && (
         <div
           style={{ boxShadow: "0 0 6px 2px rgba(0, 0, 0, 0.1)" }}

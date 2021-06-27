@@ -13,6 +13,7 @@ export default function MainMenu() {
 
   return (
     <Menu
+      minimal={false}
       toggle={<Svg name="menu" />}
       items={[
         {

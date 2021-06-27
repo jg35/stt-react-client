@@ -5,7 +5,6 @@ import FragmentList from "~/components/timeline/fragmentList";
 import UserEvent from "~/components/timeline/userEvent";
 import WorldEvent from "~/components/timeline/worldEvent";
 import SectionCaptureActions from "~/components/timeline/sectionCaptureActions";
-import Button from "~/components/button";
 
 export default function Section({ section }) {
   const [showActions, setShowActions] = useState(false);
@@ -19,10 +18,10 @@ export default function Section({ section }) {
       onMouseLeave={debounce(() => setShowActions(false), 200)}
     >
       <header className="flex justify-between h-10 pl-2">
-        <div className="flex items-center">
+        <div className="mb-4 flex items-center">
           <h1 className="text-lg font-medium">
             {section.title} &middot;{" "}
-            <span className="text-gray">{section.age}</span>
+            <span className="text-gray mb-4">{section.age}</span>
           </h1>
         </div>
         <div>

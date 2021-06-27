@@ -52,6 +52,9 @@ export const uiStateVar = makeVar(
       item: null,
       event: null,
     },
+    displayMessages: {
+      ORPHANED_FRAGMENTS: true,
+    },
   }
 );
 

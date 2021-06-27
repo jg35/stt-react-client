@@ -14,7 +14,9 @@ export default function FragmentActions({ fragment }) {
     useMutation(UPDATE_FRAGMENT);
   const [deleteFragment, { loading: deleteFragmentLoading }] =
     useMutation(DELETE_FRAGMENT);
-  const formatDate = DateTime.fromISO(fragment.date).toFormat("ccc d MMM yyyy");
+  const renderDate = fragment.date
+    ? DateTime.fromISO(fragment.date).toFormat("ccc d MMM yyyy")
+    : null;
 
   function setVisibility(hidden) {
     return updateFragment({
@@ -139,15 +141,10 @@ export default function FragmentActions({ fragment }) {
 
   return (
     <div className="pb-2 flex justify-between items-center">
-      <div className="text-sm text-center text-gray font-bold flex cursor-default">
-        <Svg
-          css="cursor-default mr-2"
-          name="calendar"
-          width="18"
-          height="18"
-          color={colors.gray}
-        />
-        {`${formatDate}${fragment.dateType === "AUTO" ? " (auto)" : ""}`}
+      <div className="text-center text-gray text-sm font-medium flex cursor-default">
+        {renderDate
+          ? `${renderDate}${fragment.dateType === "AUTO" ? " (auto)" : ""}`
+          : "No date"}
       </div>
       <div style={{ minWidth: "4rem" }}></div>
       <div

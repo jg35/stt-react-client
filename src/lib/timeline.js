@@ -130,6 +130,7 @@ export function generateTimeline(
   const dateOfBirth = DateTime.fromISO(user.dob);
   let currentPeriod = getFirstPeriod(dateOfBirth, timespan);
   const timeline = [];
+  const inTimeline = [];
 
   while (currentPeriod.toISODate() < now) {
     const nextPeriod = getNextPeriod(currentPeriod, timespan);
@@ -146,10 +147,14 @@ export function generateTimeline(
       age: getPeriodAge(dateOfBirth, currentPeriod, timespan),
     };
     timePeriod.fragments = sortedFragments.filter((fragment, i) => {
-      return (
+      if (
         fragment.date >= timePeriod.startDate &&
         fragment.date <= timePeriod.endDate
-      );
+      ) {
+        inTimeline.push(fragment.id);
+        return true;
+      }
+      return false;
     });
 
     timePeriod.events = userEvents.filter((event) => {
@@ -167,5 +172,14 @@ export function generateTimeline(
     currentPeriod = nextPeriod;
   }
 
-  return [timeline, sortedFragments];
+  // Also includes any with dates out of bounds of date of birth
+  const undatedMemories = sortedFragments.filter(
+    (f) => !inTimeline.includes(f.id)
+  );
+
+  return [
+    timeline,
+    sortedFragments.filter((f) => inTimeline.includes(f.id)),
+    undatedMemories,
+  ];
 }
