@@ -5,6 +5,7 @@ import { DateTime } from "luxon";
 export default function ScrollNavigator({ years, dob }) {
   const [hoverYear, setHoverYear] = useState(null);
   const [visibleYears, setVisibleYears] = useState([]);
+  const [hightlightN, setHightlightN] = useState(5);
 
   useEffect(() => {
     const minYearHeight = 44;
@@ -12,6 +13,7 @@ export default function ScrollNavigator({ years, dob }) {
     // // accomadate for showing first and last year (2)
     const displayYears = Math.floor(containerHeight / minYearHeight) - 2;
     const age = new Date().getFullYear() - DateTime.fromISO(dob).year;
+    setHightlightN(5);
     const nYears = Math.floor(age / displayYears);
     const sliceYears = [...years];
     const firstYear = sliceYears.shift();
@@ -72,7 +74,7 @@ export default function ScrollNavigator({ years, dob }) {
           // First, last, divisible by 5 or containing fragments
           index === 0 ||
           index === visibleYears.length - 1 ||
-          year.year % 5 === 0
+          year.year % hightlightN === 0
         ) {
           return (
             <YearWrap year={year.year} key={index}>

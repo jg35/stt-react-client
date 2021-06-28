@@ -1,0 +1,31 @@
+import countries from "~/lib/countries";
+
+export default function CountrySelect({
+  handleChange,
+  handleBlur,
+  value,
+  error,
+  name,
+}) {
+  return (
+    <select
+      name={name}
+      className={`input select ${error && "input-error"} appearance-none`}
+      autoFocus
+      onChange={handleChange}
+      onBlur={handleBlur}
+      value={value}
+    >
+      <option disabled selected value="">
+        Select a country
+      </option>
+      {countries.map((o, i) => (
+        <option value={o.id} key={i}>
+          {o.flag}
+          &nbsp;
+          {o.name}
+        </option>
+      ))}
+    </select>
+  );
+}

@@ -122,6 +122,15 @@ export const INSERT_FRAGMENT = gql`
   }
 `;
 
+export const UPDATE_USER = gql`
+  mutation ($id: String!, $data: stt_user_set_input) {
+    update_stt_user_by_pk(pk_columns: { id: $id }, _set: $data) {
+      location
+      dob
+    }
+  }
+`;
+
 export const UPDATE_FRAGMENT = gql`
   mutation ($id: Int!, $data: stt_fragment_set_input) {
     update_stt_fragment_by_pk(pk_columns: { id: $id }, _set: $data) {

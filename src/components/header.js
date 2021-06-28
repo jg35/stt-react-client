@@ -30,17 +30,17 @@ export default function Header({ minimal = false }) {
             </NavLink>
             <NavLink
               className="nav-link"
+              to="/edit"
+              activeClassName="nav-link-active"
+            >
+              Edit
+            </NavLink>
+            <NavLink
+              className="nav-link"
               to="/publish"
               activeClassName="nav-link-active"
             >
               Publish
-            </NavLink>
-            <NavLink
-              className="nav-link"
-              to="/share"
-              activeClassName="nav-link-active"
-            >
-              Share
             </NavLink>
           </nav>
         )}

@@ -52,6 +52,10 @@
     @apply outline-none bg-lightestGray p-3 rounded w-full text-xl border border-transparent transition duration-200 ease-in;
   }
 
+  .select option:disabled {
+    @apply text-lightGray;
+  }
+
   .input-error {
     @apply border border-red transition duration-200 ease-out;
   }
@@ -78,41 +82,41 @@
     @apply outline-none bg-lightestGray p-3 rounded w-full text-xl;
   }
 
-  #page .react-datepicker {
+  #root .react-datepicker {
     @apply shadow-xl border-none;
   }
 
-  #page .react-datepicker__navigation-icon::before {
+  #root .react-datepicker__navigation-icon::before {
     top: 12px;
   }
 
-  #page .react-datepicker__header {
+  #root .react-datepicker__header {
     @apply bg-lightestGray pb-4 shadow border-none;
   }
 
-  #page .react-datepicker__day--selected,
-  #page .react-datepicker__day--in-selecting-range,
-  #page .react-datepicker__day--in-range,
-  #page .react-datepicker__month-text--selected,
-  #page .react-datepicker__month-text--in-selecting-range,
-  #page .react-datepicker__month-text--in-range,
-  #page .react-datepicker__quarter-text--selected,
-  #page .react-datepicker__quarter-text--in-selecting-range,
-  #page .react-datepicker__quarter-text--in-range,
-  #page .react-datepicker__year-text--selected,
-  #page .react-datepicker__year-text--in-selecting-range,
-  #page .react-datepicker__year-text--in-range {
+  #root .react-datepicker__day--selected,
+  #root .react-datepicker__day--in-selecting-range,
+  #root .react-datepicker__day--in-range,
+  #root .react-datepicker__month-text--selected,
+  #root .react-datepicker__month-text--in-selecting-range,
+  #root .react-datepicker__month-text--in-range,
+  #root .react-datepicker__quarter-text--selected,
+  #root .react-datepicker__quarter-text--in-selecting-range,
+  #root .react-datepicker__quarter-text--in-range,
+  #root .react-datepicker__year-text--selected,
+  #root .react-datepicker__year-text--in-selecting-range,
+  #root .react-datepicker__year-text--in-range {
     @apply bg-black font-medium;
   }
 
-  #page .react-datepicker__day--keyboard-selected,
-  #page .react-datepicker__month-text--keyboard-selected,
-  #page .react-datepicker__quarter-text--keyboard-selected,
-  #page .react-datepicker__year-text--keyboard-selected {
+  #root .react-datepicker__day--keyboard-selected,
+  #root .react-datepicker__month-text--keyboard-selected,
+  #root .react-datepicker__quarter-text--keyboard-selected,
+  #root .react-datepicker__year-text--keyboard-selected {
     @apply bg-darkGray font-medium;
   }
 
-  #page .react-datepicker__triangle {
+  #root .react-datepicker__triangle {
     @apply hidden;
   }
 }

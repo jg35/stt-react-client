@@ -33,3 +33,8 @@ export const FragmentSchema = Yup.object().shape({
   tag: Yup.string().default(null).nullable(),
   type: Yup.string().required(),
 });
+
+export const OnboardingSchema = Yup.object().shape({
+  location: Yup.string().default("").required("Location is required"),
+  dob: Yup.string().default("").required("Date of birth is required"),
+});

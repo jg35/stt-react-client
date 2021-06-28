@@ -3,11 +3,11 @@ import React from "react";
 // import { getTimeline } from "~/lib/gql"
 import Page from "~/components/page";
 
-export default function Share() {
+export default function Edit() {
   // const { data } = useQuery(getTimeline())
   return (
     <Page>
-      <h1>I am the share page</h1>
+      <h1>I am the edit page</h1>
     </Page>
   );
 }

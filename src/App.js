@@ -11,11 +11,12 @@ import "~/lib/firebase";
 
 import Timeline from "~/routes/timeline";
 import Publish from "~/routes/publish";
-import Share from "~/routes/share";
+import Edit from "~/routes/edit";
 import Settings from "~/routes/settings";
 import Login from "~/routes/login";
 
 import AuthWrap from "~/components/authWrap";
+import OnboardingCheck from "~/components/onboardingCheck";
 
 export default function App() {
   return (
@@ -29,14 +30,16 @@ export default function App() {
             <Route path="/publish">
               <Publish />
             </Route>
-            <Route path="/share">
-              <Share />
+            <Route path="/edit">
+              <Edit />
             </Route>
             <Route path="/login">
               <Login />
             </Route>
             <Route path="/">
-              <Timeline />
+              <OnboardingCheck>
+                <Timeline />
+              </OnboardingCheck>
             </Route>
           </Switch>
         </AuthWrap>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import ReactDatePicker from "react-datepicker";
-import { useQuery } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 import { FETCH_USER } from "~/lib/gql";
 import { AuthContext } from "~/components/authWrap";
 export default function DatePicker({
@@ -8,15 +8,25 @@ export default function DatePicker({
   date,
   error,
   placeholder = "Enter a date",
+  minDate,
+  maxDate = null,
 }) {
   const user = useContext(AuthContext);
-  const { data } = useQuery(FETCH_USER, { variables: { userId: user.id } });
-  const [startDate, setStartDate] = useState(null);
+  const [getUser, { data }] = useLazyQuery(FETCH_USER, {
+    variables: { userId: user.id },
+  });
+  const [firstDate, setFirstDate] = useState(minDate);
   const [jsDate, setJsDate] = useState(null);
 
   useEffect(() => {
-    if (data.stt_user_by_pk) {
-      setStartDate(new Date(data.stt_user_by_pk.dob));
+    if (!firstDate) {
+      getUser();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (data && data.stt_user_by_pk) {
+      setFirstDate(new Date(data.stt_user_by_pk.dob));
     }
   }, [data]);
 
@@ -28,10 +38,10 @@ export default function DatePicker({
 
   return (
     <ReactDatePicker
+      minDate={firstDate}
+      maxDate={maxDate || new Date()}
       startDate={jsDate || new Date()}
-      minDate={startDate}
       dateFormat="dd/MM/yyyy"
-      maxDate={new Date()}
       placeholderText={placeholder}
       className={error && "border border-red rounded"}
       selected={jsDate}

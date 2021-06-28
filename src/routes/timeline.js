@@ -70,7 +70,7 @@ export default function Timeline() {
           </div>
           <div className="flex py-4" style={{ height: "calc(100% - 8rem)" }}>
             <div className="flex shadow-lg min-w-full rounded-lg bg-white px-3">
-              {timeline ? (
+              {data && data.stt_user_by_pk.dob && timeline ? (
                 <>
                   <main
                     ref={timelineScrollContainer}

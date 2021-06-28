@@ -20,7 +20,7 @@ function getDateOfBirthSeason(day, month, currentYear) {
 function getFirstPeriod(dateOfBirth, timespan) {
   switch (timespan) {
     case "MONTH":
-      return dateOfBirth.startOf("day");
+      return dateOfBirth.startOf("month");
     case "YEAR":
       return DateTime.utc(dateOfBirth.year);
     case "SEASON":
@@ -127,7 +127,7 @@ export function generateTimeline(
   const sortedFragments = sortByDateOrId(fragments);
 
   const now = DateTime.utc().toISODate();
-  const dateOfBirth = DateTime.fromISO(user.dob);
+  const dateOfBirth = DateTime.fromISO(user.dob || "1970-01-01");
   let currentPeriod = getFirstPeriod(dateOfBirth, timespan);
   const timeline = [];
   const inTimeline = [];
