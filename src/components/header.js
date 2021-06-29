@@ -14,13 +14,23 @@ export default function Header({ minimal = false }) {
   const { data } = useQuery(FETCH_LOCAL_UI_STATE);
   return (
     <header className="flex justify-between items-center py-4">
-      <div className="flex">
-        <NavLink to="/" exact>
+      <div
+        className="flex"
+        data-tutorial-anchor={[1, 2]}
+        data-tutorial-anchor-before={false}
+      >
+        <NavLink
+          to="/"
+          data-tutorial-callout={[1]}
+          data-tutorial-callout-before={false}
+        >
           <Svg name="logo" />
         </NavLink>
         {!minimal && (
           <nav className="ml-3">
             <NavLink
+              data-tutorial-callout={[2]}
+              data-tutorial-callout-before={false}
               className="nav-link"
               to="/"
               activeClassName="nav-link-active"

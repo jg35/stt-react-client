@@ -16,7 +16,7 @@ import Settings from "~/routes/settings";
 import Login from "~/routes/login";
 
 import AuthWrap from "~/components/authWrap";
-import OnboardingCheck from "~/components/onboardingCheck";
+import Onboarding from "~/components/onboarding";
 
 export default function App() {
   return (
@@ -37,11 +37,10 @@ export default function App() {
               <Login />
             </Route>
             <Route path="/">
-              <OnboardingCheck>
-                <Timeline />
-              </OnboardingCheck>
+              <Timeline />
             </Route>
           </Switch>
+          <Onboarding />
         </AuthWrap>
       </Router>
     </ApolloProvider>

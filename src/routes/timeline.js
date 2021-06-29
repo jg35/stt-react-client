@@ -82,7 +82,7 @@ export default function Timeline() {
                     }, 1000)}
                   >
                     {timeline.map((timelineSection, i) => (
-                      <Section key={i} section={timelineSection} />
+                      <Section key={i} section={timelineSection} index={i} />
                     ))}
                     {orphanedFragments.length > 0 && (
                       <OrphanedFragments fragments={orphanedFragments} />

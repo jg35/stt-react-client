@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useRouteMatch } from "react-router-dom";
 import { Formik } from "formik";
 import { useQuery, useMutation } from "@apollo/client/react";
 import { FETCH_USER, UPDATE_USER } from "~/lib/gql";
@@ -10,12 +10,19 @@ import DatePicker from "~/components/capture/datepicker";
 import { OnboardingSchema } from "~/lib/yup";
 import SubmitButton from "~/components/submitButton";
 
+import Tutorial from "~/components/tutorial";
+
 function hasOnboardingFields(user) {
   return user.location && user.dob;
 }
 
-export default function OnboardingCheck({ children }) {
+function hasCompletedTutorial(user) {
+  return user.tutorialComplete;
+}
+
+export default function Onboarding() {
   const history = useHistory();
+  let isLogin = useRouteMatch("/login");
   const user = useContext(AuthContext);
   const { data, loading } = useQuery(FETCH_USER, {
     variables: { userId: user.id },
@@ -29,15 +36,15 @@ export default function OnboardingCheck({ children }) {
     );
   }
 
-  if (loading) {
+  if (
+    isLogin ||
+    loading ||
+    (hasOnboardingFields(data.stt_user_by_pk) &&
+      hasCompletedTutorial(data.stt_user_by_pk))
+  ) {
     return null;
-  }
-  if (data && hasOnboardingFields(data.stt_user_by_pk)) {
-    return children;
-  }
-  return (
-    <>
-      {children}
+  } else if (!hasOnboardingFields(data.stt_user_by_pk)) {
+    return (
       <div className="min-h-full w-screen absolute top-0 left-0 flex justify-center items-center z-40">
         <div className="min-h-full min-w-full bg-lightestGray absolute top-0 left-0 opacity-80 z-40"></div>
         <div className="w-3/6 h-3/6 bg-white shadow-xl rounded-xl p-10 z-50">
@@ -112,6 +119,8 @@ export default function OnboardingCheck({ children }) {
           </div>
         </div>
       </div>
-    </>
-  );
+    );
+  } else if (!hasCompletedTutorial(data.stt_user_by_pk)) {
+    return <Tutorial />;
+  }
 }

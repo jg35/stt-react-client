@@ -6,7 +6,7 @@ import UserEvent from "~/components/timeline/userEvent";
 import WorldEvent from "~/components/timeline/worldEvent";
 import SectionCaptureActions from "~/components/timeline/sectionCaptureActions";
 
-export default function Section({ section }) {
+export default function Section({ section, index }) {
   const [showActions, setShowActions] = useState(false);
 
   return (
@@ -24,8 +24,15 @@ export default function Section({ section }) {
             <span className="text-gray mb-4">{section.age}</span>
           </h1>
         </div>
-        <div>
-          <SectionCaptureActions show={showActions} date={section.startDate} />
+        <div
+          data-tutorial-anchor={index === 0 && [3, 4, 7]}
+          data-tutorial-anchor-before
+        >
+          <SectionCaptureActions
+            show={showActions}
+            date={section.startDate}
+            index={index}
+          />
         </div>
       </header>
       {(section.events.length || section.worldEvents.length) > 0 && (

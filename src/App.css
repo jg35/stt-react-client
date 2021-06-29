@@ -119,4 +119,37 @@
   #root .react-datepicker__triangle {
     @apply hidden;
   }
+
+  .widget-callout::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 2px;
+    height: 10px;
+    background-color: black;
+  }
+  .widget-callout::before {
+    content: "";
+    position: absolute;
+    top: 6px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 8px 5px 0 5px;
+    border-color: black transparent transparent transparent;
+  }
+
+  .widget-callout--before::after {
+    left: calc(100% - 2px);
+  }
+  .widget-callout--after::after {
+    left: 0;
+  }
+
+  .widget-callout--before::before {
+    left: calc(100% - 6px);
+  }
+  .widget-callout--after::before {
+    left: -4px;
+  }
 }

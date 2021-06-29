@@ -145,14 +145,10 @@ export default function CaptureModal() {
       <div
         className="animate-fade-in absolute w-full h-full bg-lightestGray left-0 top-0 z-50 bg-opacity-90 flex justify-center items-center"
         onClick={closeModal}
-        // onKeyUp={(e) => {
-        //   if (e.key === "Escape") {
-        //     closeModal();
-        //   }
-        //   return true;
-        // }}
       >
         <div
+          data-tutorial-anchor={[5, 6]}
+          data-tutorial-callout={[5, 6]}
           onClick={(e) => e.stopPropagation()}
           className={`animate-fade-in m-1 shadow-lg rounded-lg bg-white p-4 flex justify-between flex-col pt-10 pl-10 pr-6 ${
             item.type === "TEXT"

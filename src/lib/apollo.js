@@ -55,6 +55,9 @@ export const uiStateVar = makeVar(
     displayMessages: {
       ORPHANED_FRAGMENTS: true,
     },
+    tutorialProgress: {
+      step: 1,
+    },
   }
 );
 

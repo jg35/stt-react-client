@@ -8,12 +8,15 @@ export default function Button({
   css = "",
   type = "button",
   disabled = false,
+  bigCta = false,
 }) {
   let variantCSS = "";
   if (minimal) {
     variantCSS = "bg-transparent hover:bg-lightestGray";
   } else if (cta) {
     variantCSS = "bg-lightGray hover:bg-black hover:text-white";
+  } else if (bigCta) {
+    variantCSS = "bg-black text-white";
   } else {
     variantCSS = "bg-lightestGray hover:bg-lightGray";
   }
