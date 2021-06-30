@@ -120,6 +120,11 @@
     @apply hidden;
   }
 
+  .widget-callout {
+    height: 2px;
+    background-color: black;
+  }
+
   .widget-callout::after {
     content: "";
     position: absolute;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { DateTime } from "luxon";
 import colors from "~/lib/colors";
 import Svg from "~/components/svg";
@@ -6,10 +6,12 @@ import Button from "~/components/button";
 import Menu from "~/components/menu";
 import { useMutation } from "@apollo/client";
 import { UPDATE_FRAGMENT, DELETE_FRAGMENT } from "~/lib/gql";
-import { showEditFragmentForm } from "~/lib/apollo";
+import { makeEditFragmentForm } from "~/lib/uiManager";
 import LoadingSpinner from "~/components/loadingSpinner";
+import { UIContext } from "~/app";
 
 export default function FragmentActions({ fragment }) {
+  const { updateUiState } = useContext(UIContext);
   const [updateFragment, { loading: updateFragmentLoading }] =
     useMutation(UPDATE_FRAGMENT);
   const [deleteFragment, { loading: deleteFragmentLoading }] =
@@ -74,7 +76,7 @@ export default function FragmentActions({ fragment }) {
           />
         </Button>
       ),
-      onClick: () => showEditFragmentForm(fragment),
+      onClick: () => updateUiState(makeEditFragmentForm(fragment)),
     },
     {
       closeOnClick: false,

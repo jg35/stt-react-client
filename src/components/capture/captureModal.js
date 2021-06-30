@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useQuery, useMutation, useLazyQuery, gql } from "@apollo/client";
-import { FETCH_LOCAL_UI_STATE, FETCH_QUESTIONS } from "~/lib/gql";
+import React, { useEffect, useState, useContext } from "react";
+import { useMutation, useLazyQuery, gql } from "@apollo/client";
+import { FETCH_QUESTIONS } from "~/lib/gql";
 import { lowerCase, omit } from "lodash";
-import { uiStateVar } from "~/lib/apollo";
 import {
   INSERT_FRAGMENT,
   INSERT_USER_EVENT,
@@ -14,6 +13,7 @@ import ChapterForm from "~/components/capture/chapterForm";
 import PhotoForm from "~/components/capture/photoForm";
 import TextForm from "~/components/capture/textForm";
 import EventForm from "~/components/capture/eventForm";
+import { UIContext } from "~/app";
 
 export default function CaptureModal() {
   const [formTitle, setFormTitle] = useState("");
@@ -22,8 +22,8 @@ export default function CaptureModal() {
   const [updateFragment] = useMutation(UPDATE_FRAGMENT);
   const [updateUserEvent] = useMutation(UPDATE_USER_EVENT);
   const [getQuestions, { data: questionData }] = useLazyQuery(FETCH_QUESTIONS);
-  const { data } = useQuery(FETCH_LOCAL_UI_STATE);
-  const { showModal, item, originatesFromQuestion } = data.uiState.capture;
+  const { uiState, updateUiState } = useContext(UIContext);
+  const { showModal, item, originatesFromQuestion } = uiState.capture;
 
   useEffect(() => {
     if (originatesFromQuestion) {
@@ -50,10 +50,7 @@ export default function CaptureModal() {
   }, [questionData, item]);
 
   function closeModal() {
-    uiStateVar({
-      ...data.uiState,
-      ...{ capture: { showModal: false, item: null } },
-    });
+    updateUiState({ capture: { showModal: false, item: null } });
   }
 
   function saveFragmentHandler(form) {
@@ -147,8 +144,7 @@ export default function CaptureModal() {
         onClick={closeModal}
       >
         <div
-          data-tutorial-anchor={[5, 6]}
-          data-tutorial-callout={[5, 6]}
+          id="capture-form-wrapper"
           onClick={(e) => e.stopPropagation()}
           className={`animate-fade-in m-1 shadow-lg rounded-lg bg-white p-4 flex justify-between flex-col pt-10 pl-10 pr-6 ${
             item.type === "TEXT"

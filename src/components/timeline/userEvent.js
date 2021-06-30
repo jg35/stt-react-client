@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useMutation } from "@apollo/client";
 import Svg from "~/components/svg";
 import colors from "~/lib/colors";
 import { DELETE_USER_EVENT } from "~/lib/gql";
-import { showEditUserEventForm } from "~/lib/apollo";
+import { makeEditUserEventForm } from "~/lib/uiManager";
 import LoadingSpinner from "~/components/loadingSpinner";
+import { UIContext } from "~/app";
 
 export default function UserEvent({ event }) {
+  const { updateUiState } = useContext(UIContext);
   const [active, setActive] = useState(false);
   const [removeUserEvent, { loading }] = useMutation(DELETE_USER_EVENT);
 
@@ -28,7 +30,7 @@ export default function UserEvent({ event }) {
     <div
       className="bg-lightBlue text-blue rounded-2xl py-1.5 pl-3 pr-2 mr-4 flex items-center cursor-pointer my-2"
       title="Edit event"
-      onClick={() => showEditUserEventForm(event)}
+      onClick={() => updateUiState(makeEditUserEventForm(event))}
     >
       {event.title}
       <div

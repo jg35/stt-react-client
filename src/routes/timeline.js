@@ -2,8 +2,7 @@ import React, { useEffect, useState, useContext, useRef } from "react";
 import { debounce, values } from "lodash";
 import { useQuery } from "@apollo/client";
 
-import { FETCH_TIMELINE_VIEW, FETCH_LOCAL_UI_STATE } from "~/lib/gql";
-import { setUIStateVar } from "~/lib/apollo";
+import { FETCH_TIMELINE_VIEW } from "~/lib/gql";
 
 import Page from "~/components/page";
 
@@ -20,11 +19,12 @@ import TimePeriodSelector from "~/components/timeline/timePeriodSelector";
 
 import TimelineSkeleton from "~/components/timeline/timelineSkeleton";
 import OrphanedFragments from "~/components/timeline/orphanedFragments";
+import { UIContext } from "~/app";
 
 export default function Timeline() {
   const user = useContext(AuthContext);
+  const { uiState, updateUiState } = useContext(UIContext);
   const timelineScrollContainer = useRef(null);
-  const { data: uiStateData } = useQuery(FETCH_LOCAL_UI_STATE);
   const { data, loading } = useQuery(FETCH_TIMELINE_VIEW, {
     variables: {
       userId: user.id,
@@ -35,7 +35,7 @@ export default function Timeline() {
   const [timeline, setTimeline] = useState(null);
   const [orphanedFragments, setOrphanedFragments] = useState([]);
 
-  const timelinePeriod = uiStateData.uiState.timelinePeriod;
+  const timelinePeriod = uiState.timelinePeriod;
 
   useEffect(() => {
     if (data) {
@@ -51,7 +51,7 @@ export default function Timeline() {
   }, [data, timelinePeriod]);
 
   useEffect(() => {
-    const lastScrollPosition = uiStateData.uiState.timelineScrollPosition;
+    const lastScrollPosition = uiState.timelineScrollPosition;
     if (!loading && timelineScrollContainer && lastScrollPosition) {
       setTimeout(() => {
         if (timelineScrollContainer.current) {
@@ -76,7 +76,7 @@ export default function Timeline() {
                     ref={timelineScrollContainer}
                     className="flex-1 mr-2 max-h-full overflow-auto js-timeline-scroll-container relative"
                     onScroll={debounce((e) => {
-                      setUIStateVar({
+                      updateUiState({
                         timelineScrollPosition: e.target.scrollTop,
                       });
                     }, 1000)}

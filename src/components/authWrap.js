@@ -3,7 +3,11 @@ import { Redirect, useRouteMatch } from "react-router";
 import { useQuery } from "@apollo/client";
 import { FETCH_LOCAL_AUTH_STATE } from "~/lib/gql";
 
-export const AuthContext = createContext({});
+export const AuthContext = createContext({
+  bro: () => {
+    console.log("brooooooo");
+  },
+});
 
 export default function AuthWrap({ children }) {
   let isLogin = useRouteMatch("/login");

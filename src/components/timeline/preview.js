@@ -1,15 +1,13 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useContext } from "react";
 import { debounce } from "lodash";
-import { useQuery } from "@apollo/client";
-import { setUIStateVar } from "~/lib/apollo";
 import { getImgIxSrc } from "~/lib/util";
-import { FETCH_LOCAL_UI_STATE } from "~/lib/gql";
 import ChapterNavigator from "~/components/timeline/chapterNavigator";
 import PreivewSkeleton from "~/components/timeline/previewSkeleton";
+import { UIContext } from "~/app";
 
 export default function Preview({ fragments }) {
   const previewScrollContainer = useRef(null);
-  const { data } = useQuery(FETCH_LOCAL_UI_STATE);
+  const { uiState, updateUiState } = useContext(UIContext);
   function scrollToFragment(fragmentId) {
     const match = document.querySelector(
       `div[data-fragment-id="${fragmentId}"]`
@@ -20,7 +18,7 @@ export default function Preview({ fragments }) {
   }
 
   useEffect(() => {
-    const lastScrollPosition = data.uiState.previewScrollPosition;
+    const lastScrollPosition = uiState.previewScrollPosition;
     if (fragments && previewScrollContainer && lastScrollPosition) {
       setTimeout(() => {
         previewScrollContainer.current.scrollTo(0, lastScrollPosition);
@@ -28,7 +26,7 @@ export default function Preview({ fragments }) {
     }
   }, [previewScrollContainer, fragments]);
 
-  if (data.uiState.showPreview) {
+  if (uiState.showPreview) {
     return (
       <div className="pl-3 pr-1 pb-4 h-full max-h-full w-2/5 relative">
         <div className="relative h-full" style={{ width: "calc(100% - 20px)" }}>
@@ -39,7 +37,7 @@ export default function Preview({ fragments }) {
                   ref={previewScrollContainer}
                   className="h-full overflow-scroll js-preview-scroll-container px-7"
                   onScroll={debounce((e) => {
-                    setUIStateVar({
+                    updateUiState({
                       previewScrollPosition: e.target.scrollTop,
                     });
                   }, 1000)}

@@ -2,15 +2,20 @@ import React, { useEffect, useState, useContext } from "react";
 import { useLazyQuery } from "@apollo/client";
 import { uniq } from "lodash";
 import { FETCH_CAPTURE_HEADER } from "~/lib/gql";
-import { showCreateFragmentForm, showCreateUserEventForm } from "~/lib/apollo";
 import Button from "~/components/button";
 import Svg from "~/components/svg";
 import TagSelect from "~/components/capture/tagSelect";
 import CaptureHeaderSkeleton from "~/components/capture/captureHeaderSkeleton";
 import { AuthContext } from "~/components/authWrap";
+import { UIContext } from "~/app";
+import {
+  makeCreateFragmentForm,
+  makeCreateUserEventForm,
+} from "~/lib/uiManager";
 
 export default function CaptureHeader({ init }) {
   const user = useContext(AuthContext);
+  const { updateUiState } = useContext(UIContext);
   const [getCaptureHeader, { loading, data }] = useLazyQuery(
     FETCH_CAPTURE_HEADER,
     {
@@ -112,11 +117,13 @@ export default function CaptureHeader({ init }) {
                   onChange={(e) => {
                     setQuestionAnswer(e.target.value);
                     if (e.target.value.length > 15) {
-                      showCreateFragmentForm({
-                        type: "TEXT",
-                        content: e.target.value,
-                        questionId: currentQuestion.id,
-                      });
+                      updateUiState(
+                        makeCreateFragmentForm({
+                          type: "TEXT",
+                          content: e.target.value,
+                          questionId: currentQuestion.id,
+                        })
+                      );
                       setTimeout(() => {
                         setQuestionAnswer("");
                       }, 500);
@@ -140,19 +147,23 @@ export default function CaptureHeader({ init }) {
         <div className="flex">
           <Button
             css="ml-3 items-center font-medium px-4 w-24"
-            onClick={() => showCreateUserEventForm()}
+            onClick={() => updateUiState(makeCreateUserEventForm())}
           >
             Add event
           </Button>
           <Button
             css="ml-3 items-center font-medium px-4 w-24"
-            onClick={() => showCreateFragmentForm({ type: "TEXT" })}
+            onClick={() =>
+              updateUiState(makeCreateFragmentForm({ type: "TEXT" }))
+            }
           >
             Add memory
           </Button>
           <Button
             css="ml-3 items-center font-medium px-4 w-24"
-            onClick={() => showCreateFragmentForm({ type: "PHOTO" })}
+            onClick={() =>
+              updateUiState(makeCreateFragmentForm({ type: "PHOTO" }))
+            }
           >
             Add photo
           </Button>

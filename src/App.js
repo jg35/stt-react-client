@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createContext, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ApolloProvider } from "@apollo/client/react";
 
@@ -17,32 +17,43 @@ import Login from "~/routes/login";
 
 import AuthWrap from "~/components/authWrap";
 import Onboarding from "~/components/onboarding";
+import uiManager from "~/lib/uiManager";
+
+export const UIContext = createContext({});
 
 export default function App() {
+  const [uiState, setUiState] = useState(uiManager.init());
+
+  function update(newUi, persist = true) {
+    uiManager.update(setUiState, uiState, newUi, persist);
+  }
+
   return (
-    <ApolloProvider client={client}>
-      <Router>
-        <AuthWrap>
-          <Switch>
-            <Route path="/settings">
-              <Settings />
-            </Route>
-            <Route path="/publish">
-              <Publish />
-            </Route>
-            <Route path="/edit">
-              <Edit />
-            </Route>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route path="/">
-              <Timeline />
-            </Route>
-          </Switch>
-          <Onboarding />
-        </AuthWrap>
-      </Router>
-    </ApolloProvider>
+    <UIContext.Provider value={{ uiState, updateUiState: update }}>
+      <ApolloProvider client={client}>
+        <Router>
+          <AuthWrap>
+            <Switch>
+              <Route path="/settings">
+                <Settings />
+              </Route>
+              <Route path="/publish">
+                <Publish />
+              </Route>
+              <Route path="/edit">
+                <Edit />
+              </Route>
+              <Route path="/login">
+                <Login />
+              </Route>
+              <Route path="/">
+                <Timeline />
+              </Route>
+            </Switch>
+            <Onboarding />
+          </AuthWrap>
+        </Router>
+      </ApolloProvider>
+    </UIContext.Provider>
   );
 }

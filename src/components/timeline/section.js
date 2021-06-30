@@ -24,16 +24,12 @@ export default function Section({ section, index }) {
             <span className="text-gray mb-4">{section.age}</span>
           </h1>
         </div>
-        <div
-          data-tutorial-anchor={index === 0 && [3, 4, 7]}
-          data-tutorial-anchor-before
-        >
-          <SectionCaptureActions
-            show={showActions}
-            date={section.startDate}
-            index={index}
-          />
-        </div>
+
+        <SectionCaptureActions
+          show={showActions}
+          date={section.startDate}
+          index={index}
+        />
       </header>
       {(section.events.length || section.worldEvents.length) > 0 && (
         <>

@@ -1,25 +1,23 @@
-import React, { useState, useEffect } from "react";
-import { useQuery } from "@apollo/client";
-import { setUIStateVar } from "~/lib/apollo";
-import { FETCH_LOCAL_UI_STATE } from "~/lib/gql";
+import React, { useState, useEffect, useContext } from "react";
 import messages from "~/lib/messages";
 import Svg from "~/components/svg";
 import Button from "~/components/button";
+import { UIContext } from "~/app";
 
 export default function InfoMessage({ name }) {
-  const { data } = useQuery(FETCH_LOCAL_UI_STATE);
+  const { uiState, updateUiState } = useContext(UIContext);
 
   const [renderMessage, setRenderMessage] = useState(
-    data.uiState.displayMessages[name] && messages[name]
+    uiState.displayMessages[name] && messages[name]
   );
 
   useEffect(() => {
-    setRenderMessage(data.uiState.displayMessages[name] && messages[name]);
-  }, [data.uiState.displayMessages]);
+    setRenderMessage(uiState.displayMessages[name] && messages[name]);
+  }, [uiState.displayMessages]);
 
   function hideMessage() {
-    const displayMessages = data.uiState.displayMessages;
-    setUIStateVar({ displayMessages: { ...displayMessages, [name]: false } });
+    const displayMessages = uiState.displayMessages;
+    updateUiState({ displayMessages: { ...displayMessages, [name]: false } });
   }
 
   if (renderMessage) {

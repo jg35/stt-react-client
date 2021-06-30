@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useRouteMatch } from "react-router";
 import { useQuery } from "@apollo/client";
 import { NavLink } from "react-router-dom";
@@ -6,32 +6,22 @@ import Svg from "~/components/svg";
 import Button from "~/components/button";
 
 import MainMenu from "~/components/mainMenu";
-import { FETCH_LOCAL_UI_STATE } from "~/lib/gql";
-import { setUIStateVar } from "~/lib/apollo";
+import { UIContext } from "~/app";
 
 export default function Header({ minimal = false }) {
+  const { uiState, updateUiState } = useContext(UIContext);
   const isTimeline = useRouteMatch("/");
-  const { data } = useQuery(FETCH_LOCAL_UI_STATE);
   return (
     <header className="flex justify-between items-center py-4">
-      <div
-        className="flex"
-        data-tutorial-anchor={[1, 2]}
-        data-tutorial-anchor-before={false}
-      >
-        <NavLink
-          to="/"
-          data-tutorial-callout={[1]}
-          data-tutorial-callout-before={false}
-        >
+      <div className="flex">
+        <NavLink to="/">
           <Svg name="logo" />
         </NavLink>
         {!minimal && (
-          <nav className="ml-3">
+          <nav className="ml-3" id="nav-items">
             <NavLink
-              data-tutorial-callout={[2]}
-              data-tutorial-callout-before={false}
               className="nav-link"
+              id="nav-item-timeline"
               to="/"
               activeClassName="nav-link-active"
               exact
@@ -58,11 +48,9 @@ export default function Header({ minimal = false }) {
       <div className="flex">
         {isTimeline && isTimeline.isExact && (
           <Button
-            onClick={() =>
-              setUIStateVar({ showPreview: !data.uiState.showPreview })
-            }
+            onClick={() => updateUiState({ showPreview: !uiState.showPreview })}
           >
-            {`${data.uiState.showPreview ? "Hide" : "Show"} Preview`}
+            {`${uiState.showPreview ? "Hide" : "Show"} Preview`}
           </Button>
         )}
         <MainMenu />
