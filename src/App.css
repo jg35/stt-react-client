@@ -158,3 +158,33 @@
     left: -4px;
   }
 }
+
+#page[class*="tutorial-step"] > * {
+  pointer-events: none;
+}
+
+#page.tutorial-step-1 {
+  filter: blur(1px);
+}
+
+#page.tutorial-step-4 #section-actions-event {
+  pointer-events: all !important;
+}
+
+#page.tutorial-step-6 #form-text-input,
+#page.tutorial-step-6 #form-submit-btn,
+#page.tutorial-step-6 #form-datepicker,
+#page.tutorial-step-6 .react-datepicker__tab-loop * {
+  pointer-events: all !important;
+}
+
+#page.tutorial-step-7 #section-actions-memory {
+  pointer-events: all !important;
+}
+
+#page.tutorial-step-8 #form-text-editor,
+#page.tutorial-step-8 #form-submit-btn,
+#page.tutorial-step-8 #form-datepicker,
+#page.tutorial-step-8 .react-datepicker__tab-loop * {
+  pointer-events: all !important;
+}

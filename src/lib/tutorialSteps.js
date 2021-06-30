@@ -1,41 +1,11 @@
 const blurPx = "1px";
 
 export default () => {
-  let page;
-  function disablePage() {
-    if (!page) {
-      page = document.querySelector("#page");
-    }
-    page.style["pointer-events"] = "none";
-  }
-  function enablePage() {
-    if (!page) {
-      page = document.querySelector("#page");
-    }
-    page.style["pointer-events"] = "all";
-  }
-
-  function enableElement(selector) {
-    document.querySelector(selector).style["pointer-events"] = "all";
-  }
-
-  function enableForm({
-    textInput = false,
-    datePicker = false,
-    countrySelect = false,
-    submitBtn = false,
-  }) {
-    if (textInput) {
-      enableElement("#form-text-input");
-    }
-    if (datePicker) {
-      enableElement("#form-datepicker");
-    }
-    if (countrySelect) {
-      enableElement("#form-country-select");
-    }
-    if (submitBtn) {
-      enableElement("#form-submit-btn");
+  function setTutorialStepCss(step, remove = false) {
+    if (remove) {
+      document.querySelector("#page").classList.remove(`tutorial-step-${step}`);
+    } else {
+      document.querySelector("#page").classList.add(`tutorial-step-${step}`);
     }
   }
 
@@ -50,12 +20,10 @@ export default () => {
       position: { x: "50%", y: "50%" },
       xl: true,
       init: () => {
-        disablePage();
-        document.querySelector("#page").style["filter"] = `blur(${blurPx})`;
+        setTutorialStepCss(1);
       },
       end: (updateUiState) => {
-        enablePage();
-        document.querySelector("#page").style["filter"] = "blur(0px)";
+        setTutorialStepCss(1, true);
         updateUiState({ tutorialStep: 2 });
       },
     }),
@@ -69,10 +37,10 @@ export default () => {
       anchorId: "nav-items",
       calloutId: "nav-item-timeline",
       init: () => {
-        disablePage();
+        setTutorialStepCss(2);
       },
       end: (updateUiState) => {
-        enablePage();
+        setTutorialStepCss(2, true);
         updateUiState({ tutorialStep: 3 });
       },
     }),
@@ -87,10 +55,10 @@ export default () => {
       calloutId: "section-actions-event",
       before: true,
       init: () => {
-        disablePage();
+        setTutorialStepCss(3);
       },
       end: (updateUiState) => {
-        enablePage();
+        setTutorialStepCss(3, true);
         updateUiState({ tutorialStep: 4 });
       },
     }),
@@ -107,11 +75,10 @@ export default () => {
       calloutId: "section-actions-event",
       before: true,
       init: () => {
-        disablePage();
-        enableElement("#section-actions-event");
+        setTutorialStepCss(4);
       },
       end: (updateUiState) => {
-        enablePage();
+        setTutorialStepCss(4, true);
         updateUiState({ tutorialStep: 5 });
       },
     }),
@@ -125,10 +92,10 @@ export default () => {
       anchorId: "capture-form-wrapper",
       calloutId: "capture-form-wrapper",
       init: () => {
-        disablePage();
+        setTutorialStepCss(5);
       },
       end: (updateUiState) => {
-        enablePage();
+        setTutorialStepCss(5, true);
         updateUiState({ tutorialStep: 6 });
       },
     }),
@@ -142,15 +109,10 @@ export default () => {
       anchorId: "capture-form-wrapper",
       calloutId: "capture-form-wrapper",
       init: () => {
-        disablePage();
-        enableForm({
-          textInput: true,
-          datePicker: true,
-          submitBtn: true,
-        });
+        setTutorialStepCss(6);
       },
       end: (updateUiState) => {
-        enablePage();
+        setTutorialStepCss(6, true);
         updateUiState({ tutorialStep: 7 });
       },
     }),
@@ -167,11 +129,10 @@ export default () => {
       anchorId: "section-actions",
       calloutId: "section-actions-memory",
       init: () => {
-        disablePage();
-        enableElement("#section-actions-memory");
+        setTutorialStepCss(7);
       },
       end: (updateUiState) => {
-        enablePage();
+        setTutorialStepCss(7, true);
         updateUiState({ tutorialStep: 8 });
       },
     }),
@@ -184,12 +145,11 @@ export default () => {
       anchorId: "capture-form-wrapper",
       calloutId: "capture-form-wrapper",
       init: () => {
-        disablePage();
-        enableForm({ textEditor: true, datePicker: true, submitBtn: true });
+        setTutorialStepCss(8);
       },
       end: (updateUiState) => {
-        enablePage();
-        updateUiState({ tutorialStep: 7 });
+        setTutorialStepCss(8, true);
+        updateUiState({ tutorialStep: 9 });
       },
     }),
   ];
