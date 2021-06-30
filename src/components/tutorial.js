@@ -49,7 +49,7 @@ function getArrowStyle(calloutEl, calloutBefore, widgetStyle) {
 
 export default function Tutorial() {
   const steps = tutorialSteps();
-  const user = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   const { uiState, updateUiState } = useContext(UIContext);
   const [getTimeline, { data, loading }] = useLazyQuery(FETCH_TIMELINE_VIEW, {
@@ -79,7 +79,6 @@ export default function Tutorial() {
 
   useEffect(() => {
     if (currentStep) {
-      console.log(currentStep.title, "current step change...");
       if (currentStep.position) {
         setWidgetStyle({
           left: currentStep.position.x,
@@ -90,9 +89,6 @@ export default function Tutorial() {
       } else {
         // Find anchor / callout elements in the dom
         setTimeout(() => {
-          console.log(currentStep.step);
-          console.log(currentStep.calloutId);
-          console.log(currentStep.anchorId);
           const calloutEl = document.querySelector(`#${currentStep.calloutId}`);
           const anchorEl = document.querySelector(`#${currentStep.anchorId}`);
           if (calloutEl && anchorEl) {

@@ -11,7 +11,7 @@ export default function DatePicker({
   minDate,
   maxDate = null,
 }) {
-  const user = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [getUser, { data }] = useLazyQuery(FETCH_USER, {
     variables: { userId: user.id },
   });

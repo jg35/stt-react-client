@@ -1,10 +1,8 @@
 import React, { useContext } from "react";
 import { useRouteMatch } from "react-router";
-import { useQuery } from "@apollo/client";
 import { NavLink } from "react-router-dom";
 import Svg from "~/components/svg";
 import Button from "~/components/button";
-
 import MainMenu from "~/components/mainMenu";
 import { UIContext } from "~/app";
 

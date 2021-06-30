@@ -1,15 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
-import { useQuery } from "@apollo/client";
-import { FETCH_LOCAL_AUTH_STATE } from "~/lib/gql";
+import { AuthContext } from "~/components/authWrap";
 import { signOut } from "~/lib/auth";
 
 import Svg from "~/components/svg";
 import Menu from "~/components/menu";
 
 export default function MainMenu() {
-  const { data } = useQuery(FETCH_LOCAL_AUTH_STATE);
-  const currentUser = data.authState.userDetails;
+  const { user } = useContext(AuthContext);
 
   return (
     <Menu
@@ -21,12 +19,12 @@ export default function MainMenu() {
             <NavLink className="fill text-right" to="account">
               <div className="flex items-center justify-end p-2">
                 <div className="mr-2">
-                  <span className="block">{currentUser.displayName}</span>
-                  <span className="text-gray">{currentUser.email}</span>
+                  <span className="block">{user.displayName}</span>
+                  <span className="text-gray">{user.email}</span>
                 </div>
                 <img
-                  src={currentUser.photoURL}
-                  alt={currentUser.displayName}
+                  src={user.photoURL}
+                  alt={user.displayName}
                   className="w-10 h-10 rounded"
                 />
               </div>

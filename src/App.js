@@ -16,7 +16,6 @@ import Settings from "~/routes/settings";
 import Login from "~/routes/login";
 
 import AuthWrap from "~/components/authWrap";
-import Onboarding from "~/components/onboarding";
 import uiManager from "~/lib/uiManager";
 
 export const UIContext = createContext({});
@@ -50,7 +49,6 @@ export default function App() {
                 <Timeline />
               </Route>
             </Switch>
-            <Onboarding />
           </AuthWrap>
         </Router>
       </ApolloProvider>

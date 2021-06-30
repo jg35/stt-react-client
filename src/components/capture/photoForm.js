@@ -19,7 +19,7 @@ function ToggleUrl({ replaceUrl, onClick }) {
 }
 
 export default function PhotoForm({ item, submitForm, closeModal }) {
-  const user = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [replaceUrl, setReplaceUrl] = useState("");
 
   return (
@@ -99,11 +99,13 @@ export default function PhotoForm({ item, submitForm, closeModal }) {
             <label>Date</label>
             <DatePicker
               date={values.date}
+              error={errors.date}
               handleChange={(newDate) => {
                 setFieldValue("date", newDate.toISOString().replace(/T.*/, ""));
                 setFieldValue("dateType", "MANUAL");
               }}
             />
+            <FormError error={errors.date} />
           </div>
 
           <FormActions

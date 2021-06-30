@@ -60,12 +60,14 @@ export default function TextForm({
           <div className="form-control">
             <label>Date</label>
             <DatePicker
+              error={errors.date}
               date={values.date}
               handleChange={(newDate) => {
                 setFieldValue("date", newDate.toISOString().replace(/T.*/, ""));
                 setFieldValue("dateType", "MANUAL");
               }}
             />
+            <FormError error={errors.date} />
           </div>
 
           <FormActions

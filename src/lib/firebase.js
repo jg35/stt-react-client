@@ -38,14 +38,14 @@ firebase.auth().onAuthStateChanged(async (user) => {
           // Force refresh the token to get the updated claims
 
           const token = await user.getIdToken(true);
-          authStateVar({ status: "in", token, userDetails });
+          authStateVar({ status: "in", token, user: userDetails });
         })
         .catch(() => {
           // Need to handle this better. For now just sign out so they can try and login again
           // signOut()
         });
     } else {
-      authStateVar({ status: "in", token, userDetails });
+      authStateVar({ status: "in", token, user: userDetails });
     }
   } else {
     authStateVar({ status: "out" });

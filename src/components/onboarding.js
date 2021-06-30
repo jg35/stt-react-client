@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useHistory, useRouteMatch } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { Formik } from "formik";
 import { useQuery, useMutation } from "@apollo/client/react";
 import { FETCH_USER, UPDATE_USER } from "~/lib/gql";
@@ -22,8 +22,7 @@ function hasCompletedTutorial(user) {
 
 export default function Onboarding() {
   const history = useHistory();
-  let isLogin = useRouteMatch("/login");
-  const user = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const { data, loading } = useQuery(FETCH_USER, {
     variables: { userId: user.id },
   });
@@ -37,7 +36,6 @@ export default function Onboarding() {
   }
 
   if (
-    isLogin ||
     loading ||
     (hasOnboardingFields(data.stt_user_by_pk) &&
       hasCompletedTutorial(data.stt_user_by_pk))

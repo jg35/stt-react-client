@@ -17,7 +17,7 @@ export const FragmentSchema = Yup.object().shape({
       }
       return true;
     }),
-  date: Yup.string().default(null).nullable(),
+  date: Yup.string().ensure().required(),
   dateType: Yup.string().default(null).nullable(),
   mediaCaption: Yup.string().default(null).nullable(),
   mediaUrl: Yup.string()

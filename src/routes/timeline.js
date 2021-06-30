@@ -22,7 +22,7 @@ import OrphanedFragments from "~/components/timeline/orphanedFragments";
 import { UIContext } from "~/app";
 
 export default function Timeline() {
-  const user = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const { uiState, updateUiState } = useContext(UIContext);
   const timelineScrollContainer = useRef(null);
   const { data, loading } = useQuery(FETCH_TIMELINE_VIEW, {
@@ -76,9 +76,13 @@ export default function Timeline() {
                     ref={timelineScrollContainer}
                     className="flex-1 mr-2 max-h-full overflow-auto js-timeline-scroll-container relative"
                     onScroll={debounce((e) => {
-                      updateUiState({
-                        timelineScrollPosition: e.target.scrollTop,
-                      });
+                      if (
+                        e.target.scrollTop !== uiState.timelineScrollPosition
+                      ) {
+                        updateUiState({
+                          timelineScrollPosition: e.target.scrollTop,
+                        });
+                      }
                     }, 1000)}
                   >
                     {timeline.map((timelineSection, i) => (

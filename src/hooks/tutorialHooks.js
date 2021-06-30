@@ -6,7 +6,6 @@ export function useStepActive(steps) {
   const [active, setActive] = useState(steps.includes(uiState.tutorialStep));
 
   useEffect(() => {
-    console.log(uiState.tutorialStep);
     setActive(steps.includes(uiState.tutorialStep));
   }, [uiState.tutorialStep]);
 
