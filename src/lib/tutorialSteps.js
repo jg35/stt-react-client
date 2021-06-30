@@ -1,14 +1,12 @@
-const blurPx = "1px";
+function setTutorialStepCss(step, remove = false) {
+  if (remove) {
+    document.querySelector("#page").classList.remove(`tutorial-step-${step}`);
+  } else {
+    document.querySelector("#page").classList.add(`tutorial-step-${step}`);
+  }
+}
 
 export default () => {
-  function setTutorialStepCss(step, remove = false) {
-    if (remove) {
-      document.querySelector("#page").classList.remove(`tutorial-step-${step}`);
-    } else {
-      document.querySelector("#page").classList.add(`tutorial-step-${step}`);
-    }
-  }
-
   return [
     registerStep({
       step: 1,
@@ -19,13 +17,6 @@ export default () => {
       async: false,
       position: { x: "50%", y: "50%" },
       xl: true,
-      init: () => {
-        setTutorialStepCss(1);
-      },
-      end: (updateUiState) => {
-        setTutorialStepCss(1, true);
-        updateUiState({ tutorialStep: 2 });
-      },
     }),
     registerStep({
       step: 2,
@@ -35,14 +26,8 @@ export default () => {
       isComplete: (data, uiState) => uiState.tutorialStep > 2,
       async: false,
       anchorId: "nav-items",
+      anchorPosition: "RIGHT",
       calloutId: "nav-item-timeline",
-      init: () => {
-        setTutorialStepCss(2);
-      },
-      end: (updateUiState) => {
-        setTutorialStepCss(2, true);
-        updateUiState({ tutorialStep: 3 });
-      },
     }),
     registerStep({
       step: 3,
@@ -53,14 +38,7 @@ export default () => {
       async: false,
       anchorId: "section-actions",
       calloutId: "section-actions-event",
-      before: true,
-      init: () => {
-        setTutorialStepCss(3);
-      },
-      end: (updateUiState) => {
-        setTutorialStepCss(3, true);
-        updateUiState({ tutorialStep: 4 });
-      },
+      anchorPosition: "LEFT",
     }),
     registerStep({
       step: 4,
@@ -73,14 +51,7 @@ export default () => {
       async: true,
       anchorId: "section-actions",
       calloutId: "section-actions-event",
-      before: true,
-      init: () => {
-        setTutorialStepCss(4);
-      },
-      end: (updateUiState) => {
-        setTutorialStepCss(4, true);
-        updateUiState({ tutorialStep: 5 });
-      },
+      anchorPosition: "LEFT",
     }),
     registerStep({
       step: 5,
@@ -89,15 +60,9 @@ export default () => {
       nextText: "Sounds good",
       isComplete: (data, uiState) => uiState.tutorialStep > 5,
       async: false,
+      anchorPosition: "RIGHT",
       anchorId: "capture-form-wrapper",
       calloutId: "capture-form-wrapper",
-      init: () => {
-        setTutorialStepCss(5);
-      },
-      end: (updateUiState) => {
-        setTutorialStepCss(5, true);
-        updateUiState({ tutorialStep: 6 });
-      },
     }),
     registerStep({
       step: 6,
@@ -108,13 +73,7 @@ export default () => {
       async: true,
       anchorId: "capture-form-wrapper",
       calloutId: "capture-form-wrapper",
-      init: () => {
-        setTutorialStepCss(6);
-      },
-      end: (updateUiState) => {
-        setTutorialStepCss(6, true);
-        updateUiState({ tutorialStep: 7 });
-      },
+      anchorPosition: "RIGHT",
     }),
     registerStep({
       step: 7,
@@ -125,44 +84,30 @@ export default () => {
         data.stt_fragment.length ||
         (uiState.capture.item && uiState.capture.item.type === "TEXT"),
       async: true,
-      before: true,
+      anchorPosition: "LEFT",
       anchorId: "section-actions",
       calloutId: "section-actions-memory",
-      init: () => {
-        setTutorialStepCss(7);
-      },
-      end: (updateUiState) => {
-        setTutorialStepCss(7, true);
-        updateUiState({ tutorialStep: 8 });
-      },
     }),
     registerStep({
       step: 8,
       title: "Adding your first memory",
-      body: `Add a  and date and click "Add" to create your event. Don't worry, the date doesn't have to be accurate - we can fix that later.`,
+      body: `Add a date and click "Add" to create your event. Don't worry, the date doesn't have to be accurate - we can fix that later.`,
       isComplete: (data, uiState) => uiState.tutorialStep > 8,
       async: true,
       anchorId: "capture-form-wrapper",
       calloutId: "capture-form-wrapper",
-      init: () => {
-        setTutorialStepCss(8);
-      },
-      end: (updateUiState) => {
-        setTutorialStepCss(8, true);
-        updateUiState({ tutorialStep: 9 });
-      },
+      anchorPosition: "RIGHT",
     }),
   ];
 };
 
 function registerStep({
   anchorId,
+  anchorPosition = "RIGHT",
   async = false,
   calloutId,
   before = false,
   body,
-  end = () => {},
-  init = () => {},
   isComplete,
   nextText = "Next",
   position = null,
@@ -172,17 +117,22 @@ function registerStep({
 }) {
   return {
     anchorId,
+    anchorPosition,
     calloutId,
     async,
     before,
     body,
-    end,
-    init,
     isComplete,
     nextText,
     position,
     step,
     title,
     xl,
+    init: function () {
+      setTutorialStepCss(this.step);
+    },
+    end: function () {
+      setTutorialStepCss(this.step, true);
+    },
   };
 }
