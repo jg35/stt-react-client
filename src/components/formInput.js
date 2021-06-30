@@ -8,6 +8,7 @@ export default function FormInput({
 }) {
   return (
     <input
+      id="form-text-input"
       name={name}
       className={`input ${error && "input-error"}`}
       autoFocus

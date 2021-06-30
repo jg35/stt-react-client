@@ -32,6 +32,7 @@ export default function TextEditor({
   return (
     <div className="flex-1">
       <textarea
+        id="form-text-editor"
         name={name}
         onKeyUp={onKeyUp}
         autoFocus

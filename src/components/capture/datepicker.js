@@ -38,6 +38,7 @@ export default function DatePicker({
 
   return (
     <ReactDatePicker
+      id="form-datepicker"
       minDate={firstDate}
       maxDate={maxDate || new Date()}
       startDate={jsDate || new Date()}

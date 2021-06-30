@@ -1,4 +1,44 @@
+const blurPx = "1px";
+
 export default () => {
+  let page;
+  function disablePage() {
+    if (!page) {
+      page = document.querySelector("#page");
+    }
+    page.style["pointer-events"] = "none";
+  }
+  function enablePage() {
+    if (!page) {
+      page = document.querySelector("#page");
+    }
+    page.style["pointer-events"] = "all";
+  }
+
+  function enableElement(selector) {
+    document.querySelector(selector).style["pointer-events"] = "all";
+  }
+
+  function enableForm({
+    textInput = false,
+    datePicker = false,
+    countrySelect = false,
+    submitBtn = false,
+  }) {
+    if (textInput) {
+      enableElement("#form-text-input");
+    }
+    if (datePicker) {
+      enableElement("#form-datepicker");
+    }
+    if (countrySelect) {
+      enableElement("#form-country-select");
+    }
+    if (submitBtn) {
+      enableElement("#form-submit-btn");
+    }
+  }
+
   return [
     registerStep({
       step: 1,
@@ -10,14 +50,13 @@ export default () => {
       position: { x: "50%", y: "50%" },
       xl: true,
       init: () => {
-        //   document.querySelector('#page > *:not(#loading)').style('pointer-events', 'none');
-        // stylesheet.addRule("#page > *:", "pointer-events: none;");
-        // stylesheet.addRule("#page", "filter: blur(1.5px);");
+        disablePage();
+        document.querySelector("#page").style["filter"] = `blur(${blurPx})`;
       },
       end: (updateUiState) => {
+        enablePage();
+        document.querySelector("#page").style["filter"] = "blur(0px)";
         updateUiState({ tutorialStep: 2 });
-        // stylesheet.removeRule("#page > *:", "pointer-events: none;");
-        // stylesheet.removeRule("#page", "filter: blur(1.5px);");
       },
     }),
     registerStep({
@@ -29,15 +68,12 @@ export default () => {
       async: false,
       anchorId: "nav-items",
       calloutId: "nav-item-timeline",
-
       init: () => {
-        document.querySelector("#page").style["pointer-events"] = "none";
-        document.querySelector("main").style["filter"] = "blur(1px)";
+        disablePage();
       },
       end: (updateUiState) => {
+        enablePage();
         updateUiState({ tutorialStep: 3 });
-        document.querySelector("#page").style["pointer-events"] = "all";
-        document.querySelector("main").style["filter"] = "blur(0px)";
       },
     }),
     registerStep({
@@ -51,9 +87,10 @@ export default () => {
       calloutId: "section-actions-event",
       before: true,
       init: () => {
-        document.querySelector("#page").style["pointer-events"] = "none";
+        disablePage();
       },
       end: (updateUiState) => {
+        enablePage();
         updateUiState({ tutorialStep: 4 });
       },
     }),
@@ -70,12 +107,11 @@ export default () => {
       calloutId: "section-actions-event",
       before: true,
       init: () => {
-        document.querySelector("#page").style["pointer-events"] = "none";
-        document.querySelector("#section-actions-event").style[
-          "pointer-events"
-        ] = "all";
+        disablePage();
+        enableElement("#section-actions-event");
       },
       end: (updateUiState) => {
+        enablePage();
         updateUiState({ tutorialStep: 5 });
       },
     }),
@@ -88,8 +124,11 @@ export default () => {
       async: false,
       anchorId: "capture-form-wrapper",
       calloutId: "capture-form-wrapper",
-      init: () => {},
+      init: () => {
+        disablePage();
+      },
       end: (updateUiState) => {
+        enablePage();
         updateUiState({ tutorialStep: 6 });
       },
     }),
@@ -102,8 +141,16 @@ export default () => {
       async: true,
       anchorId: "capture-form-wrapper",
       calloutId: "capture-form-wrapper",
-      init: () => {},
+      init: () => {
+        disablePage();
+        enableForm({
+          textInput: true,
+          datePicker: true,
+          submitBtn: true,
+        });
+      },
       end: (updateUiState) => {
+        enablePage();
         updateUiState({ tutorialStep: 7 });
       },
     }),
@@ -119,8 +166,12 @@ export default () => {
       before: true,
       anchorId: "section-actions",
       calloutId: "section-actions-memory",
-      init: () => {},
+      init: () => {
+        disablePage();
+        enableElement("#section-actions-memory");
+      },
       end: (updateUiState) => {
+        enablePage();
         updateUiState({ tutorialStep: 8 });
       },
     }),
@@ -132,8 +183,12 @@ export default () => {
       async: true,
       anchorId: "capture-form-wrapper",
       calloutId: "capture-form-wrapper",
-      init: () => {},
+      init: () => {
+        disablePage();
+        enableForm({ textEditor: true, datePicker: true, submitBtn: true });
+      },
       end: (updateUiState) => {
+        enablePage();
         updateUiState({ tutorialStep: 7 });
       },
     }),

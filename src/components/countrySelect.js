@@ -9,6 +9,7 @@ export default function CountrySelect({
 }) {
   return (
     <select
+      id="form-country-select"
       name={name}
       className={`input select ${error && "input-error"} appearance-none`}
       autoFocus

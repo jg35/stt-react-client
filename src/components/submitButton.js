@@ -9,6 +9,7 @@ export default function SubmitButton({ isSubmitting, children }) {
   }
   return (
     <button
+      id="form-submit-btn"
       type="submit"
       className={`flex items-center rounded p-2 justify-center text-lg w-36 duration-300 ease-in hover:bg-black hover:text-white ${stateCss}`}
     >
