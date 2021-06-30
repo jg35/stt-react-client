@@ -26,6 +26,32 @@ export default function Tutorial() {
   const [arrowStyle, setArrowStyle] = useState({});
   const [widgetStyle, setWidgetStyle] = useState({});
 
+  function nextStepStyleHandler(nextStep) {
+    let widgetStyle = {};
+    let arrowStyle = {};
+    if (nextStep.position) {
+      widgetStyle = {
+        left: nextStep.position.x,
+        transform: "translateX(-50%) translateY(-50%)",
+        top: nextStep.position.y,
+      };
+    } else {
+      // Find anchor / callout elements in the dom
+      const calloutEl = document.querySelector(`#${nextStep.calloutId}`);
+      const anchorEl = document.querySelector(`#${nextStep.anchorId}`);
+      if (calloutEl && anchorEl) {
+        widgetStyle = getWidgetStyle(anchorEl, nextStep.anchorPosition);
+        arrowStyle = getArrowStyle(
+          calloutEl,
+          nextStep.anchorPosition,
+          widgetStyle
+        );
+      }
+    }
+    setArrowStyle(arrowStyle);
+    setWidgetStyle(widgetStyle);
+  }
+
   useEffect(() => {
     getTimeline();
   }, []);
@@ -35,38 +61,12 @@ export default function Tutorial() {
     if (data && uiState) {
       // Check whether to move to the next step
       const nextStep = getNextStep(steps, data, uiState);
-      if (!currentStep || (nextStep && nextStep.step !== currentStep.step)) {
+      if (!currentStep || nextStep.step !== currentStep.step) {
         if (currentStep) {
           currentStep.end();
         }
-        if (nextStep.position) {
-          setWidgetStyle({
-            left: nextStep.position.x,
-            transform: "translateX(-50%) translateY(-50%)",
-            top: nextStep.position.y,
-          });
-          nextStep.init(updateUiState);
-        } else if (nextStep.anchorId && nextStep.calloutId) {
-          // Find anchor / callout elements in the dom
-          setTimeout(() => {
-            const calloutEl = document.querySelector(`#${nextStep.calloutId}`);
-            const anchorEl = document.querySelector(`#${nextStep.anchorId}`);
-            if (calloutEl && anchorEl) {
-              const widgetStyle = getWidgetStyle(
-                anchorEl,
-                nextStep.anchorPosition
-              );
-              const arrowStyle = getArrowStyle(
-                calloutEl,
-                nextStep.anchorPosition,
-                widgetStyle
-              );
-              setWidgetStyle(widgetStyle);
-              setArrowStyle(arrowStyle);
-              nextStep.init(updateUiState);
-            }
-          });
-        }
+        nextStepStyleHandler(nextStep);
+        nextStep.init();
         // Set the next step
         setCurrentStep(nextStep);
         saveCurrentStep(nextStep.step);
