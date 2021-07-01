@@ -451,7 +451,7 @@ export const steps = [
     step: 24,
     xl: true,
     last: true,
-    title: "Epilogue",
+    title: "Congratulations! 🎉",
     nextText: "Close tutorial",
     body: `And there you have it. You're now ready to start building your timeline and creating a beautiful book along the way. Once you've explored the timeline fully, head over to the “Edit” view to learn about editing your book.`,
     isComplete: (data, uiState) => uiState.tutorialStep > 24,
