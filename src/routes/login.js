@@ -13,17 +13,34 @@ export default function Login() {
   } else if (status === "out") {
     return (
       <>
-        <div className="flex flex-col min-h-screen justify-center items-center ">
-          <div className="h-auto shadow-lg rounded-lg bg-white p-20">
-            <div className="mb-6">
-              <h1 className="text-4xl mb-10">Welcome to Stories To Tell</h1>
+        <div className="flex flex-col min-h-screen justify-center items-center relative">
+          <div
+            className="min-h-screen w-full absolute top-0 left-0 z-10"
+            style={{
+              opacity: ".5",
+              backgroundImage: "url('bg.jpg')",
+              backgroundSize: "cover",
+              filter: "blur(1.5px) grayscale(.4) ",
+            }}
+          ></div>
+          <div className="h-auto shadow-2xl rounded-lg bg-white p-10 z-20 w-96">
+            <div className="text-center">
+              <h1 className="text-4xl mb-2 font-bold">Stories To Tell</h1>
+              <p className="text-lg mb-12">
+                The easy way to create your life story
+              </p>
             </div>
+            <p className="text-lg mb-4 font-medium text-center font-medium">
+              Login below
+            </p>
+
             <Button
-              css="text-xl font-medium rounded-lg"
+              bigCta
+              css="text-xl py-3 px-4 w-full justify-center font-medium rounded bg-black text-white"
               onClick={signInWithGoogle}
             >
-              Sign in with Google
-              <Svg name="google" css="ml-4" />
+              <Svg name="google" css="h-5 w-5 mr-3" color="white" />
+              Continue with Google
             </Button>
           </div>
         </div>

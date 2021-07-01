@@ -36,6 +36,7 @@ module.exports = {
       darkGray: "#666666",
       red: "#ff6a66",
       transparent: "transparent",
+      google: "#4285f4",
     },
   },
   variants: {
