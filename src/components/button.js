@@ -9,6 +9,7 @@ export default function Button({
   type = "button",
   disabled = false,
   bigCta = false,
+  id,
 }) {
   let variantCSS = "";
   if (minimal) {
@@ -23,6 +24,7 @@ export default function Button({
   const CONTENT_IS_TEXT = typeof children === "string";
   return (
     <button
+      id={id}
       disabled={disabled}
       type={type}
       className={`flex items-center rounded px-2 py-1 ${variantCSS} ${css} ${

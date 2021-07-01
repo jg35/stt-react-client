@@ -183,3 +183,109 @@ export function generateTimeline(
     undatedMemories,
   ];
 }
+
+export function scrollToFragment(fragmentId = null, smooth = true) {
+  let timelineFragment;
+  if (fragmentId) {
+    timelineFragment = document.querySelector(
+      `div[data-fragment-id="${fragmentId}"]`
+    );
+  } else {
+    timelineFragment = document.querySelector(`div[data-fragment-id]`);
+  }
+
+  const timelineContainer = document.querySelector(
+    ".js-timeline-scroll-container"
+  );
+
+  const previewConainer = document.querySelector(
+    ".js-preview-scroll-container"
+  );
+
+  const previewFragment = document.querySelector(
+    `[data-preview-fragment-id="${fragmentId}"]`
+  );
+  if (timelineFragment && timelineContainer) {
+    timelineContainer.scrollTo({
+      top: timelineFragment.offsetTop - timelineContainer.offsetTop - 10,
+      behavior: smooth ? "smooth" : "auto",
+    });
+  }
+
+  if (previewFragment && previewConainer) {
+    previewConainer.scrollTo({
+      top: previewFragment.offsetTop - previewConainer.offsetTop - 10,
+      behavior: smooth ? "smooth" : "auto",
+    });
+  }
+}
+
+export function scrollToEvent(eventId = null, smooth = true) {
+  let timelineEvent;
+  if (eventId) {
+    timelineEvent = document.querySelector(
+      `div[data-user-event-id="${eventId}"]`
+    );
+  } else {
+    timelineEvent = document.querySelector(`div[data-user-event-id]`);
+  }
+
+  const timelineContainer = document.querySelector(
+    ".js-timeline-scroll-container"
+  );
+  if (timelineEvent && timelineContainer) {
+    timelineContainer.scrollTo({
+      top: timelineEvent.offsetTop - timelineContainer.offsetTop - 10,
+      behavior: smooth ? "smooth" : "auto",
+    });
+  }
+}
+
+export function scrollToTimelineTop(smooth = true) {
+  const timelineContainer = document.querySelector(
+    ".js-timeline-scroll-container"
+  );
+  if (timelineContainer) {
+    timelineContainer.scrollTo({
+      top: 0,
+      behavior: smooth ? "smooth" : "auto",
+    });
+  }
+}
+
+export function scrollToYear(year) {
+  const match = document.querySelector(`section[data-season-year="${year}"]`);
+  if (match) {
+    match.scrollIntoView({ behavior: "smooth" });
+  }
+}
+
+export function scrollToUndated() {
+  const timelineContainer = document.querySelector(
+    ".js-timeline-scroll-container"
+  );
+
+  const undatedContainer = document.querySelector(
+    ".js-undated-fragment-container"
+  );
+
+  if (undatedContainer && timelineContainer) {
+    timelineContainer.scrollTo({
+      top: undatedContainer.offsetTop - timelineContainer.offsetTop - 10,
+      behavior: "smooth",
+    });
+  }
+}
+
+// function scrollToFragment(fragmentId) {
+//   const match = document.querySelector(
+//     `div[data-fragment-id="${fragmentId}"]`
+//   );
+//   if (match) {
+//     match.scrollIntoView({ behavior: "smooth" });
+//   }
+// }
+
+export function scrollToFirstFragment() {}
+
+export function scrollToFirstEvent() {}

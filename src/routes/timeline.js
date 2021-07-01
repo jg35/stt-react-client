@@ -73,6 +73,7 @@ export default function Timeline() {
               {data && data.stt_user_by_pk.dob && timeline ? (
                 <>
                   <main
+                    id="timeline-scroll-container"
                     ref={timelineScrollContainer}
                     className="flex-1 mr-2 max-h-full overflow-auto js-timeline-scroll-container relative"
                     onScroll={debounce((e) => {

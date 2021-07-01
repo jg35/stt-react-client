@@ -43,7 +43,7 @@ export default function UppyDashboard({ userId, mediaUrl, onChange, error }) {
   });
 
   return (
-    <div className={error && "uppy-validate-error"}>
+    <div id="uppy-dashboard" className={error && "uppy-validate-error"}>
       <Dashboard
         uppy={uppy}
         proudlyDisplayPoweredByUppy={false}

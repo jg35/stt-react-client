@@ -163,28 +163,96 @@
   pointer-events: none;
 }
 
-#page.tutorial-step-1 {
-  filter: blur(1px);
+#page {
+  transition: filter 200ms ease-in;
 }
 
-#page.tutorial-step-4 #section-actions-event {
+#page.tutorial-step-1 {
+  filter: blur(2px) grayscale(1);
+  transition: filter 200ms ease-out;
+}
+
+#page.tutorial-step-4 #shuffle-button-wrapper,
+#page.tutorial-step-4 #menu {
   pointer-events: all !important;
 }
 
-#page.tutorial-step-6 #form-text-input,
-#page.tutorial-step-6 #form-submit-btn,
+#page.tutorial-step-5 #form-question-text-input,
+#page.tutorial-step-5 #shuffle-button-wrapper,
+#page.tutorial-step-5 #menu {
+  pointer-events: all !important;
+}
+
+/* Memory form */
+#page.tutorial-step-6 #form-text-editor,
 #page.tutorial-step-6 #form-datepicker,
 #page.tutorial-step-6 .react-datepicker__tab-loop * {
   pointer-events: all !important;
 }
 
-#page.tutorial-step-7 #section-actions-memory {
+#page.tutorial-step-7 #form-text-editor,
+#page.tutorial-step-7 #form-submit-btn,
+#page.tutorial-step-7 #form-datepicker,
+#page.tutorial-step-7 .react-datepicker__tab-loop * {
   pointer-events: all !important;
 }
 
-#page.tutorial-step-8 #form-text-editor,
-#page.tutorial-step-8 #form-submit-btn,
-#page.tutorial-step-8 #form-datepicker,
-#page.tutorial-step-8 .react-datepicker__tab-loop * {
+#page.tutorial-step-10 #section-actions-event {
   pointer-events: all !important;
+}
+
+/* Event form */
+#page.tutorial-step-11 #form-text-input,
+#page.tutorial-step-11 #form-submit-btn,
+#page.tutorial-step-11 #form-datepicker,
+#page.tutorial-step-11 .react-datepicker__tab-loop * {
+  pointer-events: all !important;
+}
+
+#page.tutorial-step-14 #section-actions-photo {
+  pointer-events: all !important;
+}
+
+#page.tutorial-step-15 #uppy-dashboard,
+#page.tutorial-step-15 #form-text-input,
+#page.tutorial-step-15 #form-submit-btn,
+#page.tutorial-step-15 #form-datepicker,
+#page.tutorial-step-15 .react-datepicker__tab-loop * {
+  pointer-events: all !important;
+}
+
+#page.tutorial-step-16 #show-preview-btn {
+  pointer-events: all !important;
+}
+
+#page.tutorial-step-18 #section-actions-chapter {
+  pointer-events: all !important;
+}
+
+#page.tutorial-step-19 #form-text-input,
+#page.tutorial-step-19 #form-submit-btn,
+#page.tutorial-step-19 #form-datepicker,
+#page.tutorial-step-19 .react-datepicker__tab-loop * {
+  pointer-events: all !important;
+}
+
+#page.tutorial-step-20 #preview-container {
+  pointer-events: all !important;
+}
+
+#page.tutorial-step-21 #menu button * {
+  pointer-events: none !important;
+}
+
+#page.tutorial-step-22 #privacy-fragment-btn {
+  pointer-events: all !important;
+}
+
+#page.tutorial-step-23 #preview-container {
+  pointer-events: all !important;
+}
+
+#page.tutorial-step-24 {
+  filter: blur(2px) grayscale(1);
+  transition: filter 200ms ease-out;
 }

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useEffect } from "react/cjs/react.development";
 import { DateTime } from "luxon";
+import { scrollToYear } from "~/lib/timeline";
 
 export default function ScrollNavigator({ years, dob }) {
   const [hoverYear, setHoverYear] = useState(null);
@@ -36,13 +37,6 @@ export default function ScrollNavigator({ years, dob }) {
         {children}
       </div>
     );
-  }
-
-  function scrollToYear(year) {
-    const match = document.querySelector(`section[data-season-year="${year}"]`);
-    if (match) {
-      match.scrollIntoView({ behavior: "smooth" });
-    }
   }
 
   function TimelineMarker() {

@@ -11,3 +11,14 @@ export function useStepActive(steps) {
 
   return active;
 }
+
+export function useTutorialActive() {
+  const { uiState } = useContext(UIContext);
+  const [active, setActive] = useState(!!uiState.tutorialStep);
+
+  useEffect(() => {
+    setActive(!!uiState.tutorialStep);
+  }, [uiState.tutorialStep]);
+
+  return active;
+}

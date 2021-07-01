@@ -65,7 +65,11 @@ export default function FragmentActions({ fragment }) {
   const items = [
     {
       component: (
-        <Button minimal css="w-full justify-between items-center">
+        <Button
+          minimal
+          css="w-full justify-between items-center"
+          id="edit-fragment-btn"
+        >
           Edit
           <Svg
             name="edit"
@@ -81,7 +85,11 @@ export default function FragmentActions({ fragment }) {
     {
       closeOnClick: false,
       component: (
-        <Button minimal css="w-full justify-between items-center">
+        <Button
+          minimal
+          css="w-full justify-between items-center"
+          id="delete-fragment-btn"
+        >
           {!deleteFragmentLoading && <span>Delete</span>}
           {deleteFragmentLoading && (
             <span className="animate-pulse">Deleting...</span>
@@ -108,7 +116,11 @@ export default function FragmentActions({ fragment }) {
     items.unshift({
       closeOnClick: false,
       component: (
-        <Button minimal css={`w-full justify-between items-center`}>
+        <Button
+          minimal
+          css={`w-full justify-between items-center`}
+          id="privacy-fragment-btn"
+        >
           <div>
             {!updateFragmentLoading && (
               <span className="">

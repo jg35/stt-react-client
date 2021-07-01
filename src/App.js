@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ApolloProvider } from "@apollo/client/react";
 
@@ -24,7 +24,15 @@ export default function App() {
   const [uiState, setUiState] = useState(uiManager.init());
 
   function update(newUi, persist = true) {
-    uiManager.update(setUiState, uiState, newUi, persist);
+    // TODO this gets fucked when calls are made to close to eachother
+    const updateUi = {
+      ...uiState,
+      ...newUi,
+    };
+    setUiState(updateUi);
+    if (persist) {
+      localStorage.setItem("uiState", JSON.stringify(updateUi));
+    }
   }
 
   return (

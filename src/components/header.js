@@ -45,11 +45,15 @@ export default function Header({ minimal = false }) {
       </div>
       <div className="flex">
         {isTimeline && isTimeline.isExact && (
-          <Button
-            onClick={() => updateUiState({ showPreview: !uiState.showPreview })}
-          >
-            {`${uiState.showPreview ? "Hide" : "Show"} Preview`}
-          </Button>
+          <div id="show-preview-btn">
+            <Button
+              onClick={() =>
+                updateUiState({ showPreview: !uiState.showPreview })
+              }
+            >
+              {`${uiState.showPreview ? "Hide" : "Show"} Preview`}
+            </Button>
+          </div>
         )}
         <MainMenu />
       </div>

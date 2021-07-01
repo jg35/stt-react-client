@@ -41,7 +41,7 @@ export default function Menu({
     }
   }
   return (
-    <div className="relative">
+    <div id="menu" className="relative">
       <Button minimal={minimal} onClick={() => setOpen(!open)}>
         {toggle}
       </Button>

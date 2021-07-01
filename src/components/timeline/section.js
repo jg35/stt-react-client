@@ -13,6 +13,7 @@ export default function Section({ section, index }) {
     <section
       className="py-8 pr-6 border-b border-lightGray"
       data-season-year={section.year}
+      data-section-index={index}
       onMouseEnter={() => setShowActions(true)}
       onMouseOver={debounce(() => setShowActions(true), 200)}
       onMouseLeave={debounce(() => setShowActions(false), 200)}
@@ -33,7 +34,7 @@ export default function Section({ section, index }) {
       </header>
       {(section.events.length || section.worldEvents.length) > 0 && (
         <>
-          <div className="flex flex-wrap mt-2 pl-2">
+          <div className="flex flex-wrap mt-2 pl-2" id="section-events-grid">
             {section.events.map((e, i) => (
               <UserEvent event={e} key={i} />
             ))}

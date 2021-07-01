@@ -8,6 +8,7 @@ import TextEditor from "~/components/capture/textEditor";
 
 export default function TextForm({
   item,
+  setItem,
   submitForm,
   closeModal,
   originatesFromQuestion,
@@ -63,8 +64,11 @@ export default function TextForm({
               error={errors.date}
               date={values.date}
               handleChange={(newDate) => {
-                setFieldValue("date", newDate.toISOString().replace(/T.*/, ""));
-                setFieldValue("dateType", "MANUAL");
+                const date = newDate.toISOString().replace(/T.*/, "");
+                const dateType = "MANUAL";
+                setFieldValue("date", date);
+                setFieldValue("dateType", dateType);
+                setItem({ date });
               }}
             />
             <FormError error={errors.date} />

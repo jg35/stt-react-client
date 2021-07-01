@@ -1,25 +1,10 @@
 import React, { useContext } from "react";
 import Button from "~/components/button";
+import { scrollToUndated } from "~/lib/timeline";
 import { UIContext } from "~/app";
 
 export default function TimePeriodSelector({ timelinePeriod, orphanCount }) {
   const { updateUiState } = useContext(UIContext);
-  function scrollToUndated() {
-    const timelineContainer = document.querySelector(
-      ".js-timeline-scroll-container"
-    );
-
-    const undatedContainer = document.querySelector(
-      ".js-undated-fragment-container"
-    );
-
-    if (undatedContainer && timelineContainer) {
-      timelineContainer.scrollTo({
-        top: undatedContainer.offsetTop - timelineContainer.offsetTop - 10,
-        behavior: "smooth",
-      });
-    }
-  }
 
   return (
     <div className="h-10 bg-white sticky bottom-4 w-max flex items-center shadow-lg py-6 px-4 rounded border">

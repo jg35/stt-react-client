@@ -26,7 +26,7 @@ export default function Tutorial() {
   const [arrowStyle, setArrowStyle] = useState({});
   const [widgetStyle, setWidgetStyle] = useState({});
 
-  function nextStepStyleHandler(nextStep) {
+  function stepStyleHandler(nextStep) {
     let widgetStyle = {};
     let arrowStyle = {};
     if (nextStep.position) {
@@ -37,8 +37,10 @@ export default function Tutorial() {
       };
     } else {
       // Find anchor / callout elements in the dom
-      const calloutEl = document.querySelector(`#${nextStep.calloutId}`);
-      const anchorEl = document.querySelector(`#${nextStep.anchorId}`);
+      const calloutEl =
+        nextStep.calloutEl || document.querySelector(nextStep.calloutSelector);
+      const anchorEl =
+        nextStep.anchorEl || document.querySelector(nextStep.anchorSelector);
       if (calloutEl && anchorEl) {
         widgetStyle = getWidgetStyle(anchorEl, nextStep.anchorPosition);
         arrowStyle = getArrowStyle(
@@ -61,34 +63,51 @@ export default function Tutorial() {
     if (data && uiState) {
       // Check whether to move to the next step
       const nextStep = getNextStep(steps, data, uiState);
-      if (!currentStep || nextStep.step !== currentStep.step) {
+      if (
+        !currentStep ||
+        (!currentStep.last && nextStep.step !== currentStep.step)
+      ) {
+        // Wait for DOM
         if (currentStep) {
-          currentStep.end();
+          currentStep.end(data, uiState, updateUiState);
         }
-        nextStepStyleHandler(nextStep);
-        nextStep.init();
+        nextStep.init(data, uiState, updateUiState);
         // Set the next step
         setCurrentStep(nextStep);
-        saveCurrentStep(nextStep.step);
       }
     }
   }, [data, uiState]);
 
+  useEffect(() => {
+    if (currentStep) {
+      setTimeout(() => {
+        stepStyleHandler(currentStep);
+      });
+    }
+  }, [currentStep]);
+
   function saveCurrentStep(step) {
-    updateUiState({ tutorialStep: step });
+    if (step > steps.length) {
+      endTutorial();
+    } else {
+      updateUiState({ tutorialStep: step });
+    }
   }
 
-  function skipTutorial() {
+  function endTutorial() {
     updateUser({
       variables: { userId: user.id, data: { onboarding: true } },
       update(cache, { data }) {
-        currentStep.end();
+        currentStep.end(data, uiState);
         updateUiState({
           capture: {
             showModal: false,
             item: null,
             event: null,
           },
+          showPreview: false,
+          tutorialStep: -1,
+          activeCaptureIndex: null,
         });
         cache.modify({
           fields: {
@@ -134,21 +153,30 @@ export default function Tutorial() {
           </div>
           <div>
             <p className={`${currentStep.xl ? "py-4 text-lg" : "py-2"}`}>
-              {currentStep.body}
+              {typeof currentStep.body === "function"
+                ? currentStep.body(data, uiState)
+                : currentStep.body}
             </p>
           </div>
           <div className="flex justify-between">
-            <Button onClick={skipTutorial}>
-              <LoadingSpinner loading={updateUserLoading} css="mr-2 h-4 w-4" />
-              {updateUserLoading ? "Updating..." : "Skip tutorial"}
-            </Button>
+            <div>
+              {!currentStep.last && (
+                <Button onClick={endTutorial}>
+                  <LoadingSpinner
+                    loading={updateUserLoading}
+                    css="mr-2 h-4 w-4"
+                  />
+                  {updateUserLoading ? "Updating..." : "Skip tutorial"}
+                </Button>
+              )}
+            </div>
 
             <Button
               bigCta
               disabled={currentStep.async}
               onClick={() => saveCurrentStep(currentStep.step + 1)}
             >
-              {currentStep.async ? (
+              {currentStep.async || updateUserLoading ? (
                 <span className="flex">
                   <LoadingSpinner
                     loading={true}

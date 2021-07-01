@@ -100,19 +100,25 @@ export default function CaptureHeader({ init }) {
   if (data) {
     return (
       <>
-        <div className="w-full h-full bg-white  rounded p-4 border shadow">
+        <div
+          id="question-panel"
+          className="w-full h-full bg-white  rounded p-4 border shadow"
+        >
           {currentQuestion && (
             <>
               <div className="flex justify-between items-center mb-2">
                 <h1 className="text-xl">{currentQuestion.title}</h1>
                 {questionOptions.length > 1 && (
-                  <Button minimal onClick={() => shuffleQuestion()}>
-                    <Svg name="shuffle" width="20" height="20"></Svg>
-                  </Button>
+                  <div id="shuffle-button-wrapper">
+                    <Button minimal onClick={() => shuffleQuestion()}>
+                      <Svg name="shuffle" width="20" height="20"></Svg>
+                    </Button>
+                  </div>
                 )}
               </div>
               <div className="flex justify-between items-center">
                 <input
+                  id="form-question-text-input"
                   value={questionAnswer}
                   onChange={(e) => {
                     setQuestionAnswer(e.target.value);

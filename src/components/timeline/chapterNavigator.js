@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Svg from "~/components/svg";
+import { scrollToFragment } from "~/lib/timeline";
 
 export default function ScrollNavigator({ chapters }) {
   const [hoverChapter, setHoverChapter] = useState(null);
@@ -14,35 +15,6 @@ export default function ScrollNavigator({ chapters }) {
         {children}
       </div>
     );
-  }
-
-  function scrollToFragment(fragmentId) {
-    const timelineContainer = document.querySelector(
-      ".js-timeline-scroll-container"
-    );
-    const timelineFragment = document.querySelector(
-      `div[data-fragment-id="${fragmentId}"]`
-    );
-    const previewConainer = document.querySelector(
-      ".js-preview-scroll-container"
-    );
-
-    const previewFragment = document.querySelector(
-      `[data-preview-fragment-id="${fragmentId}"]`
-    );
-    if (timelineFragment && timelineContainer) {
-      timelineContainer.scrollTo({
-        top: timelineFragment.offsetTop - timelineContainer.offsetTop - 10,
-        behavior: "smooth",
-      });
-    }
-
-    if (previewFragment && previewConainer) {
-      previewConainer.scrollTo({
-        top: previewFragment.offsetTop - previewConainer.offsetTop - 10,
-        behavior: "smooth",
-      });
-    }
   }
 
   function TimelineMarker() {

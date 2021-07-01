@@ -53,6 +53,18 @@ export default function CaptureModal() {
     updateUiState({ capture: { showModal: false, item: null } });
   }
 
+  function setItem(field) {
+    updateUiState({
+      capture: {
+        ...uiState.capture,
+        item: {
+          ...item,
+          ...field,
+        },
+      },
+    });
+  }
+
   function saveFragmentHandler(form) {
     // TODO - error handling
     if (!form.id) {
@@ -156,6 +168,7 @@ export default function CaptureModal() {
             <h1 className="modal-title">{formTitle}</h1>
             {item.type === "EVENT" && (
               <EventForm
+                setItem={setItem}
                 item={item}
                 submitForm={saveUserEventHandler}
                 closeModal={closeModal}
@@ -163,6 +176,7 @@ export default function CaptureModal() {
             )}
             {item.type === "TEXT" && (
               <TextForm
+                setItem={setItem}
                 item={item}
                 submitForm={saveFragmentHandler}
                 closeModal={closeModal}
@@ -171,6 +185,7 @@ export default function CaptureModal() {
             )}
             {item.type === "CHAPTER" && (
               <ChapterForm
+                setItem={setItem}
                 item={item}
                 submitForm={saveFragmentHandler}
                 closeModal={closeModal}
@@ -178,6 +193,7 @@ export default function CaptureModal() {
             )}
             {item.type === "PHOTO" && (
               <PhotoForm
+                setItem={setItem}
                 item={item}
                 submitForm={saveFragmentHandler}
                 closeModal={closeModal}
