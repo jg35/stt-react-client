@@ -102,7 +102,7 @@ export default function CaptureHeader({ init }) {
       <>
         <div
           id="question-panel"
-          className="w-full h-full bg-white  rounded p-4 border shadow"
+          className="w-full h-full bg-white  rounded p-4 border-2 shadow"
         >
           {currentQuestion && (
             <>

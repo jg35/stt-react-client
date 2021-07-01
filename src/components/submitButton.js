@@ -1,14 +1,20 @@
 import React, { useEffect } from "react";
 
-export default function SubmitButton({ isSubmitting, children }) {
+export default function SubmitButton({
+  isSubmitting,
+  bigCta = false,
+  children,
+  style = {},
+}) {
   let stateCss;
-  if (isSubmitting) {
+  if (isSubmitting || bigCta) {
     stateCss = "bg-black text-white";
   } else {
     stateCss = "bg-lightGray";
   }
   return (
     <button
+      style={style}
       id="form-submit-btn"
       type="submit"
       className={`flex items-center rounded p-2 justify-center text-lg w-36 duration-300 ease-in hover:bg-black hover:text-white ${stateCss}`}

@@ -108,8 +108,8 @@ export function getArrowStyle(calloutEl, anchorPosition, widgetStyle) {
 export const steps = [
   registerStep({
     step: 1,
-    title: "Welcome",
-    body: "Hello! 👋 Since it's your first time here, we have a quick tutorial to get you up and running with Stories To Tell. Sound good?",
+    title: "Timeline created!",
+    body: "Since it's your first time here, we have a quick tutorial to get you up and running with Stories To Tell. Sound good?",
     nextText: "Yep, let's go!",
     isComplete: (data, uiState) => uiState.tutorialStep > 1,
     async: false,
@@ -119,7 +119,7 @@ export const steps = [
   registerStep({
     step: 2,
     title: "Timeline",
-    body: "Here we are in the timeline view. This is your central hub for adding content to your book.",
+    body: "Here we are in the timeline view. This is the place where you will add content to your book and where you will spend most of your time.",
     isComplete: (data, uiState) => uiState.tutorialStep > 2,
     async: false,
     anchorSelector: "#nav-items",
@@ -129,7 +129,7 @@ export const steps = [
   registerStep({
     step: 3,
     title: "Questions",
-    body: "Let’s start by looking at the question panel. When you’re not sure where to begin, answering questions is a great way to start uncovering old memories",
+    body: "Let’s start at the top and look at the question panel. When you’re not sure where to begin, answering questions is a great way to start uncovering old memories",
     isComplete: (data, uiState) => uiState.tutorialStep > 3,
     async: false,
     anchorSelector: "#question-panel",
@@ -242,9 +242,7 @@ export const steps = [
     step: 11,
     title: "Your first event",
     body: (data, uiState) =>
-      `Try to think of something that happened here in ${
-        DateTime.fromISO(data.stt_fragment[0].date).year
-      }. Enter a title, change the date (if you like) and click “Add” to create your event`,
+      `Think of something memorable that has hapepend in your life. Enter a title, set the date and click “Add” to create your event`,
     isComplete: (data, uiState) =>
       data.stt_userEvent.length > 0 || uiState.tutorialStep > 12,
     async: true,
@@ -303,6 +301,17 @@ export const steps = [
     anchorSelector: "#section-actions-inner",
     calloutSelector: "#section-actions-photo",
     anchorPosition: "LEFT",
+    init: function (data, uiState, updateUiState) {
+      const activeCaptureIndex = findActiveSectionIndex(
+        data.stt_userEvent[0].id,
+        true
+      );
+      updateUiState({
+        tutorialStep: this.step,
+        activeCaptureIndex,
+      });
+      setTutorialStepCss(this.step);
+    },
   }),
   registerStep({
     step: 15,
@@ -393,10 +402,10 @@ export const steps = [
   registerStep({
     step: 21,
     title: "Timeline cards",
-    body: "Nice. Now in let’s click the menu button in one of your timeline cards to reveal more actions",
+    body: "Nice. Now let’s click the menu button here to see what else we can do with our memories",
     isComplete: (data, uiState) => uiState.tutorialStep > 21,
     async: false,
-    anchorPosition: "LEFT",
+    anchorPosition: "RIGHT",
     init: function () {
       const card = document.querySelector('div[data-fragment-type="TEXT"]');
       const cardId = card.getAttribute("data-fragment-id");
@@ -415,7 +424,7 @@ export const steps = [
     isComplete: (data, uiState) =>
       data.stt_fragment.find((f) => f.hidden) || uiState.tutorialStep > 22,
     async: true,
-    anchorPosition: "LEFT",
+    anchorPosition: "RIGHT",
     init: function () {
       const card = document.querySelector('div[data-fragment-type="TEXT"]');
       const cardId = card.getAttribute("data-fragment-id");
@@ -442,9 +451,9 @@ export const steps = [
     step: 24,
     xl: true,
     last: true,
-    title: "Summary",
-    nextText: "Close",
-    body: `Congratulations! 🎉 You're now ready to start adding content to your timeline. Once you've explored fully, head over to the “Edit” view to learn about editing your book.`,
+    title: "Epilogue",
+    nextText: "Close tutorial",
+    body: `And there you have it. You're now ready to start building your timeline and creating a beautiful book along the way. Once you've explored the timeline fully, head over to the “Edit” view to learn about editing your book.`,
     isComplete: (data, uiState) => uiState.tutorialStep > 24,
     async: false,
     position: { x: "50%", y: "50%" },
@@ -452,11 +461,15 @@ export const steps = [
   }),
 ];
 
-function findActiveSectionIndex(fragmentId) {
-  const fragment = document.querySelector(
-    `div[data-fragment-id="${fragmentId}"]`
-  );
-  const section = fragment.closest("section");
+function findActiveSectionIndex(itemId, isEvent = false) {
+  let target;
+  if (!isEvent) {
+    target = document.querySelector(`div[data-fragment-id="${itemId}"]`);
+  } else {
+    target = document.querySelector(`div[data-user-event-id="${itemId}"]`);
+  }
+
+  const section = target.closest("section");
   return parseInt(section.getAttribute("data-section-index"));
 }
 

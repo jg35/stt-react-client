@@ -183,7 +183,7 @@ export default function Tutorial() {
                     color="white"
                     css="mr-2 h-4 w-4"
                   />{" "}
-                  Waiting...
+                  {updateUserLoading ? "Saving..." : "Waiting..."}
                 </span>
               ) : (
                 currentStep.nextText

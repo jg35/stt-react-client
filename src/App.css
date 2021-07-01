@@ -167,8 +167,10 @@
   transition: filter 200ms ease-in;
 }
 
-#page.tutorial-step-1 {
-  filter: blur(2px) grayscale(1);
+#page.tutorial-step-1,
+#page.tutorial-step-24,
+#page.blur {
+  filter: blur(4px) grayscale(0.4);
   transition: filter 200ms ease-out;
 }
 
@@ -252,7 +254,7 @@
   pointer-events: all !important;
 }
 
-#page.tutorial-step-24 {
-  filter: blur(2px) grayscale(1);
-  transition: filter 200ms ease-out;
+.user-details-form input {
+  max-width: none;
+  width: 100%;
 }
