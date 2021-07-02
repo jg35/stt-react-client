@@ -30,7 +30,7 @@ function SubscriptionStatus({
 
 async function getStripeConfig(stripeCustomerId) {
   return axios.get(
-    `${SUBSCRIPTION_URL}/config?appId=${process.env.REACT_APP_HASURA_APP_ID}&customerId=${stripeCustomerId}`
+    `${SUBSCRIPTION_URL}/init?appId=${process.env.REACT_APP_HASURA_APP_ID}&customerId=${stripeCustomerId}`
   );
 }
 

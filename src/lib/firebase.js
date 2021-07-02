@@ -27,7 +27,7 @@ firebase.auth().onAuthStateChanged(async (user) => {
     ) {
       axios
         .post(
-          `${process.env.REACT_APP_NETLIFY_FUNCTIONS_TEST_URL}/actions/users/sync`,
+          `${process.env.REACT_APP_NETLIFY_FUNCTIONS_URL}/actions/users/sync`,
           {
             token,
             user,
