@@ -14,6 +14,7 @@ import Publish from "~/routes/publish";
 import Edit from "~/routes/edit";
 import Settings from "~/routes/settings";
 import Login from "~/routes/login";
+import Logout from "~/routes/logout";
 
 import AuthWrap from "~/components/authWrap";
 import uiManager from "~/lib/uiManager";
@@ -52,6 +53,9 @@ export default function App() {
               </Route>
               <Route path="/login">
                 <Login />
+              </Route>
+              <Route path="/logout">
+                <Logout />
               </Route>
               <Route path="/">
                 <Timeline />

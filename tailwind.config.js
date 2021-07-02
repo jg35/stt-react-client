@@ -37,6 +37,7 @@ module.exports = {
       red: "#ff6a66",
       transparent: "transparent",
       google: "#4285f4",
+      green: "#a9e292",
     },
   },
   variants: {

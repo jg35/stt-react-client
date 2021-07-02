@@ -100,6 +100,8 @@ export const FETCH_USER = gql`
       location
       dob
       onboarding
+      trialExpiresDate
+      stripeCustomerId
     }
   }
 `;
