@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Button from "~/components/button";
 
 function getTitle(interval) {
@@ -17,35 +16,29 @@ function formatPrice(price) {
 }
 
 export default function SubscriptionOptionCard({
-  planId,
-  activeSubscription,
   option,
   selectPlan,
-  cancelPlan,
   selected,
+  index,
 }) {
-  const [planSelected] = useState(planId === option.id);
-  const [planActive] = useState(planId === option.id && activeSubscription);
   return (
-    <div
-      className={`w-40 shadow-lg bg-white border-2 mr-4 p-4 mb-4 rounded ${
-        selected ? "border-green" : "border-black"
-      }`}
-    >
-      <h1 className={`text-xl`}>{getTitle(option.recurring.interval)}</h1>
-      <p className="text-lg">{formatPrice(option.unit_amount)}</p>
-      <div className="pt-6">
-        {!selected && !activeSubscription && (
-          <Button onClick={() => selectPlan()}>
+    <div onClick={() => selectPlan()} className={`cursor-pointer w-48 mb-4`}>
+      <div
+        className={`shadow-lg bg-white border-2 p-4 ${
+          index === 0 ? "mr-1" : "ml-1"
+        } rounded ${selected ? "border-green" : "border-black"}`}
+      >
+        <h1 className={`text-xl`}>{getTitle(option.recurring.interval)}</h1>
+        <p className={`text-lg`}>{formatPrice(option.unit_amount)}</p>
+        <div className="pt-6">
+          <Button
+            css={selected ? "bg-green hover:bg-green " : ""}
+            onClick={() => selectPlan()}
+            disabled={selected}
+          >
             {selected ? "Plan selected" : "Select this plan"}
           </Button>
-        )}
-        {planActive && (
-          <Button onClick={() => cancelPlan()}>Cancel plan</Button>
-        )}
-        {planSelected && !planActive && (
-          <Button disabled>Payment required</Button>
-        )}
+        </div>
       </div>
     </div>
   );

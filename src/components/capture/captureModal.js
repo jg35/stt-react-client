@@ -9,6 +9,7 @@ import {
   UPDATE_USER_EVENT,
 } from "~/lib/gql";
 
+import Modal from "~/components/modal";
 import ChapterForm from "~/components/capture/chapterForm";
 import PhotoForm from "~/components/capture/photoForm";
 import TextForm from "~/components/capture/textForm";
@@ -149,60 +150,48 @@ export default function CaptureModal() {
     }
   }
 
-  if (showModal && item) {
-    return (
-      <div
-        className="animate-fade-in absolute w-full h-full bg-lightestGray left-0 top-0 z-50 bg-opacity-90 flex justify-center items-center"
-        onClick={closeModal}
-      >
-        <div
-          id="capture-form-wrapper"
-          onClick={(e) => e.stopPropagation()}
-          className={`animate-fade-in m-1 shadow-lg rounded-lg bg-white p-4 flex justify-between flex-col pt-10 pl-10 pr-6 ${
-            item.type === "TEXT"
-              ? "h-4/6 w-4/5 max-w-5xl"
-              : "h-auto w-2/5 max-w-2xl"
-          }`}
-        >
-          <div className="flex-1 flex flex-col relative h-full">
-            <h1 className="modal-title">{formTitle}</h1>
-            {item.type === "EVENT" && (
-              <EventForm
-                setItem={setItem}
-                item={item}
-                submitForm={saveUserEventHandler}
-                closeModal={closeModal}
-              />
-            )}
-            {item.type === "TEXT" && (
-              <TextForm
-                setItem={setItem}
-                item={item}
-                submitForm={saveFragmentHandler}
-                closeModal={closeModal}
-                originatesFromQuestion={originatesFromQuestion}
-              />
-            )}
-            {item.type === "CHAPTER" && (
-              <ChapterForm
-                setItem={setItem}
-                item={item}
-                submitForm={saveFragmentHandler}
-                closeModal={closeModal}
-              />
-            )}
-            {item.type === "PHOTO" && (
-              <PhotoForm
-                setItem={setItem}
-                item={item}
-                submitForm={saveFragmentHandler}
-                closeModal={closeModal}
-              />
-            )}
-          </div>
-        </div>
+  return showModal && item ? (
+    <Modal
+      isOpen={true}
+      close={closeModal}
+      size={item && item.type === "text" ? "lg" : "md"}
+    >
+      <div className="flex-1 flex flex-col relative h-full">
+        <h1 className="modal-title">{formTitle}</h1>
+        {item.type === "EVENT" && (
+          <EventForm
+            setItem={setItem}
+            item={item}
+            submitForm={saveUserEventHandler}
+            closeModal={closeModal}
+          />
+        )}
+        {item.type === "TEXT" && (
+          <TextForm
+            setItem={setItem}
+            item={item}
+            submitForm={saveFragmentHandler}
+            closeModal={closeModal}
+            originatesFromQuestion={originatesFromQuestion}
+          />
+        )}
+        {item.type === "CHAPTER" && (
+          <ChapterForm
+            setItem={setItem}
+            item={item}
+            submitForm={saveFragmentHandler}
+            closeModal={closeModal}
+          />
+        )}
+        {item.type === "PHOTO" && (
+          <PhotoForm
+            setItem={setItem}
+            item={item}
+            submitForm={saveFragmentHandler}
+            closeModal={closeModal}
+          />
+        )}
       </div>
-    );
-  }
-  return null;
+    </Modal>
+  ) : null;
 }

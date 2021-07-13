@@ -4,10 +4,13 @@ import { NavLink } from "react-router-dom";
 import Svg from "~/components/svg";
 import Button from "~/components/button";
 import MainMenu from "~/components/mainMenu";
+import TrialStatus from "~/components/trialStatus";
 import { UIContext } from "~/app";
+import { AuthContext } from "~/components/authWrap";
 
 export default function Header({ minimal = false }) {
   const { uiState, updateUiState } = useContext(UIContext);
+  const { dbUser } = useContext(AuthContext);
   const isTimeline = useRouteMatch("/");
   return (
     <header className="flex justify-between items-center py-4">
@@ -41,6 +44,15 @@ export default function Header({ minimal = false }) {
               Publish
             </NavLink>
           </nav>
+        )}
+      </div>
+      <div>
+        {dbUser && (
+          <TrialStatus
+            stripeCustomerId={dbUser.stripeCustomerId}
+            expiry={dbUser.trialExpiresDate}
+            status={dbUser.subscriptionStatus}
+          />
         )}
       </div>
       <div className="flex">

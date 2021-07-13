@@ -17,6 +17,13 @@ export default {
       tutorialStep: -1,
       tutorialClickedPreviewFragment: false,
       activeCaptureIndex: null,
+      payment: {
+        showModal: false,
+        type: "CHOOSE_PLAN",
+        intent: "AUTO",
+        subscriptionStatus: null,
+        stripeCustomerId: null,
+      },
     };
 
     if (uiState) {

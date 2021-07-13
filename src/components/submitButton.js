@@ -5,6 +5,7 @@ export default function SubmitButton({
   bigCta = false,
   children,
   style = {},
+  disabled = false,
 }) {
   let stateCss;
   if (isSubmitting || bigCta) {
@@ -12,8 +13,12 @@ export default function SubmitButton({
   } else {
     stateCss = "bg-lightGray";
   }
+  if (disabled) {
+    stateCss = stateCss + " opacity-50 cursor-not-allowed	";
+  }
   return (
     <button
+      disabled={disabled}
       style={style}
       id="form-submit-btn"
       type="submit"
