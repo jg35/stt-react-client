@@ -102,8 +102,8 @@ export const FETCH_USER = gql`
       onboarding
       trialExpiresDate
       stripeCustomerId
-      subscriptionId
       subscriptionStatus
+      subscriptionMeta
     }
   }
 `;

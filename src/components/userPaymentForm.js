@@ -69,7 +69,6 @@ export default function UserPaymentForm({
         action={`${process.env.REACT_APP_NETLIFY_FUNCTIONS_URL}/actions/subscriptions/checkout`}
         method="POST"
       >
-        <input type="hidden" name="type" value="new"></input>
         <input type="hidden" name="customerId" value={stripeCustomerId}></input>
         <input type="hidden" name="priceId" value={priceId}></input>
         <input
