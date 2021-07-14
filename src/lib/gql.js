@@ -57,6 +57,30 @@ export const FETCH_TIMELINE_VIEW = gql`
   }
 `;
 
+export const FETCH_EDIT_VIEW = gql`
+  query ($userId: String!) {
+    stt_fragment(where: { userId: { _eq: $userId } }) {
+      id
+      content
+      date
+      dateType
+      type
+      mediaUrl
+      mediaCaption
+      questionId
+      hidden
+      complete
+      tag
+      createdAt
+      updatedAt
+    }
+    stt_version(where: { userId: { _eq: $userId } }) {
+      id
+      theme
+    }
+  }
+`;
+
 export const FETCH_CAPTURE_HEADER = gql`
   query ($userId: String!) {
     stt_question {

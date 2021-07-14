@@ -38,3 +38,12 @@ export const OnboardingSchema = Yup.object().shape({
   location: Yup.string().default("").required("Location is required"),
   dob: Yup.string().default("").required("Date of birth is required"),
 });
+
+export const ThemeSchema = Yup.object().shape({
+  chapters: Yup.object().shape({
+    fontSize: Yup.string().default("md"),
+  }),
+  text: Yup.object().shape({
+    fontSize: Yup.string().default("md"),
+  }),
+});

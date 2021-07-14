@@ -1,7 +1,7 @@
-export default function Card({ children }) {
+export default function Card({ children, css = "py-4 w-full" }) {
   return (
-    <div className="py-4">
-      <div className="shadow-lg min-h-full min-w-full rounded-lg bg-white p-4">
+    <div className={css}>
+      <div className="shadow-lg h-full min-w-full rounded-lg bg-white p-4 flex flex-col">
         {children}
       </div>
     </div>
