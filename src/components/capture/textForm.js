@@ -5,6 +5,7 @@ import DatePicker from "~/components/capture/datepicker";
 import FormActions from "~/components/capture/formActions";
 import FormError from "~/components/formError";
 import TextEditor from "~/components/capture/textEditor";
+import FormInput from "~/components/formInput";
 
 export default function TextForm({
   item,
@@ -12,6 +13,7 @@ export default function TextForm({
   submitForm,
   closeModal,
   originatesFromQuestion,
+  editContent = true,
 }) {
   return (
     <Formik
@@ -32,32 +34,48 @@ export default function TextForm({
         setFieldValue,
       }) => (
         <form onSubmit={handleSubmit} className="flex-1 flex flex-col">
-          <div className="form-control h-full">
-            <TextEditor
-              name="content"
-              handleBlur={handleBlur}
-              handleChange={handleChange}
-              value={values.content}
-              error={errors.content}
-              onKeyUp={(e) => {
-                if (
-                  originatesFromQuestion &&
-                  e.key === "Backspace" &&
-                  e.target.value.length === 0
-                ) {
-                  closeModal();
-                  const input = document.querySelector(
-                    ".js-question-text-input"
-                  );
-                  if (input) {
-                    input.focus();
+          {editContent && (
+            <div className="form-control h-full">
+              <TextEditor
+                name="content"
+                handleBlur={handleBlur}
+                handleChange={handleChange}
+                value={values.content}
+                error={errors.content}
+                onKeyUp={(e) => {
+                  if (
+                    originatesFromQuestion &&
+                    e.key === "Backspace" &&
+                    e.target.value.length === 0
+                  ) {
+                    closeModal();
+                    const input = document.querySelector(
+                      ".js-question-text-input"
+                    );
+                    if (input) {
+                      input.focus();
+                    }
                   }
-                }
-                return;
-              }}
+                  return;
+                }}
+              />
+              <FormError error={errors.content} />
+            </div>
+          )}
+
+          <div className="form-control">
+            <label>Title</label>
+            <FormInput
+              name="title"
+              placeholder="Title your memory (for reference)"
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+              value={values.title}
+              error={errors.title}
             />
-            <FormError error={errors.content} />
+            <FormError error={errors.title} />
           </div>
+
           <div className="form-control">
             <label>Date</label>
             <DatePicker

@@ -4,10 +4,10 @@ import ChapterFragment from "~/components/timeline/chapterFragment";
 import MemoryFragment from "~/components/timeline/memoryFragment";
 import PhotoFragment from "~/components/timeline/photoFragment";
 
-export default function Fragment({ fragment, editView }) {
+export default function Fragment({ fragment }) {
   return (
     <div
-      style={{ minHeight: "10rem", width: editView ? "100%" : "18rem" }}
+      style={{ minHeight: "10rem", maxWidth: "18rem" }}
       className="animate-fade-in rounded p-2 pb-4 bg-white shadow flex flex-col"
       data-fragment-id={fragment.id}
       data-fragment-type={fragment.type}

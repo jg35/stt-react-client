@@ -91,9 +91,7 @@ export default function Preview({ fragments }) {
                       }
                     })}
                 </div>
-                <ChapterNavigator
-                  chapters={fragments.filter((f) => f.type === "CHAPTER")}
-                />
+                <ChapterNavigator fragments={fragments} />
               </>
             ) : (
               <PreivewSkeleton />

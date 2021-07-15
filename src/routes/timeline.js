@@ -125,7 +125,7 @@ export default function Timeline() {
         </div>
         <Preview fragments={fragments} />
       </div>
-      <CaptureModal init={!loading} />
+      <CaptureModal />
     </Page>
   );
 }

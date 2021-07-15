@@ -24,6 +24,8 @@ export default {
         subscriptionStatus: null,
         stripeCustomerId: null,
       },
+      editPreviewScrollPosition: null,
+      previewScrollPosition: null,
     };
 
     if (uiState) {

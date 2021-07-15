@@ -23,6 +23,18 @@
     outline: none;
     border: none;
   }
+  .theme-family-baskerville {
+    font-family: baskerville-display-pt, serif !important;
+  }
+  .theme-family-museo {
+    font-family: museo-sans, sans-serif !important;
+  }
+  .theme-family-futura {
+    font-family: futura-pt, sans-serif !important;
+  }
+  .theme-family-garamond {
+    font-family: adobe-garamond-pro, serif !important;
+  }
 }
 
 @layer utilities {

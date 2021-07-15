@@ -36,7 +36,6 @@ export default function AccessControlModals() {
         paymentState.type = "MANAGE_PLAN";
       }
       if (paymentState.showModal) {
-        console.log(paymentState);
         paymentState.intent = "AUTO";
         updateUiState({ payment: paymentState }, false);
       }

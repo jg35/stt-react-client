@@ -198,7 +198,7 @@ export function scrollToFragment(fragmentId = null, smooth = true) {
     ".js-timeline-scroll-container"
   );
 
-  const previewConainer = document.querySelector(
+  const previewContainer = document.querySelector(
     ".js-preview-scroll-container"
   );
 
@@ -212,9 +212,9 @@ export function scrollToFragment(fragmentId = null, smooth = true) {
     });
   }
 
-  if (previewFragment && previewConainer) {
-    previewConainer.scrollTo({
-      top: previewFragment.offsetTop - previewConainer.offsetTop - 10,
+  if (previewFragment && previewContainer) {
+    previewContainer.scrollTo({
+      top: previewFragment.offsetTop - previewContainer.offsetTop - 10,
       behavior: smooth ? "smooth" : "auto",
     });
   }

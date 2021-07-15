@@ -16,7 +16,7 @@ import TextForm from "~/components/capture/textForm";
 import EventForm from "~/components/capture/eventForm";
 import { UIContext } from "~/app";
 
-export default function CaptureModal() {
+export default function CaptureModal({ editView = false }) {
   const [formTitle, setFormTitle] = useState("");
   const [insertFragment] = useMutation(INSERT_FRAGMENT);
   const [insertUserEvent] = useMutation(INSERT_USER_EVENT);
@@ -168,6 +168,7 @@ export default function CaptureModal() {
         )}
         {item.type === "TEXT" && (
           <TextForm
+            editContent={!editView}
             setItem={setItem}
             item={item}
             submitForm={saveFragmentHandler}
@@ -177,6 +178,7 @@ export default function CaptureModal() {
         )}
         {item.type === "CHAPTER" && (
           <ChapterForm
+            editContent={!editView}
             setItem={setItem}
             item={item}
             submitForm={saveFragmentHandler}

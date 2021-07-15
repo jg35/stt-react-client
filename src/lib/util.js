@@ -34,3 +34,7 @@ export const getNumAsWord = (num) => {
   }
   return num;
 };
+
+export const renderFragmentDate = (date) => {
+  return DateTime.fromISO(date).toFormat("ccc d MMM yyyy");
+};

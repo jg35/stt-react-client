@@ -30,6 +30,7 @@ export const FETCH_TIMELINE_VIEW = gql`
     }
     stt_fragment(where: { userId: { _eq: $userId } }) {
       id
+      title
       content
       date
       dateType
@@ -61,6 +62,7 @@ export const FETCH_EDIT_VIEW = gql`
   query ($userId: String!) {
     stt_fragment(where: { userId: { _eq: $userId } }) {
       id
+      title
       content
       date
       dateType
@@ -91,6 +93,7 @@ export const FETCH_CAPTURE_HEADER = gql`
     }
     stt_fragment(where: { userId: { _eq: $userId } }) {
       id
+      title
       content
       date
       dateType
@@ -136,6 +139,7 @@ export const INSERT_FRAGMENT = gql`
   mutation ($data: stt_fragment_insert_input!) {
     insert_stt_fragment_one(object: $data) {
       id
+      title
       content
       date
       dateType
@@ -167,6 +171,7 @@ export const UPDATE_FRAGMENT = gql`
     update_stt_fragment_by_pk(pk_columns: { id: $id }, _set: $data) {
       id
       hidden
+      title
       content
       date
       dateType
@@ -222,6 +227,7 @@ export const UPDATE_VERSION = gql`
   mutation ($id: Int!, $data: stt_version_set_input) {
     update_stt_version_by_pk(pk_columns: { id: $id }, _set: $data) {
       id
+      theme
     }
   }
 `;
