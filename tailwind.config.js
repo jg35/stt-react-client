@@ -6,6 +6,7 @@ module.exports = {
       animation: {
         "fade-in": "fade-in ease-in 300ms ",
         expand: "expand 400ms forwards",
+        ticker: "ticker 2s linear infinite",
       },
       keyframes: {
         "fade-in": {
@@ -18,6 +19,15 @@ module.exports = {
             opacity: "1",
             transform: "scale(110%)",
             boxShadow: "1px 1px 12px rgb(0, 0, 0, .15)",
+          },
+        },
+        ticker: {
+          "0%": {
+            transform: "translate3d(0, 0, 0)",
+            visibility: "visible",
+          },
+          "100%": {
+            transform: "translate3d(-100%, 0, 0)",
           },
         },
       },

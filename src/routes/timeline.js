@@ -123,7 +123,10 @@ export default function Timeline() {
             </div>
           </div>
         </div>
-        <Preview fragments={fragments} />
+        <Preview
+          fragments={fragments}
+          theme={data && data.stt_version[0].theme}
+        />
       </div>
       <CaptureModal />
     </Page>

@@ -23,17 +23,26 @@
     outline: none;
     border: none;
   }
-  .theme-family-baskerville {
+  .theme-family-baskerville,
+  .theme-family-baskerville > * {
     font-family: baskerville-display-pt, serif !important;
   }
-  .theme-family-museo {
+  .theme-family-museo,
+  .theme-family-museo > * {
     font-family: museo-sans, sans-serif !important;
   }
-  .theme-family-futura {
+  .theme-family-futura,
+  .theme-family-futura > * {
     font-family: futura-pt, sans-serif !important;
   }
-  .theme-family-garamond {
+  .theme-family-garamond,
+  .theme-family-garamond > * {
     font-family: adobe-garamond-pro, serif !important;
+  }
+  .content-editable[data-placeholder]:empty:before {
+    content: attr(data-placeholder);
+    color: #cac7c7;
+    /* font-family: futura-pt, sans-serif; */
   }
 }
 

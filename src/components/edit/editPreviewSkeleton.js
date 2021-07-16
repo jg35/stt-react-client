@@ -1,4 +1,4 @@
-export default function PreviewSkeleton() {
+export default function EditPreviewSkeleton() {
   function Paragraph() {
     return (
       <>
@@ -13,7 +13,7 @@ export default function PreviewSkeleton() {
     );
   }
   return (
-    <div className="h-full w-11/12 overflow-scroll my-2 mx-auto">
+    <div className={`h-full w-full overflow-scroll mx-auto`}>
       <Paragraph />
       <Paragraph />
       <Paragraph />

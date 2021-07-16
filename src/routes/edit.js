@@ -9,7 +9,9 @@ import Card from "~/components/card";
 
 import EditPreview from "~/components/edit/editPreview";
 import EditPreviewSkeleton from "~/components/edit/editPreviewSkeleton";
+import EditPreviewContainer from "~/components/edit/editPreviewContainer";
 import Theming from "~/components/edit/theming";
+import ThemingSkeleton from "~/components/edit/themingSkeleton";
 import { ThemeSchema } from "../lib/yup";
 
 export default function Edit() {
@@ -74,20 +76,25 @@ export default function Edit() {
         className="flex h-full w-full justify-center"
         style={{ margin: "0 auto" }}
       >
-        {themeValues ? (
-          <EditPreview
-            fragments={fragments}
-            saveFragment={saveFragment}
-            theme={themeValues}
-          />
-        ) : (
-          <EditPreviewSkeleton />
-        )}
-        {themeValues && (
-          <Card css="w-72 pb-4 max-w-xs flex-shrink">
+        <EditPreviewContainer>
+          {themeValues ? (
+            <EditPreview
+              fragments={fragments}
+              saveFragment={saveFragment}
+              theme={themeValues}
+            />
+          ) : (
+            <EditPreviewSkeleton />
+          )}
+        </EditPreviewContainer>
+
+        <Card css="w-72 pb-4 max-w-xs flex-shrink">
+          {themeValues ? (
             <Theming theme={themeValues} saveTheme={saveThemeHandler} />
-          </Card>
-        )}
+          ) : (
+            <ThemingSkeleton />
+          )}
+        </Card>
       </div>
       <CaptureModal editView />
     </Page>

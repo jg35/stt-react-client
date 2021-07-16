@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useContext } from "react";
+import React, { useRef, useEffect, useContext, useState } from "react";
 import { debounce } from "lodash";
 import { getImgIxSrc } from "~/lib/util";
 import { scrollToFragment } from "~/lib/timeline";
@@ -6,10 +6,24 @@ import ChapterNavigator from "~/components/timeline/chapterNavigator";
 import PreivewSkeleton from "~/components/timeline/previewSkeleton";
 import { UIContext } from "~/app";
 
-export default function Preview({ fragments }) {
+export default function Preview({ fragments, theme }) {
   const previewScrollContainer = useRef(null);
   const { uiState, updateUiState } = useContext(UIContext);
+  const [chapterClass, setChapterClass] = useState("");
+  const [textClass, setTextClass] = useState("");
+  const [containerClass, setContainerClass] = useState("");
 
+  useEffect(() => {
+    if (theme) {
+      setChapterClass(
+        `text-center cursor-pointer ${theme.chapterFontSize} ${theme.lineHeight} ${theme.fontFamily}`
+      );
+      setTextClass(
+        `whitespace-pre-wrap cursor-pointer ${theme.fontSize} ${theme.lineHeight} ${theme.fontFamily}`
+      );
+      setContainerClass(theme.margin);
+    }
+  }, [theme]);
   useEffect(() => {
     const lastScrollPosition = uiState.previewScrollPosition;
     if (fragments && previewScrollContainer && lastScrollPosition) {
@@ -28,18 +42,21 @@ export default function Preview({ fragments }) {
 
   if (uiState.showPreview) {
     return (
-      <div className="pl-3 pr-1 pb-4 h-full max-h-full w-2/5 relative">
+      <div
+        className="pl-3 pr-1 pb-4 h-full max-h-full w-2/5 relative"
+        style={{ maxWidth: "768px" }}
+      >
         <div
           id="preview-container"
           className="relative h-full"
           style={{ width: "calc(100% - 20px)" }}
         >
-          <div className="absolute left-0 top-0 shadow-lg rounded-lg bg-white h-full w-full py-10 px-3 z-20">
+          <div className="absolute left-0 top-0 shadow-lg rounded-lg bg-white h-full w-full py-10 px-6 z-20">
             {fragments ? (
               <>
                 <div
                   ref={previewScrollContainer}
-                  className="h-full overflow-scroll js-preview-scroll-container px-7"
+                  className={`h-full overflow-scroll js-preview-scroll-container ${containerClass}`}
                   onScroll={debounce((e) => {
                     updateUiState({
                       previewScrollPosition: e.target.scrollTop,
@@ -52,7 +69,8 @@ export default function Preview({ fragments }) {
                       if (frag.type === "CHAPTER") {
                         return (
                           <h1
-                            className="text-center text-4xl my-20 cursor-pointer"
+                            style={{ margin: "2em 0" }}
+                            className={chapterClass}
                             key={index}
                             onClick={() => fragmentScrollHandler(frag.id)}
                             data-preview-fragment-id={frag.id}
@@ -63,7 +81,7 @@ export default function Preview({ fragments }) {
                       } else if (frag.type === "PHOTO") {
                         return (
                           <figure
-                            className="my-8"
+                            className="my-8 cursor-pointer"
                             key={index}
                             onClick={() => fragmentScrollHandler(frag.id)}
                           >
@@ -72,7 +90,7 @@ export default function Preview({ fragments }) {
                               className="w-full shadow"
                               data-preview-fragment-id={frag.id}
                             />
-                            <figcaption className="text-center">
+                            <figcaption className={`text-center ${textClass}`}>
                               {frag.mediaCaption}
                             </figcaption>
                           </figure>
@@ -80,7 +98,8 @@ export default function Preview({ fragments }) {
                       } else {
                         return (
                           <p
-                            className="mb-4 cursor-pointer whitespace-pre-wrap"
+                            style={{ marginBottom: "2em" }}
+                            className={textClass}
                             key={index}
                             onClick={() => fragmentScrollHandler(frag.id)}
                             data-preview-fragment-id={frag.id}

@@ -36,53 +36,38 @@ export default function Preview({ fragments, saveFragment, theme }) {
   }
 
   return (
-    <div
-      className="pb-4 h-full max-h-full w-full "
-      style={{ maxWidth: "768px" }}
-    >
+    <>
+      <SaveStatus saving={saving} lastSaved={lastSaved} />
       <div
-        id="preview-container"
-        className=" h-full"
-        style={{ width: "calc(100% - 20px)" }}
+        ref={editPreviewScrollContainer}
+        className={`h-full overflow-scroll js-preview-scroll-container relative pt-10 ${theme.margin}`}
+        onScroll={debounce((e) => {
+          updateUiState({
+            editPreviewScrollPosition: e.target.scrollTop,
+          });
+        }, 1000)}
       >
-        <div
-          className={`shadow-lg rounded-lg bg-white h-full w-full pt-6 pb-10 z-20 relative px-6`}
-        >
-          <SaveStatus saving={saving} lastSaved={lastSaved} />
-          <div
-            ref={editPreviewScrollContainer}
-            className={`h-full overflow-scroll js-preview-scroll-container relative ${theme.margin}`}
-            onScroll={debounce((e) => {
-              updateUiState({
-                editPreviewScrollPosition: e.target.scrollTop,
-              });
-            }, 1000)}
-          >
-            {fragments
-              .filter((f) => !f.hidden)
-              .map((frag, index) => {
-                if (frag.type !== "PHOTO") {
-                  return (
-                    <EditableFragment
-                      theme={theme}
-                      fragment={frag}
-                      key={index}
-                      saveFragment={(newContent) =>
-                        saveFragmentHandler(newContent, frag.content, frag.id)
-                      }
-                    />
-                  );
-                }
-                return (
-                  <PhotoFragment fragment={frag} theme={theme} key={index} />
-                );
-              })}
-          </div>
-          <ChapterNavigator fragments={fragments} />
-        </div>
-        {/* <div className="shadow-lg rounded-lg bg-white h-full w-full p-10 absolute left-3 z-10"></div> */}
-        {/* <div className="shadow-xl rounded-lg bg-white h-full w-full p-10 absolute left-6"></div> */}
+        {fragments
+          .filter((f) => !f.hidden)
+          .map((frag) => {
+            if (frag.type !== "PHOTO") {
+              return (
+                <EditableFragment
+                  theme={theme}
+                  fragment={frag}
+                  key={frag.id}
+                  saveFragment={(newContent) =>
+                    saveFragmentHandler(newContent, frag.content, frag.id)
+                  }
+                />
+              );
+            }
+            return (
+              <PhotoFragment fragment={frag} theme={theme} key={frag.id} />
+            );
+          })}
       </div>
-    </div>
+      <ChapterNavigator fragments={fragments} />
+    </>
   );
 }

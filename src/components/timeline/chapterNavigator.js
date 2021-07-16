@@ -38,11 +38,14 @@ export default function ScrollNavigator({ fragments }) {
     return Math.floor((100 / totalLength) * startsAtLength);
   }
 
-  function ChapterWrap({ chapterId, children, left }) {
+  function ChapterWrap({ chapterId, children, left, isHover = false }) {
     return (
       <div
         className="absolute flex-1 flex items-center justify-center z-10 top-1/2"
-        style={{ left: `${left}%`, transform: "translate(-12px, -50%)" }}
+        style={{
+          left: `${left}%`,
+          transform: `translate(${isHover ? "-50%" : "-12px"}, -50%)`,
+        }}
         onMouseEnter={() => setHoverChapter(chapterId)}
         onMouseLeave={() => setHoverChapter(null)}
       >
@@ -69,14 +72,22 @@ export default function ScrollNavigator({ fragments }) {
           if (hoverChapter && hoverChapter === chapter.id) {
             return (
               <ChapterWrap
+                isHover
                 chapterId={chapter.id}
-                key={index}
+                key={chapter.id}
                 left={getLeftPosition(chapter.position)}
               >
-                <div className="relative">
+                <div
+                  style={{ maxWidth: "8rem" }}
+                  className="bg-white font-medium cursor-pointer text-center border-b-2 py-1/2 px-1 border-black animate-expand overflow-hidden"
+                  onClick={() => scrollToFragment(chapter.id)}
+                >
                   <div
-                    className="bg-white font-medium cursor-pointer text-center border-b-2 py-1/2 px-1 border-black animate-expand"
-                    onClick={() => scrollToFragment(chapter.id)}
+                    style={{ textOverflow: "ellipsis", overflow: "hidden" }}
+                    className="whitespace-nowrap"
+                    title={
+                      (chapter.content.length > 15 && chapter.content) || ""
+                    }
                   >
                     {chapter.content}
                   </div>
@@ -87,7 +98,7 @@ export default function ScrollNavigator({ fragments }) {
             return (
               <ChapterWrap
                 chapterId={chapter.id}
-                key={index}
+                key={chapter.id}
                 left={getLeftPosition(chapter.position)}
               >
                 <Svg name="chapter" />

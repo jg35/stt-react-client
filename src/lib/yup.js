@@ -31,7 +31,7 @@ export const FragmentSchema = Yup.object().shape({
     .nullable(),
   questionId: Yup.number().default(null).nullable(),
   tag: Yup.string().default(null).nullable(),
-  title: Yup.string().default(null).nullable(),
+  title: Yup.string().ensure(),
   type: Yup.string().required(),
 });
 
@@ -41,7 +41,7 @@ export const OnboardingSchema = Yup.object().shape({
 });
 
 export const ThemeSchema = Yup.object().shape({
-  fontFamily: Yup.string().default("theme-family-futura"),
+  fontFamily: Yup.string().default("theme-family-baskerville"),
   fontSize: Yup.string().default("md"),
   chapterFontSize: Yup.string().default("md"),
   margin: Yup.string().default("md"),

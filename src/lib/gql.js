@@ -55,6 +55,10 @@ export const FETCH_TIMELINE_VIEW = gql`
       placeholder
       tag
     }
+    stt_version(where: { userId: { _eq: $userId } }) {
+      id
+      theme
+    }
   }
 `;
 
