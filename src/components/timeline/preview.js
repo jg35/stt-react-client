@@ -5,6 +5,7 @@ import { scrollToFragment } from "~/lib/timeline";
 import ChapterNavigator from "~/components/timeline/chapterNavigator";
 import PreivewSkeleton from "~/components/timeline/previewSkeleton";
 import { UIContext } from "~/app";
+import { setGoogleFontStyles } from "~/lib/uiManager";
 
 export default function Preview({ fragments, theme }) {
   const previewScrollContainer = useRef(null);
@@ -13,13 +14,23 @@ export default function Preview({ fragments, theme }) {
   const [textClass, setTextClass] = useState("");
   const [containerClass, setContainerClass] = useState("");
 
+  function updateGoogleFonts(fontFamily) {
+    const googleFontStyles = setGoogleFontStyles(
+      uiState.googleFontStyles,
+      fontFamily
+    );
+
+    updateUiState({ googleFontStyles }, false);
+  }
+
   useEffect(() => {
     if (theme) {
+      updateGoogleFonts(theme.fontFamily);
       setChapterClass(
-        `text-center cursor-pointer ${theme.chapterFontSize} ${theme.lineHeight} ${theme.fontFamily}`
+        `text-center cursor-pointer ${theme.chapterFontSize} ${theme.lineHeight}`
       );
       setTextClass(
-        `whitespace-pre-wrap cursor-pointer ${theme.fontSize} ${theme.lineHeight} ${theme.fontFamily}`
+        `whitespace-pre-wrap cursor-pointer ${theme.fontSize} ${theme.lineHeight}`
       );
       setContainerClass(theme.margin);
     }
@@ -69,7 +80,10 @@ export default function Preview({ fragments, theme }) {
                       if (frag.type === "CHAPTER") {
                         return (
                           <h1
-                            style={{ margin: "2em 0" }}
+                            style={{
+                              margin: "2em 0",
+                              fontFamily: theme.fontFamily,
+                            }}
                             className={chapterClass}
                             key={index}
                             onClick={() => fragmentScrollHandler(frag.id)}
@@ -90,7 +104,10 @@ export default function Preview({ fragments, theme }) {
                               className="w-full shadow"
                               data-preview-fragment-id={frag.id}
                             />
-                            <figcaption className={`text-center ${textClass}`}>
+                            <figcaption
+                              className={`text-center ${textClass}`}
+                              style={{ fontFamily: theme.fontFamily }}
+                            >
                               {frag.mediaCaption}
                             </figcaption>
                           </figure>
@@ -98,7 +115,10 @@ export default function Preview({ fragments, theme }) {
                       } else {
                         return (
                           <p
-                            style={{ marginBottom: "2em" }}
+                            style={{
+                              marginBottom: "2em",
+                              fontFamily: theme.fontFamily,
+                            }}
                             className={textClass}
                             key={index}
                             onClick={() => fragmentScrollHandler(frag.id)}

@@ -38,3 +38,14 @@ export const getNumAsWord = (num) => {
 export const renderFragmentDate = (date) => {
   return DateTime.fromISO(date).toFormat("ccc d MMM yyyy");
 };
+
+export const buildGoogleFontFaceString = (selectedFonts) => {
+  return selectedFonts
+    .map((font) => {
+      return `@import url('https://fonts.googleapis.com/css2?family=${font.family.replace(
+        /\s/g,
+        "+"
+      )}&display=swap');`;
+    })
+    .join("\n");
+};

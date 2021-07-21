@@ -30,8 +30,8 @@ export default function EditableFragment({ fragment, saveFragment, theme }) {
     }
   };
 
-  let textClass = `whitespace-pre-wrap focus:outline-none ${theme.fontSize} ${theme.lineHeight} ${theme.fontFamily}`;
-  let chapterClass = `text-center focus:outline-none ${theme.chapterFontSize} ${theme.lineHeight} ${theme.fontFamily}`;
+  let textClass = `whitespace-pre-wrap focus:outline-none ${theme.fontSize} ${theme.lineHeight}`;
+  let chapterClass = `text-center focus:outline-none ${theme.chapterFontSize} ${theme.lineHeight}`;
 
   return (
     <div
@@ -61,6 +61,7 @@ export default function EditableFragment({ fragment, saveFragment, theme }) {
           style={{
             marginTop: fragment.type === "CHAPTER" ? "2em" : "0",
             marginBottom: "2em",
+            fontFamily: theme.fontFamily,
           }}
           spellCheck={false}
           data-placeholder={

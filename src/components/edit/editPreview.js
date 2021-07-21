@@ -6,7 +6,8 @@ import { UIContext } from "~/app";
 import ChapterNavigator from "~/components/timeline/chapterNavigator";
 import PhotoFragment from "~/components/edit/photoFragment";
 import EditableFragment from "~/components/edit/editableFragment";
-import SaveStatus from "~/components/edit/saveStatus";
+import SaveStatus from "~/components/saveStatus";
+import { setGoogleFontStyles } from "~/lib/uiManager";
 
 export default function Preview({ fragments, saveFragment, theme }) {
   const { uiState, updateUiState } = useContext(UIContext);
@@ -37,7 +38,9 @@ export default function Preview({ fragments, saveFragment, theme }) {
 
   return (
     <>
-      <SaveStatus saving={saving} lastSaved={lastSaved} />
+      <div className="absolute top-2 left-4">
+        <SaveStatus saving={saving} lastSaved={lastSaved} />
+      </div>
       <div
         ref={editPreviewScrollContainer}
         className={`h-full overflow-scroll js-preview-scroll-container relative pt-10 ${theme.margin}`}

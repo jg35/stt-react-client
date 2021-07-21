@@ -26,6 +26,7 @@ export default {
       },
       editPreviewScrollPosition: null,
       previewScrollPosition: null,
+      googleFontStyles: [{ family: "Roboto", weight: 400 }],
     };
 
     if (uiState) {
@@ -73,4 +74,12 @@ export function makeEditUserEventForm(userEvent) {
       item: { ...userEvent, type: "EVENT" },
     },
   };
+}
+
+export function setGoogleFontStyles(fontStyles, fontFamily) {
+  const activeFont = fontStyles.find((f) => f.family === fontFamily);
+  if (!activeFont) {
+    return fontStyles.concat({ family: fontFamily });
+  }
+  return fontStyles;
 }

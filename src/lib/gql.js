@@ -48,6 +48,7 @@ export const FETCH_TIMELINE_VIEW = gql`
       location
       dob
       onboarding
+      publicHandle
     }
     stt_question {
       id
@@ -62,6 +63,7 @@ export const FETCH_TIMELINE_VIEW = gql`
   }
 `;
 
+// TODO - cache theme in storage, until it's fetched from the other view
 export const FETCH_EDIT_VIEW = gql`
   query ($userId: String!) {
     stt_fragment(where: { userId: { _eq: $userId } }) {
@@ -83,6 +85,40 @@ export const FETCH_EDIT_VIEW = gql`
     stt_version(where: { userId: { _eq: $userId } }) {
       id
       theme
+    }
+  }
+`;
+
+export const FETCH_PUBLISH_VIEW = gql`
+  query ($userId: String!) {
+    stt_version(where: { userId: { _eq: $userId } }) {
+      id
+      theme
+      title
+      author
+      coverUrl
+      publishedAt
+      publishedPath
+      publishedFormats
+      generated
+      userId
+    }
+  }
+`;
+
+export const FETCH_VERSION = gql`
+  query ($versionId: Int!) {
+    stt_version_by_pk(id: $versionId) {
+      id
+      theme
+      title
+      author
+      coverUrl
+      publishedAt
+      publishedPath
+      publishedFormats
+      generated
+      userId
     }
   }
 `;
@@ -135,6 +171,7 @@ export const FETCH_USER = gql`
       stripeCustomerId
       subscriptionStatus
       subscriptionMeta
+      publicHandle
     }
   }
 `;
@@ -166,6 +203,7 @@ export const UPDATE_USER = gql`
       location
       dob
       onboarding
+      publicHandle
     }
   }
 `;
@@ -232,6 +270,17 @@ export const UPDATE_VERSION = gql`
     update_stt_version_by_pk(pk_columns: { id: $id }, _set: $data) {
       id
       theme
+      title
+      author
+      publishedAt
+    }
+  }
+`;
+
+export const PUBLISH_VERSION = gql`
+  mutation ($userId: String!) {
+    stt_version_generate_book(userId: $userId) {
+      generated
     }
   }
 `;

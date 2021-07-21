@@ -2,7 +2,7 @@ import LoadingSpinner from "~/components/loadingSpinner";
 
 export default function SaveStatus({ saving }) {
   return (
-    <div className="h-12 font-medium absolute top-2 left-4">
+    <div className="h-6 font-medium">
       {saving && (
         <div className="flex">
           {" "}

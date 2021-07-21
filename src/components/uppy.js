@@ -13,7 +13,7 @@ const UPPY_AWS_CONFIG = (userId) => ({
     const fileName = `${file.name}-${Date.now()}`;
     return axios
       .get(
-        `${process.env.REACT_APP_NETLIFY_FUNCTIONS_URL}/actions/s3/sign?fileType=${file.type}&fileName=${fileName}&folder=stt/${userId}`
+        `${process.env.REACT_APP_NETLIFY_FUNCTIONS_URL}/actions/s3/signGetObject?objectPath=${file.type}&fileName=${fileName}&folder=stt/${userId}`
       )
       .then(({ data }) => {
         return {

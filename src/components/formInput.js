@@ -5,13 +5,17 @@ export default function FormInput({
   error,
   placeholder,
   name,
+  compact = false,
+  autoFocus = true,
 }) {
   return (
     <input
       id="form-text-input"
       name={name}
-      className={`input ${error && "input-error"}`}
-      autoFocus
+      className={`input ${compact ? "input--compact" : ""} ${
+        error && "input-error"
+      }`}
+      autoFocus={autoFocus}
       placeholder={placeholder}
       type="text"
       onChange={handleChange}

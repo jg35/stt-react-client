@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ApolloProvider } from "@apollo/client/react";
 
@@ -8,6 +8,7 @@ import "~/app.css";
 // Initialise apollo client + firebase
 import client from "~/lib/apollo";
 import "~/lib/firebase";
+import { buildGoogleFontFaceString } from "~/lib/util";
 
 import Timeline from "~/routes/timeline";
 import Publish from "~/routes/publish";
@@ -15,6 +16,7 @@ import Edit from "~/routes/edit";
 import Settings from "~/routes/settings";
 import Login from "~/routes/login";
 import Logout from "~/routes/logout";
+import Read from "~/routes/read";
 
 import AuthWrap from "~/components/authWrap";
 import uiManager from "~/lib/uiManager";
@@ -38,6 +40,7 @@ export default function App() {
 
   return (
     <UIContext.Provider value={{ uiState, updateUiState: update }}>
+      <style>{buildGoogleFontFaceString(uiState.googleFontStyles)}</style>
       <ApolloProvider client={client}>
         <Router>
           <AuthWrap>
@@ -56,6 +59,9 @@ export default function App() {
               </Route>
               <Route path="/logout">
                 <Logout />
+              </Route>
+              <Route path="/read/:versionId">
+                <Read />
               </Route>
               <Route path="/">
                 <Timeline />
