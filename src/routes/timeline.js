@@ -30,7 +30,6 @@ export default function Timeline() {
       userId: user.id,
     },
   });
-
   const [fragments, setFragments] = useState(null);
   const [timeline, setTimeline] = useState(null);
   const [orphanedFragments, setOrphanedFragments] = useState([]);

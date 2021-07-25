@@ -26,7 +26,6 @@ export default function AuthWrap({ children }) {
 
   useEffect(() => {
     if (hasuraUser) {
-      console.log(hasuraUser);
       setAuthState(
         handleSetAuth(
           {

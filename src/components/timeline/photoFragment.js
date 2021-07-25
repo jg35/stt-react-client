@@ -1,12 +1,10 @@
-import React from "react";
-
-import { getImgIxSrc } from "~/lib/util";
+import Image from "~/components/image";
 
 export default function PhotoFragment({ fragment }) {
   return (
     <div className="mx-auto">
-      <img
-        src={`${getImgIxSrc(fragment.mediaUrl)}?height=120`}
+      <Image
+        src={fragment.mediaUrl}
         className="h-auto rounded"
         alt={fragment.mediaCaption}
         title={fragment.mediaCaption}

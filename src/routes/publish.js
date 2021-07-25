@@ -1,12 +1,15 @@
 import { useEffect, useContext, useState } from "react";
-import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
-import { debounce, pick } from "lodash";
-import { FETCH_PUBLISH_VIEW, UPDATE_VERSION, PUBLISH_VERSION } from "~/lib/gql";
+import { useLazyQuery, useMutation, gql } from "@apollo/client";
+import { pick } from "lodash";
+import {
+  FETCH_PUBLISH_VIEW,
+  UPDATE_VERSION,
+  PUBLISH_VERSION,
+  GENERATE_COVER,
+} from "~/lib/gql";
 import { AuthContext } from "~/components/authWrap";
 import Page from "~/components/page";
 import Card from "~/components/card";
-import Button from "~/components/button";
-import { getImgIxSrc } from "~/lib/util";
 import CurrentVersion from "~/components/publish/currentVersion";
 import VersionList from "~/components/publish/versionList";
 import PublishSkeleton from "~/components/publish/publishSkeleton";
@@ -15,6 +18,7 @@ import CoverEditor from "~/components/publish/coverEditor";
 export default function Publish() {
   const { user, dbUser } = useContext(AuthContext);
   const [init, setInit] = useState(false);
+  const [showCoverEditor, setShowCoverEditor] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
   const [currentVersion, setCurrentVersion] = useState(null);
@@ -25,6 +29,7 @@ export default function Publish() {
   });
   const [updateVersion] = useMutation(UPDATE_VERSION);
   const [publishVersion] = useMutation(PUBLISH_VERSION);
+  const [generateCover] = useMutation(GENERATE_COVER);
 
   const [coverTemplate, setCoverTemplate] = useState({
     imagePosition: "center center",
@@ -41,8 +46,6 @@ export default function Publish() {
   useEffect(() => {
     if (data && data.stt_version) {
       setCurrentVersion(data.stt_version.find((v) => !v.generated));
-      // Set fonts
-      // Get published ones, newest first
       setPublishedVersions(data.stt_version.filter((v) => v.generated));
       setInit(true);
     }
@@ -57,8 +60,16 @@ export default function Publish() {
     });
   }
 
+  function saveTheme(theme, versionId) {
+    return updateVersion({
+      variables: {
+        data: { theme },
+        id: versionId,
+      },
+    });
+  }
+
   function saveVersionHandler(newValue, field, versionId) {
-    console.log("ello");
     if (newValue !== currentVersion[field]) {
       setIsSaving(true);
       const newVersion = { ...currentVersion, [field]: newValue };
@@ -73,79 +84,15 @@ export default function Publish() {
     }
   }
 
-  function setTemplate(field, value) {
-    setCoverTemplate({
-      ...coverTemplate,
-      [field]: value,
-    });
-  }
-
   return (
     <Page>
-      {/* <div style={{ maxWidth: "1056px", margin: "0 auto" }}> */}
-      {currentVersion && (
-        <>
-          {/* <div className="flex items-center my-2">
-            <span className="font-medium">Image: </span>
-            <Button
-              className="mx-2 px-2"
-              onClick={() => setTemplate("imagePosition", "left")}
-            >
-              Left
-            </Button>
-            <Button
-              className="mx-2 px-2"
-              onClick={() => setTemplate("imagePosition", "right")}
-            >
-              Right
-            </Button>
-            <Button
-              className="mx-2 px-2"
-              onClick={() => setTemplate("imagePosition", "center center")}
-            >
-              Center
-            </Button>
-          </div>
-          <div
-            style={{
-              padding: "5%",
-              width: "600px",
-              height: "800px",
-              backgroundPosition: coverTemplate.imagePosition,
-              backgroundSize: "cover",
-              backgroundImage: `url(${getImgIxSrc(
-                "https://poggl.s3.eu-west-2.amazonaws.com/images/stt/R5rRieKLqrRCMx1XjwTzAHWu80s2/andreas-gucklhorn-mawU2PoJWfU-unsplash.jpg-1626343379336"
-              )})`,
-            }}
-          >
-            <h1
-              style={{
-                fontSize: coverTemplate.titleFontSize,
-                color: coverTemplate.titleColor,
-              }}
-            >
-              {currentVersion.title}
-            </h1>
-          </div> */}
-          <CoverEditor
-            versionCover={currentVersion.theme.cover}
-            updateCover={debounce(
-              (cover) =>
-                saveVersionHandler(
-                  { ...currentVersion.theme, cover },
-                  "theme",
-                  currentVersion.id
-                ),
-              2000
-            )}
-          />
-        </>
-      )}
-      {/* <Card>
+      <div style={{ maxWidth: "1056px", margin: "0 auto" }}>
+        <Card>
           {init ? (
             <>
               <div className="mb-6">
                 <CurrentVersion
+                  setShowCoverEditor={setShowCoverEditor}
                   version={currentVersion}
                   isSaving={isSaving}
                   saveVersion={saveVersionHandler}
@@ -154,12 +101,40 @@ export default function Publish() {
                 />
               </div>
               <VersionList publishedVersions={publishedVersions} />
+              {showCoverEditor && currentVersion.theme.cover && (
+                <CoverEditor
+                  closeCoverEditor={() => setShowCoverEditor(!showCoverEditor)}
+                  versionCover={currentVersion.theme.cover}
+                  updateCover={(cover) => {
+                    return saveTheme(
+                      { ...currentVersion.theme, cover },
+                      currentVersion.id
+                    ).then(() => {
+                      return generateCover({
+                        variables: {
+                          userId: user.id,
+                        },
+                        update(cache, { data }) {
+                          cache.modify({
+                            fields: {
+                              stt_version(versions = []) {
+                                // force refetch
+                                return [];
+                              },
+                            },
+                          });
+                        },
+                      });
+                    });
+                  }}
+                />
+              )}
             </>
           ) : (
             <PublishSkeleton />
           )}
-        </Card> */}
-      {/* </div> */}
+        </Card>
+      </div>
     </Page>
   );
 }

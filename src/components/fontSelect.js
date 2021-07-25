@@ -1,4 +1,4 @@
-import axios from "axios";
+import { functionServer } from "~/lib/axios";
 import Select from "react-select";
 import { useEffect, useState, useContext } from "react";
 import { UIContext } from "~/app";
@@ -28,10 +28,8 @@ export default function GoogleFontSelect({
 
   useEffect(() => {
     // TODO cache this call in a hasura action
-    axios
-      .get(
-        `${process.env.REACT_APP_NETLIFY_FUNCTIONS_URL}/actions/googleFonts/available`
-      )
+    functionServer
+      .get("actions/googleFonts/available")
       .then(({ data: fonts }) => {
         setOptions(
           fonts.reduce((fonts, font, index) => {

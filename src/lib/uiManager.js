@@ -27,6 +27,7 @@ export default {
       editPreviewScrollPosition: null,
       previewScrollPosition: null,
       googleFontStyles: [{ family: "Roboto", weight: 400 }],
+      signedUrls: {},
     };
 
     if (uiState) {

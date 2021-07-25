@@ -102,6 +102,7 @@ export default function CaptureModal({ editView = false }) {
             "userId",
             "createdAt",
             "updatedAt",
+            "signedMediaUrl",
           ]),
           id: form.id,
         },

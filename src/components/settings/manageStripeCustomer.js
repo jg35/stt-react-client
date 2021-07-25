@@ -55,7 +55,7 @@ export default function ManageStripeCustomer({
         {buildSummary(subscriptionStatus, subscriptionMeta)}
       </p>
       <form
-        action={`${process.env.REACT_APP_NETLIFY_FUNCTIONS_URL}/actions/subscriptions/portal`}
+        action={`${process.env.REACT_APP_FUNCTIONS_SERVER_URL}/actions/subscriptions/portal`}
         method="POST"
       >
         <input type="hidden" name="customerId" value={stripeCustomerId} />

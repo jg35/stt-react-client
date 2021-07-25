@@ -39,7 +39,6 @@ export const FETCH_TIMELINE_VIEW = gql`
       mediaCaption
       questionId
       hidden
-      complete
       tag
       createdAt
       updatedAt
@@ -59,6 +58,7 @@ export const FETCH_TIMELINE_VIEW = gql`
     stt_version(where: { userId: { _eq: $userId } }) {
       id
       theme
+      coverUrl
     }
   }
 `;
@@ -77,7 +77,6 @@ export const FETCH_EDIT_VIEW = gql`
       mediaCaption
       questionId
       hidden
-      complete
       tag
       createdAt
       updatedAt
@@ -85,6 +84,7 @@ export const FETCH_EDIT_VIEW = gql`
     stt_version(where: { userId: { _eq: $userId } }) {
       id
       theme
+      coverUrl
     }
   }
 `;
@@ -142,7 +142,6 @@ export const FETCH_CAPTURE_HEADER = gql`
       mediaCaption
       questionId
       hidden
-      complete
       tag
       createdAt
       updatedAt
@@ -189,7 +188,6 @@ export const INSERT_FRAGMENT = gql`
       mediaCaption
       questionId
       hidden
-      complete
       tag
       createdAt
       updatedAt
@@ -273,6 +271,7 @@ export const UPDATE_VERSION = gql`
       title
       author
       publishedAt
+      coverUrl
     }
   }
 `;
@@ -281,6 +280,28 @@ export const PUBLISH_VERSION = gql`
   mutation ($userId: String!) {
     stt_version_generate_book(userId: $userId) {
       generated
+    }
+  }
+`;
+
+export const GENERATE_COVER = gql`
+  mutation ($userId: String!) {
+    stt_version_generate_cover(userId: $userId) {
+      generated
+      coverUrl
+    }
+  }
+`;
+
+export const FETCH_IMAGES = gql`
+  query ($userId: String!) {
+    stt_fragment(where: { userId: { _eq: $userId } }) {
+      mediaUrl
+      type
+    }
+    stt_version(where: { userId: { _eq: $userId } }) {
+      coverUrl
+      theme
     }
   }
 `;

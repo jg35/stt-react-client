@@ -1,13 +1,17 @@
+import { useState } from "react";
 import Button from "~/components/button";
 import PopoverColorPicker from "~/components/popoverColorPicker";
+import UppyModal from "~/components/uppyModal";
 
 export default function GlobalCoverControls({
+  imageUrl,
   imagePlacement,
   bgColor,
   update,
 }) {
+  const [changeImage, setChangeImage] = useState(false);
   return (
-    <div className="w-full px-4">
+    <div className="w-full px-4 animate-fade-in">
       <h1 className="text-xl">Layout</h1>
       <div className="flex items-center my-6">
         <span className="mr-6">Background</span>
@@ -18,7 +22,7 @@ export default function GlobalCoverControls({
           }}
         />
       </div>
-      <div className="animate-fade-in my-2">
+      <div className="my-2">
         <div className="flex items-center justify-between my-4">
           <span className="w-16">Image</span>
           <Button onClick={() => update("imagePlacement", "cover")}>
@@ -57,6 +61,23 @@ export default function GlobalCoverControls({
             </div>
           </Button>
         </div>
+        <div>
+          <Button onClick={() => setChangeImage(true)}>Edit cover image</Button>
+          {changeImage && (
+            <UppyModal
+              imageFolder="coverImages"
+              mediaUrl={imageUrl}
+              onClose={() => setChangeImage(false)}
+              onUploadSuccess={(url) => {
+                update("image", url);
+                setChangeImage(false);
+                // wait until the image is loaded?
+                // setChangeImage(false);
+              }}
+            />
+          )}
+        </div>
+        {/* <Button>Change image</Button> */}
       </div>
     </div>
   );

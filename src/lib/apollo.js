@@ -7,6 +7,8 @@ import {
   makeVar,
 } from "@apollo/client";
 
+import { functionServer, processingServer } from "~/lib/axios";
+
 const httpLink = new HttpLink({
   uri: process.env.REACT_APP_HASURA_GRAPHQL_API_URL,
 });
@@ -22,6 +24,10 @@ const authMiddleware = new ApolloLink((operation, forward) => {
     // Once x-hasura-role is set, user no longer treated as "public"
     // The citywalks role is set in Hasura to inherit the public role
     context.headers["x-hasura-role"] = process.env.REACT_APP_HASURA_ROLE_NAME;
+
+    // Add JWT to function/processing server to enforce protection there
+    functionServer.defaults.headers.common["Authorization"] = authState.token;
+    processingServer.defaults.headers.common["Authorization"] = authState.token;
   }
 
   operation.setContext(context);

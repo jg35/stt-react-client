@@ -43,7 +43,7 @@ export default function Preview({ fragments, saveFragment, theme }) {
       </div>
       <div
         ref={editPreviewScrollContainer}
-        className={`h-full overflow-scroll js-preview-scroll-container relative pt-10 ${theme.margin}`}
+        className={`h-full overflow-scroll js-preview-scroll-container relative pt-10 px-8`}
         onScroll={debounce((e) => {
           updateUiState({
             editPreviewScrollPosition: e.target.scrollTop,

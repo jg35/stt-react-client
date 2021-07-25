@@ -1,12 +1,12 @@
-import axios from "axios";
+import { functionServer } from "axios";
 import { useEffect, useState } from "react";
 import Modal from "~/components/modal";
 import SubmitButton from "~/components/submitButton";
 import SubscriptionOptionCard from "~/components/settings/subscriptionOptionCard";
 
 async function getPrices() {
-  return axios.get(
-    `${process.env.REACT_APP_NETLIFY_FUNCTIONS_URL}/actions/subscriptions/prices?appId=${process.env.REACT_APP_HASURA_APP_ID}`
+  return functionServer.get(
+    `actions/subscriptions/prices?appId=${process.env.REACT_APP_HASURA_APP_ID}`
   );
 }
 export default function UserPaymentForm({
@@ -66,7 +66,7 @@ export default function UserPaymentForm({
         </div>
       )}
       <form
-        action={`${process.env.REACT_APP_NETLIFY_FUNCTIONS_URL}/actions/subscriptions/checkout`}
+        action={`${process.env.REACT_APP_FUNCTIONS_SERVER_URL}/actions/subscriptions/checkout`}
         method="POST"
       >
         <input type="hidden" name="customerId" value={stripeCustomerId}></input>

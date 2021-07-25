@@ -1,12 +1,5 @@
 import { DateTime } from "luxon";
 
-export const getImgIxSrc = (s3Path) => {
-  return s3Path.replace(
-    "https://poggl.s3.eu-west-2.amazonaws.com",
-    process.env.REACT_APP_IMGIX_BASE_URL
-  );
-};
-
 export const getTrialDaysRemaining = (trialExpireDate) => {
   const now = DateTime.utc();
   const expiresDate = DateTime.fromISO(trialExpireDate);

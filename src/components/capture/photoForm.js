@@ -1,9 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Formik } from "formik";
 import { FragmentSchema } from "~/lib/yup";
-import { getImgIxSrc } from "~/lib/util";
-import { AuthContext } from "~/components/authWrap";
+
 import Button from "~/components/button";
+import Image from "~/components/image";
 import DatePicker from "~/components/capture/datepicker";
 import FormActions from "~/components/capture/formActions";
 import FormInput from "~/components/formInput";
@@ -19,7 +19,6 @@ function ToggleUrl({ replaceUrl, onClick }) {
 }
 
 export default function PhotoForm({ item, submitForm, closeModal }) {
-  const { user } = useContext(AuthContext);
   const [replaceUrl, setReplaceUrl] = useState("");
 
   return (
@@ -45,8 +44,8 @@ export default function PhotoForm({ item, submitForm, closeModal }) {
             {values.mediaUrl ? (
               <>
                 <div style={{ height: "250px" }}>
-                  <img
-                    src={`${getImgIxSrc(values.mediaUrl)}?height=250`}
+                  <Image
+                    src={values.mediaUrl}
                     className="h-auto rounded"
                     alt={values.mediaCaption}
                     title={values.mediaCaption}
@@ -63,7 +62,6 @@ export default function PhotoForm({ item, submitForm, closeModal }) {
             ) : (
               <>
                 <Uppy
-                  userId={user.id}
                   mediaUrl={values.mediaUrl}
                   onChange={(url) => setFieldValue("mediaUrl", url)}
                   error={errors.mediaUrl}

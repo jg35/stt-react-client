@@ -1,4 +1,4 @@
-import axios from "axios";
+import { functionServer } from "~/lib/axios";
 import { useState, useEffect } from "react";
 
 export default function VersionLink({ format, publishedPath }) {
@@ -6,17 +6,19 @@ export default function VersionLink({ format, publishedPath }) {
 
   function getSignObjectUrl(path, ext) {
     let reqPath = path.trim().replace(/\w{1,}\//, "");
-    return `${process.env.REACT_APP_NETLIFY_FUNCTIONS_URL}/actions/s3/signGetObject?objectPath=${reqPath}.${ext}`;
+    return `actions/s3/signFileRequest?paths=${reqPath}.${ext}`;
   }
   useEffect(() => {
     if (!signedLink) {
-      axios.get(getSignObjectUrl(publishedPath, format)).then((response) => {
-        setSignedLink(response.data.signedRequest);
-      });
+      functionServer
+        .get(getSignObjectUrl(publishedPath, format))
+        .then((response) => {
+          setSignedLink(response.data[0].signedUrl);
+        });
     }
   }, []);
   return signedLink ? (
-    <a target="_blank" href={`ibooks://${signedLink}`}>
+    <a target="_blank" href={signedLink}>
       {format.toUpperCase()}
     </a>
   ) : null;

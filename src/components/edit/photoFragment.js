@@ -1,10 +1,10 @@
-import { getImgIxSrc } from "~/lib/util";
+import Image from "~/components/image";
 
 export default function PhotoFragment({ fragment, theme }) {
   return (
     <figure className="my-8">
-      <img
-        src={`${getImgIxSrc(fragment.mediaUrl)}?width=600`}
+      <Image
+        src={fragment.mediaUrl}
         className="w-full shadow"
         data-preview-fragment-id={fragment.id}
       />

@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useContext, useState } from "react";
 import { debounce } from "lodash";
-import { getImgIxSrc } from "~/lib/util";
 import { scrollToFragment } from "~/lib/timeline";
+import Image from "~/components/image";
 import ChapterNavigator from "~/components/timeline/chapterNavigator";
 import PreivewSkeleton from "~/components/timeline/previewSkeleton";
 import { UIContext } from "~/app";
@@ -32,7 +32,7 @@ export default function Preview({ fragments, theme }) {
       setTextClass(
         `whitespace-pre-wrap cursor-pointer ${theme.fontSize} ${theme.lineHeight}`
       );
-      setContainerClass(theme.margin);
+      setContainerClass("px-8");
     }
   }, [theme]);
   useEffect(() => {
@@ -99,8 +99,8 @@ export default function Preview({ fragments, theme }) {
                             key={index}
                             onClick={() => fragmentScrollHandler(frag.id)}
                           >
-                            <img
-                              src={`${getImgIxSrc(frag.mediaUrl)}?width=600`}
+                            <Image
+                              src={frag.mediaUrl}
                               className="w-full shadow"
                               data-preview-fragment-id={frag.id}
                             />

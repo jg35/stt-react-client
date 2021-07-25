@@ -20,8 +20,15 @@ import Read from "~/routes/read";
 
 import AuthWrap from "~/components/authWrap";
 import uiManager from "~/lib/uiManager";
+import { useSignedImageUrls } from "~/hooks/useSignedUrl";
 
 export const UIContext = createContext({});
+
+function Hooks({ children }) {
+  // Gets/tracks signed urls for all images in app
+  useSignedImageUrls();
+  return children;
+}
 
 export default function App() {
   const [uiState, setUiState] = useState(uiManager.init());
@@ -44,29 +51,31 @@ export default function App() {
       <ApolloProvider client={client}>
         <Router>
           <AuthWrap>
-            <Switch>
-              <Route path="/settings">
-                <Settings />
-              </Route>
-              <Route path="/publish">
-                <Publish />
-              </Route>
-              <Route path="/edit">
-                <Edit />
-              </Route>
-              <Route path="/login">
-                <Login />
-              </Route>
-              <Route path="/logout">
-                <Logout />
-              </Route>
-              <Route path="/read/:versionId">
-                <Read />
-              </Route>
-              <Route path="/">
-                <Timeline />
-              </Route>
-            </Switch>
+            <Hooks>
+              <Switch>
+                <Route path="/settings">
+                  <Settings />
+                </Route>
+                <Route path="/publish">
+                  <Publish />
+                </Route>
+                <Route path="/edit">
+                  <Edit />
+                </Route>
+                <Route path="/login">
+                  <Login />
+                </Route>
+                <Route path="/logout">
+                  <Logout />
+                </Route>
+                <Route path="/read/:versionId">
+                  <Read />
+                </Route>
+                <Route path="/">
+                  <Timeline />
+                </Route>
+              </Switch>
+            </Hooks>
           </AuthWrap>
         </Router>
       </ApolloProvider>

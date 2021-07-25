@@ -49,25 +49,6 @@ export default function Theming({ theme, saveTheme }) {
           }
         />
       </div>
-      <div className="form-control">
-        <label>Margin</label>
-        <select
-          className="outline-none bg-lightestGray mt-1 p-2 rounded w-full appearance-none"
-          autoFocus
-          value={theme.margin}
-          onChange={(e) =>
-            saveTheme({
-              margin: e.target.value,
-            })
-          }
-        >
-          {themeOptions.margin.map((o, i) => (
-            <option value={o.value} key={i} className={o.value}>
-              {o.title}
-            </option>
-          ))}
-        </select>
-      </div>
       <div className="">
         <label>Line spacing</label>
         <select

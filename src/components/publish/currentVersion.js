@@ -1,6 +1,8 @@
+import Button from "~/components/button";
 import SubmitButton from "~/components/submitButton";
 import EditableContent from "~/components/editableContent";
 import SaveStatus from "~/components/saveStatus";
+import Image from "~/components/image";
 
 export default function CurrentVersion({
   version,
@@ -8,6 +10,7 @@ export default function CurrentVersion({
   saveVersion,
   isPublishing,
   publishVersion,
+  setShowCoverEditor,
 }) {
   const placeholderImg =
     "bg-blue opacity-30 flex items-center justify-center text-white";
@@ -18,13 +21,7 @@ export default function CurrentVersion({
         <SaveStatus saving={isSaving} />
       </div>
 
-      <div
-        className={`w-48 h-64`}
-        style={{
-          backgroundImage: `url('${version.coverUrl}')`,
-          backgroundSize: "cover",
-        }}
-      ></div>
+      <Image src={version.coverUrl} className={`w-48 h-64`} />
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -59,6 +56,7 @@ export default function CurrentVersion({
         >
           <span>{isPublishing ? "Publishing" : "Publish new version"}</span>
         </SubmitButton>
+        <Button onClick={setShowCoverEditor}>Edit cover</Button>
       </form>
     </div>
   );

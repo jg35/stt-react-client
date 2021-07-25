@@ -1,4 +1,4 @@
-import axios from "axios";
+import { functionServer } from "~/lib/axios";
 import { useEffect, useContext } from "react";
 import { useQuery } from "@apollo/client";
 import { FETCH_VERSION } from "~/lib/gql";
@@ -9,12 +9,10 @@ import Page from "~/components/page";
 function getBookHtml(version) {
   // TODO - remove s3 bucket (poggle/) from stored publishedPath
   const objectPath = `${version.publishedPath.replace("poggl/", "")}.html`;
-  return axios
-    .get(
-      `${process.env.REACT_APP_NETLIFY_FUNCTIONS_URL}/actions/s3/signGetObject?objectPath=${objectPath}`
-    )
+  return functionServer
+    .get(`actions/s3/signFileRequest?paths=${objectPath}`)
     .then(({ data }) => {
-      console.log(data.signedRequest);
+      console.log(data[0].signedUrl);
     })
     .catch((err) => console.log(err));
 }

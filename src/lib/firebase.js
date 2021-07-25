@@ -1,5 +1,5 @@
 import firebase from "firebase";
-import axios from "axios";
+import { functionServer } from "~/lib/axios";
 import { authStateVar } from "~/lib/apollo";
 
 firebase.initializeApp({
@@ -25,15 +25,12 @@ firebase.auth().onAuthStateChanged(async (user) => {
         process.env.REACT_APP_HASURA_ROLE_NAME
       )
     ) {
-      axios
-        .post(
-          `${process.env.REACT_APP_NETLIFY_FUNCTIONS_URL}/actions/users/sync`,
-          {
-            token,
-            user,
-            appId: process.env.REACT_APP_HASURA_APP_ID,
-          }
-        )
+      functionServer
+        .post(`actions/users/sync`, {
+          token,
+          user,
+          appId: process.env.REACT_APP_HASURA_APP_ID,
+        })
         .then(async () => {
           // Force refresh the token to get the updated claims
 

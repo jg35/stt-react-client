@@ -2,9 +2,10 @@ import reactable from "reactablejs";
 import interact from "interactjs";
 import React, { useState } from "react";
 
-function Draggable({ children, position, parentRef, maxWidth, size, getRef }) {
+function Draggable({ children, position, parentRef, maxWidth, css, getRef }) {
   return (
     <div
+      className={css}
       ref={getRef}
       style={{
         transform: `translate(${position.x}px, ${position.y}px)`,
@@ -13,7 +14,6 @@ function Draggable({ children, position, parentRef, maxWidth, size, getRef }) {
         position: "absolute",
         left: 0,
         top: 0,
-        ...size,
       }}
     >
       {children}
@@ -29,7 +29,7 @@ export default function SnapElement({
   parentRef,
   onChange,
   maxWidth = 90,
-  size = {},
+  css = "",
 }) {
   const [coords, setCoords] = useState({
     x: position.x,
@@ -38,11 +38,11 @@ export default function SnapElement({
 
   return (
     <Reactable
+      css={css}
       parentRef={parentRef}
       children={children}
       position={coords}
       maxWidth={maxWidth}
-      size={size}
       draggable={{
         modifiers: [
           interact.modifiers.restrict({
@@ -54,7 +54,6 @@ export default function SnapElement({
           const x = (coords.x += event.dx);
           const y = (coords.y += event.dy);
           setCoords({ x, y });
-
           let relX = Math.floor((100 / parentRef.current.clientWidth) * x);
           let relY = Math.floor((100 / parentRef.current.clientHeight) * y);
           if (relX < 0) {
