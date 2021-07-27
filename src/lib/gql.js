@@ -81,7 +81,9 @@ export const FETCH_EDIT_VIEW = gql`
       createdAt
       updatedAt
     }
-    stt_version(where: { userId: { _eq: $userId } }) {
+    stt_version(
+      where: { userId: { _eq: $userId }, _and: { generated: { _eq: false } } }
+    ) {
       id
       theme
       coverUrl
@@ -293,6 +295,16 @@ export const GENERATE_COVER = gql`
   }
 `;
 
+export const S3_GET_SIGNED_URL = gql`
+  mutation ($paths: String!) {
+    s3_signed_get_url(paths: $paths) {
+      expires
+      objectPath
+      signedUrl
+    }
+  }
+`;
+
 export const FETCH_IMAGES = gql`
   query ($userId: String!) {
     stt_fragment(where: { userId: { _eq: $userId } }) {
@@ -302,6 +314,24 @@ export const FETCH_IMAGES = gql`
     stt_version(where: { userId: { _eq: $userId } }) {
       coverUrl
       theme
+    }
+  }
+`;
+
+export const STRIPE_FETCH_PRICES = gql`
+  query ($appId: String!) {
+    subscriptions_get_prices(appId: $appId) {
+      id
+      interval
+      amount
+    }
+  }
+`;
+
+export const ACTION_SYNC_USER = gql`
+  mutation ($data: SyncUserInput!) {
+    sync_user(data: $data) {
+      synced
     }
   }
 `;

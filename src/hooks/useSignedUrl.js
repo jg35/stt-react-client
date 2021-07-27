@@ -1,10 +1,10 @@
-import { functionServer } from "~/lib/axios";
 import { useContext, useEffect, useState } from "react";
-import { useLazyQuery } from "@apollo/client";
+import { useMutation, useLazyQuery } from "@apollo/client";
 import { UIContext } from "~/app";
 import { AuthContext } from "~/components/authWrap";
-import { FETCH_IMAGES } from "~/lib/gql";
-import { flatten, uniq } from "lodash";
+import { FETCH_IMAGES, S3_GET_SIGNED_URL } from "~/lib/gql";
+import { flatten, get, uniq } from "lodash";
+import { photoSizes, coverImageSizes } from "~/lib/imageSizes";
 
 export function useGetSignedImageUrl(path) {
   const { uiState } = useContext(UIContext);
@@ -24,6 +24,7 @@ export function useSignedImageUrls() {
 
   const { uiState, updateUiState } = useContext(UIContext);
   const [getImages, { data }] = useLazyQuery(FETCH_IMAGES);
+  const [getSignedUrls] = useMutation(S3_GET_SIGNED_URL);
 
   useEffect(() => {
     if (user && user.id) {
@@ -37,20 +38,43 @@ export function useSignedImageUrls() {
 
   useEffect(() => {
     if (data) {
-      const fragmentImagePaths = data.stt_fragment
+      // Standard photos
+      let photoPaths = data.stt_fragment
         .filter((f) => f.type === "PHOTO")
         .map((f) => f.mediaUrl);
-      const versionCoverImages = flatten(
-        data.stt_version
-          .filter((v) => v.coverUrl || v.theme.cover)
-          .map((v) => [
-            v.coverUrl || null,
-            (v.theme.cover && v.theme.cover.image) || null,
-          ])
-      ).filter((i) => i !== null);
-      const paths = uniq(fragmentImagePaths.concat(versionCoverImages));
 
-      let requestPaths = [];
+      photoPaths = photoPaths.concat(
+        data.stt_version
+          .filter((v) => get(v, "theme.cover.image"))
+          .map((v) => v.theme.cover.image)
+      );
+
+      // Now register photo paths (with responsive sizes)
+      let paths = uniq(photoPaths);
+      paths = flatten(
+        paths.map((path) => {
+          return photoSizes.map((size) => `${path}-${size}`);
+        })
+      );
+
+      // Generated covers (different sizes)
+      const generatedCoverImages = data.stt_version
+        .filter((v) => v.coverUrl)
+        .map((v) => v.coverUrl);
+
+      paths = paths.concat(
+        flatten(
+          generatedCoverImages.map((path) => {
+            return coverImageSizes.map((size) => `${path}-${size}`);
+          })
+        )
+      );
+
+      let requestPaths = [
+        "resources/fonts/available.json",
+        "resources/fonts/sprite20Px.png",
+      ];
+
       paths.forEach((path) => {
         if (
           !uiState.signedUrls[path] ||
@@ -60,11 +84,13 @@ export function useSignedImageUrls() {
         }
       });
       if (requestPaths.length) {
-        const signedUrls = { ...uiState.signedUrls };
-        functionServer(
-          `actions/s3/signFileRequest?paths=${requestPaths.join(",")}`
-        ).then(({ data }) => {
-          data.forEach(
+        getSignedUrls({
+          variables: {
+            paths: requestPaths.join(","),
+          },
+        }).then(({ data }) => {
+          const signedUrls = { ...uiState.signedUrls };
+          data.s3_signed_get_url.forEach(
             (url) =>
               (signedUrls[url.objectPath] = {
                 signedUrl: url.signedUrl,

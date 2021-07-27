@@ -7,7 +7,6 @@ import "~/app.css";
 
 // Initialise apollo client + firebase
 import client from "~/lib/apollo";
-import "~/lib/firebase";
 import { buildGoogleFontFaceString } from "~/lib/util";
 
 import Timeline from "~/routes/timeline";

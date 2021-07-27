@@ -10,8 +10,6 @@ export default function CoverEditor({
   updateCover,
   closeCoverEditor,
 }) {
-  console.log(ThemeSchema.cast());
-  console.log(CoverSchema.cast());
   return (
     <Modal isOpen={true} size="full">
       <Formik

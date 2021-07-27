@@ -1,5 +1,4 @@
 import firebase from "firebase";
-import { functionServer } from "~/lib/axios";
 import { authStateVar } from "~/lib/apollo";
 
 firebase.initializeApp({
@@ -7,46 +6,47 @@ firebase.initializeApp({
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
 });
 
-firebase.auth().onAuthStateChanged(async (user) => {
-  if (user) {
-    const { displayName, email, uid: id, photoURL } = user;
-    const userDetails = {
-      displayName,
-      email,
-      id,
-      photoURL,
-    };
-    const token = await user.getIdToken();
-    const idTokenResult = await user.getIdTokenResult();
-    const hasuraClaims = idTokenResult.claims["https://hasura.io/jwt/claims"];
-    if (
-      !hasuraClaims ||
-      !hasuraClaims["x-hasura-allowed-roles"].includes(
-        process.env.REACT_APP_HASURA_ROLE_NAME
-      )
-    ) {
-      functionServer
-        .post(`actions/users/sync`, {
-          token,
-          user,
-          appId: process.env.REACT_APP_HASURA_APP_ID,
+export const onAuthStateChange = (syncUserMutation) => {
+  firebase.auth().onAuthStateChanged(async (user) => {
+    if (user) {
+      const { displayName, email, uid: id, photoURL } = user;
+      const userDetails = {
+        displayName,
+        email,
+        id,
+        photoURL,
+      };
+      const token = await user.getIdToken();
+      const idTokenResult = await user.getIdTokenResult();
+      const hasuraClaims = idTokenResult.claims["https://hasura.io/jwt/claims"];
+      if (
+        !hasuraClaims ||
+        !hasuraClaims["x-hasura-allowed-roles"].includes(
+          process.env.REACT_APP_HASURA_ROLE_NAME
+        )
+      ) {
+        syncUserMutation({
+          variables: {
+            data: {
+              token,
+              appId: process.env.REACT_APP_HASURA_APP_ID,
+            },
+          },
         })
-        .then(async () => {
-          // Force refresh the token to get the updated claims
-
-          const token = await user.getIdToken(true);
-          authStateVar({ status: "in", token, user: userDetails });
-        })
-        .catch(() => {
-          // Need to handle this better. For now just sign out so they can try and login again
-          // signOut()
-        });
+          .then(async () => {
+            // Force refresh the token to get the updated claims
+            const token = await user.getIdToken(true);
+            authStateVar({ status: "in", token, user: userDetails });
+          })
+          .catch(() => {
+            // Need to handle this better. For now just sign out so they can try and login again
+            // signOut()
+          });
+      } else {
+        authStateVar({ status: "in", token, user: userDetails });
+      }
     } else {
-      authStateVar({ status: "in", token, user: userDetails });
+      authStateVar({ status: "out" });
     }
-  } else {
-    authStateVar({ status: "out" });
-  }
-});
-
-export default firebase;
+  });
+};

@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @layer base {
+  /* TODO - no font smoothing on book? */
   * {
     font-family: futura-pt, sans-serif;
     -webkit-font-smoothing: antialiased;

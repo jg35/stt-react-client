@@ -1,25 +1,38 @@
-import { functionServer } from "~/lib/axios";
-import { useState, useEffect } from "react";
+import { useState, useRef } from "react";
+import { useMutation } from "@apollo/client";
+import { S3_GET_SIGNED_URL } from "~/lib/gql";
 
 export default function VersionLink({ format, publishedPath }) {
-  const [signedLink, setSignedLink] = useState("");
+  const link = useRef(null);
+  const [getSignedUrls] = useMutation(S3_GET_SIGNED_URL);
 
-  function getSignObjectUrl(path, ext) {
-    let reqPath = path.trim().replace(/\w{1,}\//, "");
-    return `actions/s3/signFileRequest?paths=${reqPath}.${ext}`;
-  }
-  useEffect(() => {
-    if (!signedLink) {
-      functionServer
-        .get(getSignObjectUrl(publishedPath, format))
-        .then((response) => {
-          setSignedLink(response.data[0].signedUrl);
-        });
+  function setLink(e) {
+    console.log(link.current.href);
+    if (link.current.href) {
+      return true;
+    } else {
+      e.preventDefault();
+
+      getSignedUrls({
+        variables: {
+          paths: `${publishedPath}.${format}`,
+        },
+      }).then(({ data }) => {
+        link.current.href = data.s3_signed_get_url[0].signedUrl;
+        link.current.click();
+      });
     }
-  }, []);
-  return signedLink ? (
-    <a target="_blank" href={signedLink}>
+  }
+
+  return (
+    <a
+      ref={link}
+      target="_blank"
+      className="cursor-pointer"
+      href={null}
+      onClick={setLink}
+    >
       {format.toUpperCase()}
     </a>
-  ) : null;
+  );
 }

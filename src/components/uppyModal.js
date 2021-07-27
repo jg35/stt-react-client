@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
-import { functionServer } from "~/lib/axios";
 import Uppy from "@uppy/core";
 import ImageEditor from "@uppy/image-editor";
-import AwsS3 from "@uppy/aws-s3";
+import XHRUpload from "@uppy/xhr-upload";
 import { UIContext } from "~/app";
+import { useMutation } from "@apollo/client";
+import { S3_GET_SIGNED_URL } from "~/lib/gql";
+import { photoSizes } from "~/lib/imageSizes";
+import { AuthContext } from "~/components/authWrap";
 
 import { DashboardModal, useUppy } from "@uppy/react";
 
@@ -13,26 +16,6 @@ import "@uppy/dashboard/dist/style.css";
 
 import { useGetSignedImageUrl } from "~/hooks/useSignedUrl";
 
-const UPPY_AWS_CONFIG = (imageFolder) => ({
-  // Generates the pre-signed url
-  getUploadParameters: (file) => {
-    return functionServer
-      .get(
-        `actions/s3/signUpload?fileType=${file.type}&fileName=${file.name}&folder=stt/images/${imageFolder}`
-      )
-      .then(({ data }) => {
-        return {
-          url: data.signedRequest,
-          method: "PUT",
-          fields: null,
-          headers: {
-            "Content-Type": file.type,
-          },
-        };
-      });
-  },
-});
-
 export default function UppyModal({
   imageFolder = "fragments",
   mediaUrl,
@@ -40,8 +23,10 @@ export default function UppyModal({
   onClose,
   error,
 }) {
+  const { token } = useContext(AuthContext);
   const { uiState, updateUiState } = useContext(UIContext);
-  const signedUrl = useGetSignedImageUrl(mediaUrl);
+  const signedUrl = useGetSignedImageUrl(mediaUrl + "-master");
+  const [getSignedUrls] = useMutation(S3_GET_SIGNED_URL);
   const [init, setInit] = useState(false);
   const uppy = useUppy(() => {
     return new Uppy({
@@ -49,8 +34,20 @@ export default function UppyModal({
       restrictions: {
         maxNumberOfFiles: 1,
       },
+      meta: {
+        appRef: "stt",
+        folder: imageFolder,
+      },
     })
-      .use(AwsS3, UPPY_AWS_CONFIG(imageFolder))
+      .use(XHRUpload, {
+        endpoint: `${process.env.REACT_APP_PROCESSING_SERVER_URL}/images/upload`,
+        formData: true,
+        fieldName: "uppy",
+        method: "post",
+        headers: {
+          Authorization: token,
+        },
+      })
       .use(ImageEditor, {
         id: "ImageEditor",
         quality: 1,
@@ -60,31 +57,36 @@ export default function UppyModal({
           autoCropArea: 1,
           responsive: true,
         },
+      })
+      .on("upload-success", (file, response) => {
+        const { path } = response.body;
+        setSignedUrl(path).then(() => {
+          onUploadSuccess(path);
+          uppy.reset();
+        });
       });
   });
 
   function setSignedUrl(path) {
-    functionServer(`actions/s3/signFileRequest?paths=${path}`).then(
-      ({ data }) => {
-        updateUiState({
-          signedUrls: { ...uiState.signedUrls, [path]: data[0] },
-        });
-      }
-    );
+    return getSignedUrls({
+      variables: {
+        paths: photoSizes.map((size) => `${path}-${size}`).join(","),
+      },
+    }).then(({ data }) => {
+      console.log(data.s3_signed_get_url);
+      updateUiState({
+        signedUrls: {
+          ...uiState.signedUrls,
+          ...photoSizes.reduce((obj, size, i) => {
+            obj[`${path}-${size}`] = data.s3_signed_get_url[i];
+            return obj;
+          }, {}),
+        },
+      });
+    });
   }
 
-  uppy.on("upload-success", (file, response) => {
-    const path = response.uploadURL.replace(
-      `${process.env.REACT_APP_S3_BUCKET_URL}/`,
-      ""
-    );
-    setSignedUrl(path);
-    onUploadSuccess(path);
-    uppy.reset();
-  });
-
   async function addRemoteImage(path) {
-    console.log(path);
     // assuming the image lives on a server somewhere
     return fetch(path)
       .then((response) => response.blob())

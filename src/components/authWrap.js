@@ -1,7 +1,12 @@
 import { createContext, useState, useEffect } from "react";
 import { Redirect, useRouteMatch } from "react-router";
-import { useQuery, useLazyQuery } from "@apollo/client";
-import { FETCH_LOCAL_AUTH_STATE, FETCH_USER } from "~/lib/gql";
+import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
+import {
+  FETCH_LOCAL_AUTH_STATE,
+  FETCH_USER,
+  ACTION_SYNC_USER,
+} from "~/lib/gql";
+import { onAuthStateChange } from "~/lib/firebase";
 
 import AccessControlModals from "~/components/accessControlModals";
 
@@ -20,9 +25,14 @@ export const AuthContext = createContext(handleSetAuth({}));
 export default function AuthWrap({ children }) {
   const { data } = useQuery(FETCH_LOCAL_AUTH_STATE);
   const [getUser, { data: hasuraUser }] = useLazyQuery(FETCH_USER);
+  const [syncUser] = useMutation(ACTION_SYNC_USER);
 
   const [authState, setAuthState] = useState(handleSetAuth(data.authState));
   let isLogin = useRouteMatch("/login");
+
+  useEffect(() => {
+    onAuthStateChange(syncUser);
+  }, []);
 
   useEffect(() => {
     if (hasuraUser) {

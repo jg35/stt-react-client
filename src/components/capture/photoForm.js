@@ -9,6 +9,7 @@ import FormActions from "~/components/capture/formActions";
 import FormInput from "~/components/formInput";
 import FormError from "~/components/formError";
 import Uppy from "~/components/uppy";
+import imageSizes from "~/lib/imageSizes";
 
 function ToggleUrl({ replaceUrl, onClick }) {
   return (
@@ -45,7 +46,7 @@ export default function PhotoForm({ item, submitForm, closeModal }) {
               <>
                 <div style={{ height: "250px" }}>
                   <Image
-                    src={values.mediaUrl}
+                    src={values.mediaUrl + imageSizes["400px"]}
                     className="h-auto rounded"
                     alt={values.mediaCaption}
                     title={values.mediaCaption}

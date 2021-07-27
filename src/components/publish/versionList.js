@@ -1,5 +1,6 @@
 import { sortBy } from "lodash";
 import { renderFragmentDate } from "~/lib/util";
+import { coverImages } from "~/lib/imageSizes";
 import Image from "~/components/image";
 import VersionLink from "~/components/publish/versionLink";
 import WebLink from "~/components/publish/webLink";
@@ -25,7 +26,10 @@ export default function VersionList({ publishedVersions }) {
             return (
               <li key={v.id} className="flex mb-6 items-center">
                 <div className="w-12 h-16">
-                  <Image src={v.coverUrl} className="object-cover" />
+                  <Image
+                    src={v.coverUrl + coverImages["300px"]}
+                    className="object-cover"
+                  />
                 </div>
 
                 <div className="flex-1 px-4">

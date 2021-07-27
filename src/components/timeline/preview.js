@@ -6,12 +6,13 @@ import ChapterNavigator from "~/components/timeline/chapterNavigator";
 import PreivewSkeleton from "~/components/timeline/previewSkeleton";
 import { UIContext } from "~/app";
 import { setGoogleFontStyles } from "~/lib/uiManager";
+import imageSizes from "~/lib/imageSizes";
 
 export default function Preview({ fragments, theme }) {
   const previewScrollContainer = useRef(null);
   const { uiState, updateUiState } = useContext(UIContext);
-  const [chapterClass, setChapterClass] = useState("");
-  const [textClass, setTextClass] = useState("");
+  const [chapterStyle, setChapterStyle] = useState("");
+  const [textStyle, setTextStyle] = useState("");
   const [containerClass, setContainerClass] = useState("");
 
   function updateGoogleFonts(fontFamily) {
@@ -26,12 +27,19 @@ export default function Preview({ fragments, theme }) {
   useEffect(() => {
     if (theme) {
       updateGoogleFonts(theme.fontFamily);
-      setChapterClass(
-        `text-center cursor-pointer ${theme.chapterFontSize} ${theme.lineHeight}`
-      );
-      setTextClass(
-        `whitespace-pre-wrap cursor-pointer ${theme.fontSize} ${theme.lineHeight}`
-      );
+      setChapterStyle({
+        marginTop: "2em",
+        marginBottom: "2em",
+        fontSize: theme.chapterFontSize,
+        lineHeight: theme.lineHeight,
+        fontFamily: theme.fontFamily,
+      });
+      setTextStyle({
+        marginBottom: "2em",
+        fontSize: theme.fontSize,
+        lineHeight: theme.lineHeight,
+        fontFamily: theme.fontFamily,
+      });
       setContainerClass("px-8");
     }
   }, [theme]);
@@ -80,11 +88,8 @@ export default function Preview({ fragments, theme }) {
                       if (frag.type === "CHAPTER") {
                         return (
                           <h1
-                            style={{
-                              margin: "2em 0",
-                              fontFamily: theme.fontFamily,
-                            }}
-                            className={chapterClass}
+                            style={chapterStyle}
+                            className="text-center cursor-pointer"
                             key={index}
                             onClick={() => fragmentScrollHandler(frag.id)}
                             data-preview-fragment-id={frag.id}
@@ -100,13 +105,13 @@ export default function Preview({ fragments, theme }) {
                             onClick={() => fragmentScrollHandler(frag.id)}
                           >
                             <Image
-                              src={frag.mediaUrl}
+                              src={frag.mediaUrl + imageSizes["1400px"]}
                               className="w-full shadow"
                               data-preview-fragment-id={frag.id}
                             />
                             <figcaption
-                              className={`text-center ${textClass}`}
-                              style={{ fontFamily: theme.fontFamily }}
+                              className="text-center whitespace-pre-wrap cursor-pointer"
+                              style={textStyle}
                             >
                               {frag.mediaCaption}
                             </figcaption>
@@ -115,11 +120,8 @@ export default function Preview({ fragments, theme }) {
                       } else {
                         return (
                           <p
-                            style={{
-                              marginBottom: "2em",
-                              fontFamily: theme.fontFamily,
-                            }}
-                            className={textClass}
+                            style={textStyle}
+                            className="whitespace-pre-wrap cursor-pointer"
                             key={index}
                             onClick={() => fragmentScrollHandler(frag.id)}
                             data-preview-fragment-id={frag.id}

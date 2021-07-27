@@ -3,6 +3,7 @@ import SubmitButton from "~/components/submitButton";
 import EditableContent from "~/components/editableContent";
 import SaveStatus from "~/components/saveStatus";
 import Image from "~/components/image";
+import { coverImages } from "~/lib/imageSizes";
 
 export default function CurrentVersion({
   version,
@@ -21,7 +22,7 @@ export default function CurrentVersion({
         <SaveStatus saving={isSaving} />
       </div>
 
-      <Image src={version.coverUrl} className={`w-48 h-64`} />
+      <Image src={version.coverUrl + coverImages["300px"]} />
       <form
         onSubmit={(e) => {
           e.preventDefault();

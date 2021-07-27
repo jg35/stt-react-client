@@ -1,14 +1,10 @@
-import { functionServer } from "axios";
 import { useEffect, useState } from "react";
+import { useQuery } from "@apollo/client";
+import { STRIPE_FETCH_PRICES } from "~/lib/gql";
 import Modal from "~/components/modal";
 import SubmitButton from "~/components/submitButton";
 import SubscriptionOptionCard from "~/components/settings/subscriptionOptionCard";
 
-async function getPrices() {
-  return functionServer.get(
-    `actions/subscriptions/prices?appId=${process.env.REACT_APP_HASURA_APP_ID}`
-  );
-}
 export default function UserPaymentForm({
   type,
   intent,
@@ -18,11 +14,15 @@ export default function UserPaymentForm({
 }) {
   const [subscriptionOptions, setSubscriptionOptions] = useState([]);
   const [priceId, setPriceId] = useState(null);
+  const { data } = useQuery(STRIPE_FETCH_PRICES, {
+    variables: { appId: process.env.REACT_APP_HASURA_APP_ID },
+  });
 
   useEffect(async () => {
-    const { data } = await getPrices(stripeCustomerId);
-    setSubscriptionOptions(data);
-  }, []);
+    if (data) {
+      setSubscriptionOptions(data.subscriptions_get_prices);
+    }
+  }, [data]);
 
   function getPaymentMessage() {
     if (intent === "MANUAL") {

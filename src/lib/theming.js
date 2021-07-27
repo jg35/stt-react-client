@@ -1,26 +1,12 @@
 export default {
-  fontFamily: [
-    { value: "theme-family-futura", title: "Futura" },
-    { value: "theme-family-museo", title: "Museo Sans" },
-    { value: "theme-family-baskerville", title: "Baskerville" },
-    { value: "theme-family-garamond", title: "Garamond" },
-  ],
   fontSize: [
-    { value: "text-base", title: "Smaller" },
-    { value: "text-lg", title: "Normal" },
-    { value: "text-xl", title: "Bigger" },
-  ],
-
-  chapterFontSize: [
-    { value: "text-2xl", title: "Smaller" },
-    { value: "text-3xl", title: "Normal" },
-    { value: "text-5xl", title: "Bigger" },
+    { text: "11pt", chapter: "18pt", title: "Smaller" },
+    { text: "14pt", chapter: "24pt", title: "Normal" },
+    { text: "17pt", chapter: "32pt", title: "Bigger" },
   ],
   lineHeight: [
-    { value: "leading-tight", title: "Tight" },
-    { value: "leading-snug", title: "Snug" },
-    { value: "leading-normal", title: "Normal" },
-    { value: "leading-relaxed", title: "Relaxed" },
-    { value: "leading-loose", title: "Loose" },
+    { value: "1.2", title: "Normal" },
+    { value: "1.4", title: "Relaxed" },
+    { value: "1.8", title: "Loose" },
   ],
 };

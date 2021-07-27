@@ -28,8 +28,8 @@ export default function SubscriptionOptionCard({
           index === 0 ? "mr-1" : "ml-1"
         } rounded ${selected ? "border-green" : "border-black"}`}
       >
-        <h1 className={`text-xl`}>{getTitle(option.recurring.interval)}</h1>
-        <p className={`text-lg`}>{formatPrice(option.unit_amount)}</p>
+        <h1 className={`text-xl`}>{getTitle(option.interval)}</h1>
+        <p className={`text-lg`}>{formatPrice(option.amount)}</p>
         <div className="pt-6">
           <Button
             css={selected ? "bg-green hover:bg-green " : ""}

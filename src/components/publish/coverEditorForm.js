@@ -12,7 +12,7 @@ import TextElementControlList from "~/components/publish/textElementControlList"
 import GlobalCoverControls from "~/components/publish/globalCoverControls";
 
 export default function CoverEditorForm({ values, setFieldValue }) {
-  const signedImageUrl = useGetSignedImageUrl(values.image);
+  const signedImageUrl = useGetSignedImageUrl(values.image + "-master");
   const { uiState, updateUiState } = useContext(UIContext);
   const coverContainerRef = useRef(null);
 
@@ -128,7 +128,7 @@ export default function CoverEditorForm({ values, setFieldValue }) {
                 }}
               >
                 <Image
-                  src={values.image}
+                  src={values.image + "-master"}
                   className="object-cover h-full w-full absolute"
                 />
               </SnapElement>

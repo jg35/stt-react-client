@@ -30,8 +30,22 @@ export default function EditableFragment({ fragment, saveFragment, theme }) {
     }
   };
 
-  let textClass = `whitespace-pre-wrap focus:outline-none ${theme.fontSize} ${theme.lineHeight}`;
-  let chapterClass = `text-center focus:outline-none ${theme.chapterFontSize} ${theme.lineHeight}`;
+  let textClass = `whitespace-pre-wrap focus:outline-none`;
+  let chapterClass = `text-center focus:outline-none`;
+
+  let textStyle = {
+    lineHeight: theme.lineHeight,
+    fontFamily: theme.fontFamily,
+    fontSize: theme.fontSize,
+    marginBottom: "2em",
+  };
+
+  let chapterStyle = {
+    lineHeight: theme.lineHeight,
+    fontFamily: theme.fontFamily,
+    fontSize: theme.chapterFontSize,
+    margin: "2em 0",
+  };
 
   return (
     <div
@@ -58,11 +72,7 @@ export default function EditableFragment({ fragment, saveFragment, theme }) {
       )}
       <div>
         <ContentEditable
-          style={{
-            marginTop: fragment.type === "CHAPTER" ? "2em" : "0",
-            marginBottom: "2em",
-            fontFamily: theme.fontFamily,
-          }}
+          style={fragment.type === "CHAPTER" ? chapterStyle : textStyle}
           spellCheck={false}
           data-placeholder={
             fragment.type === "CHAPTER"

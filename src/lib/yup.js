@@ -68,9 +68,9 @@ export const CoverSchema = Yup.object().shape({
 });
 
 export const ThemeSchema = Yup.object().shape({
-  fontFamily: Yup.string().default("theme-family-baskerville"),
-  fontSize: Yup.string().default("md"),
-  chapterFontSize: Yup.string().default("md"),
-  lineHeight: Yup.string().default("md"),
+  fontFamily: Yup.string().default("Libre Baskerville"),
+  fontSize: Yup.string().default("14pt"),
+  chapterFontSize: Yup.string().default("21pt"),
+  lineHeight: Yup.string().default("1.4"),
   cover: CoverSchema,
 });
