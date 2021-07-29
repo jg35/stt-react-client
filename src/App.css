@@ -66,11 +66,11 @@
     max-height: calc(100vh - 64px);
   }
   .nav-link {
-    @apply font-medium mr-3 relative;
+    @apply font-medium mx-3 relative block text-center;
   }
   .nav-link-active::after {
     content: "";
-    @apply absolute border-t-2 border-black w-full left-0 -bottom-1 animate-fade-in duration-500;
+    @apply absolute border-t-2 border-black w-full left-0 -bottom-0 animate-fade-in duration-500;
   }
   .input {
     max-width: 40rem;

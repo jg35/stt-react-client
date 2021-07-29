@@ -15,9 +15,10 @@ export default function Button({
   if (minimal) {
     variantCSS = "bg-transparent hover:bg-lightestGray";
   } else if (cta) {
-    variantCSS = "bg-lightGray hover:bg-black hover:text-white";
+    variantCSS =
+      "border-2 bg-white border-black hover:bg-black hover:text-white";
   } else if (bigCta) {
-    variantCSS = "bg-black text-white";
+    variantCSS = "bg-offBlack hover:bg-black text-white";
   } else {
     variantCSS = "bg-lightestGray hover:bg-lightGray";
   }
@@ -27,7 +28,7 @@ export default function Button({
       id={id}
       disabled={disabled}
       type={type}
-      className={`flex items-center rounded px-2 py-1 ${variantCSS} ${css} ${
+      className={`duration-200 ease-in flex items-center rounded-md px-2 py-1 ${variantCSS} ${css} ${
         CONTENT_IS_TEXT ? "justify-center" : "justify-start"
       }`}
       onClick={onClick}

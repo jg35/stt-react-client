@@ -17,12 +17,16 @@ export default function TextElementControls({
     setIsExpanded(expandedId === element.id);
   }, [expandedId]);
   return (
-    <div className="animate-fade-in mb-4 w-full bg-white rounded shadow-md py-2 px-4">
+    <div
+      className={`animate-fade-in mb-4 w-full rounded-t shadow relative ${
+        !isExpanded && "rounded-b"
+      }`}
+    >
       <div
-        className="flex justify-between cursor-pointer items-center"
+        className="flex justify-between cursor-pointer py-2 px-4 items-center bg-lightestGray "
         onClick={() => expand(isExpanded ? null : element.id)}
       >
-        <h2 className="text-lg ">{element.label}</h2>
+        <h2 className="text-lg font-normal">{element.content}</h2>
         <div className="flex">
           {!element.originalContent && (
             <Button onClick={() => remove(element.id)}>Remove</Button>
@@ -32,7 +36,7 @@ export default function TextElementControls({
       </div>
 
       {isExpanded && (
-        <div className="animate-fade-in my-2">
+        <div className="animate-fade-in px-4 pb-4 absolute top-11 left-0 bg-white z-40 shadow rounded-b">
           <div className="flex items-center justify-between my-4">
             <span className="w-16">Text</span>
             <FormInput

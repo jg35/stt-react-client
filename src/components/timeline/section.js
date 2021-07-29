@@ -45,9 +45,7 @@ export default function Section({ section, index }) {
         </>
       )}
       {section.fragments.length > 0 && (
-        <div className="flex flex-wrap mt-4">
-          <FragmentList fragments={section.fragments} />
-        </div>
+        <FragmentList fragments={section.fragments} />
       )}
     </section>
   );

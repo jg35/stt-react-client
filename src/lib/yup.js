@@ -47,10 +47,9 @@ const Position = Yup.object().shape({
 });
 
 export const CoverElementSchema = Yup.object().shape({
-  id: Yup.string().default(uuid()),
+  id: Yup.string().default(() => uuid()),
   size: Yup.number().default(5),
   content: Yup.string().default("My new element"),
-  label: Yup.string().default("Custom element"),
   color: Yup.string().default("#000000"),
   font: Yup.string().default("Libre Baskerville"),
   originalContent: Yup.string().ensure(),
@@ -63,7 +62,8 @@ export const CoverSchema = Yup.object().shape({
   image: Yup.string().default(""),
   imagePosition: Position,
   imageRelativePosition: Position,
-  bgColor: Yup.string().default("#000000"),
+  imagePlacement: Yup.string().default("cover"),
+  bgColor: Yup.string().default("#f8f8f8"),
   elements: Yup.array().of(CoverElementSchema).default([]),
 });
 
@@ -73,4 +73,19 @@ export const ThemeSchema = Yup.object().shape({
   chapterFontSize: Yup.string().default("21pt"),
   lineHeight: Yup.string().default("1.4"),
   cover: CoverSchema,
+});
+
+export const VersionSchema = Yup.object().shape({
+  id: Yup.number(),
+  edited: Yup.boolean().default(false),
+  theme: ThemeSchema,
+  title: Yup.string().required(),
+  author: Yup.string().required(),
+  publishedAt: Yup.string().required("Publication date is required"),
+  sharePassword: Yup.string()
+    .ensure()
+    .test("checkPassword", "Share password is required", function (val) {
+      return this.parent.publishStep !== 3 || !!val;
+    }),
+  publishStep: Yup.number().default(1),
 });

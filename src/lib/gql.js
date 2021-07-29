@@ -91,6 +91,25 @@ export const FETCH_EDIT_VIEW = gql`
   }
 `;
 
+export const FETCH_SHARE_VIEW = gql`
+  query ($userId: String!) {
+    stt_version(where: { userId: { _eq: $userId } }) {
+      id
+      theme
+      title
+      author
+      coverUrl
+      publishedAt
+      publishedPath
+      publishedFormats
+      generated
+      userId
+      edited
+      sharePassword
+    }
+  }
+`;
+
 export const FETCH_PUBLISH_VIEW = gql`
   query ($userId: String!) {
     stt_version(where: { userId: { _eq: $userId } }) {
@@ -104,6 +123,8 @@ export const FETCH_PUBLISH_VIEW = gql`
       publishedFormats
       generated
       userId
+      edited
+      sharePassword
     }
   }
 `;
@@ -121,6 +142,8 @@ export const FETCH_VERSION = gql`
       publishedFormats
       generated
       userId
+      edited
+      sharePassword
     }
   }
 `;
@@ -233,6 +256,14 @@ export const DELETE_FRAGMENT = gql`
   }
 `;
 
+export const DELETE_VERSION = gql`
+  mutation ($id: Int!) {
+    delete_stt_version_by_pk(id: $id) {
+      id
+    }
+  }
+`;
+
 export const INSERT_USER_EVENT = gql`
   mutation ($data: stt_userEvent_insert_input!) {
     insert_stt_userEvent_one(object: $data) {
@@ -274,6 +305,8 @@ export const UPDATE_VERSION = gql`
       author
       publishedAt
       coverUrl
+      edited
+      sharePassword
     }
   }
 `;

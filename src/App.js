@@ -11,11 +11,13 @@ import { buildGoogleFontFaceString } from "~/lib/util";
 
 import Timeline from "~/routes/timeline";
 import Publish from "~/routes/publish";
+import PublishNewVersion from "~/routes/publishNewVersion";
 import Edit from "~/routes/edit";
 import Settings from "~/routes/settings";
 import Login from "~/routes/login";
 import Logout from "~/routes/logout";
 import Read from "~/routes/read";
+import NotFound from "~/routes/404";
 
 import AuthWrap from "~/components/authWrap";
 import uiManager from "~/lib/uiManager";
@@ -52,26 +54,33 @@ export default function App() {
           <AuthWrap>
             <Hooks>
               <Switch>
-                <Route path="/settings">
+                <Route path="/settings" exact>
                   <Settings />
                 </Route>
-                <Route path="/publish">
+                <Route path="/publish/new" exact>
+                  <PublishNewVersion />
+                </Route>
+                <Route path="/publish" exact>
                   <Publish />
                 </Route>
-                <Route path="/edit">
+
+                <Route path="/edit" exact>
                   <Edit />
                 </Route>
-                <Route path="/login">
+                <Route path="/login" exact>
                   <Login />
                 </Route>
-                <Route path="/logout">
+                <Route path="/logout" exact>
                   <Logout />
                 </Route>
                 <Route path="/read/:versionId">
                   <Read />
                 </Route>
-                <Route path="/">
+                <Route path="/" exact>
                   <Timeline />
+                </Route>
+                <Route path="">
+                  <NotFound />
                 </Route>
               </Switch>
             </Hooks>

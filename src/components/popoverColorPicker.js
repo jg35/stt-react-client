@@ -13,7 +13,7 @@ export default function PopoverPicker({ color, onChange }) {
   return (
     <div className="relative">
       <div
-        className="h-7 w-7 border-2 border-lightGray shadow"
+        className="h-7 w-7 border-2 border-lightGray shadow cursor-pointer"
         style={{ backgroundColor: color, borderRadius: "50%" }}
         onClick={() => toggle(true)}
       />

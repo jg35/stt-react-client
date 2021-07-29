@@ -8,7 +8,7 @@ export default function FragmentHeader({ fragment }) {
   const renderDate = fragment.date ? renderFragmentDate(fragment.date) : null;
 
   return (
-    <div className="pb-2 flex justify-between items-center">
+    <div className="py-1 px-2 flex justify-between items-center">
       <div className="text-center text-gray text-sm font-medium flex cursor-default">
         {renderDate
           ? `${renderDate}${fragment.dateType === "AUTO" ? " (auto)" : ""}`

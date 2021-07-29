@@ -1,4 +1,18 @@
+import { useRef, useCallback, useEffect } from "react";
+import useClickOutside from "~/hooks/useClickOutside";
+
 export default function Modal({ size, isOpen, children, close }) {
+  const modal = useRef();
+  const onClickOutside = useCallback(() => close(), []);
+  useClickOutside(modal, onClickOutside);
+
+  useEffect(() => {
+    document.querySelector("body").style.overflow = "hidden";
+    return () => {
+      document.querySelector("body").style.overflow = "auto";
+    };
+  }, []);
+
   let sizeCss;
   switch (size) {
     case "sm":
@@ -21,7 +35,7 @@ export default function Modal({ size, isOpen, children, close }) {
         className="animate-fade-in absolute w-full h-full bg-lightestGray left-0 top-0 z-50 bg-opacity-90 flex justify-center items-center"
         onClick={close}
       >
-        <div className="relative w-full h-full p-4">
+        <div className="relative w-full h-full p-4" ref={modal}>
           <div
             id="capture-form-wrapper"
             onClick={(e) => e.stopPropagation()}

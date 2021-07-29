@@ -5,10 +5,6 @@ export default function ThemingSkeleton({}) {
       <div className="w-full mb-3 h-11 bg-lightestGray rounded animate-pulse"></div>
       <div className="w-full mb-3 h-11 bg-lightestGray rounded animate-pulse"></div>
       <div className="w-full mb-3 h-11 bg-lightestGray rounded animate-pulse"></div>
-      <div className="w-full mb-3 h-11 bg-lightestGray rounded animate-pulse"></div>
-      <div className="w-full mb-3 h-11 bg-lightestGray rounded animate-pulse"></div>
-      <div className="w-full mb-3 h-11 bg-lightestGray rounded animate-pulse"></div>
-      <div className="w-full mb-3 h-11 bg-lightestGray rounded animate-pulse"></div>
       <div className="w-full h-11 bg-lightestGray rounded animate-pulse"></div>
     </>
   );

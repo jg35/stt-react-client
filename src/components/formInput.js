@@ -7,6 +7,7 @@ export default function FormInput({
   name,
   compact = false,
   autoFocus = true,
+  type = "text",
 }) {
   return (
     <input
@@ -17,7 +18,7 @@ export default function FormInput({
       }`}
       autoFocus={autoFocus}
       placeholder={placeholder}
-      type="text"
+      type={type}
       onChange={handleChange}
       onBlur={handleBlur}
       value={value}

@@ -19,7 +19,7 @@ export default function Header({ minimal = false }) {
           <Svg name="logo" />
         </NavLink>
         {!minimal && (
-          <nav className="ml-3" id="nav-items">
+          <nav className="ml-3 flex" id="nav-items">
             <NavLink
               className="nav-link"
               id="nav-item-timeline"

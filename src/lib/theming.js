@@ -1,8 +1,8 @@
 export default {
   fontSize: [
-    { text: "11pt", chapter: "18pt", title: "Smaller" },
-    { text: "14pt", chapter: "24pt", title: "Normal" },
-    { text: "17pt", chapter: "32pt", title: "Bigger" },
+    { text: "10pt", chapter: "18pt", title: "Smaller" },
+    { text: "12pt", chapter: "24pt", title: "Normal" },
+    { text: "15pt", chapter: "32pt", title: "Bigger" },
   ],
   lineHeight: [
     { value: "1.2", title: "Normal" },

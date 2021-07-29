@@ -88,7 +88,10 @@ export default function Edit() {
           )}
         </EditPreviewContainer>
 
-        <Card css="w-72 pb-4 max-w-xs flex-shrink">
+        <Card
+          css="w-72 p-4 max-w-xs flex-shrink"
+          style={{ height: "fit-content" }}
+        >
           {themeValues ? (
             <Theming theme={themeValues} saveTheme={saveThemeHandler} />
           ) : (

@@ -1,13 +1,27 @@
 import { useState, useRef } from "react";
 import { useMutation } from "@apollo/client";
 import { S3_GET_SIGNED_URL } from "~/lib/gql";
+import Button from "~/components/button";
 
-export default function VersionLink({ format, publishedPath }) {
+export default function VersionLink({ format, publishedPath, small = false }) {
   const link = useRef(null);
   const [getSignedUrls] = useMutation(S3_GET_SIGNED_URL);
 
+  function getTitle() {
+    switch (format) {
+      case "epub":
+        return "iBooks";
+      case "azw3":
+      case "mobi":
+        return "Kindle";
+      case "pdf":
+        return "Pdf";
+      default:
+        return "";
+    }
+  }
+
   function setLink(e) {
-    console.log(link.current.href);
     if (link.current.href) {
       return true;
     } else {
@@ -25,14 +39,10 @@ export default function VersionLink({ format, publishedPath }) {
   }
 
   return (
-    <a
-      ref={link}
-      target="_blank"
-      className="cursor-pointer"
-      href={null}
-      onClick={setLink}
-    >
-      {format.toUpperCase()}
-    </a>
+    <Button onClick={setLink} css={small ? "text-sm" : ""}>
+      <a ref={link} target="_blank" className="cursor-pointer" href={null}>
+        {getTitle()}
+      </a>
+    </Button>
   );
 }

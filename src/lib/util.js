@@ -32,6 +32,10 @@ export const renderFragmentDate = (date) => {
   return DateTime.fromISO(date).toFormat("ccc d MMM yyyy");
 };
 
+export const renderVersionDate = (date) => {
+  return DateTime.fromISO(date).toFormat("d MMM yyyy");
+};
+
 export const buildGoogleFontFaceString = (selectedFonts) => {
   return selectedFonts
     .map((font) => {

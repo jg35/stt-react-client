@@ -1,6 +1,6 @@
 import { useRef, useContext, useEffect } from "react";
 import { css } from "@emotion/css";
-import { cloneDeep } from "lodash";
+import { cloneDeep, get } from "lodash";
 import colors from "~/lib/colors";
 import { CoverElementSchema } from "~/lib/yup";
 import { setGoogleFontStyles } from "~/lib/uiManager";
@@ -12,24 +12,37 @@ import TextElementControlList from "~/components/publish/textElementControlList"
 import GlobalCoverControls from "~/components/publish/globalCoverControls";
 
 export default function CoverEditorForm({ values, setFieldValue }) {
-  const signedImageUrl = useGetSignedImageUrl(values.image + "-master");
+  const cover = values.theme.cover;
+  const signedImageUrl = useGetSignedImageUrl(cover.image + "-master");
   const { uiState, updateUiState } = useContext(UIContext);
   const coverContainerRef = useRef(null);
+
+  function getPosition(coverContainer, relativePosition) {
+    if (!coverContainer || !relativePosition) {
+      return { x: 0, y: 0 };
+    }
+    const width = coverContainer.clientWidth;
+    const height = coverContainer.clientHeight;
+    return {
+      x: (width / 100) * relativePosition.x,
+      y: (height / 100) * relativePosition.y,
+    };
+  }
 
   useEffect(() => {
     if (coverContainerRef.current) {
       const width = coverContainerRef.current.clientWidth;
       const height = coverContainerRef.current.clientHeight;
       let gFonts = [];
-      const elements = cloneDeep(values.elements).map((el) => {
+      const elements = cloneDeep(cover.elements).map((el) => {
         gFonts.push(el.font);
-        el.position = {
-          x: (width / 100) * el.relativePosition.x,
-          y: (height / 100) * el.relativePosition.y,
-        };
+        el.position = getPosition(
+          coverContainerRef.current,
+          el.relativePosition
+        );
         return el;
       });
-      setFieldValue("elements", elements);
+      setFieldValue("theme.cover.elements", elements);
       updateGoogleFonts(gFonts);
     }
   }, [coverContainerRef.current]);
@@ -41,12 +54,14 @@ export default function CoverEditorForm({ values, setFieldValue }) {
 
     updateUiState({ googleFontStyles }, false);
   }
+  const height = 65;
+  const width = (height / 4) * 3;
 
   const coverContainer = {
-    width: "450px",
-    height: "600px",
-    maxHeight: "1600px",
-    maxWidth: "1200px",
+    width: `${width}vh`,
+    height: `${height}vh`,
+    minHeight: `${height}vh`,
+    minWidth: `${width}vh`,
     position: "relative",
     overflow: "hidden",
     backgroundColor: colors.lightGray,
@@ -87,124 +102,152 @@ export default function CoverEditorForm({ values, setFieldValue }) {
   }
 
   return (
-    <div className="flex justify-center w-full mb-6">
-      <div className="w-72 flex justify-between flex-col">
-        <div>
-          <GlobalCoverControls
-            imageUrl={values.image}
-            imagePlacement={values.imagePlacement}
-            bgColor={values.bgColor}
-            update={(field, value) => setFieldValue(field, value)}
-          />
+    <div
+      className="flex flex-col flex-1 p-4 rounded-b-lg"
+      style={{
+        backgroundColor: "#e5e5f7",
+        backgroundImage:
+          "linear-gradient(rgba(0, 0, 0, .1) 1px, transparent 1px), linear-gradient(to right, rgba(0, 0, 0, .1) 1px, #F8F8F8 1px)",
+        backgroundSize: "24px 24px",
+        backgroundPosition: "-1px -1px",
+      }}
+    >
+      <p className="font-medium mb-4 text-xl mx-auto bg-white p-2 rounded shadow text-center">
+        Here you can add photos, alter layout, drag things around and add other
+        text elements to make a beautiful cover for your book!
+      </p>
+      <div className="flex justify-between w-full">
+        <div className="w-80 flex justify-between flex-col">
+          <div>
+            <GlobalCoverControls
+              imageUrl={cover.image}
+              imagePlacement={cover.imagePlacement}
+              bgColor={cover.bgColor}
+              update={(field, value) =>
+                setFieldValue(`theme.cover.${field}`, value)
+              }
+            />
+          </div>
         </div>
-      </div>
 
-      <div
-        style={{
-          ...coverContainer,
-          ...(values.imagePlacement === "cover"
-            ? { backgroundImage: `url('${signedImageUrl}')` }
-            : { backgroundColor: values.bgColor }),
-        }}
-        className="container shadow-xl rounded-r-xl rounded-l"
-        ref={coverContainerRef}
-      >
-        {coverContainerRef.current ? (
-          <>
-            {values.imagePlacement !== "cover" && (
-              <SnapElement
-                css={getImageCss(values.imagePlacement)}
-                maxWidth={100}
-                position={values.imagePosition}
-                parentRef={coverContainerRef}
-                onChange={(val) => {
-                  if (val) {
-                    setFieldValue("imagePosition", val.position);
-                    setFieldValue(
-                      "imageRelativePosition",
-                      val.relativePosition
-                    );
-                  }
-                }}
-              >
-                <Image
-                  src={values.image + "-master"}
-                  className="object-cover h-full w-full absolute"
-                />
-              </SnapElement>
-            )}
-            {values.elements.map((el, i) => {
-              return (
+        <div
+          style={{
+            ...coverContainer,
+            ...(cover.imagePlacement === "cover"
+              ? { backgroundImage: `url('${signedImageUrl}')` }
+              : { backgroundColor: cover.bgColor }),
+          }}
+          className="container shadow-xl rounded-r-xl rounded-l"
+          ref={coverContainerRef}
+        >
+          {coverContainerRef.current ? (
+            <>
+              {cover.imagePlacement !== "cover" && (
                 <SnapElement
-                  key={el.id}
-                  position={el.position}
+                  css={getImageCss(cover.imagePlacement)}
+                  maxWidth={100}
+                  position={cover.imagePosition}
                   parentRef={coverContainerRef}
                   onChange={(val) => {
-                    const elIndex = values.elements.findIndex(
-                      (e) => e.id === el.id
-                    );
-                    setFieldValue(
-                      `elements[${elIndex}].position`,
-                      val.position
-                    );
-
-                    setFieldValue(
-                      `elements[${elIndex}].relativePosition`,
-                      val.relativePosition
-                    );
+                    if (val) {
+                      setFieldValue("theme.cover.imagePosition", val.position);
+                      setFieldValue(
+                        "theme.cover.imageRelativePosition",
+                        val.relativePosition
+                      );
+                    }
                   }}
                 >
-                  <span
-                    style={{
-                      display: "inline-block",
-                      fontSize: getRenderFontSize(
-                        el.size,
-                        (coverContainerRef.current &&
-                          coverContainerRef.current.clientWidth) ||
-                          800
-                      ),
-                      fontFamily: el.font,
-                      color: el.color,
-                      lineHeight: 1,
-                      textAlign: el.textAlign,
+                  <Image
+                    src={cover.image + "-master"}
+                    className="object-cover h-full w-full absolute"
+                  />
+                </SnapElement>
+              )}
+              {cover.elements.map((el, i) => {
+                return (
+                  <SnapElement
+                    key={el.id}
+                    position={el.position}
+                    parentRef={coverContainerRef}
+                    onChange={(val) => {
+                      const elIndex = cover.elements.findIndex(
+                        (e) => e.id === el.id
+                      );
+                      setFieldValue(
+                        `theme.cover.elements[${elIndex}].position`,
+                        val.position
+                      );
+
+                      setFieldValue(
+                        `theme.cover.elements[${elIndex}].relativePosition`,
+                        val.relativePosition
+                      );
                     }}
                   >
-                    {el.content}
-                  </span>
-                </SnapElement>
+                    <span
+                      style={{
+                        display: "inline-block",
+                        fontSize: getRenderFontSize(
+                          el.size,
+                          (coverContainerRef.current &&
+                            coverContainerRef.current.clientWidth) ||
+                            800
+                        ),
+                        fontFamily: el.font,
+                        color: el.color,
+                        lineHeight: 1.4,
+                        textAlign: el.textAlign,
+                      }}
+                    >
+                      {el.content}
+                    </span>
+                  </SnapElement>
+                );
+              })}
+            </>
+          ) : null}
+        </div>
+        <div className="w-80 flex justify-between flex-col">
+          <TextElementControlList
+            elements={cover.elements}
+            add={() => {
+              const relativePosition = { x: 50, y: 50 };
+              const newEl = CoverElementSchema.cast({
+                content: "New text",
+                relativePosition,
+                size: 10,
+                position: getPosition(
+                  coverContainerRef.current,
+                  relativePosition
+                ),
+              });
+
+              setFieldValue(
+                "theme.cover.elements",
+                cover.elements.concat(newEl)
               );
-            })}
-          </>
-        ) : null}
-      </div>
-      <div className="w-72 flex justify-between flex-col">
-        <TextElementControlList
-          elements={values.elements}
-          add={() => {
-            const newEl = CoverElementSchema.cast({
-              label: `Custom element ${values.elements.length + 1}`,
-            });
-            setFieldValue("elements", values.elements.concat(newEl));
-            return newEl.id;
-          }}
-          remove={(elId) => {
-            setFieldValue(
-              "elements",
-              values.elements.filter((e) => e.id !== elId)
-            );
-          }}
-          update={(elId, field, value) => {
-            if (field === "font") {
-              updateGoogleFonts([value]);
-            }
-            setFieldValue(
-              `elements[${values.elements.findIndex(
-                (e) => e.id === elId
-              )}][${field}]`,
-              value
-            );
-          }}
-        />
+              return newEl.id;
+            }}
+            remove={(elId) => {
+              setFieldValue(
+                "theme.cover.elements",
+                cover.elements.filter((e) => e.id !== elId)
+              );
+            }}
+            update={(elId, field, value) => {
+              if (field === "font") {
+                updateGoogleFonts([value]);
+              }
+              setFieldValue(
+                `theme.cover.elements[${cover.elements.findIndex(
+                  (e) => e.id === elId
+                )}][${field}]`,
+                value
+              );
+            }}
+          />
+        </div>
       </div>
     </div>
   );
