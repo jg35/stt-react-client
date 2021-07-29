@@ -6,7 +6,11 @@ import { pick, cloneDeep } from "lodash";
 
 import { AuthContext } from "~/components/authWrap";
 import { VersionSchema, CoverElementSchema, CoverSchema } from "~/lib/yup";
-import { FETCH_PUBLISH_VIEW, UPDATE_VERSION, PUBLISH_VERSION } from "~/lib/gql";
+import {
+  FETCH_CREATE_BOOK_VIEW,
+  UPDATE_VERSION,
+  PUBLISH_VERSION,
+} from "~/lib/gql";
 import Page from "~/components/page";
 import Card from "~/components/card";
 import PublishSkeleton from "~/components/publish/publishSkeleton";
@@ -21,13 +25,13 @@ export default function PublishNewVersion() {
   const [currentVersion, setCurrentVersion] = useState(null);
   const [updateVersion] = useMutation(UPDATE_VERSION);
   const [publishVersion] = useMutation(PUBLISH_VERSION);
-  const { data } = useQuery(FETCH_PUBLISH_VIEW, {
+  const { data } = useQuery(FETCH_CREATE_BOOK_VIEW, {
     variables: { userId: user.id },
   });
 
   useEffect(() => {
     if (data && data.stt_version) {
-      const version = cloneDeep(data.stt_version.find((v) => !v.generated));
+      const version = cloneDeep(data.stt_version[0]);
 
       if (!version.publishedAt) {
         version.publishedAt = new Date().toISOString().replace(/T.*/, "");

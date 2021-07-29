@@ -7,8 +7,7 @@ import PhotoFragment from "~/components/timeline/photoFragment";
 export default function Fragment({ fragment }) {
   return (
     <div
-      className="animate-fade-in rounded bg-white shadow flex flex-col"
-      style={{ minHeight: "250px", maxHeight: "250px" }}
+      className="animate-fade-in rounded-md bg-white shadow flex flex-col h-full"
       data-fragment-id={fragment.id}
       data-fragment-type={fragment.type}
     >
@@ -21,12 +20,11 @@ export default function Fragment({ fragment }) {
 
       {fragment.type === "PHOTO" && <PhotoFragment fragment={fragment} />}
 
-      {fragment.type !== "CHAPTER" &&
-        (fragment.title || fragment.mediaCaption) && (
-          <div className="bg-black text-white rounded-b py-1 px-2">
-            {fragment.title || fragment.mediaCaption}
-          </div>
-        )}
+      {fragment.type === "TEXT" && fragment.title && (
+        <div className="bg-lightestGray text-black font-medium rounded-b py-1 px-2">
+          {fragment.title}
+        </div>
+      )}
     </div>
   );
 }

@@ -112,7 +112,33 @@ export const FETCH_SHARE_VIEW = gql`
 
 export const FETCH_PUBLISH_VIEW = gql`
   query ($userId: String!) {
-    stt_version(where: { userId: { _eq: $userId } }) {
+    stt_version(
+      where: { generated: { _eq: true }, userId: { _eq: $userId } }
+      order_by: { id: desc }
+    ) {
+      id
+      theme
+      title
+      author
+      coverUrl
+      publishedAt
+      publishedPath
+      publishedFormats
+      generated
+      userId
+      edited
+      sharePassword
+    }
+  }
+`;
+
+export const FETCH_CREATE_BOOK_VIEW = gql`
+  query ($userId: String!) {
+    stt_version(
+      where: { generated: { _eq: false }, userId: { _eq: $userId } }
+      order_by: { id: desc }
+      limit: 1
+    ) {
       id
       theme
       title
