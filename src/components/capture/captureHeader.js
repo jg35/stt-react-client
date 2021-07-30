@@ -124,11 +124,15 @@ export default function CaptureHeader({ init }) {
                     setQuestionAnswer(e.target.value);
                     if (e.target.value.length > 15) {
                       updateUiState(
-                        makeCreateFragmentForm({
-                          type: "TEXT",
-                          content: e.target.value,
-                          questionId: currentQuestion.id,
-                        })
+                        makeCreateFragmentForm(
+                          {
+                            type: "TEXT",
+                            content: e.target.value,
+                            questionId: currentQuestion.id,
+                          },
+                          { revealAfterCreate: true }
+                        ),
+                        false
                       );
                       setTimeout(() => {
                         setQuestionAnswer("");
@@ -153,14 +157,22 @@ export default function CaptureHeader({ init }) {
         <div className="flex">
           <Button
             css="ml-3 items-center font-medium px-4 w-24"
-            onClick={() => updateUiState(makeCreateUserEventForm())}
+            onClick={() => updateUiState(makeCreateUserEventForm(), false)}
           >
             Add event
           </Button>
           <Button
             css="ml-3 items-center font-medium px-4 w-24"
             onClick={() =>
-              updateUiState(makeCreateFragmentForm({ type: "TEXT" }))
+              updateUiState(
+                makeCreateFragmentForm(
+                  {
+                    type: "TEXT",
+                  },
+                  { revealAfterCreate: true }
+                ),
+                false
+              )
             }
           >
             Add memory
@@ -168,7 +180,15 @@ export default function CaptureHeader({ init }) {
           <Button
             css="ml-3 items-center font-medium px-4 w-24"
             onClick={() =>
-              updateUiState(makeCreateFragmentForm({ type: "PHOTO" }))
+              updateUiState(
+                makeCreateFragmentForm(
+                  {
+                    type: "PHOTO",
+                  },
+                  { revealAfterCreate: true }
+                ),
+                false
+              )
             }
           >
             Add photo

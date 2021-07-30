@@ -1,7 +1,12 @@
 import Button from "~/components/button";
 import SubmitButton from "~/components/submitButton";
 
-export default function FormActions({ closeModal, itemId, isSubmitting }) {
+export default function FormActions({
+  closeModal,
+  itemId,
+  isSubmitting,
+  formIsDirty = false,
+}) {
   let submitText;
   if (isSubmitting) {
     submitText = !itemId ? "Adding..." : "Updating...";
@@ -18,7 +23,9 @@ export default function FormActions({ closeModal, itemId, isSubmitting }) {
       >
         Cancel
       </Button>
-      <SubmitButton isSubmitting={isSubmitting}>{submitText}</SubmitButton>
+      <SubmitButton disabled={!formIsDirty} isSubmitting={isSubmitting}>
+        {submitText}
+      </SubmitButton>
     </div>
   );
 }

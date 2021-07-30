@@ -57,9 +57,8 @@ export default function LatestVersion({
               <span className="text-lg font-medium ml-1">Download</span>
               <div className="flex">
                 {version.publishedFormats.split(",").map((format, i) => (
-                  <span className="text-lg m-1 block">
+                  <span className="text-lg m-1 block" key={format}>
                     <VersionLink
-                      key={i}
                       format={format}
                       publishedPath={version.publishedPath}
                     />

@@ -1,4 +1,5 @@
 import { DateTime } from "luxon";
+import { sortBy } from "lodash";
 
 function getHemisphere(countryCode) {
   // TODO get lib to calculate this
@@ -162,11 +163,17 @@ export function generateTimeline(
         event.date >= timePeriod.startDate && event.date <= timePeriod.endDate
       );
     });
-    timePeriod.worldEvents = worldEvents.filter((event) => {
-      return (
-        event.date >= timePeriod.startDate && event.date <= timePeriod.endDate
-      );
-    });
+    timePeriod.events = sortBy(
+      timePeriod.events.concat(
+        worldEvents.filter((event) => {
+          return (
+            event.date >= timePeriod.startDate &&
+            event.date <= timePeriod.endDate
+          );
+        })
+      ),
+      ["date"]
+    );
     timeline.push(timePeriod);
 
     currentPeriod = nextPeriod;

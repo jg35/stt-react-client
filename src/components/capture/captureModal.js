@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Formik } from "formik";
+import { Form, Formik } from "formik";
 import { useMutation, useLazyQuery, gql } from "@apollo/client";
 import { FETCH_QUESTIONS } from "~/lib/gql";
 import { lowerCase, omit } from "lodash";
@@ -19,7 +19,7 @@ import FormActions from "~/components/capture/formActions";
 import { UIContext } from "~/app";
 import { EventSchema, FragmentSchema } from "~/lib/yup";
 
-export default function CaptureModal({ editView = false }) {
+export default function CaptureModal({ editView = false, scrollToFragment }) {
   const [formTitle, setFormTitle] = useState("");
   const [insertFragment] = useMutation(INSERT_FRAGMENT);
   const [insertUserEvent] = useMutation(INSERT_USER_EVENT);
@@ -57,18 +57,6 @@ export default function CaptureModal({ editView = false }) {
     updateUiState({ capture: { showModal: false, item: null } });
   }
 
-  function setItem(field) {
-    updateUiState({
-      capture: {
-        ...uiState.capture,
-        item: {
-          ...item,
-          ...field,
-        },
-      },
-    });
-  }
-
   function getSchema(type) {
     switch (type) {
       case "EVENT":
@@ -81,7 +69,7 @@ export default function CaptureModal({ editView = false }) {
     }
   }
 
-  function getSubmitHanlder(type) {
+  function getSubmitHandler(type) {
     switch (type) {
       case "EVENT":
         return saveUserEventHandler;
@@ -104,6 +92,9 @@ export default function CaptureModal({ editView = false }) {
           cache.modify({
             fields: {
               stt_fragment(fragments = []) {
+                if (uiState.capture.revealAfterCreate) {
+                  scrollToFragment(data.insert_stt_fragment_one.id);
+                }
                 const newFragmentRef = cache.writeFragment({
                   data: data.insert_stt_fragment_one,
                   fragment: gql`
@@ -134,6 +125,9 @@ export default function CaptureModal({ editView = false }) {
           id: form.id,
         },
       }).then(() => {
+        if (item.date !== form.date) {
+          scrollToFragment(form.id);
+        }
         closeModal();
       });
     }
@@ -178,10 +172,21 @@ export default function CaptureModal({ editView = false }) {
     }
   }
 
+  function getModalSize(type) {
+    switch (type) {
+      case "TEXT":
+        return "lg";
+      case "PHOTO":
+        return "full";
+      default:
+        return "md";
+    }
+  }
+
   return showModal && item ? (
     <Formik
       initialValues={getSchema(item.type).cast(item)}
-      onSubmit={getSubmitHanlder(item.type)}
+      onSubmit={getSubmitHandler(item.type)}
       validationSchema={getSchema(item.type)}
       validateOnChange={false}
       validateOnBlur={false}
@@ -192,9 +197,9 @@ export default function CaptureModal({ editView = false }) {
             formIsDirty={props.dirty}
             isOpen={true}
             close={closeModal}
-            size={item && item.type === "TEXT" ? "lg" : "md"}
+            size={getModalSize(item.type)}
           >
-            <form onSubmit={props.handleSubmit}>
+            <form id="capture-form" onSubmit={props.handleSubmit}>
               <h1 className="modal-title">{formTitle}</h1>
               {item.type === "EVENT" && <EventForm {...props} />}
 
@@ -211,6 +216,7 @@ export default function CaptureModal({ editView = false }) {
               )}
               {item.type === "PHOTO" && <PhotoForm {...props} />}
               <FormActions
+                formIsDirty={props.dirty}
                 closeModal={closeModal}
                 itemId={props.values.id}
                 isSubmitting={props.isSubmitting}

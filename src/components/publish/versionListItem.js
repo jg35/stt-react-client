@@ -4,7 +4,7 @@ import Image from "~/components/image";
 import VersionLink from "~/components/publish/versionLink";
 import DeleteModal from "~/components/deleteModal";
 
-export default function VersionItem({
+export default function VersionListItem({
   last,
   version,
   isDeleting,
@@ -12,7 +12,6 @@ export default function VersionItem({
 }) {
   return (
     <li
-      key={version.id}
       className={`max-w-md flex ${!last && "mr-4 border-lightGray border-r"}`}
     >
       <Image
@@ -45,10 +44,9 @@ export default function VersionItem({
 
         <div className="flex">
           {version.publishedFormats.split(",").map((format) => (
-            <span className="text-lg mr-1 block">
+            <span className="text-lg mr-1 block" key={format}>
               <VersionLink
                 small
-                key={format}
                 format={format}
                 publishedPath={version.publishedPath}
               />

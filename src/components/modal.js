@@ -48,7 +48,7 @@ export default function Modal({
   if (isOpen) {
     return (
       <>
-        <div className="animate-fade-in absolute min-w-full h-full bg-lightestGray left-0 top-0 z-50 bg-opacity-90 flex justify-center items-center">
+        <div className="animate-fade-in absolute min-w-full h-full bg-lightestGray left-0 top-0 z-50 bg-opacity-90 flex justify-center items-center p-4">
           <div
             ref={modal}
             className={`relative ${sizeStyles}`}

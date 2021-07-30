@@ -26,7 +26,7 @@ export default function PublishOptionsForm({
         </label>
         <FormInput
           name="sharePassword"
-          placeholder="Enter a password"
+          placeholder="Your password should be at least 8 characters"
           handleChange={handleChange}
           handleBlur={handleBlur}
           value={values.sharePassword}
@@ -35,7 +35,7 @@ export default function PublishOptionsForm({
         <FormError error={errors.sharePassword} />
       </div>
 
-      <SubmitButton isSubmitting={isSubmitting} bigCta>
+      <SubmitButton isSubmitting={isSubmitting} bigCta width="w-60">
         {isSubmitting ? "Creating your book..." : "Create your book"}
       </SubmitButton>
     </div>

@@ -29,7 +29,9 @@ export default function SectionCaptureActions({ show, date, index }) {
           <div id="section-actions-event">
             <Button
               css="mr-3"
-              onClick={() => updateUiState(makeCreateUserEventForm({ date }))}
+              onClick={() =>
+                updateUiState(makeCreateUserEventForm({ date }), false)
+              }
             >
               Add event
             </Button>
@@ -43,7 +45,8 @@ export default function SectionCaptureActions({ show, date, index }) {
                     type: "TEXT",
                     date,
                     dateType: "AUTO",
-                  })
+                  }),
+                  false
                 )
               }
             >
@@ -59,7 +62,8 @@ export default function SectionCaptureActions({ show, date, index }) {
                     type: "PHOTO",
                     date,
                     dateType: "AUTO",
-                  })
+                  }),
+                  false
                 )
               }
             >
@@ -75,7 +79,8 @@ export default function SectionCaptureActions({ show, date, index }) {
                     type: "CHAPTER",
                     date,
                     dateType: "AUTO",
-                  })
+                  }),
+                  false
                 )
               }
             >

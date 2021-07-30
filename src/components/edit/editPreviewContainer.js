@@ -2,7 +2,7 @@ export default function EditPreviewContainer({ children }) {
   return (
     <div
       className="pb-4 h-full max-h-full w-full mr-4"
-      style={{ maxWidth: "75vh" }}
+      style={{ width: "75vh", maxWidth: "768px" }}
     >
       <div
         id="preview-container"

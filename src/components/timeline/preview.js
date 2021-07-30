@@ -9,6 +9,7 @@ import { setGoogleFontStyles } from "~/lib/uiManager";
 import imageSizes from "~/lib/imageSizes";
 
 export default function Preview({ fragments, theme }) {
+  console.log(theme);
   const previewScrollContainer = useRef(null);
   const { uiState, updateUiState } = useContext(UIContext);
   const [chapterStyle, setChapterStyle] = useState("");

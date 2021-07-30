@@ -5,8 +5,8 @@ export default {
     { text: "15pt", chapter: "32pt", title: "Bigger" },
   ],
   lineHeight: [
-    { value: "1.2", title: "Normal" },
-    { value: "1.4", title: "Relaxed" },
-    { value: "1.8", title: "Loose" },
+    { value: "18pt", title: "Normal" },
+    { value: "21pt", title: "Relaxed" },
+    { value: "24pt", title: "Loose" },
   ],
 };

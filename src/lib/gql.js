@@ -56,7 +56,9 @@ export const FETCH_TIMELINE_VIEW = gql`
       placeholder
       tag
     }
-    stt_version(where: { userId: { _eq: $userId } }) {
+    stt_version(
+      where: { userId: { _eq: $userId }, _and: { generated: { _eq: false } } }
+    ) {
       id
       theme
       coverUrl

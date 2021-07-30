@@ -5,8 +5,12 @@ export default function FragmentList({ fragments, editView = false }) {
   return (
     <div className="flex flex-wrap">
       {fragments.map((fragment) => (
-        <div className="p-4" style={{ height: "250px", width: "300px" }}>
-          <Fragment key={fragment.id} fragment={fragment} editView={editView} />
+        <div
+          className="p-4"
+          style={{ height: "250px", width: "300px" }}
+          key={fragment.id}
+        >
+          <Fragment fragment={fragment} editView={editView} />
         </div>
       ))}
     </div>

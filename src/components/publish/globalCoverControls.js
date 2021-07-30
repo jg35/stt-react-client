@@ -2,7 +2,7 @@ import { useState } from "react";
 import Card from "~/components/card";
 import Button from "~/components/button";
 import PopoverColorPicker from "~/components/popoverColorPicker";
-import UppyModal from "~/components/uppyModal";
+import Uppy from "~/components/uppy";
 
 export default function GlobalCoverControls({
   imageUrl,
@@ -72,17 +72,18 @@ export default function GlobalCoverControls({
           <div>
             <Button
               cta
-              css="text-xl h-12 w-full font-medium justify-center"
+              css="text-lg h-11 w-full font-medium justify-center"
               onClick={() => setChangeImage(true)}
             >
               {!imageUrl ? "Add" : "Change"} cover image
             </Button>
             {changeImage && (
-              <UppyModal
+              <Uppy
+                asModal={true}
                 imageFolder="coverImages"
                 mediaUrl={imageUrl}
                 onClose={() => setChangeImage(false)}
-                onUploadSuccess={(url) => {
+                onChange={(url) => {
                   update("image", url);
                   setChangeImage(false);
                   // wait until the image is loaded?
@@ -91,7 +92,6 @@ export default function GlobalCoverControls({
               />
             )}
           </div>
-          {/* <Button>Change image</Button> */}
         </div>
       </Card>
     </div>

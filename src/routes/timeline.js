@@ -14,7 +14,7 @@ import { AuthContext } from "~/components/authWrap";
 
 import ScrollNavigator from "~/components/timeline/scrollNavigator";
 
-import { generateTimeline } from "~/lib/timeline";
+import { generateTimeline, scrollToFragment } from "~/lib/timeline";
 import TimePeriodSelector from "~/components/timeline/timePeriodSelector";
 
 import TimelineSkeleton from "~/components/timeline/timelineSkeleton";
@@ -127,7 +127,11 @@ export default function Timeline() {
           theme={data && data.stt_version[0].theme}
         />
       </div>
-      <CaptureModal />
+      <CaptureModal
+        scrollToFragment={debounce((fragmentId) => {
+          scrollToFragment(fragmentId);
+        }, 500)}
+      />
     </Page>
   );
 }

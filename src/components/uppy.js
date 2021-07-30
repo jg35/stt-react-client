@@ -1,12 +1,13 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useMutation } from "@apollo/client";
 import { S3_GET_SIGNED_URL } from "~/lib/gql";
+import { useGetSignedImageUrl } from "~/hooks/useSignedUrl";
 import { photoSizes } from "~/lib/imageSizes";
 import Uppy from "@uppy/core";
 import ImageEditor from "@uppy/image-editor";
 import XHRUpload from "@uppy/xhr-upload";
 
-import { Dashboard, useUppy } from "@uppy/react";
+import { Dashboard, DashboardModal, useUppy } from "@uppy/react";
 import { UIContext } from "~/app";
 import { AuthContext } from "~/components/authWrap";
 
@@ -19,52 +20,78 @@ export default function UppyDashboard({
   mediaUrl,
   onChange,
   error,
-  height = 250,
-  resetAfterUpload = false,
+  asModal = false,
+  onClose = null,
+  // isSubmitting,
+  // height = 250,
+  // resetAfterUpload = false,
+  // formId = null,
 }) {
+  // const [filesChanged, setFilesChanged] = useState(false);
+  // const editorTarget = useRef();
+  const [init, setInit] = useState(false);
   const { token } = useContext(AuthContext);
   const { uiState, updateUiState } = useContext(UIContext);
+  const signedUrl = useGetSignedImageUrl(mediaUrl + "-master");
   const [getSignedUrls] = useMutation(S3_GET_SIGNED_URL);
   const uppy = useUppy(() => {
-    return new Uppy({
-      id: "dashboardUppy",
-      autoProceed: true,
-      restrictions: {
-        maxNumberOfFiles: 1,
-      },
-      meta: {
-        appRef: "stt",
-        folder: imageFolder,
-      },
-    })
-      .use(XHRUpload, {
-        endpoint: `${process.env.REACT_APP_PROCESSING_SERVER_URL}/images/upload`,
-        formData: true,
-        fieldName: "uppy",
-        method: "post",
-        headers: {
-          Authorization: token,
+    return (
+      new Uppy({
+        id: "dashboardUppy",
+        restrictions: {
+          maxNumberOfFiles: 1,
         },
-      })
-      .use(ImageEditor, {
-        id: "ImageEditor",
-        quality: 1,
-        cropperOptions: {
-          viewMode: 1,
-          background: false,
-          autoCropArea: 1,
-          responsive: true,
+        meta: {
+          appRef: "stt",
+          folder: imageFolder,
         },
+        autoProceed: false,
+        locale: { strings: { cancel: "Replace image" } },
       })
-      .on("upload-success", (file, response) => {
-        const { path } = response.body;
-        setSignedUrl(path).then(() => {
-          onChange(path);
-        });
-        // if (resetAfterUpload) {
-        //   uppy.reset();
-        // }
-      });
+        .use(XHRUpload, {
+          id: "XHR",
+          endpoint: `${process.env.REACT_APP_PROCESSING_SERVER_URL}/images/upload`,
+          formData: true,
+          fieldName: "uppy",
+          method: "post",
+          headers: {
+            Authorization: token,
+          },
+        })
+        .use(ImageEditor, {
+          id: "ImageEditor",
+          quality: 1,
+          cropperOptions: {
+            viewMode: 1,
+            background: false,
+            autoCropArea: 1,
+            responsive: true,
+          },
+          actions: {
+            rotate: false,
+          },
+        })
+        // .use(Form, {
+        //   target: formId,
+        //   triggerUploadOnSubmit: true,
+        //   submitOnSuccess: true,
+        // })
+        .on("upload-success", (file, response) => {
+          const { path } = response.body;
+          setSignedUrl(path).then(() => {
+            onChange(path);
+          });
+        })
+        .on("dashboard:file-edit-start", () => {
+          setTimeout(() => {
+            const el = document.querySelector(".uppy-Dashboard-FileCard-edit");
+            if (el) {
+              // console.log("el", el);
+              el.click();
+            }
+          });
+        })
+    );
   });
 
   function setSignedUrl(path) {
@@ -85,18 +112,64 @@ export default function UppyDashboard({
     });
   }
 
+  async function addRemoteImage(path) {
+    return fetch(path)
+      .then((response) => response.blob())
+      .then((blob) => {
+        uppy.addFile({
+          name: "image.jpg",
+          type: blob.type,
+          data: blob,
+        });
+      });
+  }
+
+  useEffect(() => {
+    if (signedUrl) {
+      setInit(true);
+      addRemoteImage(signedUrl);
+    } else {
+      setInit(true);
+    }
+  }, []);
+
+  if (asModal) {
+    return (
+      init && (
+        <DashboardModal
+          open={true}
+          uppy={uppy}
+          autoOpenFileEditor
+          proudlyDisplayPoweredByUppy={false}
+          hideProgressAfterFinish
+          showLinkToFileUploadResult={false}
+          plugins={["ImageEditor"]}
+          animateOpenClose={false}
+          closeModalOnClickOutside
+          onRequestClose={() => {
+            if (onClose) {
+              onClose();
+            }
+            uppy.reset();
+          }}
+        />
+      )
+    );
+  }
+
   return (
-    <div id="uppy-dashboard" className={error && "uppy-validate-error"}>
-      <Dashboard
-        uppy={uppy}
-        proudlyDisplayPoweredByUppy={false}
-        height={height}
-        locale={{ strings: { done: "Replace image" } }}
-        hideProgressAfterFinish={true}
-        showLinkToFileUploadResult={false}
-        plugins={["ImageEditor"]}
-        metaFields={[{ id: "name", name: "Name", placeholder: "File name" }]}
-      />
-    </div>
+    init && (
+      <div id="uppy-dashboard" className={error && "uppy-validate-error"}>
+        <Dashboard
+          uppy={uppy}
+          autoOpenFileEditor
+          proudlyDisplayPoweredByUppy={false}
+          hideProgressAfterFinish
+          showLinkToFileUploadResult={false}
+          plugins={["ImageEditor"]}
+          animateOpenClose={false}
+        />
+      </div>
+    )
   );
 }
