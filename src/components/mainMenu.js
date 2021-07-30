@@ -35,7 +35,7 @@ export default function MainMenu() {
           component: (
             <NavLink
               className="fill text-right flex items-center justify-end p-2"
-              to="settings"
+              to="/settings"
             >
               Settings <Svg name="settings" css="ml-2" />
             </NavLink>

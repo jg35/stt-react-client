@@ -119,8 +119,9 @@ export default function GoogleFontSelect({
           option: (styles, state) => {
             return {
               ...styles,
-              height: "32px",
-              maxHeight: "32px",
+              padding: "0",
+              height: "30px",
+              maxHeight: "30px",
               position: "relative",
               overflow: "hidden",
               backgroundColor: state.isSelected
@@ -132,7 +133,7 @@ export default function GoogleFontSelect({
                 backgroundImage: `url(${fontSpriteUrl})`,
                 backgroundPositionY: `-${state.data.sprite20PxY}px`,
                 position: "absolute",
-                // top: "6px",
+                top: "5px",
                 height: "20px",
                 left: "6px",
                 width: "100%",

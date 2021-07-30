@@ -12,7 +12,7 @@ export const FragmentSchema = Yup.object().shape({
   id: Yup.number(),
   content: Yup.string()
     .default("")
-    .test("content", "Add some text", function (value) {
+    .test("content", "Add your memory", function (value) {
       if (this.parent.type !== "PHOTO") {
         return !!value;
       }

@@ -27,6 +27,7 @@ export const FETCH_TIMELINE_VIEW = gql`
       id
       title
       date
+      userId
     }
     stt_fragment(where: { userId: { _eq: $userId } }) {
       id

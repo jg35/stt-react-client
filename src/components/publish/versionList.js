@@ -40,7 +40,7 @@ export default function VersionList({ publishedVersions }) {
               .reverse()
               .map((v, i) => (
                 <VersionListItem
-                  index={i}
+                  last={i === publishedVersions.length - 1}
                   deleteVersion={deleteVersionHandler}
                   isDeleting={versionIsDeleting}
                   version={v}

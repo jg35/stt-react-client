@@ -1,9 +1,24 @@
-import { useRef, useCallback, useEffect } from "react";
+import { useRef, useCallback, useEffect, useState } from "react";
 import useClickOutside from "~/hooks/useClickOutside";
+import Card from "~/components/card";
+import ModalCloseWarning from "~/components/modalCloseWarning";
 
-export default function Modal({ size, isOpen, children, close }) {
+export default function Modal({
+  size,
+  isOpen,
+  children,
+  close,
+  formIsDirty = false,
+}) {
+  const [showCloseWarning, setShowCloseWarning] = useState(false);
   const modal = useRef();
-  const onClickOutside = useCallback(() => close(), []);
+  const onClickOutside = useCallback(() => {
+    if (formIsDirty) {
+      setShowCloseWarning(true);
+    } else {
+      close(true);
+    }
+  }, [formIsDirty]);
   useClickOutside(modal, onClickOutside);
 
   useEffect(() => {
@@ -13,38 +28,42 @@ export default function Modal({ size, isOpen, children, close }) {
     };
   }, []);
 
-  let sizeCss;
+  let sizeStyles;
   switch (size) {
     case "sm":
-      sizeCss = "h-auto w-auto max-w-md";
+      sizeStyles = "w-auto max-w-md";
       break;
     case "lg":
-      sizeCss = "h-4/6 w-4/5 max-w-5xl";
+      sizeStyles = "w-4/5 max-w-5xl";
       break;
     case "full":
-      sizeCss = "h-full max-h-full w-full max-w-full";
+      sizeStyles = "h-full max-h-full w-full max-w-full";
       break;
     case "md":
     default:
-      sizeCss = "h-auto w-2/5 max-w-2xl";
+      sizeStyles = "w-2/5 max-w-2xl";
       break;
   }
+
   if (isOpen) {
     return (
-      <div
-        className="animate-fade-in absolute w-full h-full bg-lightestGray left-0 top-0 z-50 bg-opacity-90 flex justify-center items-center"
-        onClick={close}
-      >
-        <div className="relative w-full h-full p-4" ref={modal}>
+      <>
+        <div className="animate-fade-in absolute min-w-full h-full bg-lightestGray left-0 top-0 z-50 bg-opacity-90 flex justify-center items-center">
           <div
+            ref={modal}
+            className={`relative ${sizeStyles}`}
             id="capture-form-wrapper"
             onClick={(e) => e.stopPropagation()}
-            className={`animate-fade-in shadow-lg rounded-lg bg-white flex justify-center flex-col ${sizeCss} overflow-scroll`}
           >
-            {children}
+            <Card css={`p-6`}>{children}</Card>
+            <ModalCloseWarning
+              isOpen={showCloseWarning}
+              back={() => setShowCloseWarning(false)}
+              close={close}
+            />
           </div>
         </div>
-      </div>
+      </>
     );
   }
   return null;

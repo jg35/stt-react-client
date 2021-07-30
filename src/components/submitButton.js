@@ -9,9 +9,9 @@ export default function SubmitButton({
 }) {
   let stateCss;
   if (isSubmitting || bigCta) {
-    stateCss = "bg-black text-white";
+    stateCss = "bg-black text-white border-2 border-black ";
   } else {
-    stateCss = "bg-lightGray";
+    stateCss = "bg-white border-2 border-black ";
   }
   if (disabled) {
     stateCss = stateCss + " opacity-50 cursor-not-allowed	";
@@ -22,7 +22,7 @@ export default function SubmitButton({
       style={style}
       id="form-submit-btn"
       type="submit"
-      className={`flex items-center rounded p-2 justify-center text-lg w-36 duration-300 ease-in hover:bg-black hover:text-white ${stateCss}`}
+      className={`flex font-medium items-center rounded p-2 justify-center text-lg w-36 duration-200 ease-in hover:bg-black hover:text-white ${stateCss}`}
     >
       {isSubmitting && (
         <svg

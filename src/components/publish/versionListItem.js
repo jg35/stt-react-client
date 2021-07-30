@@ -2,15 +2,18 @@ import { renderVersionDate } from "~/lib/util";
 import { coverImages } from "~/lib/imageSizes";
 import Image from "~/components/image";
 import VersionLink from "~/components/publish/versionLink";
-import WebLink from "~/components/publish/webLink";
 import DeleteModal from "~/components/deleteModal";
-import Svg from "~/components/svg";
 
-export default function VersionItem({ version, isDeleting, deleteVersion }) {
+export default function VersionItem({
+  last,
+  version,
+  isDeleting,
+  deleteVersion,
+}) {
   return (
     <li
       key={version.id}
-      className="mr-4 max-w-md border-lightGray border-r flex"
+      className={`max-w-md flex ${!last && "mr-4 border-lightGray border-r"}`}
     >
       <Image
         src={version.coverUrl + coverImages["300px"]}

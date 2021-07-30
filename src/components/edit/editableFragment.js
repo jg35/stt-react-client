@@ -70,25 +70,23 @@ export default function EditableFragment({ fragment, saveFragment, theme }) {
           </div>
         </div>
       )}
-      <div>
-        <ContentEditable
-          style={fragment.type === "CHAPTER" ? chapterStyle : textStyle}
-          spellCheck={false}
-          data-placeholder={
-            fragment.type === "CHAPTER"
-              ? "Enter chapter name"
-              : "This memory is empty. Consider deleting it if you don't need it"
-          }
-          className={`content-editable ${
-            fragment.type === "CHAPTER" ? chapterClass : textClass
-          }`}
-          html={text.current}
-          onKeyPress={handleKeypress}
-          onBlur={handleBlur}
-          onChange={handleChange}
-          tagName={fragment.type === "CHAPTER" ? "h1" : "p"}
-        />
-      </div>
+      <ContentEditable
+        style={fragment.type === "CHAPTER" ? chapterStyle : textStyle}
+        spellCheck={false}
+        data-placeholder={
+          fragment.type === "CHAPTER"
+            ? "Enter chapter name"
+            : "This memory is empty. Consider deleting it if you don't need it"
+        }
+        className={`content-editable ${
+          fragment.type === "CHAPTER" ? chapterClass : textClass
+        }`}
+        html={text.current}
+        onKeyPress={handleKeypress}
+        onBlur={handleBlur}
+        onChange={handleChange}
+        tagName={fragment.type === "CHAPTER" ? "h1" : "p"}
+      />
     </div>
   );
 }

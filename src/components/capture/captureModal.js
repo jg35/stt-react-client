@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
+import { Formik } from "formik";
 import { useMutation, useLazyQuery, gql } from "@apollo/client";
 import { FETCH_QUESTIONS } from "~/lib/gql";
 import { lowerCase, omit } from "lodash";
@@ -14,7 +15,9 @@ import ChapterForm from "~/components/capture/chapterForm";
 import PhotoForm from "~/components/capture/photoForm";
 import TextForm from "~/components/capture/textForm";
 import EventForm from "~/components/capture/eventForm";
+import FormActions from "~/components/capture/formActions";
 import { UIContext } from "~/app";
+import { EventSchema, FragmentSchema } from "~/lib/yup";
 
 export default function CaptureModal({ editView = false }) {
   const [formTitle, setFormTitle] = useState("");
@@ -64,6 +67,30 @@ export default function CaptureModal({ editView = false }) {
         },
       },
     });
+  }
+
+  function getSchema(type) {
+    switch (type) {
+      case "EVENT":
+        return EventSchema;
+      case "TEXT":
+      case "PHOTO":
+      case "CHAPTER":
+      default:
+        return FragmentSchema;
+    }
+  }
+
+  function getSubmitHanlder(type) {
+    switch (type) {
+      case "EVENT":
+        return saveUserEventHandler;
+      case "TEXT":
+      case "PHOTO":
+      case "CHAPTER":
+      default:
+        return saveFragmentHandler;
+    }
   }
 
   function saveFragmentHandler(form) {
@@ -152,49 +179,46 @@ export default function CaptureModal({ editView = false }) {
   }
 
   return showModal && item ? (
-    <Modal
-      isOpen={true}
-      close={closeModal}
-      size={item && item.type === "text" ? "lg" : "md"}
+    <Formik
+      initialValues={getSchema(item.type).cast(item)}
+      onSubmit={getSubmitHanlder(item.type)}
+      validationSchema={getSchema(item.type)}
+      validateOnChange={false}
+      validateOnBlur={false}
     >
-      <div className="flex-1 flex flex-col relative h-full">
-        <h1 className="modal-title">{formTitle}</h1>
-        {item.type === "EVENT" && (
-          <EventForm
-            setItem={setItem}
-            item={item}
-            submitForm={saveUserEventHandler}
-            closeModal={closeModal}
-          />
-        )}
-        {item.type === "TEXT" && (
-          <TextForm
-            editContent={!editView}
-            setItem={setItem}
-            item={item}
-            submitForm={saveFragmentHandler}
-            closeModal={closeModal}
-            originatesFromQuestion={originatesFromQuestion}
-          />
-        )}
-        {item.type === "CHAPTER" && (
-          <ChapterForm
-            editContent={!editView}
-            setItem={setItem}
-            item={item}
-            submitForm={saveFragmentHandler}
-            closeModal={closeModal}
-          />
-        )}
-        {item.type === "PHOTO" && (
-          <PhotoForm
-            setItem={setItem}
-            item={item}
-            submitForm={saveFragmentHandler}
-            closeModal={closeModal}
-          />
-        )}
-      </div>
-    </Modal>
+      {(props) => {
+        return (
+          <Modal
+            formIsDirty={props.dirty}
+            isOpen={true}
+            close={closeModal}
+            size={item && item.type === "TEXT" ? "lg" : "md"}
+          >
+            <form onSubmit={props.handleSubmit}>
+              <h1 className="modal-title">{formTitle}</h1>
+              {item.type === "EVENT" && <EventForm {...props} />}
+
+              {item.type === "TEXT" && (
+                <TextForm
+                  {...props}
+                  editContent={!editView}
+                  originatesFromQuestion={originatesFromQuestion}
+                  closeModal={closeModal}
+                />
+              )}
+              {item.type === "CHAPTER" && (
+                <ChapterForm {...props} editContent={!editView} />
+              )}
+              {item.type === "PHOTO" && <PhotoForm {...props} />}
+              <FormActions
+                closeModal={closeModal}
+                itemId={props.values.id}
+                isSubmitting={props.isSubmitting}
+              />
+            </form>
+          </Modal>
+        );
+      }}
+    </Formik>
   ) : null;
 }

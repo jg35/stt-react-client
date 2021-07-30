@@ -46,6 +46,7 @@ export default function ScrollNavigator({ fragments }) {
           left: `${left}%`,
           transform: `translate(${isHover ? "-50%" : "-12px"}, -50%)`,
         }}
+        onClick={() => setHoverChapter(chapterId)}
         onMouseEnter={() => setHoverChapter(chapterId)}
         onMouseLeave={() => setHoverChapter(null)}
       >

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { debounce } from "lodash";
+import { debounce, sortBy } from "lodash";
 
 import FragmentList from "~/components/timeline/fragmentList";
 import UserEvent from "~/components/timeline/userEvent";
@@ -8,6 +8,8 @@ import SectionCaptureActions from "~/components/timeline/sectionCaptureActions";
 
 export default function Section({ section, index }) {
   const [showActions, setShowActions] = useState(false);
+
+  const events = sortBy(section.events.concat(section.worldEvents), ["date"]);
 
   return (
     <section
@@ -32,15 +34,15 @@ export default function Section({ section, index }) {
           index={index}
         />
       </header>
-      {(section.events.length || section.worldEvents.length) > 0 && (
+      {section.events.length > 0 && (
         <>
           <div className="flex flex-wrap mt-2 pl-2" id="section-events-grid">
-            {section.events.map((e, i) => (
-              <UserEvent event={e} key={i} />
-            ))}
-            {section.worldEvents.map((e, i) => (
-              <WorldEvent event={e} key={i} />
-            ))}
+            {events.map((e, i) => {
+              if (e.userId) {
+                return <UserEvent event={e} key={i} />;
+              }
+              return <WorldEvent event={e} key={i} />;
+            })}
           </div>
         </>
       )}
