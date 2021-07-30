@@ -14,7 +14,7 @@ export default function Logout() {
     return (
       <Redirect
         to={{
-          pathname: "login",
+          pathname: "/login",
         }}
       />
     );

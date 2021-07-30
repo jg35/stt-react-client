@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "~/components/authWrap";
 import { signOut } from "~/lib/auth";
@@ -16,7 +16,7 @@ export default function MainMenu() {
       items={[
         {
           component: (
-            <NavLink className="fill text-right" to="account">
+            <NavLink className="fill text-right" to="/settings">
               <div className="flex items-center justify-end p-2">
                 <div className="mr-2">
                   <span className="block">{user.displayName}</span>
