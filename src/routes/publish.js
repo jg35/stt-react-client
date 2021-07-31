@@ -25,7 +25,7 @@ export default function Publish() {
           <div>
             <div>
               <h2 className="text-xl my-4">Latest version</h2>
-              <Card css="p-4 w-full">
+              <Card>
                 <LatestVersion version={data.stt_version[0]} />
               </Card>
             </div>

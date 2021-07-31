@@ -1,7 +1,27 @@
-export default function Card({ children, css = "p-4 min-w-full", style = {} }) {
+import { joinTailwindClasses } from "~/lib/util";
+
+export default function Card({
+  children,
+  style = {},
+  css = "",
+  variant = "default",
+  size = "default",
+}) {
+  const styles = {
+    variants: {
+      default: "bg-white flex flex-col shadow-lg rounded-lg",
+    },
+    sizes: {
+      default: "p-4",
+    },
+  };
   return (
     <div
-      className={`shadow-lg rounded-lg bg-white flex flex-col ${css}`}
+      className={joinTailwindClasses([
+        styles.variants[variant],
+        styles.sizes[size],
+        css,
+      ])}
       style={style}
     >
       {children}

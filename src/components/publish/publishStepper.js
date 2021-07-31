@@ -1,4 +1,4 @@
-import Button from "~/components/button";
+import ButtonNew from "~/components/buttonNew";
 import SubmitButton from "~/components/submitButton";
 
 export default function PublishStepper({
@@ -19,13 +19,13 @@ export default function PublishStepper({
     <div className="flex justify-between border-b-2 border-lightGray p-2 px-4 items-center">
       <div className="w-36">
         {currentStep > 1 && (
-          <Button
+          <ButtonNew
             disabled={isSubmitting}
             css="text-lg w-full py-2 duration-300"
             onClick={() => stepBack(currentStep - 1)}
           >
             Back
-          </Button>
+          </ButtonNew>
         )}
       </div>
       <div className="flex justify-around p-4  w-8/12">

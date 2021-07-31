@@ -1,4 +1,5 @@
 import { DateTime } from "luxon";
+import { overrideTailwindClasses } from "tailwind-override";
 
 export const getTrialDaysRemaining = (trialExpireDate) => {
   const now = DateTime.utc();
@@ -45,4 +46,8 @@ export const buildGoogleFontFaceString = (selectedFonts) => {
       )}&display=swap');`;
     })
     .join("\n");
+};
+
+export const joinTailwindClasses = (classes) => {
+  return overrideTailwindClasses(classes.join(" ").trim());
 };

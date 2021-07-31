@@ -45,6 +45,7 @@ export const FETCH_TIMELINE_VIEW = gql`
       updatedAt
     }
     stt_user_by_pk(id: $userId) {
+      id
       location
       dob
       onboarding
@@ -217,6 +218,7 @@ export const FETCH_QUESTIONS = gql`
 export const FETCH_USER = gql`
   query ($userId: String!) {
     stt_user_by_pk(id: $userId) {
+      id
       location
       dob
       onboarding

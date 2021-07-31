@@ -60,7 +60,7 @@
     @apply absolute border-t-2 border-black w-full left-0 -bottom-0 animate-fade-in duration-500;
   }
   .input {
-    max-width: 40rem;
+    /* max-width: 40rem; */
     @apply outline-none bg-lightestGray p-3 rounded w-full text-xl border border-transparent transition duration-200 ease-in;
   }
 

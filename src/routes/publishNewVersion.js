@@ -2,7 +2,7 @@ import { useEffect, useContext, useState } from "react";
 import { useHistory } from "react-router";
 import { Formik } from "formik";
 import { useQuery, useMutation } from "@apollo/client";
-import { pick, cloneDeep } from "lodash";
+import { pick, cloneDeep, values } from "lodash";
 
 import { AuthContext } from "~/components/authWrap";
 import { VersionSchema, CoverElementSchema, CoverSchema } from "~/lib/yup";
@@ -39,6 +39,7 @@ export default function PublishNewVersion() {
       if (!version.author) {
         version.author = user.displayName;
       }
+      version.publishStep = 2;
       // Should only run once user reaches the second step
       if (!version.theme.cover && version.author && version.title) {
         version.theme.cover = CoverSchema.cast({
@@ -112,7 +113,7 @@ export default function PublishNewVersion() {
             height: "calc(100% - 16px)",
           }}
         >
-          <Card css="min-h-full border-4 border-white">
+          <Card css="min-h-full border-4 border-white p-0">
             <Formik
               onSubmit={(values, formBag) => {
                 values.edited = true;

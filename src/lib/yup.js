@@ -101,3 +101,10 @@ export const VersionSchema = Yup.object().shape({
     }),
   publishStep: Yup.number().default(1),
 });
+
+export const UserSettingsSchema = Yup.object()
+  .shape({
+    dob: Yup.string().required("Set your date of birth").default(""),
+    location: Yup.string().required("Set your location"),
+  })
+  .noUnknown();

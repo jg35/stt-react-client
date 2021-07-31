@@ -55,7 +55,7 @@ export default function Modal({
             id="capture-form-wrapper"
             onClick={(e) => e.stopPropagation()}
           >
-            <Card css={`p-6`}>{children}</Card>
+            <Card css="p-6">{children}</Card>
             <ModalCloseWarning
               isOpen={showCloseWarning}
               back={() => setShowCloseWarning(false)}
