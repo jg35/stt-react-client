@@ -62,11 +62,13 @@ export default function PublishNewVersion() {
     }
   }, [data]);
 
-  function publishVersionHandler() {
-    // TODO update the action to also generate the cover
-    return publishVersion({ variables: { userId: user.id } }).then(() => {
-      // Redirect to publish view
-      history.push("/publish");
+  function publishVersionHandler(values) {
+    return saveVersionHandler(values).then(() => {
+      // TODO update the action to also generate the cover
+      return publishVersion({ variables: { userId: user.id } }).then(() => {
+        // Redirect to publish view
+        history.push("/publish");
+      });
     });
   }
 
@@ -119,7 +121,7 @@ export default function PublishNewVersion() {
                 values.edited = true;
                 if (values.publishStep === 3) {
                   // Create the book
-                  return publishVersionHandler();
+                  return publishVersionHandler(values);
                 }
                 return saveVersionHandler(values, formBag).then(() => {
                   formBag.setFieldValue("publishStep", values.publishStep + 1);

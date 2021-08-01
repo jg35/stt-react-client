@@ -82,23 +82,14 @@ export const VersionSchema = Yup.object().shape({
   title: Yup.string().required(),
   author: Yup.string().required(),
   publishedAt: Yup.string().required("Publication date is required"),
-  sharePassword: Yup.string()
-
-    .when("publishStep", {
-      is: 3,
-      then: Yup.string()
-        .ensure()
-        .min(8, "Your password shuold be at least 8 characters")
-        .matches(/^\S+$/i, "Your password cannot contain spaces")
-        .trim(),
-      otherwise: Yup.string().ensure(),
-    })
-    .test("checkPassword", "Share password is required", function (val) {
-      if (this.parent.publishStep !== 3) {
-        return true;
-      }
-      return this.parent.publishStep !== 3 || !!val;
-    }),
+  sharePassword: Yup.string().when("publishStep", {
+    is: 3,
+    then: Yup.string()
+      .min(8, "Your password shuold be at least 8 characters")
+      .matches(/^\S+$/i, "Your password cannot contain spaces")
+      .trim(),
+    otherwise: Yup.string().ensure(),
+  }),
   publishStep: Yup.number().default(1),
 });
 
