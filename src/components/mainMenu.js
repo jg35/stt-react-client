@@ -16,7 +16,7 @@ export default function MainMenu() {
       items={[
         {
           component: (
-            <NavLink className="fill text-right" to="/settings">
+            <NavLink className="fill text-right" to="/settings#account">
               <div className="flex items-center justify-end p-2">
                 <div className="mr-2">
                   <span className="block">{user.displayName}</span>

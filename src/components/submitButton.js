@@ -7,6 +7,7 @@ export default function SubmitButton({
   style = {},
   disabled = false,
   width = "w-36",
+  formId = "",
 }) {
   let stateCss = width;
   if (isSubmitting || bigCta) {
@@ -22,6 +23,7 @@ export default function SubmitButton({
   return (
     <button
       disabled={disabled}
+      form={formId}
       style={style}
       id="form-submit-btn"
       type="submit"

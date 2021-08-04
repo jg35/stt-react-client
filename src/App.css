@@ -22,7 +22,6 @@
   button:active,
   button:focus {
     outline: none;
-    border: none;
   }
   .content-editable * {
     font-family: inherit !important;

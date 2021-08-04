@@ -18,7 +18,10 @@ export default function TabLink({
       className={`${variants.base} ${
         activeTab === tab ? variants.active : variants.default
       }`}
-      onClick={() => setActiveTab(tab)}
+      onClick={() => {
+        setActiveTab(tab);
+        window.location.hash = `#${tab.toLowerCase()}`;
+      }}
     >
       <span>{title}</span>
       {description && (

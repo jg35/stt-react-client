@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import { useHistory } from "react-router";
 import { AuthContext } from "~/components/authWrap";
 import Page from "~/components/page";
 import Card from "~/components/card";
@@ -6,10 +7,21 @@ import Card from "~/components/card";
 import ManageUser from "~/components/settings/manageUser";
 import ManageBilling from "~/components/settings/manageBilling";
 import ManageAccount from "~/components/settings/manageAccount";
+import ManagePrivacy from "~/components/settings/managePrivacy";
 import TabLink from "~/components/settings/tabLink";
 
 export default function Settings() {
-  const [activeTab, setActiveTab] = useState("SETTINGS");
+  const TABS = ["SETTINGS", "BILLING", "ACCOUNT", "PRIVACY"];
+  const history = useHistory();
+  const urlTab =
+    history.location.hash &&
+    history.location.hash.replace("#", "").toUpperCase();
+
+  if (urlTab && !TABS.includes(urlTab)) {
+    window.location.hash = "";
+    urlTab = null;
+  }
+  const [activeTab, setActiveTab] = useState(urlTab || "SETTINGS");
   const { dbUser } = useContext(AuthContext);
 
   function renderActiveTab() {
@@ -20,6 +32,8 @@ export default function Settings() {
         return <ManageBilling dbUser={dbUser} />;
       case "ACCOUNT":
         return <ManageAccount dbUser={dbUser} />;
+      case "PRIVACY":
+        return <ManagePrivacy dbUser={dbUser} />;
     }
   }
   return (
@@ -36,6 +50,14 @@ export default function Settings() {
               tab="SETTINGS"
               title="General"
               description="The way things work and feel"
+            />
+
+            <TabLink
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
+              tab="PRIVACY"
+              title="Privacy"
+              description="Manage access to your book"
             />
 
             <TabLink

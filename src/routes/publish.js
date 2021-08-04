@@ -9,11 +9,11 @@ import VersionList from "~/components/publish/versionList";
 import LatestVersion from "~/components/publish/latestVersion";
 import PublishSkeleton from "~/components/publish/publishSkeleton";
 import Button from "~/components/button";
+import AccessList from "~/components/accessList/accessList";
 
 export default function Publish() {
   const history = useHistory();
   const { user } = useContext(AuthContext);
-
   const { data, loading } = useQuery(FETCH_PUBLISH_VIEW, {
     variables: { userId: user.id },
   });
@@ -51,6 +51,7 @@ export default function Publish() {
           </Card>
         )}
       </div>
+      <AccessList userId={user.id} />
     </Page>
   );
 }

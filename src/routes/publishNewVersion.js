@@ -2,7 +2,7 @@ import { useEffect, useContext, useState } from "react";
 import { useHistory } from "react-router";
 import { Formik } from "formik";
 import { useQuery, useMutation } from "@apollo/client";
-import { pick, cloneDeep, values } from "lodash";
+import { pick, cloneDeep } from "lodash";
 
 import { AuthContext } from "~/components/authWrap";
 import { VersionSchema, CoverElementSchema, CoverSchema } from "~/lib/yup";
@@ -18,10 +18,12 @@ import PublishStepper from "~/components/publish/publishStepper";
 import CoverEditorForm from "~/components/publish/coverEditorForm";
 import PublishOptionsForm from "~/components/publish/publishOptionsForm";
 import CreateBookForm from "~/components/publish/createBookForm";
+import AccessList from "~/components/accessList/accessList";
 
 export default function PublishNewVersion() {
   const history = useHistory();
   const { user } = useContext(AuthContext);
+
   const [currentVersion, setCurrentVersion] = useState(null);
   const [updateVersion] = useMutation(UPDATE_VERSION);
   const [publishVersion] = useMutation(PUBLISH_VERSION);
@@ -39,7 +41,7 @@ export default function PublishNewVersion() {
       if (!version.author) {
         version.author = user.displayName;
       }
-      version.publishStep = 2;
+      version.publishStep = 3;
       // Should only run once user reaches the second step
       if (!version.theme.cover && version.author && version.title) {
         version.theme.cover = CoverSchema.cast({
@@ -63,7 +65,7 @@ export default function PublishNewVersion() {
   }, [data]);
 
   function publishVersionHandler(values) {
-    return saveVersionHandler(values).then(() => {
+    return saveVersionHandler(values, true).then(() => {
       // TODO update the action to also generate the cover
       return publishVersion({ variables: { userId: user.id } }).then(() => {
         // Redirect to publish view
@@ -80,8 +82,8 @@ export default function PublishNewVersion() {
           "author",
           "publishedAt",
           "theme",
-          "sharePassword",
           "edited",
+          "privacyStatus",
         ]),
         id: values.id,
       },
@@ -89,9 +91,9 @@ export default function PublishNewVersion() {
   }
 
   const steps = [
-    "⚙️  1. Publish options  ",
-    "✨  2. Design your cover",
-    "📖  3. Create your book",
+    "1. Publish options",
+    "2. Design your cover",
+    "3. Privacy options",
   ];
 
   function renderStep(formProps) {
@@ -123,7 +125,7 @@ export default function PublishNewVersion() {
                   // Create the book
                   return publishVersionHandler(values);
                 }
-                return saveVersionHandler(values, formBag).then(() => {
+                return saveVersionHandler(values).then(() => {
                   formBag.setFieldValue("publishStep", values.publishStep + 1);
                 });
               }}
@@ -135,6 +137,7 @@ export default function PublishNewVersion() {
               {(props) => {
                 return (
                   <form
+                    id="publish-new-version-form"
                     onSubmit={props.handleSubmit}
                     className="flex-1 flex flex-col"
                   >
@@ -158,6 +161,7 @@ export default function PublishNewVersion() {
             </Formik>
           </Card>
         </div>
+        <AccessList userId={user.id} />
       </Page>
     );
   }

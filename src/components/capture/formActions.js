@@ -6,6 +6,7 @@ export default function FormActions({
   itemId,
   isSubmitting,
   formIsDirty = false,
+  formId,
 }) {
   let submitText;
   if (isSubmitting) {
@@ -23,7 +24,11 @@ export default function FormActions({
       >
         Cancel
       </Button>
-      <SubmitButton disabled={!formIsDirty} isSubmitting={isSubmitting}>
+      <SubmitButton
+        disabled={!formIsDirty}
+        isSubmitting={isSubmitting}
+        formId={formId}
+      >
         {submitText}
       </SubmitButton>
     </div>

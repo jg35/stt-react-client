@@ -1,43 +1,47 @@
-import FormInput from "~/components/formInput";
-import FormError from "~/components/formError";
 import SubmitButton from "~/components/submitButton";
-
+import ManagePrivacyStatus from "~/components/accessList/managePrivacyStatus";
+import AccessListStatusButton from "~/components/accessList/accessListStatusButton";
 export default function PublishOptionsForm({
   values,
-
+  setFieldValue,
   handleBlur,
   handleChange,
   errors,
   isSubmitting,
+  showAccessModal,
 }) {
   return (
     <div
-      className="flex flex-col justify-center pt-20 w-10/12 md:w-6/12 mx-auto"
-      style={{ maxWidth: "600px" }}
+      className="flex flex-col justify-center pt-20 w-12/12 lg:w-6/12 mx-auto"
+      style={{ maxWidth: "768px" }}
     >
-      <p className="font-medium mb-6 text-xl">
-        Finally set your sharing password. You'll give this to anyone you want
-        to share your book with, so don't use your normal password!
+      <p className="font-medium mb-6 text-xl p-2">
+        Finally decide how you would like to share your book
       </p>
 
-      <div className="form-control w-full my-10">
-        <label>
-          Think of a good password to keep your book private and secure
-        </label>
-        <FormInput
-          name="sharePassword"
-          placeholder="Your password should be at least 8 characters"
-          handleChange={handleChange}
-          handleBlur={handleBlur}
-          value={values.sharePassword}
-          error={errors.sharePassword}
+      <div className="mb-6">
+        <ManagePrivacyStatus
+          privacyStatus={values.privacyStatus}
+          setPrivacyStatus={(val) => setFieldValue("privacyStatus", val)}
         />
-        <FormError error={errors.sharePassword} />
+
+        {values.privacyStatus === "PRIVATE" && (
+          <div className="mt-6">
+            <AccessListStatusButton userId={values.userId} future={true} />
+          </div>
+        )}
       </div>
 
-      <SubmitButton isSubmitting={isSubmitting} bigCta width="w-60">
-        {isSubmitting ? "Creating your book..." : "Create your book"}
-      </SubmitButton>
+      <div className="mx-auto mt-6">
+        <SubmitButton
+          isSubmitting={isSubmitting}
+          bigCta
+          width="w-60"
+          formId="publish-new-version-form"
+        >
+          {isSubmitting ? "Creating your book..." : "Create your book"}
+        </SubmitButton>
+      </div>
     </div>
   );
 }

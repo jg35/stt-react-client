@@ -220,6 +220,7 @@ export default function CaptureModal({ editView = false, scrollToFragment }) {
                 closeModal={closeModal}
                 itemId={props.values.id}
                 isSubmitting={props.isSubmitting}
+                formId="capture-form"
               />
             </form>
           </Modal>

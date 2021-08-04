@@ -11,6 +11,7 @@ export default {
         item: null,
         event: null,
       },
+      showAccessListModal: false,
       displayMessages: {
         ORPHANED_FRAGMENTS: true,
       },

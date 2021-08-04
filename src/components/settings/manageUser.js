@@ -9,14 +9,12 @@ import FormError from "~/components/formError";
 import SubmitButton from "~/components/submitButton";
 
 export default function UserSettings({ dbUser }) {
-  console.log(dbUser);
   const [updateUser] = useMutation(UPDATE_USER);
 
   function updateUserHandler(values) {
     return updateUser({
       variables: { userId: dbUser.id, data: values },
       // update(cache, { data }) {
-      //   console.log(data);
       //   cache.modify({
       //     fields: {
       //       stt_user(user = {}) {

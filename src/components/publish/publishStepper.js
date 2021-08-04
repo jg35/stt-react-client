@@ -41,7 +41,12 @@ export default function PublishStepper({
 
       <div className="w-36">
         {currentStep !== steps.length && (
-          <SubmitButton isSubmitting={isSubmitting}>{submitText}</SubmitButton>
+          <SubmitButton
+            formId="publish-new-version-form"
+            isSubmitting={isSubmitting}
+          >
+            {submitText}
+          </SubmitButton>
         )}
       </div>
     </div>

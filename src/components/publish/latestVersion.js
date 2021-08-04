@@ -4,7 +4,9 @@ import Image from "~/components/image";
 import VersionLink from "~/components/publish/versionLink";
 import WebLink from "~/components/publish/webLink";
 import DeleteModal from "~/components/deleteModal";
+import Button from "~/components/button";
 import Svg from "~/components/svg";
+import AccessListStatusButton from "~/components/accessList/accessListStatusButton";
 
 export default function LatestVersion({
   version,
@@ -43,8 +45,16 @@ export default function LatestVersion({
               />
             </div>
           </div>
+          <div className="mb-6">
+            <div className="flex items-center">
+              <AccessListStatusButton
+                isPublic={version.privacyStatus === "PUBLIC"}
+                userId={version.userId}
+              />
+            </div>
+          </div>
           <div>
-            <div className="mb-6">
+            <div>
               <span className="text-lg font-medium ml-1">Share</span>
               <div className="flex">
                 <Svg name="facebook" width={32} height={32} css="m-1" />
@@ -53,7 +63,7 @@ export default function LatestVersion({
                 <Svg name="instagram" width={32} height={32} css="m-1" />
               </div>
             </div>
-            <div>
+            {/* <div>
               <span className="text-lg font-medium ml-1">Download</span>
               <div className="flex">
                 {version.publishedFormats.split(",").map((format, i) => (
@@ -65,7 +75,7 @@ export default function LatestVersion({
                   </span>
                 ))}
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

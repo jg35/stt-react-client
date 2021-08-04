@@ -106,10 +106,10 @@ export const FETCH_SHARE_VIEW = gql`
       publishedAt
       publishedPath
       publishedFormats
+      privacyStatus
       generated
       userId
       edited
-      sharePassword
     }
   }
 `;
@@ -128,10 +128,10 @@ export const FETCH_PUBLISH_VIEW = gql`
       publishedAt
       publishedPath
       publishedFormats
+      privacyStatus
       generated
       userId
       edited
-      sharePassword
     }
   }
 `;
@@ -151,10 +151,10 @@ export const FETCH_CREATE_BOOK_VIEW = gql`
       publishedAt
       publishedPath
       publishedFormats
+      privacyStatus
       generated
       userId
       edited
-      sharePassword
     }
   }
 `;
@@ -170,10 +170,10 @@ export const FETCH_VERSION = gql`
       publishedAt
       publishedPath
       publishedFormats
+      privacyStatus
       generated
       userId
       edited
-      sharePassword
     }
   }
 `;
@@ -337,7 +337,33 @@ export const UPDATE_VERSION = gql`
       publishedAt
       coverUrl
       edited
-      sharePassword
+    }
+  }
+`;
+
+export const UPDATE_PRIVACY_SETTINGS = gql`
+  mutation (
+    $userId: String!
+    $privacyStatus: String!
+    $savedTokenIds: [Int!]
+    $newTokens: [stt_accessToken_insert_input!]!
+  ) {
+    update_stt_version(
+      where: { userId: { _eq: $userId } }
+      _set: { privacyStatus: $privacyStatus }
+    ) {
+      affected_rows
+    }
+    delete_stt_accessToken(
+      where: {
+        id: { _nin: $savedTokenIds }
+        _and: { type: { _eq: "PRIVATE" } }
+      }
+    ) {
+      affected_rows
+    }
+    insert_stt_accessToken(objects: $newTokens) {
+      affected_rows
     }
   }
 `;
@@ -396,6 +422,65 @@ export const ACTION_SYNC_USER = gql`
   mutation ($data: SyncUserInput!) {
     sync_user(data: $data) {
       synced
+    }
+  }
+`;
+
+export const FETCH_PRIVATE_ACCESS_TOKENS = gql`
+  query ($userId: String!) {
+    stt_accessToken(
+      where: { userId: { _eq: $userId }, _and: { email: { _is_null: false } } }
+    ) {
+      id
+      token
+      email
+      userId
+      createdAt
+      updatedAt
+      type
+    }
+  }
+`;
+
+export const MANGE_PRIVACY_SETTINGS_VIEW = gql`
+  query ($userId: String!) {
+    stt_version(
+      where: { userId: { _eq: $userId } }
+      order_by: { id: desc }
+      limit: 1
+    ) {
+      privacyStatus
+    }
+    stt_accessToken(where: { userId: { _eq: $userId } }) {
+      id
+      token
+      email
+      userId
+      createdAt
+      updatedAt
+      type
+    }
+  }
+`;
+
+export const INSERT_ACCESS_TOKEN = gql`
+  mutation ($data: stt_accessToken_insert_input!) {
+    insert_stt_accessToken_one(object: $data) {
+      id
+      email
+      token
+      userId
+      createdAt
+      updatedAt
+      type
+    }
+  }
+`;
+
+export const DELETE_ACCESS_TOKEN = gql`
+  mutation ($id: Int!) {
+    delete_stt_accessToken_by_pk(id: $id) {
+      id
     }
   }
 `;

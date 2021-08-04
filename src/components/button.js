@@ -16,7 +16,7 @@ export default function Button({
     variantCSS = "bg-transparent hover:bg-lightestGray";
   } else if (cta) {
     variantCSS =
-      "border-2 bg-white border-black hover:bg-black hover:text-white";
+      "border-2 bg-white border-black hover:bg-black hover:text-white active:border-2";
   } else if (bigCta) {
     variantCSS = "bg-offBlack hover:bg-black text-white";
   } else {

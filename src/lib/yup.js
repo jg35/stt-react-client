@@ -1,6 +1,17 @@
 import * as Yup from "yup";
 import { v4 as uuid } from "uuid";
 
+export const AccessTokenPrivateSchema = Yup.object().shape({
+  id: Yup.number(),
+  email: Yup.string().ensure().email(),
+});
+
+export const PrivacySettingsForm = Yup.object().shape({
+  privacyStatus: Yup.string().default("PRIVATE"),
+  tokens: Yup.array().of(AccessTokenPrivateSchema).default([]),
+  newToken: AccessTokenPrivateSchema,
+});
+
 export const EventSchema = Yup.object().shape({
   id: Yup.number(),
   title: Yup.string().required("Give your event a name").default(""),
@@ -82,15 +93,9 @@ export const VersionSchema = Yup.object().shape({
   title: Yup.string().required(),
   author: Yup.string().required(),
   publishedAt: Yup.string().required("Publication date is required"),
-  sharePassword: Yup.string().when("publishStep", {
-    is: 3,
-    then: Yup.string()
-      .min(8, "Your password shuold be at least 8 characters")
-      .matches(/^\S+$/i, "Your password cannot contain spaces")
-      .trim(),
-    otherwise: Yup.string().ensure(),
-  }),
-  publishStep: Yup.number().default(1),
+  privacyStatus: Yup.string().default("PRIVATE"),
+  // TODO - do we want this part of the version form?
+  // tokens: Yup.array().of(AccessTokenPrivateSchema).default([]),
 });
 
 export const UserSettingsSchema = Yup.object()
