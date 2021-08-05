@@ -9,6 +9,7 @@ import { useMutation, useQuery, gql } from "@apollo/client";
 import {
   MANGE_PRIVACY_SETTINGS_VIEW,
   UPDATE_PRIVACY_SETTINGS,
+  REGENERATE_PUBLIC_ACCESS_TOKEN,
 } from "~/lib/gql";
 import { PrivacySettingsForm, AccessTokenPrivateSchema } from "~/lib/yup";
 
@@ -17,9 +18,32 @@ export default function ManagePrivacy({ dbUser }) {
     variables: { userId: dbUser.id },
   });
   const [updatePrivacySettings] = useMutation(UPDATE_PRIVACY_SETTINGS);
+  const [regeneratePublicToken] = useMutation(REGENERATE_PUBLIC_ACCESS_TOKEN);
 
   if (loading) {
     return null;
+  }
+
+  function regeneratePublicTokenHandler(accessToken) {
+    return regeneratePublicToken({
+      variables: {
+        id: accessToken.id,
+      },
+      update(cache, { data }) {
+        const regenerateToken = data.stt_accessToken_regenerate.token;
+        cache.writeFragment({
+          id: cache.identify(accessToken),
+          data: {
+            token: regenerateToken,
+          },
+          fragment: gql`
+            fragment token on stt_accessToken {
+              token
+            }
+          `,
+        });
+      },
+    });
   }
 
   return (
@@ -88,6 +112,7 @@ export default function ManagePrivacy({ dbUser }) {
               />
               <div className="mt-6">
                 <AccessListItems
+                  regeneratePublicToken={regeneratePublicTokenHandler}
                   isPublic={props.values.privacyStatus === "PUBLIC"}
                   items={props.values.tokens}
                   removeAccessToken={(token) => {

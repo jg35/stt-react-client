@@ -4,6 +4,7 @@ export default function AccessListItems({
   items,
   removeAccessToken,
   isPublic = false,
+  regeneratePublicToken,
 }) {
   const itemLength = items.filter((f) =>
     isPublic ? f.type === "PUBLIC" : f.type === "PRIVATE"
@@ -20,9 +21,6 @@ export default function AccessListItems({
     return <span>Public link</span>;
   }
 
-  function regenerateToken(item) {
-    console.log("regenerateToken", item);
-  }
   return (
     <div className="p-2">
       <h1 className="font-medium text-lg mb-6">{getStatus(items.length)}</h1>
@@ -54,7 +52,7 @@ export default function AccessListItems({
                       Remove access
                     </Button>
                   ) : (
-                    <Button onClick={() => regenerateToken(item)}>
+                    <Button onClick={() => regeneratePublicToken(item)}>
                       Regenerate Link
                     </Button>
                   )}

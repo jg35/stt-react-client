@@ -368,6 +368,15 @@ export const UPDATE_PRIVACY_SETTINGS = gql`
   }
 `;
 
+export const REGENERATE_PUBLIC_ACCESS_TOKEN = gql`
+  mutation ($id: Int!) {
+    stt_accessToken_regenerate(id: $id) {
+      id
+      token
+    }
+  }
+`;
+
 export const PUBLISH_VERSION = gql`
   mutation ($userId: String!) {
     stt_version_generate_book(userId: $userId) {
