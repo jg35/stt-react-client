@@ -7,9 +7,8 @@ import ChapterNavigator from "~/components/timeline/chapterNavigator";
 import PhotoFragment from "~/components/edit/photoFragment";
 import EditableFragment from "~/components/edit/editableFragment";
 import SaveStatus from "~/components/saveStatus";
-import { setGoogleFontStyles } from "~/lib/uiManager";
 
-export default function Preview({ fragments, saveFragment, theme }) {
+export default function Preview({ fragments, saveFragment }) {
   const { uiState, updateUiState } = useContext(UIContext);
   const editPreviewScrollContainer = useRef(null);
   const [saving, setIsSaving] = useState(false);
@@ -43,7 +42,7 @@ export default function Preview({ fragments, saveFragment, theme }) {
       </div>
       <div
         ref={editPreviewScrollContainer}
-        className={`h-full overflow-scroll js-preview-scroll-container relative pt-10 px-8`}
+        className={`h-full overflow-scroll js-preview-scroll-container relative pt-10 preview-container`}
         onScroll={debounce((e) => {
           updateUiState({
             editPreviewScrollPosition: e.target.scrollTop,
@@ -56,7 +55,6 @@ export default function Preview({ fragments, saveFragment, theme }) {
             if (frag.type !== "PHOTO") {
               return (
                 <EditableFragment
-                  theme={theme}
                   fragment={frag}
                   key={frag.id}
                   saveFragment={(newContent) =>
@@ -65,9 +63,7 @@ export default function Preview({ fragments, saveFragment, theme }) {
                 />
               );
             }
-            return (
-              <PhotoFragment fragment={frag} theme={theme} key={frag.id} />
-            );
+            return <PhotoFragment fragment={frag} key={frag.id} />;
           })}
       </div>
       <ChapterNavigator fragments={fragments} />

@@ -5,7 +5,7 @@ import colors from "~/lib/colors";
 import { renderFragmentDate } from "~/lib/util";
 import FragmentHeaderMenu from "~/components/timeline/fragmentHeaderMenu";
 
-export default function EditableFragment({ fragment, saveFragment, theme }) {
+export default function EditableFragment({ fragment, saveFragment }) {
   const [showInfo, setShowInfo] = useState(false);
   let text = useRef(fragment.content);
 
@@ -28,23 +28,6 @@ export default function EditableFragment({ fragment, saveFragment, theme }) {
     if (fragment.type === "CHAPTER" && e.key === "Enter") {
       e.preventDefault();
     }
-  };
-
-  let textClass = `whitespace-pre-wrap focus:outline-none`;
-  let chapterClass = `text-center focus:outline-none`;
-
-  let textStyle = {
-    lineHeight: theme.lineHeight,
-    fontFamily: theme.fontFamily,
-    fontSize: theme.fontSize,
-    marginBottom: "2em",
-  };
-
-  let chapterStyle = {
-    lineHeight: theme.lineHeight,
-    fontFamily: theme.fontFamily,
-    fontSize: theme.chapterFontSize,
-    margin: "2em 0",
   };
 
   return (
@@ -71,16 +54,13 @@ export default function EditableFragment({ fragment, saveFragment, theme }) {
         </div>
       )}
       <ContentEditable
-        style={fragment.type === "CHAPTER" ? chapterStyle : textStyle}
         spellCheck={false}
         data-placeholder={
           fragment.type === "CHAPTER"
             ? "Enter chapter name"
             : "This memory is empty. Consider deleting it if you don't need it"
         }
-        className={`content-editable ${
-          fragment.type === "CHAPTER" ? chapterClass : textClass
-        }`}
+        className="content-editable"
         html={text.current}
         onKeyPress={handleKeypress}
         onBlur={handleBlur}

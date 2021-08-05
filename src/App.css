@@ -297,3 +297,31 @@ input[type="range"]::-webkit-slider-runnable-track {
 input[type="range"]:focus::-webkit-slider-runnable-track {
   @apply bg-lightGray;
 }
+
+.preview-container {
+  @apply px-6;
+}
+
+.preview-container h1,
+.preview-container p,
+.preview-container figcaption {
+  font-family: "Source Serif Pro", serif;
+  line-height: 1.4;
+}
+
+.preview-container h1 {
+  @apply text-3xl text-center;
+  margin: 3em 0;
+}
+.preview-container p {
+  @apply text-lg whitespace-pre-wrap;
+  margin-bottom: 2em;
+}
+
+.preview-container figure {
+  @apply my-10;
+}
+.preview-container figcaption {
+  @apply text-center whitespace-pre-wrap;
+  margin: 0.5em 0 1em;
+}

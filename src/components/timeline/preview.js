@@ -1,49 +1,16 @@
-import React, { useRef, useEffect, useContext, useState } from "react";
+import React, { useRef, useEffect, useContext } from "react";
 import { debounce } from "lodash";
 import { scrollToFragment } from "~/lib/timeline";
 import Image from "~/components/image";
 import ChapterNavigator from "~/components/timeline/chapterNavigator";
 import PreivewSkeleton from "~/components/timeline/previewSkeleton";
 import { UIContext } from "~/app";
-import { setGoogleFontStyles } from "~/lib/uiManager";
 import imageSizes from "~/lib/imageSizes";
 
-export default function Preview({ fragments, theme }) {
-  console.log(theme);
+export default function Preview({ fragments }) {
   const previewScrollContainer = useRef(null);
   const { uiState, updateUiState } = useContext(UIContext);
-  const [chapterStyle, setChapterStyle] = useState("");
-  const [textStyle, setTextStyle] = useState("");
-  const [containerClass, setContainerClass] = useState("");
 
-  function updateGoogleFonts(fontFamily) {
-    const googleFontStyles = setGoogleFontStyles(
-      uiState.googleFontStyles,
-      fontFamily
-    );
-
-    updateUiState({ googleFontStyles }, false);
-  }
-
-  useEffect(() => {
-    if (theme) {
-      updateGoogleFonts(theme.fontFamily);
-      setChapterStyle({
-        marginTop: "2em",
-        marginBottom: "2em",
-        fontSize: theme.chapterFontSize,
-        lineHeight: theme.lineHeight,
-        fontFamily: theme.fontFamily,
-      });
-      setTextStyle({
-        marginBottom: "2em",
-        fontSize: theme.fontSize,
-        lineHeight: theme.lineHeight,
-        fontFamily: theme.fontFamily,
-      });
-      setContainerClass("px-8");
-    }
-  }, [theme]);
   useEffect(() => {
     const lastScrollPosition = uiState.previewScrollPosition;
     if (fragments && previewScrollContainer && lastScrollPosition) {
@@ -76,7 +43,7 @@ export default function Preview({ fragments, theme }) {
               <>
                 <div
                   ref={previewScrollContainer}
-                  className={`h-full overflow-scroll js-preview-scroll-container ${containerClass}`}
+                  className={`h-full overflow-scroll js-preview-scroll-container preview-container`}
                   onScroll={debounce((e) => {
                     updateUiState({
                       previewScrollPosition: e.target.scrollTop,
@@ -89,8 +56,7 @@ export default function Preview({ fragments, theme }) {
                       if (frag.type === "CHAPTER") {
                         return (
                           <h1
-                            style={chapterStyle}
-                            className="text-center cursor-pointer"
+                            className="cursor-pointer"
                             key={index}
                             onClick={() => fragmentScrollHandler(frag.id)}
                             data-preview-fragment-id={frag.id}
@@ -101,19 +67,16 @@ export default function Preview({ fragments, theme }) {
                       } else if (frag.type === "PHOTO") {
                         return (
                           <figure
-                            className="my-8 cursor-pointer"
+                            className="cursor-pointer"
                             key={index}
                             onClick={() => fragmentScrollHandler(frag.id)}
                           >
                             <Image
                               src={frag.mediaUrl + imageSizes["1400px"]}
-                              className="w-full shadow"
+                              className="min-w-full shadow"
                               data-preview-fragment-id={frag.id}
                             />
-                            <figcaption
-                              className="text-center whitespace-pre-wrap cursor-pointer"
-                              style={textStyle}
-                            >
+                            <figcaption className="cursor-pointer">
                               {frag.mediaCaption}
                             </figcaption>
                           </figure>
@@ -121,8 +84,7 @@ export default function Preview({ fragments, theme }) {
                       } else {
                         return (
                           <p
-                            style={textStyle}
-                            className="whitespace-pre-wrap cursor-pointer"
+                            className="cursor-pointer"
                             key={index}
                             onClick={() => fragmentScrollHandler(frag.id)}
                             data-preview-fragment-id={frag.id}
