@@ -109,7 +109,6 @@ export const FETCH_SHARE_VIEW = gql`
       privacyStatus
       generated
       userId
-      edited
     }
   }
 `;
@@ -131,7 +130,6 @@ export const FETCH_PUBLISH_VIEW = gql`
       privacyStatus
       generated
       userId
-      edited
     }
   }
 `;
@@ -154,7 +152,6 @@ export const FETCH_CREATE_BOOK_VIEW = gql`
       privacyStatus
       generated
       userId
-      edited
     }
   }
 `;
@@ -173,7 +170,6 @@ export const FETCH_VERSION = gql`
       privacyStatus
       generated
       userId
-      edited
     }
   }
 `;
@@ -336,7 +332,6 @@ export const UPDATE_VERSION = gql`
       author
       publishedAt
       coverUrl
-      edited
     }
   }
 `;
@@ -381,15 +376,6 @@ export const PUBLISH_VERSION = gql`
   mutation ($userId: String!) {
     stt_version_generate_book(userId: $userId) {
       generated
-    }
-  }
-`;
-
-export const GENERATE_COVER = gql`
-  mutation ($userId: String!) {
-    stt_version_generate_cover(userId: $userId) {
-      generated
-      coverUrl
     }
   }
 `;

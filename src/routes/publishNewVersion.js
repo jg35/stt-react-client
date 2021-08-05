@@ -82,7 +82,6 @@ export default function PublishNewVersion() {
           "author",
           "publishedAt",
           "theme",
-          "edited",
           "privacyStatus",
         ]),
         id: values.id,
@@ -120,7 +119,6 @@ export default function PublishNewVersion() {
           <Card css="min-h-full border-4 border-white p-0">
             <Formik
               onSubmit={(values, formBag) => {
-                values.edited = true;
                 if (values.publishStep === 3) {
                   // Create the book
                   return publishVersionHandler(values);

@@ -322,6 +322,6 @@ input[type="range"]:focus::-webkit-slider-runnable-track {
   @apply my-10;
 }
 .preview-container figcaption {
-  @apply text-center whitespace-pre-wrap;
+  @apply text-center text-lg whitespace-pre-wrap;
   margin: 0.5em 0 1em;
 }

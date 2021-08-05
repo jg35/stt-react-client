@@ -84,14 +84,11 @@ export const ThemeSchema = Yup.object().shape({
 
 export const VersionSchema = Yup.object().shape({
   id: Yup.number(),
-  edited: Yup.boolean().default(false),
   theme: ThemeSchema,
   title: Yup.string().required(),
   author: Yup.string().required(),
   publishedAt: Yup.string().required("Publication date is required"),
   privacyStatus: Yup.string().default("PRIVATE"),
-  // TODO - do we want this part of the version form?
-  // tokens: Yup.array().of(AccessTokenPrivateSchema).default([]),
 });
 
 export const UserSettingsSchema = Yup.object()
