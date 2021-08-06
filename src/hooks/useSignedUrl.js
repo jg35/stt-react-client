@@ -20,7 +20,9 @@ export function useGetSignedImageUrl(path) {
 }
 
 export function useSignedImageUrls() {
-  const { user } = useContext(AuthContext);
+  const {
+    authState: { user },
+  } = useContext(AuthContext);
 
   const { uiState, updateUiState } = useContext(UIContext);
   const [getImages, { data }] = useLazyQuery(FETCH_IMAGES);

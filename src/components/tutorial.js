@@ -15,7 +15,9 @@ import {
 
 export default function Tutorial() {
   const [updateUser, { loading: updateUserLoading }] = useMutation(UPDATE_USER);
-  const { user } = useContext(AuthContext);
+  const {
+    authState: { user },
+  } = useContext(AuthContext);
   const { uiState, updateUiState } = useContext(UIContext);
   const [getTimeline, { data, loading }] = useLazyQuery(FETCH_TIMELINE_VIEW, {
     variables: {

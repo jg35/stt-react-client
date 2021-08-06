@@ -16,7 +16,6 @@ import Edit from "~/routes/edit";
 import Settings from "~/routes/settings";
 import Login from "~/routes/login";
 import Logout from "~/routes/logout";
-import Read from "~/routes/read";
 import NotFound from "~/routes/404";
 
 import AuthWrap from "~/components/authWrap";
@@ -72,9 +71,6 @@ export default function App() {
                 </Route>
                 <Route path="/logout" exact>
                   <Logout />
-                </Route>
-                <Route path="/read/:versionId">
-                  <Read />
                 </Route>
                 <Route path="/" exact>
                   <Timeline />

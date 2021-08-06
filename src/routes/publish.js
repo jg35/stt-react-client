@@ -13,7 +13,9 @@ import AccessList from "~/components/accessList/accessList";
 
 export default function Publish() {
   const history = useHistory();
-  const { user } = useContext(AuthContext);
+  const {
+    authState: { user },
+  } = useContext(AuthContext);
   const { data, loading } = useQuery(FETCH_PUBLISH_VIEW, {
     variables: { userId: user.id },
   });

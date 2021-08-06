@@ -22,7 +22,9 @@ export default function Settings() {
     urlTab = null;
   }
   const [activeTab, setActiveTab] = useState(urlTab || "SETTINGS");
-  const { dbUser } = useContext(AuthContext);
+  const {
+    authState: { dbUser },
+  } = useContext(AuthContext);
 
   function renderActiveTab() {
     switch (activeTab) {

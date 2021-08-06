@@ -11,7 +11,9 @@ import EditPreviewSkeleton from "~/components/edit/editPreviewSkeleton";
 import EditPreviewContainer from "~/components/edit/editPreviewContainer";
 
 export default function Edit() {
-  const { user } = useContext(AuthContext);
+  const {
+    authState: { user },
+  } = useContext(AuthContext);
   const { data } = useQuery(FETCH_EDIT_VIEW, {
     variables: { userId: user.id },
   });

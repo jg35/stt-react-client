@@ -4,7 +4,9 @@ import { AuthContext } from "../components/authWrap";
 import { signOut } from "~/lib/auth";
 
 export default function Logout() {
-  const { status } = useContext(AuthContext);
+  const {
+    authState: { status },
+  } = useContext(AuthContext);
 
   useEffect(() => {
     signOut();

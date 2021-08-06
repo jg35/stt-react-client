@@ -14,7 +14,9 @@ import {
 } from "~/lib/uiManager";
 
 export default function CaptureHeader({ init }) {
-  const { user } = useContext(AuthContext);
+  const {
+    authState: { user },
+  } = useContext(AuthContext);
   const { updateUiState } = useContext(UIContext);
   const [getCaptureHeader, { loading, data }] = useLazyQuery(
     FETCH_CAPTURE_HEADER,

@@ -10,7 +10,9 @@ import { AuthContext } from "~/components/authWrap";
 
 export default function Header({ minimal = false }) {
   const { uiState, updateUiState } = useContext(UIContext);
-  const { dbUser } = useContext(AuthContext);
+  const {
+    authState: { dbUser },
+  } = useContext(AuthContext);
   const isTimeline = useRouteMatch("/");
   return (
     <header className="flex justify-between items-center py-4">

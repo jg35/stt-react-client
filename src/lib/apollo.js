@@ -15,9 +15,12 @@ const authMiddleware = new ApolloLink((operation, forward) => {
   // This gets called every time there is a request
   const authState = authStateVar();
 
-  let context = { headers: {} };
+  let context = operation.getContext();
   // If a token exists, request as an authorised user
   if (authState.token) {
+    if (!context.headers) {
+      context.headers = {};
+    }
     context.headers.authorization = `Bearer ${authState.token}`;
     // Once x-hasura-role is set, user no longer treated as "public"
     // The citywalks role is set in Hasura to inherit the public role

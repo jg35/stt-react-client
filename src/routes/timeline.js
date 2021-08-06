@@ -22,7 +22,9 @@ import OrphanedFragments from "~/components/timeline/orphanedFragments";
 import { UIContext } from "~/app";
 
 export default function Timeline() {
-  const { user } = useContext(AuthContext);
+  const {
+    authState: { user },
+  } = useContext(AuthContext);
   const { uiState, updateUiState } = useContext(UIContext);
   const timelineScrollContainer = useRef(null);
   const { data, loading } = useQuery(FETCH_TIMELINE_VIEW, {
@@ -122,10 +124,7 @@ export default function Timeline() {
             </div>
           </div>
         </div>
-        <Preview
-          fragments={fragments}
-          theme={data && data.stt_version[0].theme}
-        />
+        <Preview fragments={fragments} />
       </div>
       <CaptureModal
         scrollToFragment={debounce((fragmentId) => {

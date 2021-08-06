@@ -30,7 +30,9 @@ export default function UppyDashboard({
   // const [filesChanged, setFilesChanged] = useState(false);
   // const editorTarget = useRef();
   const [init, setInit] = useState(false);
-  const { token } = useContext(AuthContext);
+  const {
+    authState: { token },
+  } = useContext(AuthContext);
   const { uiState, updateUiState } = useContext(UIContext);
   const signedUrl = useGetSignedImageUrl(mediaUrl + "-master");
   const [getSignedUrls] = useMutation(S3_GET_SIGNED_URL);

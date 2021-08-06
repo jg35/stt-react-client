@@ -6,10 +6,14 @@ import Tutorial from "~/components/tutorial";
 import { AuthContext } from "~/components/authWrap";
 import { UIContext } from "~/app";
 import UserPaymentForm from "~/components/userPaymentForm";
+import UserVerifyForm from "~/components/userVerifyForm";
 
 export default function AccessControlModals() {
-  const { dbUser } = useContext(AuthContext);
+  const {
+    authState: { dbUser, user },
+  } = useContext(AuthContext);
   const { uiState, updateUiState } = useContext(UIContext);
+  const [showVerifyEmail] = useState(!user.emailVerified);
   const [showUserForm, setShowUserForm] = useState(false);
   const [showTutorial, setShowTutorial] = useState(false);
 
@@ -46,6 +50,10 @@ export default function AccessControlModals() {
   }, [dbUser]);
 
   // In order of precendence. We only ever show one of these.
+
+  if (showVerifyEmail) {
+    return <UserVerifyForm />;
+  }
 
   if (uiState.payment.showModal) {
     return (

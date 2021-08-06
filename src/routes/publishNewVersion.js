@@ -22,7 +22,9 @@ import AccessList from "~/components/accessList/accessList";
 
 export default function PublishNewVersion() {
   const history = useHistory();
-  const { user } = useContext(AuthContext);
+  const {
+    authState: { user },
+  } = useContext(AuthContext);
 
   const [currentVersion, setCurrentVersion] = useState(null);
   const [updateVersion] = useMutation(UPDATE_VERSION);

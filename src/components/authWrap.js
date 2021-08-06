@@ -12,7 +12,13 @@ import AccessControlModals from "~/components/accessControlModals";
 
 function handleSetAuth(
   newAuth,
-  oldAuth = { status: "out", user: null, token: "", dbUser: null }
+  oldAuth = {
+    status: "out",
+    user: null,
+    token: "",
+    dbUser: null,
+    emailForm: null,
+  }
 ) {
   return {
     ...oldAuth,
@@ -31,8 +37,13 @@ export default function AuthWrap({ children }) {
   let isLogin = useRouteMatch("/login");
 
   useEffect(() => {
-    onAuthStateChange(syncUser);
-  }, []);
+    console.log("start");
+    let onAuthStateChangeListener = onAuthStateChange(syncUser, authState);
+    return () => {
+      console.log("cancel");
+      onAuthStateChangeListener = undefined;
+    };
+  }, [authState]);
 
   useEffect(() => {
     if (hasuraUser) {
@@ -64,7 +75,14 @@ export default function AuthWrap({ children }) {
       return null;
     case "in":
       return (
-        <AuthContext.Provider value={authState}>
+        <AuthContext.Provider
+          value={{
+            authState,
+            updateAuthState: (newAuth) => {
+              setAuthState(handleSetAuth(newAuth, authState));
+            },
+          }}
+        >
           {children}
           <AccessControlModals />
         </AuthContext.Provider>
@@ -72,7 +90,14 @@ export default function AuthWrap({ children }) {
     case "out":
       if (isLogin) {
         return (
-          <AuthContext.Provider value={authState}>
+          <AuthContext.Provider
+            value={{
+              authState,
+              updateAuthState: (newAuth) => {
+                setAuthState(handleSetAuth(newAuth, authState));
+              },
+            }}
+          >
             {children}
           </AuthContext.Provider>
         );

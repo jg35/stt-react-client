@@ -14,7 +14,9 @@ import { useEffect } from "react/cjs/react.development";
 
 export default function UserDeailsForm() {
   const history = useHistory();
-  const { user } = useContext(AuthContext);
+  const {
+    authState: { user },
+  } = useContext(AuthContext);
   const [updateUser] = useMutation(UPDATE_USER);
 
   useEffect(() => {
@@ -70,6 +72,7 @@ export default function UserDeailsForm() {
             }) => (
               <form
                 onSubmit={handleSubmit}
+                id="user-details-form"
                 className="flex-1 flex flex-col h-full justify-between"
               >
                 <div className=" user-details-form">
@@ -115,6 +118,7 @@ export default function UserDeailsForm() {
 
                 <SubmitButton
                   bigCta
+                  formId="user-details-form"
                   style={{ width: "100%" }}
                   isSubmitting={isSubmitting}
                 >

@@ -68,6 +68,7 @@ export default function UserPaymentForm({
       <form
         action={`${process.env.REACT_APP_FUNCTIONS_SERVER_URL}/actions/subscriptions/checkout`}
         method="POST"
+        id="user-payment-form"
       >
         <input type="hidden" name="customerId" value={stripeCustomerId}></input>
         <input type="hidden" name="priceId" value={priceId}></input>
@@ -76,7 +77,12 @@ export default function UserPaymentForm({
           name="appId"
           value={process.env.REACT_APP_HASURA_APP_ID}
         />
-        <SubmitButton style={{ minWidth: "100%" }} bigCta disabled={!priceId}>
+        <SubmitButton
+          style={{ minWidth: "100%" }}
+          bigCta
+          disabled={!priceId}
+          formId="user-payment-form"
+        >
           Continue
         </SubmitButton>
       </form>
