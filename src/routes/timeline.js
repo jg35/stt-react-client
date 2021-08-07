@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
 import { debounce, values } from "lodash";
-import { useQuery } from "@apollo/client";
+import { useCustomQuery } from "~/hooks/useCustomApollo";
 
 import { FETCH_TIMELINE_VIEW } from "~/lib/gql";
 
@@ -10,8 +10,6 @@ import CaptureModal from "~/components/capture/captureModal";
 import CaptureHeader from "~/components/capture/captureHeader";
 import Section from "~/components/timeline/section";
 import Preview from "~/components/timeline/preview";
-import { AuthContext } from "~/components/authWrap";
-
 import ScrollNavigator from "~/components/timeline/scrollNavigator";
 
 import { generateTimeline, scrollToFragment } from "~/lib/timeline";
@@ -22,16 +20,13 @@ import OrphanedFragments from "~/components/timeline/orphanedFragments";
 import { UIContext } from "~/app";
 
 export default function Timeline() {
-  const {
-    authState: { user },
-  } = useContext(AuthContext);
   const { uiState, updateUiState } = useContext(UIContext);
   const timelineScrollContainer = useRef(null);
-  const { data, loading } = useQuery(FETCH_TIMELINE_VIEW, {
-    variables: {
-      userId: user.id,
-    },
+  const { data, loading } = useCustomQuery(FETCH_TIMELINE_VIEW, {
+    name: "FETCH_TIMELINE_VIEW",
+    userId: true,
   });
+
   const [fragments, setFragments] = useState(null);
   const [timeline, setTimeline] = useState(null);
   const [orphanedFragments, setOrphanedFragments] = useState([]);
