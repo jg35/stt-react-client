@@ -97,3 +97,19 @@ export const UserSettingsSchema = Yup.object()
     location: Yup.string().required("Set your location"),
   })
   .noUnknown();
+
+export const EmailForgotSchema = Yup.object().shape({
+  email: Yup.string().email().ensure().required(),
+});
+
+export const EmailLoginSchema = Yup.object().shape({
+  email: Yup.string().email().ensure().required(),
+  password: Yup.string().ensure().required(),
+});
+
+export const EmailCreateSchema = Yup.object().shape({
+  firstName: Yup.string().ensure().required(),
+  lastName: Yup.string().ensure().required(),
+  email: Yup.string().email().ensure().required(),
+  password: Yup.string().ensure().required(),
+});

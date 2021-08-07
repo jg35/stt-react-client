@@ -33,10 +33,11 @@ export default function MainMenu() {
                   />
                 ) : (
                   <div className="w-12 h-12 rounded-full text-xl bg-lightGray flex items-center justify-center font-bold shadow">
-                    {user.displayName
-                      .split(" ")
-                      .map((w) => w[0])
-                      .join("")}
+                    {user.displayName &&
+                      user.displayName
+                        .split(" ")
+                        .map((w) => w[0])
+                        .join("")}
                   </div>
                 )}
               </div>

@@ -19,35 +19,20 @@ export const signInWithFacebook = async () => {
   }
 };
 
-export const createAccountWithEmail = async (email, password) => {
-  try {
-    const { user } = await firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password);
-
-    // TODO - block access to app until isEmailVerified (https://firebase.google.com/docs/reference/android/com/google/firebase/auth/UserInfo)
-    await user.sendEmailVerification();
-  } catch (error) {
-    console.log(error);
-  }
+export const createAccountWithEmail = async ({ email, password }) => {
+  const { user } = await firebase
+    .auth()
+    .createUserWithEmailAndPassword(email, password);
+  // TODO - block access to app until isEmailVerified (https://firebase.google.com/docs/reference/android/com/google/firebase/auth/UserInfo)
+  await user.sendEmailVerification();
 };
 
-export const loginWithEmail = async (email, password) => {
-  try {
-    const user = await firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password);
-  } catch (error) {
-    console.log(error);
-  }
+export const loginWithEmail = async ({ email, password }) => {
+  return firebase.auth().signInWithEmailAndPassword(email, password);
 };
 
-export const sendResetPasswordEmail = async (email) => {
-  try {
-    await firebase.auth().sendPasswordResetEmail(email);
-  } catch (error) {
-    console.log(error);
-  }
+export const sendResetPasswordEmail = async ({ email }) => {
+  return firebase.auth().sendPasswordResetEmail(email);
 };
 
 export const signOut = async () => {
