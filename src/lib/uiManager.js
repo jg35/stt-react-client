@@ -25,6 +25,7 @@ export default {
         subscriptionStatus: null,
         stripeCustomerId: null,
       },
+      messages: [],
       editPreviewScrollPosition: null,
       previewScrollPosition: null,
       googleFontStyles: [{ family: "Roboto", weight: 400 }],

@@ -20,7 +20,9 @@ import NotFound from "~/routes/404";
 
 import AuthWrap from "~/components/authWrap";
 import uiManager from "~/lib/uiManager";
+import { createToastMessage } from "~/lib/toast";
 import { useSignedImageUrls } from "~/hooks/useSignedUrl";
+import ToastMessages from "~/components/toastMessages";
 
 export const UIContext = createContext({});
 
@@ -41,12 +43,27 @@ export default function App() {
     };
     setUiState(updateUi);
     if (persist) {
-      localStorage.setItem("uiState", JSON.stringify(updateUi));
+      localStorage.setItem(
+        "uiState",
+        JSON.stringify({
+          ...JSON.parse(localStorage.getItem("uiState")),
+          ...newUi,
+        })
+      );
     }
   }
 
+  function setToastMessage({ type, ref, params, timeout }) {
+    update(
+      {
+        messages: [...uiState.messages, createToastMessage(type, ref, params, timeout)],
+      },
+      false
+    );
+  }
+
   return (
-    <UIContext.Provider value={{ uiState, updateUiState: update }}>
+    <UIContext.Provider value={{ uiState, updateUiState: update, setToastMessage }}>
       <style>{buildGoogleFontFaceString(uiState.googleFontStyles)}</style>
       <ApolloProvider client={client}>
         <Router>
@@ -79,6 +96,7 @@ export default function App() {
                   <NotFound />
                 </Route>
               </Switch>
+              <ToastMessages />
             </Hooks>
           </AuthWrap>
         </Router>

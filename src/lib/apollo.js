@@ -11,7 +11,7 @@ const httpLink = new HttpLink({
   uri: process.env.REACT_APP_HASURA_GRAPHQL_API_URL,
 });
 
-const authMiddleware = new ApolloLink((operation, forward) => {
+const authMiddlewareLink = new ApolloLink((operation, forward) => {
   // This gets called every time there is a request
   const authState = authStateVar();
 
@@ -50,5 +50,5 @@ export default new ApolloClient({
       },
     },
   }),
-  link: from([authMiddleware, httpLink]),
+  link: from([authMiddlewareLink, httpLink]),
 });

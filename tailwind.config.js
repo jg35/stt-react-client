@@ -49,6 +49,7 @@ module.exports = {
       transparent: "transparent",
       google: "#4285f4",
       green: "#a9e292",
+      successGreen: "#50de63",
       facebook: "#3b5998",
     },
   },

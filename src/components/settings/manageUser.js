@@ -14,18 +14,24 @@ export default function UserSettings({ dbUser }) {
   function updateUserHandler(values) {
     return updateUser({
       variables: { userId: dbUser.id, data: values },
-      // update(cache, { data }) {
-      //   cache.modify({
-      //     fields: {
-      //       stt_user(user = {}) {
-      //         return { ...user, ...data.update_stt_user_by_pk };
-      //       },
-      //       stt_user_by_pk(user = {}) {
-      //         return { ...user, ...data.update_stt_user_by_pk };
-      //       },
-      //     },
-      //   });
-      // },
+      update(cache, { data }) {
+        // cache.modify({
+        //   fields: {
+        //     stt_user(user = {}) {
+        //       return { ...user, ...data.update_stt_user_by_pk };
+        //     },
+        //     stt_user_by_pk(user = {}) {
+        //       return { ...user, ...data.update_stt_user_by_pk };
+        //     },
+        //   },
+        // });
+        // setToastMessage({
+        //   type: "SUCCESS",
+        //   ref: "UPDATE",
+        //   params: ["user settings"],
+        //   timeout: true,
+        // });
+      },
     });
   }
   return (
@@ -80,7 +86,11 @@ export default function UserSettings({ dbUser }) {
                 <FormError error={errors.location} />
               </div>
               <div className="flex justify-end">
-                <SubmitButton disabled={!dirty}>
+                <SubmitButton
+                  formId="manage-user-settings-form"
+                  disabled={!dirty}
+                  isSubmitting={isSubmitting}
+                >
                   {isSubmitting ? "Saving..." : "Save"}
                 </SubmitButton>
               </div>

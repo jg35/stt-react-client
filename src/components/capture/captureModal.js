@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Form, Formik } from "formik";
+import { Formik } from "formik";
 import { useMutation, useLazyQuery, gql } from "@apollo/client";
 import { FETCH_QUESTIONS } from "~/lib/gql";
 import { lowerCase, omit } from "lodash";
@@ -107,7 +107,6 @@ export default function CaptureModal({ editView = false, scrollToFragment }) {
               },
             },
           });
-
           closeModal();
         },
       });
