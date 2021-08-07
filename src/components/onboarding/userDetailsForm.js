@@ -3,6 +3,7 @@ import { useMutation } from "@apollo/client";
 import { useHistory } from "react-router";
 import { Formik } from "formik";
 
+import useToastMessage from "~/hooks/useToastMessage";
 import { OnboardingSchema } from "~/lib/yup";
 import { UPDATE_USER } from "~/lib/gql";
 import FormError from "~/components/formError";
@@ -13,6 +14,7 @@ import { AuthContext } from "~/components/authWrap";
 import { useEffect } from "react/cjs/react.development";
 
 export default function UserDeailsForm() {
+  const { setError } = useToastMessage();
   const history = useHistory();
   const {
     authState: { user },
@@ -55,7 +57,14 @@ export default function UserDeailsForm() {
 
           <Formik
             initialValues={OnboardingSchema.cast()}
-            onSubmit={submitForm}
+            onSubmit={(values) =>
+              submitForm(values).catch((e) => {
+                setError(e, {
+                  ref: "UPDATE",
+                  params: ["account"],
+                });
+              })
+            }
             validationSchema={OnboardingSchema}
             validateOnChange={false}
             validateOnBlur={false}

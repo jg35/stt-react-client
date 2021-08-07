@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Button from "~/components/button";
 
 export default function AccessListItems({
@@ -6,6 +7,7 @@ export default function AccessListItems({
   isPublic = false,
   regeneratePublicToken,
 }) {
+  const [isRegen, setIsRegen] = useState(false);
   const itemLength = items.filter((f) =>
     isPublic ? f.type === "PUBLIC" : f.type === "PRIVATE"
   ).length;
@@ -52,8 +54,15 @@ export default function AccessListItems({
                       Remove access
                     </Button>
                   ) : (
-                    <Button onClick={() => regeneratePublicToken(item)}>
-                      Regenerate Link
+                    <Button
+                      onClick={() => {
+                        setIsRegen(true);
+                        regeneratePublicToken(item).then(() => {
+                          setIsRegen(false);
+                        });
+                      }}
+                    >
+                      {isRegen ? "Regenerating link..." : "Regenerate Link"}
                     </Button>
                   )}
                 </div>

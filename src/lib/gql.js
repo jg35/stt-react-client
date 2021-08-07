@@ -459,7 +459,7 @@ export const MANGE_PRIVACY_SETTINGS_VIEW = gql`
 `;
 
 export const INSERT_ACCESS_TOKEN = gql`
-  mutation ($data: stt_accessToken_insert_input!) {
+  mutation ($data: stt_accessToken_dddinsert_input!) {
     insert_stt_accessToken_one(object: $data) {
       id
       email

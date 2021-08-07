@@ -1,4 +1,4 @@
-import { useState } from "react";
+import useToastMessage from "~/hooks/useToastMessage";
 import AccessListForm from "~/components/accessList/accessListForm";
 import ManagePrivacyStatus from "~/components/accessList/managePrivacyStatus";
 import SubmitButton from "~/components/submitButton";
@@ -14,6 +14,7 @@ import {
 import { PrivacySettingsForm, AccessTokenPrivateSchema } from "~/lib/yup";
 
 export default function ManagePrivacy({ dbUser }) {
+  const { setError, setSuccess } = useToastMessage();
   const { data, loading } = useQuery(MANGE_PRIVACY_SETTINGS_VIEW, {
     variables: { userId: dbUser.id },
   });
@@ -42,7 +43,10 @@ export default function ManagePrivacy({ dbUser }) {
             }
           `,
         });
+        setSuccess({ ref: "UPDATE", params: ["public share link"] });
       },
+    }).catch((e) => {
+      setError(e, { ref: "UPDATE", params: ["public share link"] });
     });
   }
 
@@ -68,7 +72,9 @@ export default function ManagePrivacy({ dbUser }) {
                 .map((t) => t.id),
               userId: dbUser.id,
             },
-          });
+          }).catch((e) =>
+            setError(e, { ref: "UPDATE", params: ["share list"] })
+          );
 
           //   return updatePrivacySettings({
           //     variables: {

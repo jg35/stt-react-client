@@ -56,14 +56,19 @@ export default function App() {
   function setToastMessage({ type, ref, params, timeout }) {
     update(
       {
-        messages: [...uiState.messages, createToastMessage(type, ref, params, timeout)],
+        messages: [
+          ...uiState.messages,
+          createToastMessage(type, ref, params, timeout),
+        ],
       },
       false
     );
   }
 
   return (
-    <UIContext.Provider value={{ uiState, updateUiState: update, setToastMessage }}>
+    <UIContext.Provider
+      value={{ uiState, updateUiState: update, setToastMessage }}
+    >
       <style>{buildGoogleFontFaceString(uiState.googleFontStyles)}</style>
       <ApolloProvider client={client}>
         <Router>

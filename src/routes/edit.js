@@ -9,8 +9,10 @@ import CaptureModal from "~/components/capture/captureModal";
 import EditPreview from "~/components/edit/editPreview";
 import EditPreviewSkeleton from "~/components/edit/editPreviewSkeleton";
 import EditPreviewContainer from "~/components/edit/editPreviewContainer";
+import useToastMessage from "~/hooks/useToastMessage";
 
 export default function Edit() {
+  const { setError } = useToastMessage();
   const {
     authState: { user },
   } = useContext(AuthContext);
@@ -37,7 +39,7 @@ export default function Edit() {
         },
         id: fragmentId,
       },
-    });
+    }).catch((e) => setError(e, { ref: "UPDATE", params: ["book"] }));
   }
 
   return (

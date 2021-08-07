@@ -6,8 +6,10 @@ import { DELETE_USER_EVENT } from "~/lib/gql";
 import { makeEditUserEventForm } from "~/lib/uiManager";
 import LoadingSpinner from "~/components/loadingSpinner";
 import { UIContext } from "~/app";
+import useToastMessage from "~/hooks/useToastMessage";
 
 export default function UserEvent({ event }) {
+  const { setError } = useToastMessage();
   const { updateUiState } = useContext(UIContext);
   const [active, setActive] = useState(false);
   const [removeUserEvent, { loading }] = useMutation(DELETE_USER_EVENT);
@@ -23,7 +25,7 @@ export default function UserEvent({ event }) {
         cache.evict({ id: normalizedId });
         cache.gc();
       },
-    });
+    }).catch((e) => setError(e, { ref: "DELETE", params: ["event"] }));
   }
 
   return (

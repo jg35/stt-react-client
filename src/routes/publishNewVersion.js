@@ -19,8 +19,10 @@ import CoverEditorForm from "~/components/publish/coverEditorForm";
 import PublishOptionsForm from "~/components/publish/publishOptionsForm";
 import CreateBookForm from "~/components/publish/createBookForm";
 import AccessList from "~/components/accessList/accessList";
+import useToastMessage from "~/hooks/useToastMessage";
 
 export default function PublishNewVersion() {
+  const { setError, setSuccess } = useToastMessage();
   const history = useHistory();
   const {
     authState: { user },
@@ -43,7 +45,7 @@ export default function PublishNewVersion() {
       if (!version.author) {
         version.author = user.displayName;
       }
-      version.publishStep = 3;
+      version.publishStep = 1;
       // Should only run once user reaches the second step
       if (!version.theme.cover && version.author && version.title) {
         version.theme.cover = CoverSchema.cast({
@@ -67,13 +69,23 @@ export default function PublishNewVersion() {
   }, [data]);
 
   function publishVersionHandler(values) {
-    return saveVersionHandler(values, true).then(() => {
-      // TODO update the action to also generate the cover
-      return publishVersion({ variables: { userId: user.id } }).then(() => {
-        // Redirect to publish view
-        history.push("/publish");
+    return saveVersionHandler(values, true)
+      .then(() => {
+        // TODO update the action to also generate the cover
+        return publishVersion({ variables: { userId: user.id } }).then(() => {
+          // Redirect to publish view
+          history.push("/publish");
+          setSuccess(
+            "You've succesfully published your book! It can now be found here on your publish list."
+          );
+        });
+      })
+      .catch((e) => {
+        setError(
+          e,
+          "Something went wrong when publishing your book. Please try again"
+        );
       });
-    });
   }
 
   function saveVersionHandler(values) {
@@ -88,6 +100,8 @@ export default function PublishNewVersion() {
         ]),
         id: values.id,
       },
+    }).catch((e) => {
+      setError(e, { ref: "UPDATE", params: ["book"] });
     });
   }
 

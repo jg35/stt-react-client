@@ -6,15 +6,16 @@ import {
   FETCH_PRIVATE_ACCESS_TOKENS,
 } from "~/lib/gql";
 import { AccessTokenPrivateSchema } from "~/lib/yup";
+import useToastMessage from "~/hooks/useToastMessage";
 import Modal from "~/components/modal";
 
 import FormInput from "~/components/formInput";
 import FormError from "~/components/formError";
 import SubmitButton from "~/components/submitButton";
 import AccessListItems from "~/components/accessList/accessListItems";
-import AccessListEmptyMessage from "~/components/accessList/accessListEmptyMessage";
 
 export default function AccessListModal({ userId, closeModal }) {
+  const { setError } = useToastMessage();
   const { data, loading } = useQuery(FETCH_PRIVATE_ACCESS_TOKENS, {
     variables: { userId },
   });
@@ -32,7 +33,7 @@ export default function AccessListModal({ userId, closeModal }) {
         cache.evict({ id: normalizedId });
         cache.gc();
       },
-    });
+    }).catch((e) => setError(e, { ref: "DELETE", params: ["share token"] }));
   }
 
   if (loading) {
@@ -71,7 +72,7 @@ export default function AccessListModal({ userId, closeModal }) {
               values: AccessTokenPrivateSchema.cast(),
             });
           },
-        });
+        }).catch((e) => setError(e, { ref: "ADD_TO_SHARE_LIST" }));
       }}
       validationSchema={AccessTokenPrivateSchema}
       validateOnChange={false}

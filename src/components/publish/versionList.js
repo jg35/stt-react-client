@@ -2,8 +2,10 @@ import { useMutation } from "@apollo/client";
 import { sortBy } from "lodash";
 import { DELETE_VERSION } from "~/lib/gql";
 import VersionListItem from "~/components/publish/versionListItem";
+import useToastMessage from "~/hooks/useToastMessage";
 
 export default function VersionList({ publishedVersions }) {
+  const { setError } = useToastMessage();
   const [deleteVersion, { loading: versionIsDeleting }] =
     useMutation(DELETE_VERSION);
 
@@ -20,7 +22,7 @@ export default function VersionList({ publishedVersions }) {
         cache.evict({ id: normalizedId });
         cache.gc();
       },
-    });
+    }).catch((e) => setError(e, { ref: "DELETE", params: ["book"] }));
   }
   const placeholderImg =
     "bg-blue opacity-30 flex items-center justify-center text-white";

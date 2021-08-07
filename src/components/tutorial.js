@@ -12,8 +12,10 @@ import {
   getWidgetStyle,
   getArrowStyle,
 } from "~/lib/tutorial";
+import useToastMessage from "~/hooks/useToastMessage";
 
 export default function Tutorial() {
+  const { setError } = useToastMessage();
   const [updateUser, { loading: updateUserLoading }] = useMutation(UPDATE_USER);
   const {
     authState: { user },
@@ -119,7 +121,7 @@ export default function Tutorial() {
           },
         });
       },
-    });
+    }).catch((e) => setError(e, { ref: "UPDATE", params: ["account"] }));
   }
 
   if (loading) {

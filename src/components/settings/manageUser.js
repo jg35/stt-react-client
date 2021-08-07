@@ -8,8 +8,11 @@ import CountrySelect from "~/components/countrySelect";
 import FormError from "~/components/formError";
 import SubmitButton from "~/components/submitButton";
 
+import useToastMessage from "~/hooks/useToastMessage";
+
 export default function UserSettings({ dbUser }) {
   const [updateUser] = useMutation(UPDATE_USER);
+  const { setError } = useToastMessage();
 
   function updateUserHandler(values) {
     return updateUser({
@@ -25,19 +28,17 @@ export default function UserSettings({ dbUser }) {
         //     },
         //   },
         // });
-        // setToastMessage({
-        //   type: "SUCCESS",
-        //   ref: "UPDATE",
-        //   params: ["user settings"],
-        //   timeout: true,
-        // });
       },
     });
   }
   return (
     <Formik
       initialValues={UserSettingsSchema.cast(dbUser)}
-      onSubmit={updateUserHandler}
+      onSubmit={(values) =>
+        updateUserHandler(values).catch((e) => {
+          setError(e, { ref: "UPDATE", params: ["account"] });
+        })
+      }
       validationSchema={UserSettingsSchema}
       validateOnChange={false}
       validateOnBlur={false}

@@ -8,12 +8,14 @@ import Menu from "~/components/menu";
 import Button from "~/components/button";
 import Svg from "~/components/svg";
 import LoadingSpinner from "~/components/loadingSpinner";
+import useToastMessage from "~/hooks/useToastMessage";
 
 export default function FragmentHeaderMenu({
   fragment,
   excludeActions = [],
   menuColor = colors.black,
 }) {
+  const { setError } = useToastMessage();
   const { updateUiState } = useContext(UIContext);
   const [updateFragment, { loading: updateFragmentLoading }] =
     useMutation(UPDATE_FRAGMENT);
@@ -28,7 +30,7 @@ export default function FragmentHeaderMenu({
           hidden,
         },
       },
-    });
+    }).catch((e) => setError(e, { ref: "FRAGMENT_VISIBILITY" }));
   }
 
   function deleteHandler() {
@@ -44,6 +46,10 @@ export default function FragmentHeaderMenu({
         cache.evict({ id: normalizedId });
         cache.gc();
       },
+    }).catch((e) => {
+      let label =
+        fragment.type === "TEXT" ? "memory" : fragment.type.toLowerCase();
+      setError(e, { ref: "DELETE", params: [label] });
     });
   }
 

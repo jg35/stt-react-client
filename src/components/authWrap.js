@@ -37,10 +37,8 @@ export default function AuthWrap({ children }) {
   let isLogin = useRouteMatch("/login");
 
   useEffect(() => {
-    console.log("start");
     let onAuthStateChangeListener = onAuthStateChange(syncUser, authState);
     return () => {
-      console.log("cancel");
       onAuthStateChangeListener = undefined;
     };
   }, [authState]);

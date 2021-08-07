@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Formik } from "formik";
 import { useMutation, useLazyQuery, gql } from "@apollo/client";
+import useToastMessage from "~/hooks/useToastMessage";
 import { FETCH_QUESTIONS } from "~/lib/gql";
 import { lowerCase, omit } from "lodash";
 import {
@@ -20,6 +21,7 @@ import { UIContext } from "~/app";
 import { EventSchema, FragmentSchema } from "~/lib/yup";
 
 export default function CaptureModal({ editView = false, scrollToFragment }) {
+  const { setError } = useToastMessage();
   const [formTitle, setFormTitle] = useState("");
   const [insertFragment] = useMutation(INSERT_FRAGMENT);
   const [insertUserEvent] = useMutation(INSERT_USER_EVENT);
@@ -185,7 +187,15 @@ export default function CaptureModal({ editView = false, scrollToFragment }) {
   return showModal && item ? (
     <Formik
       initialValues={getSchema(item.type).cast(item)}
-      onSubmit={getSubmitHandler(item.type)}
+      onSubmit={(values) =>
+        getSubmitHandler(item.type)(values).catch((e) => {
+          let label = item.type === "TEXT" ? "memory" : item.type.toLowerCase();
+          setError(e, {
+            ref: values.id ? "UPDATE" : "CREATE",
+            params: [label],
+          });
+        })
+      }
       validationSchema={getSchema(item.type)}
       validateOnChange={false}
       validateOnBlur={false}

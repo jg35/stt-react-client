@@ -1,23 +1,20 @@
 import { useContext, useEffect } from "react";
-import { useQuery, useMutation } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { AuthContext } from "~/components/authWrap";
 import { UIContext } from "~/app";
 import { createToastMessage } from "~/lib/toast";
 
 export function useCustomQuery(
   gql,
-  { variables = {}, context = {}, userId = false, errorType = "TOAST" }
+  { variables = {}, context = {}, userId = false }
 ) {
-  const {
-    authState: { user },
-  } = useContext(AuthContext);
+  const { authState } = useContext(AuthContext);
   const { uiState, updateUiState } = useContext(UIContext);
 
-  const vars = { ...variables };
   if (userId) {
-    vars.userId = user.id;
+    variables.userId = authState.user.id;
   }
-  const { data, loading, error } = useQuery(gql, { variables: vars, context });
+  const { data, loading, error } = useQuery(gql, { variables, context });
 
   function setToastMessage(type, ref) {
     updateUiState(
