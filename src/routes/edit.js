@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useQuery, useMutation } from "@apollo/client";
+import React, { useEffect, useState } from "react";
+import { useMutation } from "@apollo/client";
 import { sortBy } from "lodash";
 import { FETCH_EDIT_VIEW, UPDATE_FRAGMENT } from "~/lib/gql";
-import { AuthContext } from "~/components/authWrap";
+import { useCustomQuery } from "~/hooks/useCustomApollo";
 import Page from "~/components/page";
 import CaptureModal from "~/components/capture/captureModal";
 
@@ -13,11 +13,8 @@ import useToastMessage from "~/hooks/useToastMessage";
 
 export default function Edit() {
   const { setError } = useToastMessage();
-  const {
-    authState: { user },
-  } = useContext(AuthContext);
-  const { data } = useQuery(FETCH_EDIT_VIEW, {
-    variables: { userId: user.id },
+  const { data } = useCustomQuery(FETCH_EDIT_VIEW, {
+    userId: true,
   });
 
   const [updateFragment] = useMutation(UPDATE_FRAGMENT);

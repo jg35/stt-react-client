@@ -4,6 +4,8 @@ const DEFAULT_TIMEOUT = 5000;
 
 const TOAST_MESSAGES = {
   ERROR: {
+    FETCH_DEFAULT: () =>
+      `Sorry! We've been unable to access your data. Please reload the page or try again later.`,
     DEFAULT: () => "Oops, something went wrong. Please try again later",
     CREATE: (thing) =>
       `Something went wrong when creating your ${thing}. Please try again.`,
@@ -22,8 +24,12 @@ const TOAST_MESSAGES = {
   },
 };
 
-export function createToastMessage(type, message = "", timeout = false) {
-  console.log("createToastMessage", message);
+export function createToastMessage(
+  type,
+  message = "",
+  timeout = false,
+  blockPage = false
+) {
   return {
     type,
     text:
@@ -32,5 +38,6 @@ export function createToastMessage(type, message = "", timeout = false) {
         : message,
     id: uuid(),
     timeout: timeout ? DEFAULT_TIMEOUT : 0,
+    blockPage,
   };
 }

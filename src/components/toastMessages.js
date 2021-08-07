@@ -22,7 +22,13 @@ function ToastMessage({ message }) {
     "fixed py-3 px-4 shadow font-medium z-50 flex w-full flex justify-center";
   switch (message.type) {
     case "ERROR":
-      messageStyles += " bg-red text-white";
+      if (message.blockPage) {
+        messageStyles +=
+          " h-full items-center text-2xl opacity-95 bg-black text-white top-0 animate-fade-in";
+      } else {
+        messageStyles += " bg-red text-white";
+      }
+
       break;
     case "SUCCESS":
       messageStyles += " bg-successGreen text-white";
@@ -32,15 +38,14 @@ function ToastMessage({ message }) {
       messageStyles += " bg-white";
       break;
   }
+  if (!message.blockPage) {
+    messageStyles += show ? " animate-slide-in" : " animate-slide-out";
+  }
 
   return (
-    <div
-      className={`${messageStyles} ${
-        show ? "animate-slide-in" : "animate-slide-out"
-      }`}
-    >
+    <div className={messageStyles}>
       <p>{message.text}</p>
-      {!message.timeout && (
+      {!message.timeout && !message.blockPage && (
         <div
           className="p-1 ml-2 cursor-pointer"
           onClick={(e) => {

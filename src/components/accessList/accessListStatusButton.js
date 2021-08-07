@@ -1,4 +1,4 @@
-import { useQuery } from "@apollo/client";
+import { useCustomQuery } from "~/hooks/useCustomApollo";
 import { useHistory } from "react-router";
 import { FETCH_PRIVATE_ACCESS_TOKENS } from "~/lib/gql";
 import { useContext } from "react";
@@ -6,13 +6,12 @@ import { UIContext } from "~/app";
 import Button from "~/components/button";
 
 export default function AccessListStatusButton({
-  userId,
   future = false,
   isPublic = false,
 }) {
   const history = useHistory();
-  const { data, loading } = useQuery(FETCH_PRIVATE_ACCESS_TOKENS, {
-    variables: { userId },
+  const { data, loading } = useCustomQuery(FETCH_PRIVATE_ACCESS_TOKENS, {
+    userId: true,
   });
   const { updateUiState } = useContext(UIContext);
 

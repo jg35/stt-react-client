@@ -1,5 +1,6 @@
 import { Formik } from "formik";
-import { useMutation, useQuery, gql } from "@apollo/client";
+import { useMutation, gql } from "@apollo/client";
+import { useCustomQuery } from "~/hooks/useCustomApollo";
 import {
   INSERT_ACCESS_TOKEN,
   DELETE_ACCESS_TOKEN,
@@ -14,10 +15,10 @@ import FormError from "~/components/formError";
 import SubmitButton from "~/components/submitButton";
 import AccessListItems from "~/components/accessList/accessListItems";
 
-export default function AccessListModal({ userId, closeModal }) {
+export default function AccessListModal({ closeModal }) {
   const { setError } = useToastMessage();
-  const { data, loading } = useQuery(FETCH_PRIVATE_ACCESS_TOKENS, {
-    variables: { userId },
+  const { data, loading } = useCustomQuery(FETCH_PRIVATE_ACCESS_TOKENS, {
+    userId: true,
   });
   const [createAccessToken] = useMutation(INSERT_ACCESS_TOKEN);
   const [deleteAccessToken] = useMutation(DELETE_ACCESS_TOKEN);

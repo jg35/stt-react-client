@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { useHistory } from "react-router";
-import { useQuery } from "@apollo/client";
+import { useCustomQuery } from "~/hooks/useCustomApollo";
 import { FETCH_PUBLISH_VIEW } from "~/lib/gql";
 import { AuthContext } from "~/components/authWrap";
 import Page from "~/components/page";
@@ -16,8 +16,8 @@ export default function Publish() {
   const {
     authState: { user },
   } = useContext(AuthContext);
-  const { data, loading } = useQuery(FETCH_PUBLISH_VIEW, {
-    variables: { userId: user.id },
+  const { data, loading } = useCustomQuery(FETCH_PUBLISH_VIEW, {
+    userId: true,
   });
 
   return (

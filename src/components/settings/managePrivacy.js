@@ -5,7 +5,8 @@ import SubmitButton from "~/components/submitButton";
 import AccessListItems from "~/components/accessList/accessListItems";
 
 import { Formik } from "formik";
-import { useMutation, useQuery, gql } from "@apollo/client";
+import { useMutation, gql } from "@apollo/client";
+import { useCustomQuery } from "~/hooks/useCustomApollo";
 import {
   MANGE_PRIVACY_SETTINGS_VIEW,
   UPDATE_PRIVACY_SETTINGS,
@@ -15,8 +16,8 @@ import { PrivacySettingsForm, AccessTokenPrivateSchema } from "~/lib/yup";
 
 export default function ManagePrivacy({ dbUser }) {
   const { setError, setSuccess } = useToastMessage();
-  const { data, loading } = useQuery(MANGE_PRIVACY_SETTINGS_VIEW, {
-    variables: { userId: dbUser.id },
+  const { data, loading } = useCustomQuery(MANGE_PRIVACY_SETTINGS_VIEW, {
+    userId: true,
   });
   const [updatePrivacySettings] = useMutation(UPDATE_PRIVACY_SETTINGS);
   const [regeneratePublicToken] = useMutation(REGENERATE_PUBLIC_ACCESS_TOKEN);

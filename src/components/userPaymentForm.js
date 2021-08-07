@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useQuery } from "@apollo/client";
+import { useCustomQuery } from "~/hooks/useCustomApollo";
 import { STRIPE_FETCH_PRICES } from "~/lib/gql";
 import Modal from "~/components/modal";
 import SubmitButton from "~/components/submitButton";
@@ -14,7 +14,7 @@ export default function UserPaymentForm({
 }) {
   const [subscriptionOptions, setSubscriptionOptions] = useState([]);
   const [priceId, setPriceId] = useState(null);
-  const { data } = useQuery(STRIPE_FETCH_PRICES, {
+  const { data } = useCustomQuery(STRIPE_FETCH_PRICES, {
     variables: { appId: process.env.REACT_APP_HASURA_APP_ID },
   });
 

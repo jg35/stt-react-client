@@ -16,10 +16,13 @@ export function useCustomQuery(
   }
   const { data, loading, error } = useQuery(gql, { variables, context });
 
-  function setToastMessage(type, ref) {
+  function setToastMessage(type, ref, timeout, blockPage) {
     updateUiState(
       {
-        messages: [...uiState.messages, createToastMessage(type, ref)],
+        messages: [
+          ...uiState.messages,
+          createToastMessage(type, { ref }, timeout, blockPage),
+        ],
       },
       false
     );
@@ -42,7 +45,8 @@ export function useCustomQuery(
           console.log("JWT has expired - redirect to login?");
           break;
         default:
-          setToastMessage("ERROR", "DEFAULT");
+          // Blocks the page, so the user can't use the app
+          setToastMessage("ERROR", "FETCH_DEFAULT", false, true);
       }
     }
   }, [data, error, loading]);
