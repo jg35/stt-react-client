@@ -1,18 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useLazyQuery, useMutation } from "@apollo/client";
-import { AuthContext } from "~/components/authWrap";
-import Button from "~/components/button";
-import LoadingSpinner from "~/components/loadingSpinner";
+import { AuthContext } from "@src/components/authWrap";
+import Button from "@src/components/button";
+import LoadingSpinner from "@src/components/loadingSpinner";
 
-import { FETCH_TIMELINE_VIEW, UPDATE_USER } from "~/lib/gql";
-import { UIContext } from "~/app";
+import { FETCH_TIMELINE_VIEW, UPDATE_USER } from "@src/lib/gql";
+import { UIContext } from "@src/app";
 import {
   steps,
   getNextStep,
   getWidgetStyle,
   getArrowStyle,
-} from "~/lib/tutorial";
-import useToastMessage from "~/hooks/useToastMessage";
+} from "@src/lib/tutorial";
+import useToastMessage from "@src/hooks/useToastMessage";
 
 export default function Tutorial() {
   const { setError } = useToastMessage();

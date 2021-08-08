@@ -1,6 +1,6 @@
-import FormError from "~/components/formError";
-import FormInput from "~/components/formInput";
-import DatePicker from "~/components/capture/datepicker";
+import FormError from "@src/components/formError";
+import FormInput from "@src/components/formInput";
+import DatePicker from "@src/components/capture/datepicker";
 
 export default function EventForm({
   handleChange,

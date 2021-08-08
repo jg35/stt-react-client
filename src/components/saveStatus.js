@@ -1,4 +1,4 @@
-import LoadingSpinner from "~/components/loadingSpinner";
+import LoadingSpinner from "@src/components/loadingSpinner";
 
 export default function SaveStatus({ saving }) {
   return (

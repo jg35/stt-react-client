@@ -3,26 +3,26 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ApolloProvider } from "@apollo/client/react";
 
 import "react-datepicker/dist/react-datepicker.css";
-import "~/app.css";
+import "@src/app.css";
 
 // Initialise apollo client + firebase
-import client from "~/lib/apollo";
-import { buildGoogleFontFaceString } from "~/lib/util";
+import client from "@src/lib/apollo";
+import { buildGoogleFontFaceString } from "@src/lib/util";
 
-import Timeline from "~/routes/timeline";
-import Publish from "~/routes/publish";
-import PublishNewVersion from "~/routes/publishNewVersion";
-import Edit from "~/routes/edit";
-import Settings from "~/routes/settings";
-import Login from "~/routes/login";
-import Logout from "~/routes/logout";
-import NotFound from "~/routes/404";
+import Timeline from "@src/routes/timeline";
+import Publish from "@src/routes/publish";
+import PublishNewVersion from "@src/routes/publishNewVersion";
+import Edit from "@src/routes/edit";
+import Settings from "@src/routes/settings";
+import Login from "@src/routes/login";
+import Logout from "@src/routes/logout";
+import NotFound from "@src/routes/404";
 
-import AuthWrap from "~/components/authWrap";
-import uiManager from "~/lib/uiManager";
-import { createToastMessage } from "~/lib/toast";
-import { useSignedImageUrls } from "~/hooks/useSignedUrl";
-import ToastMessages from "~/components/toastMessages";
+import AuthWrap from "@src/components/authWrap";
+import uiManager from "@src/lib/uiManager";
+import { createToastMessage } from "@src/lib/toast";
+import { useSignedImageUrls } from "@src/hooks/useSignedUrl";
+import ToastMessages from "@src/components/toastMessages";
 
 export const UIContext = createContext({});
 

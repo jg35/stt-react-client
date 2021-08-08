@@ -1,15 +1,15 @@
 import { useRef, useContext, useEffect } from "react";
 import { css } from "@emotion/css";
 import { cloneDeep, get } from "lodash";
-import colors from "~/lib/colors";
-import { CoverElementSchema } from "~/lib/yup";
-import { setGoogleFontStyles } from "~/lib/uiManager";
-import { UIContext } from "~/app";
-import { useGetSignedImageUrl } from "~/hooks/useSignedUrl";
-import Image from "~/components/image";
-import SnapElement from "~/components/publish/snapElement";
-import TextElementControlList from "~/components/publish/textElementControlList";
-import GlobalCoverControls from "~/components/publish/globalCoverControls";
+import colors from "@src/lib/colors";
+import { CoverElementSchema } from "@src/lib/yup";
+import { setGoogleFontStyles } from "@src/lib/uiManager";
+import { UIContext } from "@src/app";
+import { useGetSignedImageUrl } from "@src/hooks/useSignedUrl";
+import Image from "@src/components/image";
+import SnapElement from "@src/components/publish/snapElement";
+import TextElementControlList from "@src/components/publish/textElementControlList";
+import GlobalCoverControls from "@src/components/publish/globalCoverControls";
 
 export default function CoverEditorForm({ values, setFieldValue }) {
   const cover = values.theme.cover;

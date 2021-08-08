@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { UIContext } from "~/app";
-import { createToastMessage } from "~/lib/toast";
+import { UIContext } from "@src/app";
+import { createToastMessage } from "@src/lib/toast";
 
 const MESSAGE_TIMEOUT = 5000;
 

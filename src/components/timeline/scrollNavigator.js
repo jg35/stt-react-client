@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { DateTime } from "luxon";
-import { scrollToYear } from "~/lib/timeline";
+import { scrollToYear } from "@src/lib/timeline";
 
 export default function ScrollNavigator({ years, dob }) {
   const [hoverYear, setHoverYear] = useState(null);

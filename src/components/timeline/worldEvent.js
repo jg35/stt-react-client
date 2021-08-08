@@ -1,5 +1,5 @@
 import React from "react";
-import { renderFragmentDate } from "~/lib/util";
+import { renderFragmentDate } from "@src/lib/util";
 
 export default function WorldEvent({ event }) {
   return (

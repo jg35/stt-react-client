@@ -1,7 +1,7 @@
-import SubmitButton from "~/components/submitButton";
-import Button from "~/components/button";
-import FormInput from "~/components/formInput";
-import FormError from "~/components/formError";
+import SubmitButton from "@src/components/submitButton";
+import Button from "@src/components/button";
+import FormInput from "@src/components/formInput";
+import FormError from "@src/components/formError";
 
 export default function EmailForm({
   handleSubmit,

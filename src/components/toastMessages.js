@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
-import colors from "~/lib/colors";
-import { UIContext } from "~/app";
-import Svg from "~/components/svg";
+import colors from "@src/lib/colors";
+import { UIContext } from "@src/app";
+import Svg from "@src/components/svg";
 
 function ToastMessage({ message }) {
   const [show, setShow] = useState(false);

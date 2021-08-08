@@ -1,5 +1,5 @@
 import React from "react";
-import Svg from "~/components/svg";
+import Svg from "@src/components/svg";
 
 export default function ChapterFragment({ title }) {
   return (

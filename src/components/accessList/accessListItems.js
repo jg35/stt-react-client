@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Button from "~/components/button";
+import Button from "@src/components/button";
 
 export default function AccessListItems({
   items,

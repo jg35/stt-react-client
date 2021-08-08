@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { useCustomQuery } from "~/hooks/useCustomApollo";
-import { STRIPE_FETCH_PRICES } from "~/lib/gql";
-import Modal from "~/components/modal";
-import SubmitButton from "~/components/submitButton";
-import SubscriptionOptionCard from "~/components/settings/subscriptionOptionCard";
+import { useCustomQuery } from "@src/hooks/useCustomApollo";
+import { STRIPE_FETCH_PRICES } from "@src/lib/gql";
+import Modal from "@src/components/modal";
+import SubmitButton from "@src/components/submitButton";
+import SubscriptionOptionCard from "@src/components/settings/subscriptionOptionCard";
 
 export default function UserPaymentForm({
   type,

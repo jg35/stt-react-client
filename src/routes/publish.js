@@ -1,15 +1,15 @@
 import { useContext } from "react";
 import { useHistory } from "react-router";
-import { useCustomQuery } from "~/hooks/useCustomApollo";
-import { FETCH_PUBLISH_VIEW } from "~/lib/gql";
-import { AuthContext } from "~/components/authWrap";
-import Page from "~/components/page";
-import Card from "~/components/card";
-import VersionList from "~/components/publish/versionList";
-import LatestVersion from "~/components/publish/latestVersion";
-import PublishSkeleton from "~/components/publish/publishSkeleton";
-import Button from "~/components/button";
-import AccessList from "~/components/accessList/accessList";
+import { useCustomQuery } from "@src/hooks/useCustomApollo";
+import { FETCH_PUBLISH_VIEW } from "@src/lib/gql";
+import { AuthContext } from "@src/components/authWrap";
+import Page from "@src/components/page";
+import Card from "@src/components/card";
+import VersionList from "@src/components/publish/versionList";
+import LatestVersion from "@src/components/publish/latestVersion";
+import PublishSkeleton from "@src/components/publish/publishSkeleton";
+import Button from "@src/components/button";
+import AccessList from "@src/components/accessList/accessList";
 
 export default function Publish() {
   const history = useHistory();

@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from "react";
-import { UIContext } from "~/app";
+import { UIContext } from "@src/app";
 
 export function useStepActive(steps) {
   const { uiState } = useContext(UIContext);

@@ -1,5 +1,5 @@
 import firebase from "firebase";
-import { authStateVar } from "~/lib/apollo";
+import { authStateVar } from "@src/lib/apollo";
 const google = new firebase.auth.GoogleAuthProvider();
 const facebook = new firebase.auth.FacebookAuthProvider();
 

@@ -4,11 +4,11 @@ import {
   createAccountWithEmail,
   loginWithEmail,
   sendResetPasswordEmail,
-} from "~/lib/auth";
-import { AuthContext } from "~/components/authWrap";
+} from "@src/lib/auth";
+import { AuthContext } from "@src/components/authWrap";
 
-import EmailFormWrapper from "~/components/auth/emailFormWrapper";
-import OAuthLogin from "~/components/auth/oAuthLogin";
+import EmailFormWrapper from "@src/components/auth/emailFormWrapper";
+import OAuthLogin from "@src/components/auth/oAuthLogin";
 
 export default function Login() {
   const [authView, setAuthView] = useState("LOGIN");

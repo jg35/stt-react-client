@@ -1,15 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useMutation } from "@apollo/client";
-import { S3_GET_SIGNED_URL } from "~/lib/gql";
-import { useGetSignedImageUrl } from "~/hooks/useSignedUrl";
-import { photoSizes } from "~/lib/imageSizes";
+import { S3_GET_SIGNED_URL } from "@src/lib/gql";
+import { useGetSignedImageUrl } from "@src/hooks/useSignedUrl";
+import { photoSizes } from "@src/lib/imageSizes";
 import Uppy from "@uppy/core";
 import ImageEditor from "@uppy/image-editor";
 import XHRUpload from "@uppy/xhr-upload";
 
 import { Dashboard, DashboardModal, useUppy } from "@uppy/react";
-import { UIContext } from "~/app";
-import { AuthContext } from "~/components/authWrap";
+import { UIContext } from "@src/app";
+import { AuthContext } from "@src/components/authWrap";
 
 import "@uppy/image-editor/dist/style.css";
 import "@uppy/core/dist/style.css";

@@ -1,4 +1,4 @@
-import { joinTailwindClasses } from "~/lib/util";
+import { joinTailwindClasses } from "@src/lib/util";
 
 export default function Card({
   children,

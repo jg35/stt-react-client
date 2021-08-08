@@ -1,23 +1,23 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
 import { debounce, values } from "lodash";
-import { useCustomQuery } from "~/hooks/useCustomApollo";
+import { useCustomQuery } from "@src/hooks/useCustomApollo";
 
-import { FETCH_TIMELINE_VIEW } from "~/lib/gql";
+import { FETCH_TIMELINE_VIEW } from "@src/lib/gql";
 
-import Page from "~/components/page";
+import Page from "@src/components/page";
 
-import CaptureModal from "~/components/capture/captureModal";
-import CaptureHeader from "~/components/capture/captureHeader";
-import Section from "~/components/timeline/section";
-import Preview from "~/components/timeline/preview";
-import ScrollNavigator from "~/components/timeline/scrollNavigator";
+import CaptureModal from "@src/components/capture/captureModal";
+import CaptureHeader from "@src/components/capture/captureHeader";
+import Section from "@src/components/timeline/section";
+import Preview from "@src/components/timeline/preview";
+import ScrollNavigator from "@src/components/timeline/scrollNavigator";
 
-import { generateTimeline, scrollToFragment } from "~/lib/timeline";
-import TimePeriodSelector from "~/components/timeline/timePeriodSelector";
+import { generateTimeline, scrollToFragment } from "@src/lib/timeline";
+import TimePeriodSelector from "@src/components/timeline/timePeriodSelector";
 
-import TimelineSkeleton from "~/components/timeline/timelineSkeleton";
-import OrphanedFragments from "~/components/timeline/orphanedFragments";
-import { UIContext } from "~/app";
+import TimelineSkeleton from "@src/components/timeline/timelineSkeleton";
+import OrphanedFragments from "@src/components/timeline/orphanedFragments";
+import { UIContext } from "@src/app";
 
 export default function Timeline() {
   const { uiState, updateUiState } = useContext(UIContext);

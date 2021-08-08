@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { debounce } from "lodash";
-import SubmitButton from "~/components/submitButton";
-import EditableContent from "~/components/editableContent";
-import SaveStatus from "~/components/saveStatus";
-import Image from "~/components/image";
-import { coverImages } from "~/lib/imageSizes";
+import SubmitButton from "@src/components/submitButton";
+import EditableContent from "@src/components/editableContent";
+import SaveStatus from "@src/components/saveStatus";
+import Image from "@src/components/image";
+import { coverImages } from "@src/lib/imageSizes";
 
 export default function CurrentVersion({
   version,

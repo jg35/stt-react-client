@@ -1,8 +1,8 @@
 import { useContext, useEffect } from "react";
 import { useQuery } from "@apollo/client";
-import { AuthContext } from "~/components/authWrap";
-import { UIContext } from "~/app";
-import { createToastMessage } from "~/lib/toast";
+import { AuthContext } from "@src/components/authWrap";
+import { UIContext } from "@src/app";
+import { createToastMessage } from "@src/lib/toast";
 
 export function useCustomQuery(
   gql,

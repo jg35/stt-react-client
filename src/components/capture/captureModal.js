@@ -1,24 +1,24 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Formik } from "formik";
 import { useMutation, useLazyQuery, gql } from "@apollo/client";
-import useToastMessage from "~/hooks/useToastMessage";
-import { FETCH_QUESTIONS } from "~/lib/gql";
+import useToastMessage from "@src/hooks/useToastMessage";
+import { FETCH_QUESTIONS } from "@src/lib/gql";
 import { lowerCase, omit } from "lodash";
 import {
   INSERT_FRAGMENT,
   INSERT_USER_EVENT,
   UPDATE_FRAGMENT,
   UPDATE_USER_EVENT,
-} from "~/lib/gql";
+} from "@src/lib/gql";
 
-import Modal from "~/components/modal";
-import ChapterForm from "~/components/capture/chapterForm";
-import PhotoForm from "~/components/capture/photoForm";
-import TextForm from "~/components/capture/textForm";
-import EventForm from "~/components/capture/eventForm";
-import FormActions from "~/components/capture/formActions";
-import { UIContext } from "~/app";
-import { EventSchema, FragmentSchema } from "~/lib/yup";
+import Modal from "@src/components/modal";
+import ChapterForm from "@src/components/capture/chapterForm";
+import PhotoForm from "@src/components/capture/photoForm";
+import TextForm from "@src/components/capture/textForm";
+import EventForm from "@src/components/capture/eventForm";
+import FormActions from "@src/components/capture/formActions";
+import { UIContext } from "@src/app";
+import { EventSchema, FragmentSchema } from "@src/lib/yup";
 
 export default function CaptureModal({ editView = false, scrollToFragment }) {
   const { setError } = useToastMessage();

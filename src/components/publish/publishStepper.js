@@ -1,5 +1,5 @@
-import ButtonNew from "~/components/buttonNew";
-import SubmitButton from "~/components/submitButton";
+import ButtonNew from "@src/components/buttonNew";
+import SubmitButton from "@src/components/submitButton";
 
 export default function PublishStepper({
   stepBack,

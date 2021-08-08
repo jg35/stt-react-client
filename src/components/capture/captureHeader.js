@@ -1,17 +1,17 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useLazyQuery } from "@apollo/client";
 import { uniq } from "lodash";
-import { FETCH_CAPTURE_HEADER } from "~/lib/gql";
-import Button from "~/components/button";
-import Svg from "~/components/svg";
-import TagSelect from "~/components/capture/tagSelect";
-import CaptureHeaderSkeleton from "~/components/capture/captureHeaderSkeleton";
-import { AuthContext } from "~/components/authWrap";
-import { UIContext } from "~/app";
+import { FETCH_CAPTURE_HEADER } from "@src/lib/gql";
+import Button from "@src/components/button";
+import Svg from "@src/components/svg";
+import TagSelect from "@src/components/capture/tagSelect";
+import CaptureHeaderSkeleton from "@src/components/capture/captureHeaderSkeleton";
+import { AuthContext } from "@src/components/authWrap";
+import { UIContext } from "@src/app";
 import {
   makeCreateFragmentForm,
   makeCreateUserEventForm,
-} from "~/lib/uiManager";
+} from "@src/lib/uiManager";
 
 export default function CaptureHeader({ init }) {
   const {

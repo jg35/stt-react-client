@@ -1,6 +1,6 @@
-import { signInWithGoogle, signInWithFacebook } from "~/lib/auth";
-import Button from "~/components/button";
-import Svg from "~/components/svg";
+import { signInWithGoogle, signInWithFacebook } from "@src/lib/auth";
+import Button from "@src/components/button";
+import Svg from "@src/components/svg";
 
 export default function OAuthForm() {
   return (

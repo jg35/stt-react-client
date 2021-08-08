@@ -1,9 +1,9 @@
 import ContentEditable from "react-contenteditable";
 import { useRef, useState } from "react";
 import { debounce } from "lodash";
-import colors from "~/lib/colors";
-import { renderFragmentDate } from "~/lib/util";
-import FragmentHeaderMenu from "~/components/timeline/fragmentHeaderMenu";
+import colors from "@src/lib/colors";
+import { renderFragmentDate } from "@src/lib/util";
+import FragmentHeaderMenu from "@src/components/timeline/fragmentHeaderMenu";
 
 export default function EditableFragment({ fragment, saveFragment }) {
   const [showInfo, setShowInfo] = useState(false);

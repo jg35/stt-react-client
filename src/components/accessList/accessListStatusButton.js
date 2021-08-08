@@ -1,9 +1,9 @@
-import { useCustomQuery } from "~/hooks/useCustomApollo";
+import { useCustomQuery } from "@src/hooks/useCustomApollo";
 import { useHistory } from "react-router";
-import { FETCH_PRIVATE_ACCESS_TOKENS } from "~/lib/gql";
+import { FETCH_PRIVATE_ACCESS_TOKENS } from "@src/lib/gql";
 import { useContext } from "react";
-import { UIContext } from "~/app";
-import Button from "~/components/button";
+import { UIContext } from "@src/app";
+import Button from "@src/components/button";
 
 export default function AccessListStatusButton({
   future = false,

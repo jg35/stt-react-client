@@ -4,23 +4,23 @@ import { Formik } from "formik";
 import { useMutation } from "@apollo/client";
 import { pick, cloneDeep } from "lodash";
 
-import { useCustomQuery } from "~/hooks/useCustomApollo";
-import { AuthContext } from "~/components/authWrap";
-import { VersionSchema, CoverElementSchema, CoverSchema } from "~/lib/yup";
+import { useCustomQuery } from "@src/hooks/useCustomApollo";
+import { AuthContext } from "@src/components/authWrap";
+import { VersionSchema, CoverElementSchema, CoverSchema } from "@src/lib/yup";
 import {
   FETCH_CREATE_BOOK_VIEW,
   UPDATE_VERSION,
   PUBLISH_VERSION,
-} from "~/lib/gql";
-import Page from "~/components/page";
-import Card from "~/components/card";
-import PublishSkeleton from "~/components/publish/publishSkeleton";
-import PublishStepper from "~/components/publish/publishStepper";
-import CoverEditorForm from "~/components/publish/coverEditorForm";
-import PublishOptionsForm from "~/components/publish/publishOptionsForm";
-import CreateBookForm from "~/components/publish/createBookForm";
-import AccessList from "~/components/accessList/accessList";
-import useToastMessage from "~/hooks/useToastMessage";
+} from "@src/lib/gql";
+import Page from "@src/components/page";
+import Card from "@src/components/card";
+import PublishSkeleton from "@src/components/publish/publishSkeleton";
+import PublishStepper from "@src/components/publish/publishStepper";
+import CoverEditorForm from "@src/components/publish/coverEditorForm";
+import PublishOptionsForm from "@src/components/publish/publishOptionsForm";
+import CreateBookForm from "@src/components/publish/createBookForm";
+import AccessList from "@src/components/accessList/accessList";
+import useToastMessage from "@src/hooks/useToastMessage";
 
 export default function PublishNewVersion() {
   const { setError, setSuccess } = useToastMessage();

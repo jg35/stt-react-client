@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { debounce } from "lodash";
 
-import FragmentList from "~/components/timeline/fragmentList";
-import UserEvent from "~/components/timeline/userEvent";
-import WorldEvent from "~/components/timeline/worldEvent";
-import SectionCaptureActions from "~/components/timeline/sectionCaptureActions";
+import FragmentList from "@src/components/timeline/fragmentList";
+import UserEvent from "@src/components/timeline/userEvent";
+import WorldEvent from "@src/components/timeline/worldEvent";
+import SectionCaptureActions from "@src/components/timeline/sectionCaptureActions";
 
 export default function Section({ section, index }) {
   const [showActions, setShowActions] = useState(false);

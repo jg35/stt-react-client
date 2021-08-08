@@ -1,12 +1,12 @@
 import React, { useState, useContext } from "react";
 import { useMutation } from "@apollo/client";
-import Svg from "~/components/svg";
-import colors from "~/lib/colors";
-import { DELETE_USER_EVENT } from "~/lib/gql";
-import { makeEditUserEventForm } from "~/lib/uiManager";
-import LoadingSpinner from "~/components/loadingSpinner";
-import { UIContext } from "~/app";
-import useToastMessage from "~/hooks/useToastMessage";
+import Svg from "@src/components/svg";
+import colors from "@src/lib/colors";
+import { DELETE_USER_EVENT } from "@src/lib/gql";
+import { makeEditUserEventForm } from "@src/lib/uiManager";
+import LoadingSpinner from "@src/components/loadingSpinner";
+import { UIContext } from "@src/app";
+import useToastMessage from "@src/hooks/useToastMessage";
 
 export default function UserEvent({ event }) {
   const { setError } = useToastMessage();

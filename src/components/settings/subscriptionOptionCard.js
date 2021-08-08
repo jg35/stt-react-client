@@ -1,4 +1,4 @@
-import Button from "~/components/button";
+import Button from "@src/components/button";
 
 function getTitle(interval) {
   switch (interval) {

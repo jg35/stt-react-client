@@ -1,14 +1,14 @@
 import { Formik } from "formik";
 import { useMutation } from "@apollo/client";
-import { UserSettingsSchema } from "~/lib/yup";
-import { UPDATE_USER } from "~/lib/gql";
+import { UserSettingsSchema } from "@src/lib/yup";
+import { UPDATE_USER } from "@src/lib/gql";
 
-import DatePicker from "~/components/capture/datepicker";
-import CountrySelect from "~/components/countrySelect";
-import FormError from "~/components/formError";
-import SubmitButton from "~/components/submitButton";
+import DatePicker from "@src/components/capture/datepicker";
+import CountrySelect from "@src/components/countrySelect";
+import FormError from "@src/components/formError";
+import SubmitButton from "@src/components/submitButton";
 
-import useToastMessage from "~/hooks/useToastMessage";
+import useToastMessage from "@src/hooks/useToastMessage";
 
 export default function UserSettings({ dbUser }) {
   const [updateUser] = useMutation(UPDATE_USER);

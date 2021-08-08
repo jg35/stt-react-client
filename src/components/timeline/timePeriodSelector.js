@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
-import Button from "~/components/button";
-import { scrollToUndated } from "~/lib/timeline";
-import { UIContext } from "~/app";
+import Button from "@src/components/button";
+import { scrollToUndated } from "@src/lib/timeline";
+import { UIContext } from "@src/app";
 
 export default function TimePeriodSelector({ timelinePeriod, orphanCount }) {
   const { updateUiState } = useContext(UIContext);

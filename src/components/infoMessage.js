@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
-import messages from "~/lib/messages";
-import Svg from "~/components/svg";
-import Button from "~/components/button";
-import { UIContext } from "~/app";
+import messages from "@src/lib/messages";
+import Svg from "@src/components/svg";
+import Button from "@src/components/button";
+import { UIContext } from "@src/app";
 
 export default function InfoMessage({ name }) {
   const { uiState, updateUiState } = useContext(UIContext);

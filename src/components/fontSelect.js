@@ -1,10 +1,10 @@
 import axios from "axios";
 import Select from "react-select";
 import { useEffect, useState, useContext } from "react";
-import { UIContext } from "~/app";
-import { setGoogleFontStyles } from "~/lib/uiManager";
-import { useGetSignedImageUrl } from "~/hooks/useSignedUrl";
-import colors from "~/lib/colors";
+import { UIContext } from "@src/app";
+import { setGoogleFontStyles } from "@src/lib/uiManager";
+import { useGetSignedImageUrl } from "@src/hooks/useSignedUrl";
+import colors from "@src/lib/colors";
 
 export default function GoogleFontSelect({
   value,

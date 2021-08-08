@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { UIContext } from "~/app";
-import AccessListModal from "~/components/accessList/accessListModal";
+import { UIContext } from "@src/app";
+import AccessListModal from "@src/components/accessList/accessListModal";
 
 export default function AccessList({ userId }) {
   const { uiState, updateUiState } = useContext(UIContext);

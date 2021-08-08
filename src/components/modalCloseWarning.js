@@ -1,5 +1,5 @@
-import Card from "~/components/card";
-import Button from "~/components/button";
+import Card from "@src/components/card";
+import Button from "@src/components/button";
 
 export default function ModalCloseWarning({
   text = "⚠️ You have unsaved changes. Are you sure you want to continue?",

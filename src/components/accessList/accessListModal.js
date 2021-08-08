@@ -1,19 +1,19 @@
 import { Formik } from "formik";
 import { useMutation, gql } from "@apollo/client";
-import { useCustomQuery } from "~/hooks/useCustomApollo";
+import { useCustomQuery } from "@src/hooks/useCustomApollo";
 import {
   INSERT_ACCESS_TOKEN,
   DELETE_ACCESS_TOKEN,
   FETCH_PRIVATE_ACCESS_TOKENS,
-} from "~/lib/gql";
-import { AccessTokenPrivateSchema } from "~/lib/yup";
-import useToastMessage from "~/hooks/useToastMessage";
-import Modal from "~/components/modal";
+} from "@src/lib/gql";
+import { AccessTokenPrivateSchema } from "@src/lib/yup";
+import useToastMessage from "@src/hooks/useToastMessage";
+import Modal from "@src/components/modal";
 
-import FormInput from "~/components/formInput";
-import FormError from "~/components/formError";
-import SubmitButton from "~/components/submitButton";
-import AccessListItems from "~/components/accessList/accessListItems";
+import FormInput from "@src/components/formInput";
+import FormError from "@src/components/formError";
+import SubmitButton from "@src/components/submitButton";
+import AccessListItems from "@src/components/accessList/accessListItems";
 
 export default function AccessListModal({ closeModal }) {
   const { setError } = useToastMessage();

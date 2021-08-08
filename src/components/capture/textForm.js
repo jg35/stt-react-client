@@ -1,7 +1,7 @@
-import DatePicker from "~/components/capture/datepicker";
-import FormError from "~/components/formError";
-import TextEditor from "~/components/capture/textEditor";
-import FormInput from "~/components/formInput";
+import DatePicker from "@src/components/capture/datepicker";
+import FormError from "@src/components/formError";
+import TextEditor from "@src/components/capture/textEditor";
+import FormInput from "@src/components/formInput";
 
 export default function TextForm({
   handleChange,

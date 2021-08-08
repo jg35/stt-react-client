@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { UIContext } from "~/app";
-import Button from "~/components/button";
-import { getTrialDaysRemaining, getNumAsWord } from "~/lib/util";
+import { UIContext } from "@src/app";
+import Button from "@src/components/button";
+import { getTrialDaysRemaining, getNumAsWord } from "@src/lib/util";
 
 export default function TrialStatus({ expiry, status, stripeCustomerId }) {
   const { updateUiState } = useContext(UIContext);
