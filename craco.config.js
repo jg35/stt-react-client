@@ -12,7 +12,7 @@ module.exports = {
       plugin: CracoAlias,
       options: {
         source: "options",
-        baseUrl: "/",
+        baseUrl: "",
         aliases: {
           "~": "./src",
         },
