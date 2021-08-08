@@ -13,7 +13,7 @@ module.exports = {
       options: {
         source: "options",
         aliases: {
-          "@src": "./src",
+          "~": "./src",
         },
       },
     },

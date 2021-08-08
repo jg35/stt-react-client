@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import Button from "@src/components/button";
-import Svg from "@src/components/svg";
-import PopoverColorPicker from "@src/components/popoverColorPicker";
-import FontSelect from "@src/components/fontSelect";
-import FormInput from "@src/components/formInput";
+import Button from "~/components/button";
+import Svg from "~/components/svg";
+import PopoverColorPicker from "~/components/popoverColorPicker";
+import FontSelect from "~/components/fontSelect";
+import FormInput from "~/components/formInput";
 
 export default function TextElementControls({
   update,

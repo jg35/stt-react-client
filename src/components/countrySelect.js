@@ -1,4 +1,4 @@
-import countries from "@src/lib/countries";
+import countries from "~/lib/countries";
 
 export default function CountrySelect({
   handleChange,

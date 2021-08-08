@@ -1,8 +1,8 @@
 import { useState } from "react";
-import Card from "@src/components/card";
-import Button from "@src/components/button";
-import PopoverColorPicker from "@src/components/popoverColorPicker";
-import Uppy from "@src/components/uppy";
+import Card from "~/components/card";
+import Button from "~/components/button";
+import PopoverColorPicker from "~/components/popoverColorPicker";
+import Uppy from "~/components/uppy";
 
 export default function GlobalCoverControls({
   imageUrl,

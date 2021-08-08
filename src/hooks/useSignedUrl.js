@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { useMutation, useLazyQuery } from "@apollo/client";
-import { UIContext } from "@src/app";
-import { AuthContext } from "@src/components/authWrap";
-import { FETCH_IMAGES, S3_GET_SIGNED_URL } from "@src/lib/gql";
+import { UIContext } from "~/app";
+import { AuthContext } from "~/components/authWrap";
+import { FETCH_IMAGES, S3_GET_SIGNED_URL } from "~/lib/gql";
 import { flatten, get, uniq } from "lodash";
-import { photoSizes, coverImageSizes } from "@src/lib/imageSizes";
+import { photoSizes, coverImageSizes } from "~/lib/imageSizes";
 
 export function useGetSignedImageUrl(path) {
   const { uiState } = useContext(UIContext);

@@ -1,8 +1,8 @@
 import { useMutation } from "@apollo/client";
 import { sortBy } from "lodash";
-import { DELETE_VERSION } from "@src/lib/gql";
-import VersionListItem from "@src/components/publish/versionListItem";
-import useToastMessage from "@src/hooks/useToastMessage";
+import { DELETE_VERSION } from "~/lib/gql";
+import VersionListItem from "~/components/publish/versionListItem";
+import useToastMessage from "~/hooks/useToastMessage";
 
 export default function VersionList({ publishedVersions }) {
   const { setError } = useToastMessage();

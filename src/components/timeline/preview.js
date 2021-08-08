@@ -1,11 +1,11 @@
 import React, { useRef, useEffect, useContext } from "react";
 import { debounce } from "lodash";
-import { scrollToFragment } from "@src/lib/timeline";
-import Image from "@src/components/image";
-import ChapterNavigator from "@src/components/timeline/chapterNavigator";
-import PreivewSkeleton from "@src/components/timeline/previewSkeleton";
-import { UIContext } from "@src/app";
-import imageSizes from "@src/lib/imageSizes";
+import { scrollToFragment } from "~/lib/timeline";
+import Image from "~/components/image";
+import ChapterNavigator from "~/components/timeline/chapterNavigator";
+import PreivewSkeleton from "~/components/timeline/previewSkeleton";
+import { UIContext } from "~/app";
+import imageSizes from "~/lib/imageSizes";
 
 export default function Preview({ fragments }) {
   const previewScrollContainer = useRef(null);

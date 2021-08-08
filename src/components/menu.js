@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Button from "@src/components/button";
+import Button from "~/components/button";
 
 export default function Menu({
   items,

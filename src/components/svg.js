@@ -1,6 +1,6 @@
 import React from "react";
 
-import icons from "@src/lib/icons";
+import icons from "~/lib/icons";
 
 export default function Svg({
   name,

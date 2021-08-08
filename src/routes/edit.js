@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useMutation } from "@apollo/client";
 import { sortBy } from "lodash";
-import { FETCH_EDIT_VIEW, UPDATE_FRAGMENT } from "@src/lib/gql";
-import { useCustomQuery } from "@src/hooks/useCustomApollo";
-import Page from "@src/components/page";
-import CaptureModal from "@src/components/capture/captureModal";
+import { FETCH_EDIT_VIEW, UPDATE_FRAGMENT } from "~/lib/gql";
+import { useCustomQuery } from "~/hooks/useCustomApollo";
+import Page from "~/components/page";
+import CaptureModal from "~/components/capture/captureModal";
 
-import EditPreview from "@src/components/edit/editPreview";
-import EditPreviewSkeleton from "@src/components/edit/editPreviewSkeleton";
-import EditPreviewContainer from "@src/components/edit/editPreviewContainer";
-import useToastMessage from "@src/hooks/useToastMessage";
+import EditPreview from "~/components/edit/editPreview";
+import EditPreviewSkeleton from "~/components/edit/editPreviewSkeleton";
+import EditPreviewContainer from "~/components/edit/editPreviewContainer";
+import useToastMessage from "~/hooks/useToastMessage";
 
 export default function Edit() {
   const { setError } = useToastMessage();

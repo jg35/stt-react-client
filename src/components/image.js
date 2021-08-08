@@ -1,5 +1,5 @@
 import { omit } from "lodash";
-import { useGetSignedImageUrl } from "@src/hooks/useSignedUrl";
+import { useGetSignedImageUrl } from "~/hooks/useSignedUrl";
 
 export default function Image(props) {
   const src = useGetSignedImageUrl(props.src);

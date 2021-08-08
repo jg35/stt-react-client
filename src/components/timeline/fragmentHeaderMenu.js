@@ -1,14 +1,14 @@
 import { useContext } from "react";
 import { useMutation } from "@apollo/client";
-import { UIContext } from "@src/app";
-import { UPDATE_FRAGMENT, DELETE_FRAGMENT } from "@src/lib/gql";
-import colors from "@src/lib/colors";
-import { makeEditFragmentForm } from "@src/lib/uiManager";
-import Menu from "@src/components/menu";
-import Button from "@src/components/button";
-import Svg from "@src/components/svg";
-import LoadingSpinner from "@src/components/loadingSpinner";
-import useToastMessage from "@src/hooks/useToastMessage";
+import { UIContext } from "~/app";
+import { UPDATE_FRAGMENT, DELETE_FRAGMENT } from "~/lib/gql";
+import colors from "~/lib/colors";
+import { makeEditFragmentForm } from "~/lib/uiManager";
+import Menu from "~/components/menu";
+import Button from "~/components/button";
+import Svg from "~/components/svg";
+import LoadingSpinner from "~/components/loadingSpinner";
+import useToastMessage from "~/hooks/useToastMessage";
 
 export default function FragmentHeaderMenu({
   fragment,

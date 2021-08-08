@@ -1,6 +1,6 @@
-import Image from "@src/components/image";
-import imageSizes from "@src/lib/imageSizes";
-import { useGetSignedImageUrl } from "@src/hooks/useSignedUrl";
+import Image from "~/components/image";
+import imageSizes from "~/lib/imageSizes";
+import { useGetSignedImageUrl } from "~/hooks/useSignedUrl";
 
 export default function PhotoFragment({ fragment }) {
   const url = useGetSignedImageUrl(fragment.mediaUrl + imageSizes["400px"]);

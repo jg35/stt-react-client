@@ -5,10 +5,10 @@ import {
   FETCH_LOCAL_AUTH_STATE,
   FETCH_USER,
   ACTION_SYNC_USER,
-} from "@src/lib/gql";
-import { onAuthStateChange } from "@src/lib/firebase";
+} from "~/lib/gql";
+import { onAuthStateChange } from "~/lib/firebase";
 
-import AccessControlModals from "@src/components/accessControlModals";
+import AccessControlModals from "~/components/accessControlModals";
 
 function handleSetAuth(
   newAuth,

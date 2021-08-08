@@ -1,5 +1,5 @@
-import Image from "@src/components/image";
-import imageSizes from "@src/lib/imageSizes";
+import Image from "~/components/image";
+import imageSizes from "~/lib/imageSizes";
 
 export default function PhotoFragment({ fragment }) {
   return (

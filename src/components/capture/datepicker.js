@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import ReactDatePicker from "react-datepicker";
 import { useLazyQuery } from "@apollo/client";
-import { FETCH_USER } from "@src/lib/gql";
-import { AuthContext } from "@src/components/authWrap";
+import { FETCH_USER } from "~/lib/gql";
+import { AuthContext } from "~/components/authWrap";
 export default function DatePicker({
   handleChange,
   date,

@@ -1,14 +1,14 @@
 import { useContext, useState } from "react";
 import { useHistory } from "react-router";
-import { AuthContext } from "@src/components/authWrap";
-import Page from "@src/components/page";
-import Card from "@src/components/card";
+import { AuthContext } from "~/components/authWrap";
+import Page from "~/components/page";
+import Card from "~/components/card";
 
-import ManageUser from "@src/components/settings/manageUser";
-import ManageBilling from "@src/components/settings/manageBilling";
-import ManageAccount from "@src/components/settings/manageAccount";
-import ManagePrivacy from "@src/components/settings/managePrivacy";
-import TabLink from "@src/components/settings/tabLink";
+import ManageUser from "~/components/settings/manageUser";
+import ManageBilling from "~/components/settings/manageBilling";
+import ManageAccount from "~/components/settings/manageAccount";
+import ManagePrivacy from "~/components/settings/managePrivacy";
+import TabLink from "~/components/settings/tabLink";
 
 export default function Settings() {
   const TABS = ["SETTINGS", "BILLING", "ACCOUNT", "PRIVACY"];

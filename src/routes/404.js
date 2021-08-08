@@ -1,5 +1,5 @@
 import { NavLink, useParams } from "react-router-dom";
-import Page from "@src/components/page";
+import Page from "~/components/page";
 
 export default function NotFound() {
   return (

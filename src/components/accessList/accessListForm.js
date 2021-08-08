@@ -1,6 +1,6 @@
-import FormInput from "@src/components/formInput";
-import FormError from "@src/components/formError";
-import Button from "@src/components/button";
+import FormInput from "~/components/formInput";
+import FormError from "~/components/formError";
+import Button from "~/components/button";
 
 export default function AccessListForm({ formProps, addNewToken }) {
   return (

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Redirect } from "react-router";
 import { AuthContext } from "../components/authWrap";
-import { signOut } from "@src/lib/auth";
+import { signOut } from "~/lib/auth";
 
 export default function Logout() {
   const {

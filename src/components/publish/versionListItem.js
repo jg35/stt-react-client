@@ -1,8 +1,8 @@
-import { renderVersionDate } from "@src/lib/util";
-import { coverImages } from "@src/lib/imageSizes";
-import Image from "@src/components/image";
-import VersionLink from "@src/components/publish/versionLink";
-import DeleteModal from "@src/components/deleteModal";
+import { renderVersionDate } from "~/lib/util";
+import { coverImages } from "~/lib/imageSizes";
+import Image from "~/components/image";
+import VersionLink from "~/components/publish/versionLink";
+import DeleteModal from "~/components/deleteModal";
 
 export default function VersionListItem({
   last,

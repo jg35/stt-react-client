@@ -1,7 +1,7 @@
 import { useHistory } from "react-router";
-import Modal from "@src/components/modal";
-import Button from "@src/components/button";
-import { resendEmailVerification } from "@src/lib/firebase";
+import Modal from "~/components/modal";
+import Button from "~/components/button";
+import { resendEmailVerification } from "~/lib/firebase";
 
 export default function UserVerifyForm() {
   const history = useHistory();

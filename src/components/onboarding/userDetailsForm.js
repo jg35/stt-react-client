@@ -3,14 +3,14 @@ import { useMutation } from "@apollo/client";
 import { useHistory } from "react-router";
 import { Formik } from "formik";
 
-import useToastMessage from "@src/hooks/useToastMessage";
-import { OnboardingSchema } from "@src/lib/yup";
-import { UPDATE_USER } from "@src/lib/gql";
-import FormError from "@src/components/formError";
-import CountrySelect from "@src/components/countrySelect";
-import DatePicker from "@src/components/capture/datepicker";
-import SubmitButton from "@src/components/submitButton";
-import { AuthContext } from "@src/components/authWrap";
+import useToastMessage from "~/hooks/useToastMessage";
+import { OnboardingSchema } from "~/lib/yup";
+import { UPDATE_USER } from "~/lib/gql";
+import FormError from "~/components/formError";
+import CountrySelect from "~/components/countrySelect";
+import DatePicker from "~/components/capture/datepicker";
+import SubmitButton from "~/components/submitButton";
+import { AuthContext } from "~/components/authWrap";
 import { useEffect } from "react";
 
 export default function UserDeailsForm() {

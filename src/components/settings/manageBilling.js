@@ -1,4 +1,4 @@
-import ManageStripeCustomer from "@src/components/settings/manageStripeCustomer";
+import ManageStripeCustomer from "~/components/settings/manageStripeCustomer";
 
 export default function ManageBilling({ dbUser }) {
   return (

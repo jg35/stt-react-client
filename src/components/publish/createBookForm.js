@@ -1,6 +1,6 @@
-import SubmitButton from "@src/components/submitButton";
-import ManagePrivacyStatus from "@src/components/accessList/managePrivacyStatus";
-import AccessListStatusButton from "@src/components/accessList/accessListStatusButton";
+import SubmitButton from "~/components/submitButton";
+import ManagePrivacyStatus from "~/components/accessList/managePrivacyStatus";
+import AccessListStatusButton from "~/components/accessList/accessListStatusButton";
 export default function PublishOptionsForm({
   values,
   setFieldValue,

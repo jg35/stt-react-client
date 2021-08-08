@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Svg from "@src/components/svg";
-import { scrollToFragment } from "@src/lib/timeline";
+import Svg from "~/components/svg";
+import { scrollToFragment } from "~/lib/timeline";
 
 export default function ScrollNavigator({ fragments }) {
   const [hoverChapter, setHoverChapter] = useState(null);

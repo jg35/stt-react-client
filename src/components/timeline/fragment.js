@@ -1,8 +1,8 @@
 import React from "react";
-import FragmentHeader from "@src/components/timeline/fragmentHeader";
-import ChapterFragment from "@src/components/timeline/chapterFragment";
-import MemoryFragment from "@src/components/timeline/memoryFragment";
-import PhotoFragment from "@src/components/timeline/photoFragment";
+import FragmentHeader from "~/components/timeline/fragmentHeader";
+import ChapterFragment from "~/components/timeline/chapterFragment";
+import MemoryFragment from "~/components/timeline/memoryFragment";
+import PhotoFragment from "~/components/timeline/photoFragment";
 
 export default function Fragment({ fragment }) {
   return (

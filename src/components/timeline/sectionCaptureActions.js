@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
-import { UIContext } from "@src/app";
-import Button from "@src/components/button";
+import { UIContext } from "~/app";
+import Button from "~/components/button";
 import {
   makeCreateFragmentForm,
   makeCreateUserEventForm,
-} from "@src/lib/uiManager";
+} from "~/lib/uiManager";
 
 export default function SectionCaptureActions({ show, date, index }) {
   const { updateUiState, uiState } = useContext(UIContext);

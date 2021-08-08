@@ -1,12 +1,12 @@
 import React, { useContext, useState, useEffect } from "react";
 import { DateTime } from "luxon";
 
-import UserDetailsForm from "@src/components/onboarding/userDetailsForm";
-import Tutorial from "@src/components/tutorial";
-import { AuthContext } from "@src/components/authWrap";
-import { UIContext } from "@src/app";
-import UserPaymentForm from "@src/components/userPaymentForm";
-import UserVerifyForm from "@src/components/userVerifyForm";
+import UserDetailsForm from "~/components/onboarding/userDetailsForm";
+import Tutorial from "~/components/tutorial";
+import { AuthContext } from "~/components/authWrap";
+import { UIContext } from "~/app";
+import UserPaymentForm from "~/components/userPaymentForm";
+import UserVerifyForm from "~/components/userVerifyForm";
 
 export default function AccessControlModals() {
   const {

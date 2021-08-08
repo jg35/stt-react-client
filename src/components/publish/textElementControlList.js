@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Button from "@src/components/button";
-import Card from "@src/components/card";
-import TextElementControls from "@src/components/publish/textElementControls";
+import Button from "~/components/button";
+import Card from "~/components/card";
+import TextElementControls from "~/components/publish/textElementControls";
 
 export default function TextElementControlList({
   elements,

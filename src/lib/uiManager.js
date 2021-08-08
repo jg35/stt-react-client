@@ -1,4 +1,4 @@
-import { FragmentSchema, EventSchema } from "@src/lib/yup";
+import { FragmentSchema, EventSchema } from "~/lib/yup";
 
 export default {
   init: () => {

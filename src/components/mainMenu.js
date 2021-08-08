@@ -1,10 +1,10 @@
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
-import { AuthContext } from "@src/components/authWrap";
-import { signOut } from "@src/lib/auth";
+import { AuthContext } from "~/components/authWrap";
+import { signOut } from "~/lib/auth";
 
-import Svg from "@src/components/svg";
-import Menu from "@src/components/menu";
+import Svg from "~/components/svg";
+import Menu from "~/components/menu";
 
 export default function MainMenu() {
   const {

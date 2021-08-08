@@ -1,7 +1,7 @@
 import { useRef, useCallback, useEffect, useState } from "react";
-import useClickOutside from "@src/hooks/useClickOutside";
-import Card from "@src/components/card";
-import ModalCloseWarning from "@src/components/modalCloseWarning";
+import useClickOutside from "~/hooks/useClickOutside";
+import Card from "~/components/card";
+import ModalCloseWarning from "~/components/modalCloseWarning";
 
 export default function Modal({
   size,

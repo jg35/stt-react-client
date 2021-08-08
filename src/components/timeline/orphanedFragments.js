@@ -1,7 +1,7 @@
 import React from "react";
 
-import FragmentList from "@src/components/timeline/fragmentList";
-import InfoMessage from "@src/components/infoMessage";
+import FragmentList from "~/components/timeline/fragmentList";
+import InfoMessage from "~/components/infoMessage";
 
 export default function OrphanedFragments({ fragments }) {
   const numWords = [

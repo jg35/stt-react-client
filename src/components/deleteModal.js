@@ -1,9 +1,9 @@
 import { useState } from "react";
-import colors from "@src/lib/colors";
-import Modal from "@src/components/modal";
-import Button from "@src/components/button";
-import Svg from "@src/components/svg";
-import LoadingSpinner from "@src/components/loadingSpinner";
+import colors from "~/lib/colors";
+import Modal from "~/components/modal";
+import Button from "~/components/button";
+import Svg from "~/components/svg";
+import LoadingSpinner from "~/components/loadingSpinner";
 
 export default function DeleteModal({
   iconSize = 24,

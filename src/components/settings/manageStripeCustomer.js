@@ -1,4 +1,4 @@
-import Button from "@src/components/button";
+import Button from "~/components/button";
 import { DateTime } from "luxon";
 
 function buildSummary(subscriptionStatus, subscriptionMeta) {

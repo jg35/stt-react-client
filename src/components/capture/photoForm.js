@@ -1,8 +1,8 @@
-import Button from "@src/components/button";
-import DatePicker from "@src/components/capture/datepicker";
-import FormInput from "@src/components/formInput";
-import FormError from "@src/components/formError";
-import Uppy from "@src/components/uppy";
+import Button from "~/components/button";
+import DatePicker from "~/components/capture/datepicker";
+import FormInput from "~/components/formInput";
+import FormError from "~/components/formError";
+import Uppy from "~/components/uppy";
 
 export default function PhotoForm({
   handleChange,

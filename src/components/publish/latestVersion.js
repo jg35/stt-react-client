@@ -1,12 +1,12 @@
-import { renderVersionDate } from "@src/lib/util";
-import { coverImages } from "@src/lib/imageSizes";
-import Image from "@src/components/image";
-import VersionLink from "@src/components/publish/versionLink";
-import WebLink from "@src/components/publish/webLink";
-import DeleteModal from "@src/components/deleteModal";
-import Button from "@src/components/button";
-import Svg from "@src/components/svg";
-import AccessListStatusButton from "@src/components/accessList/accessListStatusButton";
+import { renderVersionDate } from "~/lib/util";
+import { coverImages } from "~/lib/imageSizes";
+import Image from "~/components/image";
+import VersionLink from "~/components/publish/versionLink";
+import WebLink from "~/components/publish/webLink";
+import DeleteModal from "~/components/deleteModal";
+import Button from "~/components/button";
+import Svg from "~/components/svg";
+import AccessListStatusButton from "~/components/accessList/accessListStatusButton";
 
 export default function LatestVersion({
   version,

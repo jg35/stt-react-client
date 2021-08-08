@@ -1,8 +1,8 @@
 import React from "react";
 
-import Menu from "@src/components/menu";
-import Svg from "@src/components/svg";
-import colors from "@src/lib/colors";
+import Menu from "~/components/menu";
+import Svg from "~/components/svg";
+import colors from "~/lib/colors";
 
 function TagSelectOption({ tag, selectTag }) {
   return (

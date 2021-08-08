@@ -1,18 +1,18 @@
-import useToastMessage from "@src/hooks/useToastMessage";
-import AccessListForm from "@src/components/accessList/accessListForm";
-import ManagePrivacyStatus from "@src/components/accessList/managePrivacyStatus";
-import SubmitButton from "@src/components/submitButton";
-import AccessListItems from "@src/components/accessList/accessListItems";
+import useToastMessage from "~/hooks/useToastMessage";
+import AccessListForm from "~/components/accessList/accessListForm";
+import ManagePrivacyStatus from "~/components/accessList/managePrivacyStatus";
+import SubmitButton from "~/components/submitButton";
+import AccessListItems from "~/components/accessList/accessListItems";
 
 import { Formik } from "formik";
 import { useMutation, gql } from "@apollo/client";
-import { useCustomQuery } from "@src/hooks/useCustomApollo";
+import { useCustomQuery } from "~/hooks/useCustomApollo";
 import {
   MANGE_PRIVACY_SETTINGS_VIEW,
   UPDATE_PRIVACY_SETTINGS,
   REGENERATE_PUBLIC_ACCESS_TOKEN,
-} from "@src/lib/gql";
-import { PrivacySettingsForm, AccessTokenPrivateSchema } from "@src/lib/yup";
+} from "~/lib/gql";
+import { PrivacySettingsForm, AccessTokenPrivateSchema } from "~/lib/yup";
 
 export default function ManagePrivacy({ dbUser }) {
   const { setError, setSuccess } = useToastMessage();

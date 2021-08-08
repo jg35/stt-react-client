@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "@src/components/header";
+import Header from "~/components/header";
 
 export default function Page({ children, minimal = false, css = "" }) {
   return (

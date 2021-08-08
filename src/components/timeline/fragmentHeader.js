@@ -1,8 +1,8 @@
 import React from "react";
-import colors from "@src/lib/colors";
-import Svg from "@src/components/svg";
-import { renderFragmentDate } from "@src/lib/util";
-import FragmentHeaderMenu from "@src/components/timeline/fragmentHeaderMenu";
+import colors from "~/lib/colors";
+import Svg from "~/components/svg";
+import { renderFragmentDate } from "~/lib/util";
+import FragmentHeaderMenu from "~/components/timeline/fragmentHeaderMenu";
 
 export default function FragmentHeader({ fragment }) {
   const renderDate = fragment.date ? renderFragmentDate(fragment.date) : null;

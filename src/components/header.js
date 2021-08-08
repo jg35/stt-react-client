@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 import { useRouteMatch } from "react-router";
 import { NavLink } from "react-router-dom";
-import Svg from "@src/components/svg";
-import Button from "@src/components/button";
-import MainMenu from "@src/components/mainMenu";
-import TrialStatus from "@src/components/trialStatus";
-import { UIContext } from "@src/app";
-import { AuthContext } from "@src/components/authWrap";
+import Svg from "~/components/svg";
+import Button from "~/components/button";
+import MainMenu from "~/components/mainMenu";
+import TrialStatus from "~/components/trialStatus";
+import { UIContext } from "~/app";
+import { AuthContext } from "~/components/authWrap";
 
 export default function Header({ minimal = false }) {
   const { uiState, updateUiState } = useContext(UIContext);

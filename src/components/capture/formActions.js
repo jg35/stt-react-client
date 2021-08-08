@@ -1,5 +1,5 @@
-import Button from "@src/components/button";
-import SubmitButton from "@src/components/submitButton";
+import Button from "~/components/button";
+import SubmitButton from "~/components/submitButton";
 
 export default function FormActions({
   closeModal,

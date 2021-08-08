@@ -1,5 +1,5 @@
 import React from "react";
-import Fragment from "@src/components/timeline/fragment";
+import Fragment from "~/components/timeline/fragment";
 
 export default function FragmentList({ fragments, editView = false }) {
   return (

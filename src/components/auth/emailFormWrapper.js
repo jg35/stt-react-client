@@ -3,8 +3,8 @@ import {
   EmailForgotSchema,
   EmailLoginSchema,
   EmailCreateSchema,
-} from "@src/lib/yup";
-import EmailForm from "@src/components/auth/emailForm";
+} from "~/lib/yup";
+import EmailForm from "~/components/auth/emailForm";
 
 export default function EmailFormWrapper({ submit, authView, setAuthView }) {
   function getSchema() {

@@ -2,11 +2,11 @@ import React, { useState, useContext, useRef, useEffect } from "react";
 import { DateTime } from "luxon";
 import { debounce } from "lodash";
 
-import { UIContext } from "@src/app";
-import ChapterNavigator from "@src/components/timeline/chapterNavigator";
-import PhotoFragment from "@src/components/edit/photoFragment";
-import EditableFragment from "@src/components/edit/editableFragment";
-import SaveStatus from "@src/components/saveStatus";
+import { UIContext } from "~/app";
+import ChapterNavigator from "~/components/timeline/chapterNavigator";
+import PhotoFragment from "~/components/edit/photoFragment";
+import EditableFragment from "~/components/edit/editableFragment";
+import SaveStatus from "~/components/saveStatus";
 
 export default function Preview({ fragments, saveFragment }) {
   const { uiState, updateUiState } = useContext(UIContext);

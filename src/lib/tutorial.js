@@ -2,7 +2,7 @@ import {
   scrollToFragment,
   scrollToEvent,
   scrollToTimelineTop,
-} from "@src/lib/timeline";
+} from "~/lib/timeline";
 import { DateTime } from "luxon";
 export function getNextStep(steps, data, uiState) {
   return steps.find((step) => !step.isComplete(data, uiState));
