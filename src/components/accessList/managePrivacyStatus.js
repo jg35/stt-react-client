@@ -25,7 +25,7 @@ export default function ManagePrivacyStatus({
           onClick={() => setPrivacyStatus("PUBLIC")}
           active={privacyStatus === "PUBLIC"}
           title="Public 🌎 "
-          description="Your book will be viewable by anyone that has the link. You can reset the link in your settings."
+          description="Your book will be viewable by anyone that has the link. You can regenerate the link in your settings."
         />
       </div>
 
