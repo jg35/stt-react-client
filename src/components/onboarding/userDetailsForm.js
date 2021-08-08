@@ -11,7 +11,7 @@ import CountrySelect from "~/components/countrySelect";
 import DatePicker from "~/components/capture/datepicker";
 import SubmitButton from "~/components/submitButton";
 import { AuthContext } from "~/components/authWrap";
-import { useEffect } from "react/cjs/react.development";
+import { useEffect } from "react";
 
 export default function UserDeailsForm() {
   const { setError } = useToastMessage();
