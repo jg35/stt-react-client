@@ -44,7 +44,7 @@
     "yup": "^0.32.9"
   },
   "engines": {
-    "node": ">16"
+    "node": "16.0.0"
   },
   "scripts": {
     "start": "craco start",
