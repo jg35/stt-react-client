@@ -39,7 +39,7 @@ export const signOut = async () => {
   try {
     authStateVar({ status: "loading" });
     await firebase.auth().signOut();
-    authStateVar({ status: "out" });
+    authStateVar({ status: "out", user: null, dbUser: null, token: "" });
   } catch (error) {
     console.log(error);
   }

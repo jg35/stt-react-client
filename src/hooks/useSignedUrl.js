@@ -21,7 +21,7 @@ export function useGetSignedImageUrl(path) {
 
 export function useSignedImageUrls() {
   const {
-    authState: { user },
+    authState: { user, status },
   } = useContext(AuthContext);
 
   const { uiState, updateUiState } = useContext(UIContext);
@@ -39,7 +39,7 @@ export function useSignedImageUrls() {
   }, [user]);
 
   useEffect(() => {
-    if (data) {
+    if (data && status === "in") {
       // Standard photos
       let photoPaths = data.stt_fragment
         .filter((f) => f.type === "PHOTO")
