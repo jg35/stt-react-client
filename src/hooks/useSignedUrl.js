@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useMutation, useLazyQuery } from "@apollo/client";
 import { UIContext } from "~/app";
 import { AuthContext } from "~/components/authWrap";
-import { FETCH_IMAGES, S3_GET_SIGNED_URL } from "~/lib/gql";
+import { FETCH_IMAGES, ACTION_S3_GET_SIGNED_URL } from "~/lib/gql";
 import { flatten, get, uniq } from "lodash";
 import { photoSizes, coverImageSizes } from "~/lib/imageSizes";
 
@@ -26,10 +26,12 @@ export function useSignedImageUrls() {
 
   const { uiState, updateUiState } = useContext(UIContext);
   const [getImages, { data }] = useLazyQuery(FETCH_IMAGES);
-  const [getSignedUrls] = useMutation(S3_GET_SIGNED_URL);
+  const [getSignedUrls] = useMutation(ACTION_S3_GET_SIGNED_URL);
 
   useEffect(() => {
     if (user && user.id) {
+      console.log("getting images...");
+      // TODO - this works initially, but then need to make additional requests for signed urls for every image added further
       getImages({
         variables: {
           userId: user.id,
@@ -64,18 +66,20 @@ export function useSignedImageUrls() {
         .filter((v) => v.coverUrl)
         .map((v) => v.coverUrl);
 
-      paths = paths.concat(
-        flatten(
-          generatedCoverImages.map((path) => {
-            return coverImageSizes.map((size) => `${path}-${size}`);
-          })
+      paths = paths
+        .concat(
+          flatten(
+            generatedCoverImages.map((path) => {
+              return coverImageSizes.map((size) => `${path}-${size}`);
+            })
+          )
         )
-      );
+        .concat([
+          "resources/fonts/available.json",
+          "resources/fonts/sprite20Px.png",
+        ]);
 
-      let requestPaths = [
-        "resources/fonts/available.json",
-        "resources/fonts/sprite20Px.png",
-      ];
+      let requestPaths = [];
 
       paths.forEach((path) => {
         if (
@@ -103,7 +107,7 @@ export function useSignedImageUrls() {
         });
       }
     }
-  }, [data]);
+  }, [data, user]);
 
   return uiState.signedUrls;
 }

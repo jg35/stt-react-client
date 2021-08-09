@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useMutation } from "@apollo/client";
-import { S3_GET_SIGNED_URL } from "~/lib/gql";
+import { ACTION_S3_GET_SIGNED_URL } from "~/lib/gql";
 import { useGetSignedImageUrl } from "~/hooks/useSignedUrl";
 import { photoSizes } from "~/lib/imageSizes";
 import Uppy from "@uppy/core";
@@ -35,7 +35,7 @@ export default function UppyDashboard({
   } = useContext(AuthContext);
   const { uiState, updateUiState } = useContext(UIContext);
   const signedUrl = useGetSignedImageUrl(mediaUrl + "-master");
-  const [getSignedUrls] = useMutation(S3_GET_SIGNED_URL);
+  const [getSignedUrls] = useMutation(ACTION_S3_GET_SIGNED_URL);
   const uppy = useUppy(() => {
     return (
       new Uppy({

@@ -1,11 +1,11 @@
 import { useState, useRef } from "react";
 import { useMutation } from "@apollo/client";
-import { S3_GET_SIGNED_URL } from "~/lib/gql";
+import { ACTION_S3_GET_SIGNED_URL } from "~/lib/gql";
 import Button from "~/components/button";
 
 export default function VersionLink({ format, publishedPath, small = false }) {
   const link = useRef(null);
-  const [getSignedUrls] = useMutation(S3_GET_SIGNED_URL);
+  const [getSignedUrls] = useMutation(ACTION_S3_GET_SIGNED_URL);
 
   function getTitle() {
     switch (format) {

@@ -8,19 +8,19 @@ import { Formik } from "formik";
 import { useMutation, gql } from "@apollo/client";
 import { useCustomQuery } from "~/hooks/useCustomApollo";
 import {
-  MANGE_PRIVACY_SETTINGS_VIEW,
-  UPDATE_PRIVACY_SETTINGS,
-  REGENERATE_PUBLIC_ACCESS_TOKEN,
+  SECTION_FETCH_PRIVACY_SETTINGS,
+  SECTION_UPDATE_PRIVACY_SETTINGS,
+  ACTION_REGENERATE_TOKEN,
 } from "~/lib/gql";
 import { PrivacySettingsForm, AccessTokenPrivateSchema } from "~/lib/yup";
 
 export default function ManagePrivacy({ dbUser }) {
   const { setError, setSuccess } = useToastMessage();
-  const { data, loading } = useCustomQuery(MANGE_PRIVACY_SETTINGS_VIEW, {
+  const { data, loading } = useCustomQuery(SECTION_FETCH_PRIVACY_SETTINGS, {
     userId: true,
   });
-  const [updatePrivacySettings] = useMutation(UPDATE_PRIVACY_SETTINGS);
-  const [regeneratePublicToken] = useMutation(REGENERATE_PUBLIC_ACCESS_TOKEN);
+  const [updatePrivacySettings] = useMutation(SECTION_UPDATE_PRIVACY_SETTINGS);
+  const [regeneratePublicToken] = useMutation(ACTION_REGENERATE_TOKEN);
 
   if (loading) {
     return null;

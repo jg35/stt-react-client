@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useLazyQuery } from "@apollo/client";
 import { uniq } from "lodash";
-import { FETCH_CAPTURE_HEADER } from "~/lib/gql";
+import { SECTION_FETCH_CAPTURE_HEADER } from "~/lib/gql";
 import Button from "~/components/button";
 import Svg from "~/components/svg";
 import TagSelect from "~/components/capture/tagSelect";
@@ -19,7 +19,7 @@ export default function CaptureHeader({ init }) {
   } = useContext(AuthContext);
   const { updateUiState } = useContext(UIContext);
   const [getCaptureHeader, { loading, data }] = useLazyQuery(
-    FETCH_CAPTURE_HEADER,
+    SECTION_FETCH_CAPTURE_HEADER,
     {
       variables: { userId: user.id },
     }

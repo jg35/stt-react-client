@@ -10,7 +10,7 @@ import { VersionSchema, CoverElementSchema, CoverSchema } from "~/lib/yup";
 import {
   FETCH_CREATE_BOOK_VIEW,
   UPDATE_VERSION,
-  PUBLISH_VERSION,
+  ACTION_PUBLISH_VERSION,
 } from "~/lib/gql";
 import Page from "~/components/page";
 import Card from "~/components/card";
@@ -31,7 +31,7 @@ export default function PublishNewVersion() {
 
   const [currentVersion, setCurrentVersion] = useState(null);
   const [updateVersion] = useMutation(UPDATE_VERSION);
-  const [publishVersion] = useMutation(PUBLISH_VERSION);
+  const [publishVersion] = useMutation(ACTION_PUBLISH_VERSION);
   const { data } = useCustomQuery(FETCH_CREATE_BOOK_VIEW, { userId: true });
 
   useEffect(() => {
