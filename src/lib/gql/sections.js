@@ -31,7 +31,7 @@ export const SECTION_FETCH_CAPTURE_HEADER = gql`
 export const SECTION_FETCH_PRIVACY_SETTINGS = gql`
   query ($userId: String!) {
     stt_version(
-      where: { userId: { _eq: $userId } }
+      where: { userId: { _eq: $userId }, _and: { generated: { _eq: true } } }
       order_by: { id: desc }
       limit: 1
     ) {

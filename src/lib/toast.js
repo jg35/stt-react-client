@@ -17,6 +17,7 @@ const TOAST_MESSAGES = {
       "Email could not be added to share list. Please try again.",
     FRAGMENT_VISIBILITY: () =>
       `The visibility could not be changed. Please try agian.`,
+    SESSION_EXPIRED: () => `Your session has expired. Please login.`,
   },
   SUCCESS: {
     CREATE: ([thing]) => `You've successfully created a new ${thing}`,

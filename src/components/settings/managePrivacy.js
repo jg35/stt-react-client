@@ -32,7 +32,7 @@ export default function ManagePrivacy({ dbUser }) {
         id: accessToken.id,
       },
       update(cache, { data }) {
-        const regenerateToken = data.stt_accessToken_regenerate.token;
+        const regenerateToken = data.action_stt_regenerate_token.token;
         cache.writeFragment({
           id: cache.identify(accessToken),
           data: {

@@ -106,7 +106,7 @@ export default function UppyDashboard({
         signedUrls: {
           ...uiState.signedUrls,
           ...photoSizes.reduce((obj, size, i) => {
-            obj[`${path}-${size}`] = data.s3_signed_get_url[i];
+            obj[`${path}-${size}`] = data.action_s3_get_signed_url[i];
             return obj;
           }, {}),
         },

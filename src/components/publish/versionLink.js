@@ -32,7 +32,7 @@ export default function VersionLink({ format, publishedPath, small = false }) {
           paths: `${publishedPath}.${format}`,
         },
       }).then(({ data }) => {
-        link.current.href = data.s3_signed_get_url[0].signedUrl;
+        link.current.href = data.action_s3_get_signed_url[0].signedUrl;
         link.current.click();
       });
     }

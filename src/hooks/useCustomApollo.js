@@ -1,4 +1,5 @@
 import { useContext, useEffect } from "react";
+import { useHistory } from "react-router";
 import { useQuery } from "@apollo/client";
 import { AuthContext } from "~/components/authWrap";
 import { UIContext } from "~/app";
@@ -8,6 +9,7 @@ export function useCustomQuery(
   gql,
   { variables = {}, context = {}, userId = false }
 ) {
+  const history = useHistory();
   const { authState } = useContext(AuthContext);
   const { uiState, updateUiState } = useContext(UIContext);
 
@@ -42,7 +44,8 @@ export function useCustomQuery(
         case "jwt-invalid-claims":
         case "invalid-jwt":
         case "invalid-jwt-key":
-          console.log("JWT has expired - redirect to login?");
+          setToastMessage("ERROR", "SESSION_EXPIRED");
+          history.push("/login");
           break;
         default:
           // Blocks the page, so the user can't use the app

@@ -96,7 +96,7 @@ export function useSignedImageUrls() {
           },
         }).then(({ data }) => {
           const signedUrls = { ...uiState.signedUrls };
-          data.s3_signed_get_url.forEach(
+          data.action_s3_get_signed_url.forEach(
             (url) =>
               (signedUrls[url.objectPath] = {
                 signedUrl: url.signedUrl,
