@@ -1,5 +1,5 @@
 import { Formik } from "formik";
-import { useMutation } from "@apollo/client";
+import { useMutation, gql } from "@apollo/client";
 import { UserSettingsSchema } from "~/lib/yup";
 import { UPDATE_USER } from "~/lib/gql";
 
@@ -18,16 +18,20 @@ export default function UserSettings({ dbUser }) {
     return updateUser({
       variables: { userId: dbUser.id, data: values },
       update(cache, { data }) {
-        // cache.modify({
-        //   fields: {
-        //     stt_user(user = {}) {
-        //       return { ...user, ...data.update_stt_user_by_pk };
-        //     },
-        //     stt_user_by_pk(user = {}) {
-        //       return { ...user, ...data.update_stt_user_by_pk };
-        //     },
-        //   },
-        // });
+        const { dob, location } = data.update_stt_user_by_pk;
+        cache.writeFragment({
+          id: cache.identify(dbUser),
+          data: {
+            dob,
+            location,
+          },
+          fragment: gql`
+            fragment user on stt_user {
+              dob
+              location
+            }
+          `,
+        });
       },
     });
   }

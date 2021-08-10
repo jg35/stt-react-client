@@ -16,7 +16,7 @@ export default function AccessListItems({
       return (
         <span>
           {itemLength > 0 ? itemLength : "No"} reader
-          {itemLength !== 1 && "s"} can view your book
+          {itemLength !== 1 && "s"} will be able to view your book
         </span>
       );
     }

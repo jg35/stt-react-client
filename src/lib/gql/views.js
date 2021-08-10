@@ -103,10 +103,7 @@ export const FETCH_SHARE_VIEW = gql`
 
 export const FETCH_PUBLISH_VIEW = gql`
   query ($userId: String!) {
-    stt_version(
-      where: { generated: { _eq: true }, userId: { _eq: $userId } }
-      order_by: { id: desc }
-    ) {
+    stt_version(where: { userId: { _eq: $userId } }, order_by: { id: desc }) {
       id
       theme
       title

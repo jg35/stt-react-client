@@ -4,6 +4,7 @@ import { v4 as uuid } from "uuid";
 export const AccessTokenPrivateSchema = Yup.object().shape({
   id: Yup.number(),
   email: Yup.string().ensure().email(),
+  type: Yup.string().default("PRIVATE"),
 });
 
 export const PrivacySettingsForm = Yup.object().shape({

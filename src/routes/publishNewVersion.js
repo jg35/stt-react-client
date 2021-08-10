@@ -1,7 +1,7 @@
 import { useEffect, useContext, useState } from "react";
 import { useHistory } from "react-router";
 import { Formik } from "formik";
-import { useMutation } from "@apollo/client";
+import { useMutation, gql } from "@apollo/client";
 import { pick, cloneDeep } from "lodash";
 
 import { useCustomQuery } from "~/hooks/useCustomApollo";
@@ -71,7 +71,9 @@ export default function PublishNewVersion() {
     return saveVersionHandler(values, true)
       .then(() => {
         // TODO update the action to also generate the cover
-        return publishVersion({ variables: { userId: user.id } }).then(() => {
+        return publishVersion({
+          variables: { userId: user.id },
+        }).then(() => {
           // Redirect to publish view
           history.push("/publish");
           setSuccess(

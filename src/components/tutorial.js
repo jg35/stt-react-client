@@ -18,12 +18,12 @@ export default function Tutorial() {
   const { setError } = useToastMessage();
   const [updateUser, { loading: updateUserLoading }] = useMutation(UPDATE_USER);
   const {
-    authState: { user },
+    authState: { dbUser },
   } = useContext(AuthContext);
   const { uiState, updateUiState } = useContext(UIContext);
   const [getTimeline, { data, loading }] = useLazyQuery(FETCH_TIMELINE_VIEW, {
     variables: {
-      userId: user.id,
+      userId: dbUser.id,
     },
   });
   const [currentStep, setCurrentStep] = useState(null);
@@ -100,8 +100,15 @@ export default function Tutorial() {
 
   function endTutorial() {
     updateUser({
-      variables: { userId: user.id, data: { onboarding: true } },
+      variables: { userId: dbUser.id, data: { onboarding: true } },
       update(cache, { data }) {
+        cache.modify({
+          id: cache.identify(dbUser),
+          fields: {
+            onboarding: () => true,
+          },
+        });
+
         currentStep.end(data, uiState);
         updateUiState({
           capture: {
@@ -112,13 +119,6 @@ export default function Tutorial() {
           showPreview: false,
           tutorialStep: -1,
           activeCaptureIndex: null,
-        });
-        cache.modify({
-          fields: {
-            stt_user_by_pk(user = {}) {
-              return { ...user, ...data.update_stt_user_by_pk };
-            },
-          },
         });
       },
     }).catch((e) => setError(e, { ref: "UPDATE", params: ["account"] }));

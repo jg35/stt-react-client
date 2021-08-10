@@ -7,12 +7,29 @@ import { flatten, get, uniq } from "lodash";
 import { photoSizes, coverImageSizes } from "~/lib/imageSizes";
 
 export function useGetSignedImageUrl(path) {
-  const { uiState } = useContext(UIContext);
+  const { uiState, updateUiState } = useContext(UIContext);
   const [url, setUrl] = useState(uiState.signedUrls[path]);
+  const [getSignedUrls] = useMutation(ACTION_S3_GET_SIGNED_URL);
 
   useEffect(() => {
     if (uiState.signedUrls[path]) {
       setUrl(uiState.signedUrls[path]);
+    } else {
+      getSignedUrls({
+        variables: {
+          paths: path,
+        },
+      }).then(({ data }) => {
+        const signedUrls = { ...uiState.signedUrls };
+        data.action_s3_get_signed_url.forEach(
+          (url) =>
+            (signedUrls[url.objectPath] = {
+              signedUrl: url.signedUrl,
+              expires: url.expires,
+            })
+        );
+        updateUiState({ signedUrls });
+      });
     }
   }, [path, uiState.signedUrls]);
 

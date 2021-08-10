@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { useCustomQuery } from "~/hooks/useCustomApollo";
 import { FETCH_PUBLISH_VIEW } from "~/lib/gql";
@@ -12,6 +12,7 @@ import Button from "~/components/button";
 import AccessList from "~/components/accessList/accessList";
 
 export default function Publish() {
+  const [versions, setVersions] = useState([]);
   const history = useHistory();
   const {
     authState: { user },
@@ -20,15 +21,21 @@ export default function Publish() {
     userId: true,
   });
 
+  useEffect(() => {
+    if (data) {
+      setVersions(data.stt_version.filter((v) => v.generated));
+    }
+  }, [data]);
+
   return (
     <Page>
       <div style={{ maxWidth: "1056px", margin: "0 auto" }}>
-        {data ? (
+        {versions.length > 0 ? (
           <div>
             <div>
               <h2 className="text-xl my-4">Latest version</h2>
               <Card>
-                <LatestVersion version={data.stt_version[0]} />
+                <LatestVersion version={versions[0]} />
               </Card>
             </div>
             <div className="text-lg my-6">
@@ -43,7 +50,7 @@ export default function Publish() {
             <div>
               <h2 className="text-lg my-2">Other versions</h2>
               <Card css="pt-4 pl-4 pr-4 pb-2">
-                <VersionList publishedVersions={data.stt_version.slice(1)} />
+                <VersionList publishedVersions={versions.slice(1)} />
               </Card>
             </div>
           </div>

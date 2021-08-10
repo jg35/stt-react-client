@@ -17,7 +17,7 @@ export default function UserDeailsForm() {
   const { setError } = useToastMessage();
   const history = useHistory();
   const {
-    authState: { user },
+    authState: { dbUser, user },
   } = useContext(AuthContext);
   const [updateUser] = useMutation(UPDATE_USER);
 
@@ -30,13 +30,14 @@ export default function UserDeailsForm() {
 
   function submitForm(values) {
     return updateUser({
-      variables: { userId: user.id, data: values },
+      variables: { userId: dbUser.id, data: values },
       update(cache, { data }) {
+        const updateUser = data.update_stt_user_by_pk;
         cache.modify({
+          id: cache.identify(dbUser),
           fields: {
-            stt_user_by_pk(user = {}) {
-              return { ...user, ...data.update_stt_user_by_pk };
-            },
+            dob: () => updateUser.dob,
+            location: () => updateUser.location,
           },
         });
       },

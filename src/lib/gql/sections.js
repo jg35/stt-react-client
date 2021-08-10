@@ -35,6 +35,7 @@ export const SECTION_FETCH_PRIVACY_SETTINGS = gql`
       order_by: { id: desc }
       limit: 1
     ) {
+      id
       privacyStatus
     }
     stt_accessToken(where: { userId: { _eq: $userId } }) {
@@ -60,7 +61,10 @@ export const SECTION_UPDATE_PRIVACY_SETTINGS = gql`
       where: { userId: { _eq: $userId } }
       _set: { privacyStatus: $privacyStatus }
     ) {
-      affected_rows
+      returning {
+        id
+        privacyStatus
+      }
     }
     delete_stt_accessToken(
       where: {
@@ -68,10 +72,20 @@ export const SECTION_UPDATE_PRIVACY_SETTINGS = gql`
         _and: { type: { _eq: "PRIVATE" } }
       }
     ) {
-      affected_rows
+      returning {
+        id
+        email
+        type
+        userId
+      }
     }
     insert_stt_accessToken(objects: $newTokens) {
-      affected_rows
+      returning {
+        id
+        email
+        type
+        userId
+      }
     }
   }
 `;

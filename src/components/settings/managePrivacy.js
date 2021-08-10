@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import useToastMessage from "~/hooks/useToastMessage";
 import AccessListForm from "~/components/accessList/accessListForm";
 import ManagePrivacyStatus from "~/components/accessList/managePrivacyStatus";
@@ -13,6 +14,7 @@ import {
   ACTION_REGENERATE_TOKEN,
 } from "~/lib/gql";
 import { PrivacySettingsForm, AccessTokenPrivateSchema } from "~/lib/yup";
+import { omit } from "lodash";
 
 export default function ManagePrivacy({ dbUser }) {
   const { setError, setSuccess } = useToastMessage();
@@ -67,42 +69,47 @@ export default function ManagePrivacy({ dbUser }) {
           return updatePrivacySettings({
             variables: {
               privacyStatus,
-              newTokens: tokens.filter((t) => !t.id),
+              newTokens: tokens
+                .filter((t) => !t.id)
+                .map((t) => omit(t, ["type"])),
               savedTokenIds: tokens
                 .filter((t) => t.id && t.type !== "PUBLIC")
                 .map((t) => t.id),
               userId: dbUser.id,
             },
+            update: (cache, { data }) => {
+              data.delete_stt_accessToken.returning.forEach((t) => {
+                cache.evict({
+                  id: cache.identify({
+                    id: t.id,
+                    __typename: "stt_accessToken",
+                  }),
+                });
+              });
+              cache.gc();
+              cache.modify({
+                fields: {
+                  stt_accessToken(tokens = []) {
+                    const newRefs = data.insert_stt_accessToken.returning.map(
+                      (t) => {
+                        return cache.writeFragment({
+                          data: t,
+                          fragment: gql`
+                            fragment token on stt_accessToken {
+                              id
+                            }
+                          `,
+                        });
+                      }
+                    );
+                    return [...tokens, ...newRefs];
+                  },
+                },
+              });
+            },
           }).catch((e) =>
             setError(e, { ref: "UPDATE", params: ["share list"] })
           );
-
-          //   return updatePrivacySettings({
-          //     variables: {
-          //       privacyStatus,
-          //       newTokens: tokens.filter((t) => !t.id),
-          //       savedTokenIds: tokens.filter((t) => t.id).map((t) => t.id),
-          //       userId: dbUser.id,
-          //     },
-          // update(cache, { data }) {
-          //   cache.modify({
-          //     fields: {
-          //       stt_version(versions = []) {
-          //         return versions.map(
-          //           (v) => (v.privacyStatus = privacyStatus)
-          //         );
-          //       },
-          //     },
-          //   });
-          //   formBag.resetForm({
-          //     values: PrivacySettingsForm.cast({
-          //       privacyStatus: privacyStatus,
-          //       //   TODO token response
-          //       tokens: tokens,
-          //     }),
-          //   });
-          // },
-          //   });
         }}
         validationSchema={PrivacySettingsForm}
         validateOnChange={false}
@@ -120,6 +127,7 @@ export default function ManagePrivacy({ dbUser }) {
               <div className="mt-6">
                 <AccessListItems
                   regeneratePublicToken={regeneratePublicTokenHandler}
+                  savedPublicStatus={data.stt_version[0].privacyStatus}
                   isPublic={props.values.privacyStatus === "PUBLIC"}
                   items={props.values.tokens}
                   removeAccessToken={(token) => {
@@ -133,6 +141,7 @@ export default function ManagePrivacy({ dbUser }) {
                   <AccessListForm
                     formProps={{ ...props }}
                     addNewToken={() => {
+                      console.log(props.values.newToken);
                       props.setFieldValue(
                         "tokens",
                         props.values.tokens.concat({ ...props.values.newToken })

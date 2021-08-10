@@ -7,7 +7,7 @@ import { createToastMessage } from "~/lib/toast";
 
 export function useCustomQuery(
   gql,
-  { variables = {}, context = {}, userId = false }
+  { variables = {}, context = {}, userId = false, fetchPolicy = "cache-first" }
 ) {
   const history = useHistory();
   const { authState } = useContext(AuthContext);
@@ -16,7 +16,11 @@ export function useCustomQuery(
   if (userId) {
     variables.userId = authState.user.id;
   }
-  const { data, loading, error } = useQuery(gql, { variables, context });
+  const { data, loading, error } = useQuery(gql, {
+    variables,
+    context,
+    fetchPolicy,
+  });
 
   function setToastMessage(type, ref, timeout, blockPage) {
     updateUiState(
