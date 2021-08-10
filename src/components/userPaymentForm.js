@@ -11,6 +11,7 @@ export default function UserPaymentForm({
   subscriptionStatus,
   stripeCustomerId,
   closeModal,
+  asModal = true,
 }) {
   const [subscriptionOptions, setSubscriptionOptions] = useState([]);
   const [priceId, setPriceId] = useState(null);
@@ -20,7 +21,7 @@ export default function UserPaymentForm({
 
   useEffect(async () => {
     if (data) {
-      setSubscriptionOptions(data.subscriptions_get_prices);
+      setSubscriptionOptions(data.action_subscriptions_get_prices);
     }
   }, [data]);
 
@@ -38,12 +39,8 @@ export default function UserPaymentForm({
     }
   }
 
-  return (
-    <Modal
-      size="sm"
-      isOpen={true}
-      close={intent === "MANUAL" ? closeModal : null}
-    >
+  const inner = (
+    <>
       <div>
         <h1 className="text-xl">
           {type === "CHOOSE_PLAN" ? "Pick a plan" : "Manage your subscription"}
@@ -66,7 +63,7 @@ export default function UserPaymentForm({
         </div>
       )}
       <form
-        action={`${process.env.REACT_APP_FUNCTIONS_SERVER_URL}/actions/subscriptions/checkout`}
+        action={`${process.env.REACT_APP_FUNCTIONS_SERVER_URL}/actions/public/stripe/checkout`}
         method="POST"
         id="user-payment-form"
       >
@@ -86,6 +83,20 @@ export default function UserPaymentForm({
           Continue
         </SubmitButton>
       </form>
+    </>
+  );
+
+  if (!asModal) {
+    return inner;
+  }
+
+  return (
+    <Modal
+      size="sm"
+      isOpen={true}
+      close={intent === "MANUAL" ? closeModal : null}
+    >
+      {inner}
     </Modal>
   );
 }

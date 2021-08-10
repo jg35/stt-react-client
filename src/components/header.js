@@ -20,7 +20,7 @@ export default function Header({ minimal = false }) {
         <NavLink to="/">
           <Svg name="logo" />
         </NavLink>
-        {!minimal && (
+        {!minimal && dbUser && (
           <nav className="ml-3 flex" id="nav-items">
             <NavLink
               className="nav-link"
@@ -40,7 +40,7 @@ export default function Header({ minimal = false }) {
             </NavLink>
             <NavLink
               className="nav-link"
-              to="/publish"
+              to={`/publish${dbUser.versions.length === 1 && "/new"}`}
               activeClassName="nav-link-active"
             >
               Publish

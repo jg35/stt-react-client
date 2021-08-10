@@ -23,7 +23,12 @@ export default function Publish() {
 
   useEffect(() => {
     if (data) {
-      setVersions(data.stt_version.filter((v) => v.generated));
+      const published = data.stt_version.filter((v) => v.generated);
+      if (!published.length) {
+        history.push("/publish/new");
+      } else {
+        setVersions(data.stt_version.filter((v) => v.generated));
+      }
     }
   }, [data]);
 

@@ -22,7 +22,6 @@ export const onAuthStateChange = (syncUserMutation, authState) => {
       if (user) {
         fbAuthUser = user;
         if (authState.emailForm) {
-          console.log(authState.emailForm);
           await user.updateProfile({
             displayName: `${authState.emailForm.firstName} ${authState.emailForm.lastName}`,
           });

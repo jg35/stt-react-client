@@ -12,6 +12,9 @@ export const FETCH_USER = gql`
       subscriptionStatus
       subscriptionMeta
       publicHandle
+      versions {
+        id
+      }
     }
   }
 `;

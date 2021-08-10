@@ -35,53 +35,62 @@ export default function Settings() {
       case "ACCOUNT":
         return <ManageAccount dbUser={dbUser} />;
       case "PRIVACY":
+        if (dbUser.versions.length === 1) {
+          window.location.hash = "";
+          return <ManageUser dbUser={dbUser} />;
+        }
         return <ManagePrivacy dbUser={dbUser} />;
     }
   }
   return (
-    <Page minimal>
-      <div className="flex h-full" style={{ maxWidth: "1024px" }}>
-        <div
-          className="w-3/12 pr-2"
-          style={{ height: "fit-content", maxWidth: "275px" }}
-        >
-          <Card css="p-2">
-            <TabLink
-              activeTab={activeTab}
-              setActiveTab={setActiveTab}
-              tab="SETTINGS"
-              title="General"
-              description="The way things work and feel"
-            />
+    dbUser && (
+      <Page minimal>
+        <div className="flex h-full" style={{ maxWidth: "1024px" }}>
+          <div
+            className="w-3/12 pr-2"
+            style={{ height: "fit-content", maxWidth: "275px" }}
+          >
+            <Card css="p-2">
+              <TabLink
+                activeTab={activeTab}
+                setActiveTab={setActiveTab}
+                tab="SETTINGS"
+                title="General"
+                description="The way things work and feel"
+              />
 
-            <TabLink
-              activeTab={activeTab}
-              setActiveTab={setActiveTab}
-              tab="PRIVACY"
-              title="Privacy"
-              description="Manage access to your book"
-            />
+              {dbUser.versions.length > 1 && (
+                <TabLink
+                  activeTab={activeTab}
+                  setActiveTab={setActiveTab}
+                  tab="PRIVACY"
+                  title="Privacy"
+                  description="Manage access to your book"
+                />
+              )}
 
-            <TabLink
-              activeTab={activeTab}
-              setActiveTab={setActiveTab}
-              tab="BILLING"
-              title="Billing"
-              description="Manage your subscription"
-            />
-            <TabLink
-              activeTab={activeTab}
-              setActiveTab={setActiveTab}
-              tab="ACCOUNT"
-              title="Account"
-              description="Manage your account"
-            />
-          </Card>
+              <TabLink
+                activeTab={activeTab}
+                setActiveTab={setActiveTab}
+                tab="BILLING"
+                title="Billing"
+                description="Manage your subscription"
+              />
+              <TabLink
+                activeTab={activeTab}
+                setActiveTab={setActiveTab}
+                tab="ACCOUNT"
+                title="Account"
+                description="Manage your account"
+              />
+            </Card>
+          </div>
+          <div className="pl-2 w-9/12">
+            <Card>{renderActiveTab()}</Card>
+          </div>
         </div>
-        <div className="pl-2 w-9/12">
-          {dbUser && <Card>{renderActiveTab()}</Card>}
-        </div>
-      </div>
-    </Page>
+      </Page>
+    )
   );
+  return null;
 }

@@ -1,16 +1,16 @@
 import Button from "~/components/button";
 import { DateTime } from "luxon";
+import UserPaymentForm from "~/components/userPaymentForm";
 
 function buildSummary(subscriptionStatus, subscriptionMeta) {
-  const planName = subscriptionMeta.interval + "ly";
-  const nextPaymentDate = `${DateTime.fromSeconds(
-    subscriptionMeta.periodEnd
-  ).toFormat("dd MMMM yyyy")}`;
-
   let planMessage;
   switch (subscriptionStatus) {
     // Other statuses PAYMENT_FAILED / CANCELLED will be handled by global modal
     case "ACTIVE":
+      const planName = subscriptionMeta.interval + "ly";
+      const nextPaymentDate = `${DateTime.fromSeconds(
+        subscriptionMeta.periodEnd
+      ).toFormat("dd MMMM yyyy")}`;
       planMessage = (
         <p>
           You're on our <span className="font-medium">{planName}</span> plan.
@@ -28,6 +28,13 @@ function buildSummary(subscriptionStatus, subscriptionMeta) {
         </p>
       );
       break;
+    case "IN_TRIAL":
+      planMessage = (
+        <p>
+          You're on our free trial. If you would like to continue using Stories
+          To Tell, please follow the instructions below.
+        </p>
+      );
   }
   return (
     <>
@@ -54,13 +61,23 @@ export default function ManageStripeCustomer({
       <p className="my-4">
         {buildSummary(subscriptionStatus, subscriptionMeta)}
       </p>
-      <form
-        action={`${process.env.REACT_APP_FUNCTIONS_SERVER_URL}/actions/subscriptions/portal`}
-        method="POST"
-      >
-        <input type="hidden" name="customerId" value={stripeCustomerId} />
-        <Button type="submit">Manage my subscription</Button>
-      </form>
+      {subscriptionStatus === "IN_TRIAL" ? (
+        <UserPaymentForm
+          intent="MANUAL"
+          type="CHOOSE_PLAN"
+          subscriptionStatus={subscriptionStatus}
+          stripeCustomerId={stripeCustomerId}
+          asModal={false}
+        />
+      ) : (
+        <form
+          action={`${process.env.REACT_APP_FUNCTIONS_SERVER_URL}/actions/public/stripe/portal`}
+          method="POST"
+        >
+          <input type="hidden" name="customerId" value={stripeCustomerId} />
+          <Button type="submit">Manage my subscription</Button>
+        </form>
+      )}
     </div>
   );
 }

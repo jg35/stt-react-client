@@ -86,9 +86,9 @@ export const ThemeSchema = Yup.object().shape({
 export const VersionSchema = Yup.object().shape({
   id: Yup.number(),
   theme: ThemeSchema,
-  title: Yup.string().required(),
-  author: Yup.string().required(),
-  publishedAt: Yup.string().required("Publication date is required"),
+  title: Yup.string().ensure().required(),
+  author: Yup.string().ensure().required(),
+  publishedAt: Yup.string().ensure().required("Publication date is required"),
   privacyStatus: Yup.string().default("PRIVATE"),
 });
 
