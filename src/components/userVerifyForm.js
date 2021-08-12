@@ -8,7 +8,7 @@ export default function UserVerifyForm() {
   const { setSuccess } = useToastMessage();
   const history = useHistory();
   return (
-    <Modal size="sm" isOpen={true} close={() => console.log("cannot close")}>
+    <Modal size="sm" isOpen={true} canClose={false}>
       <div>
         <h1 className="text-xl">
           Please check your email to verify your account

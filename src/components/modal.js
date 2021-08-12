@@ -8,17 +8,20 @@ export default function Modal({
   isOpen,
   children,
   close,
+  canClose = true,
   formIsDirty = false,
 }) {
   const [showCloseWarning, setShowCloseWarning] = useState(false);
   const modal = useRef();
   const onClickOutside = useCallback(() => {
-    if (formIsDirty) {
-      setShowCloseWarning(true);
-    } else {
-      close(true);
+    if (canClose) {
+      if (formIsDirty) {
+        setShowCloseWarning(true);
+      } else {
+        close(true);
+      }
     }
-  }, [formIsDirty]);
+  }, [formIsDirty, canClose, close]);
   useClickOutside(modal, onClickOutside);
 
   useEffect(() => {

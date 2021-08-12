@@ -94,7 +94,8 @@ export default function UserPaymentForm({
     <Modal
       size="sm"
       isOpen={true}
-      close={intent === "MANUAL" ? closeModal : null}
+      canClose={intent === "MANUAL"}
+      close={closeModal}
     >
       {inner}
     </Modal>
