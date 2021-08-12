@@ -13,7 +13,9 @@ import GlobalCoverControls from "~/components/publish/globalCoverControls";
 
 export default function CoverEditorForm({ values, setFieldValue }) {
   const cover = values.theme.cover;
-  const signedImageUrl = useGetSignedImageUrl(cover.image + "-master");
+  const signedImageUrl = useGetSignedImageUrl(
+    cover.image ? cover.image + "-master" : null
+  );
   const { uiState, updateUiState } = useContext(UIContext);
   const coverContainerRef = useRef(null);
 

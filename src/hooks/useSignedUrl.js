@@ -12,24 +12,26 @@ export function useGetSignedImageUrl(path) {
   const [getSignedUrls] = useMutation(ACTION_S3_GET_SIGNED_URL);
 
   useEffect(() => {
-    if (uiState.signedUrls[path]) {
-      setUrl(uiState.signedUrls[path]);
-    } else {
-      getSignedUrls({
-        variables: {
-          paths: path,
-        },
-      }).then(({ data }) => {
-        const signedUrls = { ...uiState.signedUrls };
-        data.action_s3_get_signed_url.forEach(
-          (url) =>
-            (signedUrls[url.objectPath] = {
-              signedUrl: url.signedUrl,
-              expires: url.expires,
-            })
-        );
-        updateUiState({ signedUrls });
-      });
+    if (path) {
+      if (uiState.signedUrls[path]) {
+        setUrl(uiState.signedUrls[path]);
+      } else {
+        getSignedUrls({
+          variables: {
+            paths: path,
+          },
+        }).then(({ data }) => {
+          const signedUrls = { ...uiState.signedUrls };
+          data.action_s3_get_signed_url.forEach(
+            (url) =>
+              (signedUrls[url.objectPath] = {
+                signedUrl: url.signedUrl,
+                expires: url.expires,
+              })
+          );
+          updateUiState({ signedUrls });
+        });
+      }
     }
   }, [path, uiState.signedUrls]);
 

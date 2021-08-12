@@ -1,4 +1,3 @@
-import Image from "~/components/image";
 import imageSizes from "~/lib/imageSizes";
 import { useGetSignedImageUrl } from "~/hooks/useSignedUrl";
 

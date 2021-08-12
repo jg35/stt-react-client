@@ -34,7 +34,9 @@ export default function UppyDashboard({
     authState: { token },
   } = useContext(AuthContext);
   const { uiState, updateUiState } = useContext(UIContext);
-  const signedUrl = useGetSignedImageUrl(mediaUrl + "-master");
+  const signedUrl = useGetSignedImageUrl(
+    mediaUrl ? mediaUrl + "-master" : null
+  );
   const [getSignedUrls] = useMutation(ACTION_S3_GET_SIGNED_URL);
   const uppy = useUppy(() => {
     return (
@@ -84,15 +86,15 @@ export default function UppyDashboard({
             onChange(path);
           });
         })
-        .on("dashboard:file-edit-start", () => {
-          setTimeout(() => {
-            const el = document.querySelector(".uppy-Dashboard-FileCard-edit");
-            if (el) {
-              // console.log("el", el);
-              el.click();
-            }
-          });
-        })
+      // .on("dashboard:file-edit-start", () => {
+      //   setTimeout(() => {
+      //     const el = document.querySelector(".uppy-Dashboard-FileCard-edit");
+      //     if (el) {
+      //       // console.log("el", el);
+      //       el.click();
+      //     }
+      //   });
+      // })
     );
   });
 
@@ -141,12 +143,12 @@ export default function UppyDashboard({
         <DashboardModal
           open={true}
           uppy={uppy}
-          autoOpenFileEditor
+          // autoOpenFileEditor
           proudlyDisplayPoweredByUppy={false}
           hideProgressAfterFinish
           showLinkToFileUploadResult={false}
           plugins={["ImageEditor"]}
-          animateOpenClose={false}
+          // animateOpenClose={false}
           closeModalOnClickOutside
           onRequestClose={() => {
             if (onClose) {
@@ -164,12 +166,12 @@ export default function UppyDashboard({
       <div id="uppy-dashboard" className={error && "uppy-validate-error"}>
         <Dashboard
           uppy={uppy}
-          autoOpenFileEditor
+          // autoOpenFileEditor
           proudlyDisplayPoweredByUppy={false}
           hideProgressAfterFinish
           showLinkToFileUploadResult={false}
           plugins={["ImageEditor"]}
-          animateOpenClose={false}
+          // animateOpenClose={false}
         />
       </div>
     )
