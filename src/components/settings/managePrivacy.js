@@ -4,6 +4,7 @@ import AccessListForm from "~/components/accessList/accessListForm";
 import ManagePrivacyStatus from "~/components/accessList/managePrivacyStatus";
 import SubmitButton from "~/components/submitButton";
 import AccessListItems from "~/components/accessList/accessListItems";
+import FormHandleAvailabilityInput from "~/components/formHandleAvailabilityInput";
 
 import { Formik } from "formik";
 import { useMutation, gql } from "@apollo/client";
@@ -61,13 +62,15 @@ export default function ManagePrivacy({ dbUser }) {
       <Formik
         initialValues={PrivacySettingsForm.cast({
           privacyStatus: data.stt_version[0].privacyStatus,
+          publicHandle: data.stt_user[0].publicHandle,
           tokens: data.stt_accessToken,
           newToken: AccessTokenPrivateSchema.cast(),
         })}
         enableReinitialize
-        onSubmit={({ privacyStatus, tokens }, formBag) => {
+        onSubmit={({ privacyStatus, tokens, publicHandle }, formBag) => {
           return updatePrivacySettings({
             variables: {
+              publicHandle: publicHandle || null,
               privacyStatus,
               newTokens: tokens
                 .filter((t) => !t.id)
@@ -118,26 +121,40 @@ export default function ManagePrivacy({ dbUser }) {
         {(props) => {
           return (
             <form onSubmit={props.handleSubmit} id="manage-privacy-form">
+              <div className="mb-6">
+                <FormHandleAvailabilityInput
+                  value={props.values.publicHandle}
+                  error={props.errors.publicHandle}
+                  handleBlur={props.handleBlur}
+                  handleChange={props.handleChange}
+                  setFieldError={props.setFieldError}
+                  savedHandle={data.stt_user[0].publicHandle}
+                />
+              </div>
               <ManagePrivacyStatus
                 setPrivacyStatus={(status) =>
                   props.setFieldValue("privacyStatus", status)
                 }
                 privacyStatus={props.values.privacyStatus}
               />
-              <div className="mt-6">
-                <AccessListItems
-                  regeneratePublicToken={regeneratePublicTokenHandler}
-                  savedPublicStatus={data.stt_version[0].privacyStatus}
-                  isPublic={props.values.privacyStatus === "PUBLIC"}
-                  items={props.values.tokens}
-                  removeAccessToken={(token) => {
-                    props.setFieldValue(
-                      "tokens",
-                      props.values.tokens.filter((t) => t.email !== token.email)
-                    );
-                  }}
-                />
-                {props.values.privacyStatus === "PRIVATE" && (
+
+              {props.values.privacyStatus === "PRIVATE" && (
+                <div className="mt-6">
+                  <AccessListItems
+                    regeneratePublicToken={regeneratePublicTokenHandler}
+                    savedPublicStatus={data.stt_version[0].privacyStatus}
+                    isPublic={props.values.privacyStatus === "PUBLIC"}
+                    items={props.values.tokens}
+                    removeAccessToken={(token) => {
+                      props.setFieldValue(
+                        "tokens",
+                        props.values.tokens.filter(
+                          (t) => t.email !== token.email
+                        )
+                      );
+                    }}
+                  />
+
                   <AccessListForm
                     formProps={{ ...props }}
                     addNewToken={() => {
@@ -152,8 +169,8 @@ export default function ManagePrivacy({ dbUser }) {
                       );
                     }}
                   />
-                )}
-              </div>
+                </div>
+              )}
               <div className="flex justify-end pt-6 mt-6 border-t border-lightGray">
                 <SubmitButton
                   disabled={!props.dirty}

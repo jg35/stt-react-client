@@ -8,6 +8,7 @@ export const AccessTokenPrivateSchema = Yup.object().shape({
 });
 
 export const PrivacySettingsForm = Yup.object().shape({
+  publicHandle: Yup.string(),
   privacyStatus: Yup.string().default("PRIVATE"),
   tokens: Yup.array().of(AccessTokenPrivateSchema).default([]),
   newToken: AccessTokenPrivateSchema,

@@ -16,7 +16,7 @@ export default function AccessListItems({
       return (
         <span>
           {itemLength > 0 ? itemLength : "No"} reader
-          {itemLength !== 1 && "s"} will be able to view your book
+          {itemLength !== 1 && "s"} have access to your book
         </span>
       );
     }
@@ -24,9 +24,18 @@ export default function AccessListItems({
   }
 
   return (
-    <div className="p-2">
-      <h1 className="font-medium text-lg mb-6">{getStatus(items.length)}</h1>
+    <div>
+      <label className="mb-2 text-lg font-medium block">Readers</label>
+      <p className="mb-4 block">
+        When your book is private, readers will gain access by enterring their
+        email and login token.
+      </p>
       <ul className="mb-8">
+        <li className="flex justify-between py-2 font-medium items-center">
+          <span className="w-36">Email</span>
+          <span className="w-36">Login token</span>
+          <span className="w-36"></span>
+        </li>
         {items
           .filter((f) =>
             isPublic ? f.type === "PUBLIC" : f.type === "PRIVATE"
@@ -37,18 +46,12 @@ export default function AccessListItems({
                 className="flex justify-between p-2 shadow mb-4 rounded items-center bg-offWhite"
                 key={item.id || item.email}
               >
-                {!isPublic && <span className="w-36">{item.email}</span>}
+                {!isPublic && (
+                  <span className="w-36 truncate">{item.email}</span>
+                )}
 
-                <a
-                  target="_blank"
-                  href={`${process.env.REACT_APP_READER_VIEW_URL}/${item.token}`}
-                  className="truncate text-blue hover:text-black"
-                >
-                  {isPublic
-                    ? `${process.env.REACT_APP_READER_VIEW_URL}/${item.token}`
-                    : "Reader access link"}
-                </a>
-                <div className="w-36">
+                <span className="w-36 truncate"> {item.token}</span>
+                <div className="w-36 flex justify-end">
                   {!isPublic ? (
                     <Button onClick={() => removeAccessToken(item)}>
                       Remove access

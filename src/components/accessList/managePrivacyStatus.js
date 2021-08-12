@@ -19,24 +19,27 @@ export default function ManagePrivacyStatus({
   setPrivacyStatus,
 }) {
   return (
-    <div className="flex">
-      <div className="w-1/2 pr-2">
-        <PrivacyOption
-          onClick={() => setPrivacyStatus("PUBLIC")}
-          active={privacyStatus === "PUBLIC"}
-          title="Public 🌎 "
-          description="Your book will be viewable by anyone that has the link. You can regenerate the link in your settings."
-        />
-      </div>
+    <>
+      <label className="mb-2 block font-medium text-lg">Privacy status</label>
+      <div className="flex">
+        <div className="w-1/2 pr-2">
+          <PrivacyOption
+            onClick={() => setPrivacyStatus("PUBLIC")}
+            active={privacyStatus === "PUBLIC"}
+            title="Public 🌎 "
+            description="Your book will be viewable by anyone that has the link. You can regenerate the link in your settings."
+          />
+        </div>
 
-      <div className="w-1/2 pl-2">
-        <PrivacyOption
-          onClick={() => setPrivacyStatus("PRIVATE")}
-          active={privacyStatus === "PRIVATE"}
-          title="Private 🔒"
-          description="A unique link will be generated for each email you add to your share list."
-        />
+        <div className="w-1/2 pl-2">
+          <PrivacyOption
+            onClick={() => setPrivacyStatus("PRIVATE")}
+            active={privacyStatus === "PRIVATE"}
+            title="Private 🔒"
+            description="A unique link will be generated for each email you add to your share list."
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 }

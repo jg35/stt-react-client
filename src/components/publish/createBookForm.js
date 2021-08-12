@@ -37,13 +37,21 @@ export default function PublishOptionsForm({
       </div>
 
       {!savedHandle && (
-        <FormHandleAvailabilityInput
-          value={values.publicHandle}
-          error={errors.publicHandle}
-          handleBlur={handleBlur}
-          handleChange={handleChange}
-          setFieldError={setFieldError}
-        />
+        <div className="mt-6">
+          <p className="text-xl font-medium">URL handle</p>
+          <p className="text-lg mb-4 ">
+            Now let's set your handle. This will form the web address where
+            readers can access your book.
+          </p>
+          <FormHandleAvailabilityInput
+            value={values.publicHandle}
+            error={errors.publicHandle}
+            handleBlur={handleBlur}
+            handleChange={handleChange}
+            setFieldError={setFieldError}
+            savedHandle={savedHandle}
+          />
+        </div>
       )}
 
       <div className="mx-auto mt-6">

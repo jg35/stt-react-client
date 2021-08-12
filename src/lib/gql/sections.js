@@ -47,6 +47,10 @@ export const SECTION_FETCH_PRIVACY_SETTINGS = gql`
       updatedAt
       type
     }
+    stt_user(where: { id: { _eq: $userId } }) {
+      id
+      publicHandle
+    }
   }
 `;
 
@@ -54,9 +58,20 @@ export const SECTION_UPDATE_PRIVACY_SETTINGS = gql`
   mutation (
     $userId: String!
     $privacyStatus: String!
+    $publicHandle: String
     $savedTokenIds: [Int!]
     $newTokens: [stt_accessToken_insert_input!]!
   ) {
+    update_stt_user_by_pk(
+      pk_columns: { id: $userId }
+      _set: { publicHandle: $publicHandle }
+    ) {
+      location
+      dob
+      onboarding
+      publicHandle
+      deleteAt
+    }
     update_stt_version(
       where: { userId: { _eq: $userId } }
       _set: { privacyStatus: $privacyStatus }
