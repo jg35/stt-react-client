@@ -26,12 +26,16 @@ export default function EmailFormWrapper({ submit, authView, setAuthView }) {
         initialValues={getSchema().cast()}
         onSubmit={(form, formBag) => {
           return submit(form).catch((err) => {
+            console.log(err);
             switch (err.code) {
               case "auth/user-not-found":
                 formBag.setFieldError(
                   "email",
                   "No user was found with that email addresss"
                 );
+                break;
+              case "auth/email-already-in-use":
+                formBag.setFieldError("email", "That email is already in use");
                 break;
               case "auth/too-many-requests":
                 formBag.setFieldError(

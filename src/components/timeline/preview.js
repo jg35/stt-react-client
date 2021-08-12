@@ -56,7 +56,7 @@ export default function Preview({ fragments }) {
                       if (frag.type === "CHAPTER") {
                         return (
                           <h1
-                            className="cursor-pointer"
+                            className="preview-element cursor-pointer"
                             key={index}
                             onClick={() => fragmentScrollHandler(frag.id)}
                             data-preview-fragment-id={frag.id}
@@ -76,7 +76,7 @@ export default function Preview({ fragments }) {
                               className="min-w-full shadow"
                               data-preview-fragment-id={frag.id}
                             />
-                            <figcaption className="cursor-pointer">
+                            <figcaption className="preview-element cursor-pointer">
                               {frag.mediaCaption}
                             </figcaption>
                           </figure>
@@ -84,7 +84,7 @@ export default function Preview({ fragments }) {
                       } else {
                         return (
                           <p
-                            className="cursor-pointer"
+                            className="preview-element cursor-pointer"
                             key={index}
                             onClick={() => fragmentScrollHandler(frag.id)}
                             data-preview-fragment-id={frag.id}

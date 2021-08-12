@@ -23,7 +23,7 @@ export default function useToastMessage() {
 
   return {
     setError: (error, message, closeManually = false) => {
-      if (error.graphQLErrors) {
+      if (error && error.graphQLErrors) {
         console.log(error.graphQLErrors);
         // Here we check the error code, incase we need to handle differently than showing a message
         const errorCode = error.graphQLErrors[0].extensions.code;

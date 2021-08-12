@@ -1,5 +1,4 @@
 import firebase from "firebase";
-import { authStateVar } from "~/lib/apollo";
 const google = new firebase.auth.GoogleAuthProvider();
 const facebook = new firebase.auth.FacebookAuthProvider();
 
@@ -37,9 +36,8 @@ export const sendResetPasswordEmail = async ({ email }) => {
 
 export const signOut = async () => {
   try {
-    authStateVar({ status: "loading" });
     await firebase.auth().signOut();
-    authStateVar({ status: "out", user: null, dbUser: null, token: "" });
+    window.location.reload();
   } catch (error) {
     console.log(error);
   }

@@ -12,6 +12,7 @@ export const FETCH_USER = gql`
       subscriptionStatus
       subscriptionMeta
       publicHandle
+      deleteAt
       versions {
         id
       }
@@ -26,6 +27,7 @@ export const UPDATE_USER = gql`
       dob
       onboarding
       publicHandle
+      deleteAt
     }
   }
 `;

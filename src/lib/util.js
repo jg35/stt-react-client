@@ -37,6 +37,10 @@ export const renderVersionDate = (date) => {
   return DateTime.fromISO(date).toFormat("d MMM yyyy");
 };
 
+export const renderInformalDate = (date) => {
+  return DateTime.fromISO(date).toFormat("cccc d MMMM");
+};
+
 export const buildGoogleFontFaceString = (selectedFonts) => {
   return selectedFonts
     .map((font) => {

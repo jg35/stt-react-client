@@ -159,7 +159,12 @@ export default function CaptureHeader({ init }) {
         <div className="flex">
           <Button
             css="ml-3 items-center font-medium px-4 w-24"
-            onClick={() => updateUiState(makeCreateUserEventForm(), false)}
+            onClick={() =>
+              updateUiState(
+                makeCreateUserEventForm({}, { revealAfterCreate: true }),
+                false
+              )
+            }
           >
             Add event
           </Button>

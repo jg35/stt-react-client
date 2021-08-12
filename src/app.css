@@ -302,18 +302,18 @@ input[type="range"]:focus::-webkit-slider-runnable-track {
   @apply px-6;
 }
 
-.preview-container h1,
-.preview-container p,
-.preview-container figcaption {
+.preview-element,
+.preview-element,
+.preview-element {
   font-family: "Source Serif Pro", serif;
   line-height: 1.4;
 }
 
-.preview-container h1 {
+h1.preview-element {
   @apply text-3xl text-center;
   margin: 3em 0;
 }
-.preview-container p {
+p.preview-element {
   @apply text-lg whitespace-pre-wrap;
   margin-bottom: 2em;
 }
@@ -321,7 +321,7 @@ input[type="range"]:focus::-webkit-slider-runnable-track {
 .preview-container figure {
   @apply my-10;
 }
-.preview-container figcaption {
+figcaption.preview-element {
   @apply text-center text-lg whitespace-pre-wrap;
   margin: 0.5em 0 1em;
 }

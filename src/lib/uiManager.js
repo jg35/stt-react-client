@@ -53,11 +53,12 @@ export function makeCreateFragmentForm(initialValue = {}, options = {}) {
   };
 }
 
-export function makeCreateUserEventForm(initialValue = {}) {
+export function makeCreateUserEventForm(initialValue = {}, options = {}) {
   return {
     capture: {
       showModal: true,
       item: EventSchema.cast(initialValue),
+      revealAfterCreate: options.revealAfterCreate || false,
     },
   };
 }

@@ -15,6 +15,8 @@ export const FETCH_TIMELINE_VIEW = gql`
       id
       title
       date
+      createdAt
+      updatedAt
       userId
     }
     stt_fragment(where: { userId: { _eq: $userId } }) {
@@ -38,6 +40,7 @@ export const FETCH_TIMELINE_VIEW = gql`
       dob
       onboarding
       publicHandle
+      deleteAt
     }
     stt_question {
       id

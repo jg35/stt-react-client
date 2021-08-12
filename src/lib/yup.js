@@ -106,6 +106,10 @@ export const EmailForgotSchema = Yup.object().shape({
 export const EmailLoginSchema = Yup.object().shape({
   email: Yup.string().email().ensure().required(),
   password: Yup.string().ensure().required(),
+  // .matches(
+  //   "^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$",
+  //   "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+  // ),
 });
 
 export const EmailCreateSchema = Yup.object().shape({
@@ -113,4 +117,14 @@ export const EmailCreateSchema = Yup.object().shape({
   lastName: Yup.string().ensure().required(),
   email: Yup.string().email().ensure().required(),
   password: Yup.string().ensure().required(),
+});
+
+export const DeleteAccountSchema = Yup.object().shape({
+  confirm: Yup.string()
+    .ensure()
+    .required("Does not match above expression")
+    .matches(
+      /Delete my account and all of my data/,
+      "Does not match above expression"
+    ),
 });

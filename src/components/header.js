@@ -40,7 +40,7 @@ export default function Header({ minimal = false }) {
             </NavLink>
             <NavLink
               className="nav-link"
-              to={`/publish${dbUser.versions.length === 1 && "/new"}`}
+              to={`/publish${dbUser.versions.length === 1 ? "/new" : ""}`}
               activeClassName="nav-link-active"
             >
               Publish

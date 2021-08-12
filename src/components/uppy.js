@@ -52,7 +52,7 @@ export default function UppyDashboard({
       })
         .use(XHRUpload, {
           id: "XHR",
-          endpoint: `${process.env.REACT_APP_PROCESSING_SERVER_URL}/images/upload`,
+          endpoint: `${process.env.REACT_APP_PROCESSING_SERVER_URL}/actions/user/images/upload`,
           formData: true,
           fieldName: "uppy",
           method: "post",

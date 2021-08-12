@@ -9,7 +9,9 @@ export default function PhotoFragment({ fragment }) {
         className="w-full shadow"
         data-preview-fragment-id={fragment.id}
       />
-      <figcaption>{fragment.mediaCaption}</figcaption>
+      <figcaption className="preview-element">
+        {fragment.mediaCaption}
+      </figcaption>
     </figure>
   );
 }

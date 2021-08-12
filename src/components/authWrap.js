@@ -5,8 +5,10 @@ import {
   FETCH_LOCAL_AUTH_STATE,
   FETCH_USER,
   ACTION_SYNC_USER,
+  UPDATE_USER,
 } from "~/lib/gql";
 import { onAuthStateChange } from "~/lib/firebase";
+import useToastMessage from "~/hooks/useToastMessage";
 
 import AccessControlModals from "~/components/accessControlModals";
 
@@ -32,6 +34,8 @@ export default function AuthWrap({ children }) {
   const { data } = useQuery(FETCH_LOCAL_AUTH_STATE);
   const [getUser, { data: hasuraUser }] = useLazyQuery(FETCH_USER);
   const [syncUser] = useMutation(ACTION_SYNC_USER);
+  const [updateUser] = useMutation(UPDATE_USER);
+  const { setSuccess } = useToastMessage();
 
   const [authState, setAuthState] = useState(handleSetAuth(data.authState));
   let isLogin = useRouteMatch("/login");
@@ -53,6 +57,22 @@ export default function AuthWrap({ children }) {
           authState
         )
       );
+
+      if (hasuraUser.stt_user_by_pk.deleteAt) {
+        updateUser({
+          variables: {
+            userId: authState.user.id,
+            data: {
+              deleteAt: null,
+            },
+          },
+        }).then(() => {
+          setSuccess({
+            ref: "RESTORED_ACCOUNT",
+            params: [authState.user.displayName.split(" ")[0]],
+          });
+        });
+      }
     }
   }, [hasuraUser]);
 

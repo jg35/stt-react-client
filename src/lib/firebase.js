@@ -10,8 +10,9 @@ let fbAuthUser;
 
 export const resendEmailVerification = () => {
   if (fbAuthUser) {
-    fbAuthUser.sendEmailVerification();
+    return fbAuthUser.sendEmailVerification();
   }
+  return Promise.reject();
 };
 
 export const onAuthStateChange = (syncUserMutation, authState) => {

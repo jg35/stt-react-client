@@ -9,8 +9,10 @@ import { AuthContext } from "~/components/authWrap";
 
 import EmailFormWrapper from "~/components/auth/emailFormWrapper";
 import OAuthLogin from "~/components/auth/oAuthLogin";
+import useToastMessage from "~/hooks/useToastMessage";
 
 export default function Login() {
+  const { setSuccess } = useToastMessage();
   const [authView, setAuthView] = useState("LOGIN");
   const history = useHistory();
   const {
@@ -21,21 +23,29 @@ export default function Login() {
   function getEmailSubmitHandler() {
     switch (authView) {
       case "LOGIN":
-        return (form) => loginWithEmail(form).then(() => history.push("/"));
+        return (form) =>
+          loginWithEmail(form).then(() => {
+            // setSuccess({ ref: "LOGIN" });
+            history.push("/");
+          });
       case "CREATE_ACCOUNT":
         return (form) => {
-          return new Promise((resolve) => {
+          // Don't resolve promise, as we need to wait until status changes before redirect
+          return new Promise((resolve, reject) => {
             updateAuthState({ emailForm: form });
             setTimeout(() =>
-              createAccountWithEmail(form).then(() => {
-                resolve();
-              })
+              createAccountWithEmail(form)
+                .then()
+                .catch((e) => reject(e))
             );
           });
         };
       case "FORGOT_PASSWORD":
         return (form) =>
-          sendResetPasswordEmail(form).then(() => setAuthView("LOGIN"));
+          sendResetPasswordEmail(form).then(() => {
+            setAuthView("LOGIN");
+            setSuccess({ ref: "SEND_RESET_EMAIL" });
+          });
     }
   }
 

@@ -237,6 +237,8 @@ export function scrollToEvent(eventId = null, smooth = true) {
     timelineEvent = document.querySelector(`div[data-user-event-id]`);
   }
 
+  console.log(eventId, timelineEvent);
+
   const timelineContainer = document.querySelector(
     ".js-timeline-scroll-container"
   );

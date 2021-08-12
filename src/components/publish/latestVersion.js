@@ -8,12 +8,7 @@ import Button from "~/components/button";
 import Svg from "~/components/svg";
 import AccessListStatusButton from "~/components/accessList/accessListStatusButton";
 
-export default function LatestVersion({
-  version,
-  isDeleting,
-  deleteVersion,
-  index,
-}) {
+export default function LatestVersion({ version, deleteVersion, onlyVersion }) {
   return (
     <div>
       <div className="px-2"></div>
@@ -39,9 +34,11 @@ export default function LatestVersion({
             <div>
               <DeleteModal
                 onlyIcon={true}
+                deleteSuccessMessage={
+                  onlyVersion ? "DELETE_VERSION" : "DELETE_LATEST_VERSION"
+                }
                 title="Are you sure you want to delete this version?"
                 deleteHandler={() => deleteVersion(version.id)}
-                isDeleting={isDeleting}
               />
             </div>
           </div>

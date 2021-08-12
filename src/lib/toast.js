@@ -22,6 +22,16 @@ const TOAST_MESSAGES = {
   SUCCESS: {
     CREATE: ([thing]) => `You've successfully created a new ${thing}`,
     UPDATE: ([thing]) => `You've succcesfully updated your ${thing}`,
+    LOGIN: () => `Welcome back`,
+    DELETE_VERSION: () => `Your book was deleted`,
+    DELETE_LATEST_VERSION: () =>
+      `Your book was deleted. Your previously published version will now be visible to readers.`,
+    SEND_RESET_EMAIL: () =>
+      `Please check your email for instructions to reset your password. Once done, continue to login.`,
+    DELETE_ACCOUNT: (deleteDate) =>
+      `Your account is now scheduled for deletion. Login before ${deleteDate} to restore your account.`,
+    RESTORED_ACCOUNT: (userFirstName) =>
+      `Welcome back ${userFirstName}. Your account has now been restored.`,
   },
 };
 

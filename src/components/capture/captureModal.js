@@ -20,7 +20,11 @@ import FormActions from "~/components/capture/formActions";
 import { UIContext } from "~/app";
 import { EventSchema, FragmentSchema } from "~/lib/yup";
 
-export default function CaptureModal({ editView = false, scrollToFragment }) {
+export default function CaptureModal({
+  editView = false,
+  scrollToFragment,
+  scrollToEvent,
+}) {
   const { setError } = useToastMessage();
   const [formTitle, setFormTitle] = useState("");
   const [insertFragment] = useMutation(INSERT_FRAGMENT);
@@ -56,7 +60,7 @@ export default function CaptureModal({ editView = false, scrollToFragment }) {
   }, [questionData, item]);
 
   function closeModal() {
-    updateUiState({ capture: { showModal: false, item: null } });
+    updateUiState({ capture: { showModal: false, item: null } }, false);
   }
 
   function getSchema(type) {
@@ -135,19 +139,21 @@ export default function CaptureModal({ editView = false, scrollToFragment }) {
   }
 
   function saveUserEventHandler(form) {
-    const data = {
-      title: form.title,
-      date: form.date,
-    };
     if (!form.id) {
       return insertUserEvent({
         variables: {
-          data,
+          data: {
+            title: form.title,
+            date: form.date,
+          },
         },
         update(cache, { data }) {
           cache.modify({
             fields: {
               stt_userEvent(userEvents = []) {
+                if (uiState.capture.revealAfterCreate) {
+                  scrollToEvent(data.insert_stt_userEvent_one.id);
+                }
                 const newUserEventRef = cache.writeFragment({
                   data: data.insert_stt_userEvent_one,
                   fragment: gql`
@@ -166,7 +172,10 @@ export default function CaptureModal({ editView = false, scrollToFragment }) {
     } else {
       return updateUserEvent({
         variables: {
-          data,
+          data: {
+            title: form.title,
+            date: form.date,
+          },
           id: form.id,
         },
       }).then(() => closeModal());

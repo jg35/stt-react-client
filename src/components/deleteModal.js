@@ -4,19 +4,26 @@ import Modal from "~/components/modal";
 import Button from "~/components/button";
 import Svg from "~/components/svg";
 import LoadingSpinner from "~/components/loadingSpinner";
+import useToastMessage from "~/hooks/useToastMessage";
 
 export default function DeleteModal({
   iconSize = 24,
   title,
-  isDeleting,
   deleteHandler,
+  deleteSuccessMessage,
   onlyIcon = false,
 }) {
+  const { setError, setSuccess } = useToastMessage();
+  const [isDeleting, setIsDeleting] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
-      <Button minimal onClick={() => setIsOpen(true)}>
+      <Button
+        minimal
+        onClick={() => setIsOpen(true)}
+        css="flex justify-between min-w-full"
+      >
         {!onlyIcon && "Delete"}
         <Svg
           name="delete"
@@ -31,7 +38,25 @@ export default function DeleteModal({
           <div>
             <Button onClick={() => setIsOpen(false)}>Cancel</Button>
             <Button
-              onClick={() => deleteHandler().then(() => setIsOpen(false))}
+              onClick={() => {
+                setIsDeleting(true);
+                deleteHandler()
+                  .then(() => {
+                    setIsOpen(false);
+                    setIsDeleting(false);
+                    if (deleteSuccessMessage) {
+                      setSuccess({
+                        ref: deleteSuccessMessage,
+                      });
+                    }
+                  })
+                  .catch((e) => {
+                    setError(e, {
+                      ref: "DELETE",
+                      params: ["item"],
+                    });
+                  });
+              }}
             >
               {!isDeleting && <span>Delete</span>}
               {isDeleting && <span className="animate-pulse">Deleting...</span>}

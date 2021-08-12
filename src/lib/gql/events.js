@@ -8,6 +8,7 @@ export const INSERT_USER_EVENT = gql`
       date
       createdAt
       updatedAt
+      userId
     }
   }
 `;

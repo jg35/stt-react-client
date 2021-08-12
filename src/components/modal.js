@@ -47,23 +47,21 @@ export default function Modal({
 
   if (isOpen) {
     return (
-      <>
-        <div className="animate-fade-in absolute min-w-full h-full bg-lightestGray left-0 top-0 z-50 bg-opacity-90 flex justify-center items-center p-4">
-          <div
-            ref={modal}
-            className={`relative ${sizeStyles}`}
-            id="capture-form-wrapper"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <Card css="p-6">{children}</Card>
-            <ModalCloseWarning
-              isOpen={showCloseWarning}
-              back={() => setShowCloseWarning(false)}
-              close={close}
-            />
-          </div>
+      <div className="animate-fade-in fixed min-w-full h-full bg-lightestGray left-0 top-0 z-40 bg-opacity-90 flex justify-center items-center p-4">
+        <div
+          ref={modal}
+          className={`relative ${sizeStyles}`}
+          id="capture-form-wrapper"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <Card css="p-6">{children}</Card>
+          <ModalCloseWarning
+            isOpen={showCloseWarning}
+            back={() => setShowCloseWarning(false)}
+            close={close}
+          />
         </div>
-      </>
+      </div>
     );
   }
   return null;

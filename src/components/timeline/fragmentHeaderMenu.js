@@ -9,6 +9,7 @@ import Button from "~/components/button";
 import Svg from "~/components/svg";
 import LoadingSpinner from "~/components/loadingSpinner";
 import useToastMessage from "~/hooks/useToastMessage";
+import DeleteModal from "~/components/deleteModal";
 
 export default function FragmentHeaderMenu({
   fragment,
@@ -73,7 +74,7 @@ export default function FragmentHeaderMenu({
           />
         </Button>
       ),
-      onClick: () => updateUiState(makeEditFragmentForm(fragment)),
+      onClick: () => updateUiState(makeEditFragmentForm(fragment), false),
     });
   }
 
@@ -81,30 +82,11 @@ export default function FragmentHeaderMenu({
     items.push({
       closeOnClick: false,
       component: (
-        <Button
-          minimal
-          css="w-full justify-between items-center"
-          id="delete-fragment-btn"
-        >
-          {!deleteFragmentLoading && <span>Delete</span>}
-          {deleteFragmentLoading && (
-            <span className="animate-pulse">Deleting...</span>
-          )}
-          {!deleteFragmentLoading && (
-            <Svg
-              name="delete"
-              css="ml-2"
-              width="18"
-              height="18"
-              color={colors.darkGray}
-            />
-          )}
-          <LoadingSpinner loading={deleteFragmentLoading} />
-        </Button>
+        <DeleteModal
+          title="Are you sure you want to delete this memory?"
+          deleteHandler={deleteHandler}
+        />
       ),
-      onClick: (close) => {
-        deleteHandler().then(() => close());
-      },
     });
   }
 

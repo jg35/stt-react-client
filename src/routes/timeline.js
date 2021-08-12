@@ -12,7 +12,11 @@ import Section from "~/components/timeline/section";
 import Preview from "~/components/timeline/preview";
 import ScrollNavigator from "~/components/timeline/scrollNavigator";
 
-import { generateTimeline, scrollToFragment } from "~/lib/timeline";
+import {
+  generateTimeline,
+  scrollToFragment,
+  scrollToEvent,
+} from "~/lib/timeline";
 import TimePeriodSelector from "~/components/timeline/timePeriodSelector";
 
 import TimelineSkeleton from "~/components/timeline/timelineSkeleton";
@@ -124,6 +128,9 @@ export default function Timeline() {
       <CaptureModal
         scrollToFragment={debounce((fragmentId) => {
           scrollToFragment(fragmentId);
+        }, 500)}
+        scrollToEvent={debounce((eventId) => {
+          scrollToEvent(eventId);
         }, 500)}
       />
     </Page>

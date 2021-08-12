@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Button from "~/components/button";
+import useClickOutside from "~/hooks/useClickOutside";
 
 export default function Menu({
   items,
@@ -7,8 +8,11 @@ export default function Menu({
   compact = false,
   minimal = true,
 }) {
+  const menuRef = useRef();
   const [open, setOpen] = useState(false);
   const [menuItems, setMenuItems] = useState([]);
+
+  useClickOutside(menuRef, () => setOpen(false));
 
   useEffect(() => {
     if (items && items.length) {
@@ -41,7 +45,7 @@ export default function Menu({
     }
   }
   return (
-    <div id="menu" className="relative">
+    <div id="menu" className="relative" ref={menuRef}>
       <Button minimal={minimal} onClick={() => setOpen(!open)}>
         {toggle}
       </Button>

@@ -4,7 +4,6 @@ import { debounce } from "lodash";
 
 import { UIContext } from "~/app";
 import ChapterNavigator from "~/components/timeline/chapterNavigator";
-import PhotoFragment from "~/components/edit/photoFragment";
 import EditableFragment from "~/components/edit/editableFragment";
 import SaveStatus from "~/components/saveStatus";
 
@@ -51,20 +50,15 @@ export default function Preview({ fragments, saveFragment }) {
       >
         {fragments
           .filter((f) => !f.hidden)
-          .map((frag) => {
-            if (frag.type !== "PHOTO") {
-              return (
-                <EditableFragment
-                  fragment={frag}
-                  key={frag.id}
-                  saveFragment={(newContent) =>
-                    saveFragmentHandler(newContent, frag.content, frag.id)
-                  }
-                />
-              );
-            }
-            return <PhotoFragment fragment={frag} key={frag.id} />;
-          })}
+          .map((frag) => (
+            <EditableFragment
+              fragment={frag}
+              key={frag.id}
+              saveFragment={(newContent) =>
+                saveFragmentHandler(newContent, frag.content, frag.id)
+              }
+            />
+          ))}
       </div>
       <ChapterNavigator fragments={fragments} />
     </>

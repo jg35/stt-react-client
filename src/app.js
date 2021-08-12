@@ -15,7 +15,6 @@ import PublishNewVersion from "~/routes/publishNewVersion";
 import Edit from "~/routes/edit";
 import Settings from "~/routes/settings";
 import Login from "~/routes/login";
-import Logout from "~/routes/logout";
 import NotFound from "~/routes/404";
 
 import AuthWrap from "~/components/authWrap";
@@ -36,12 +35,7 @@ export default function App() {
   const [uiState, setUiState] = useState(uiManager.init());
 
   function update(newUi, persist = true) {
-    // TODO this gets fucked when calls are made to close to eachother
-    const updateUi = {
-      ...uiState,
-      ...newUi,
-    };
-    setUiState(updateUi);
+    setUiState((uiState) => ({ ...uiState, ...newUi }));
     if (persist) {
       localStorage.setItem(
         "uiState",
@@ -90,9 +84,6 @@ export default function App() {
                 </Route>
                 <Route path="/login" exact>
                   <Login />
-                </Route>
-                <Route path="/logout" exact>
-                  <Logout />
                 </Route>
                 <Route path="/" exact>
                   <Timeline />

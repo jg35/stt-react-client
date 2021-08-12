@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import { debounce } from "lodash";
 import colors from "~/lib/colors";
 import { renderFragmentDate } from "~/lib/util";
+import PhotoFragment from "~/components/edit/photoFragment";
 import FragmentHeaderMenu from "~/components/timeline/fragmentHeaderMenu";
 
 export default function EditableFragment({ fragment, saveFragment }) {
@@ -53,20 +54,24 @@ export default function EditableFragment({ fragment, saveFragment }) {
           </div>
         </div>
       )}
-      <ContentEditable
-        spellCheck={false}
-        data-placeholder={
-          fragment.type === "CHAPTER"
-            ? "Enter chapter name"
-            : "This memory is empty. Consider deleting it if you don't need it"
-        }
-        className="content-editable"
-        html={text.current}
-        onKeyPress={handleKeypress}
-        onBlur={handleBlur}
-        onChange={handleChange}
-        tagName={fragment.type === "CHAPTER" ? "h1" : "p"}
-      />
+      {fragment.type === "PHOTO" ? (
+        <PhotoFragment fragment={fragment} />
+      ) : (
+        <ContentEditable
+          spellCheck={false}
+          data-placeholder={
+            fragment.type === "CHAPTER"
+              ? "Enter chapter name"
+              : "This memory is empty. Consider deleting it if you don't need it"
+          }
+          className="content-editable preview-element"
+          html={text.current}
+          onKeyPress={handleKeypress}
+          onBlur={handleBlur}
+          onChange={handleChange}
+          tagName={fragment.type === "CHAPTER" ? "h1" : "p"}
+        />
+      )}
     </div>
   );
 }

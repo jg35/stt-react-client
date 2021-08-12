@@ -1,12 +1,13 @@
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "~/components/authWrap";
-import { signOut } from "~/lib/auth";
+import useLogout from "~/hooks/useLogout";
 
 import Svg from "~/components/svg";
 import Menu from "~/components/menu";
 
 export default function MainMenu() {
+  const logout = useLogout();
   const {
     authState: { user },
   } = useContext(AuthContext);
@@ -56,7 +57,7 @@ export default function MainMenu() {
         },
         {
           component: (
-            <button className="fill text-right p-2" onClick={() => signOut()}>
+            <button className="fill text-right p-2" onClick={() => logout()}>
               Log out
             </button>
           ),

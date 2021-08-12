@@ -4,12 +4,7 @@ import Image from "~/components/image";
 import VersionLink from "~/components/publish/versionLink";
 import DeleteModal from "~/components/deleteModal";
 
-export default function VersionListItem({
-  last,
-  version,
-  isDeleting,
-  deleteVersion,
-}) {
+export default function VersionListItem({ last, version, deleteVersion }) {
   return (
     <li
       className={`max-w-md flex ${!last && "mr-4 border-lightGray border-r"}`}
@@ -35,9 +30,9 @@ export default function VersionListItem({
             <DeleteModal
               iconSize={16}
               onlyIcon={true}
+              deleteSuccessMessage="DELETE_VERSION"
               title="Are you sure you want to delete this version?"
               deleteHandler={() => deleteVersion(version.id)}
-              isDeleting={isDeleting}
             />
           </div>
         </div>

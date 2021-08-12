@@ -1,5 +1,14 @@
 import { gql } from "@apollo/client";
 
+export const ACTION_DELETE_USER = gql`
+  mutation {
+    action_stt_delete_user {
+      deleteAt
+      error
+    }
+  }
+`;
+
 export const ACTION_SYNC_USER = gql`
   mutation ($data: SyncUserInput!) {
     action_sync_user(data: $data) {
@@ -20,6 +29,7 @@ export const ACTION_REGENERATE_TOKEN = gql`
 export const ACTION_PUBLISH_VERSION = gql`
   mutation ($userId: String!) {
     action_stt_publish_version(userId: $userId) {
+      nextVersionId
       version {
         id
         theme

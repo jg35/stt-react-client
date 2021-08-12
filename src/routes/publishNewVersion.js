@@ -26,7 +26,7 @@ export default function PublishNewVersion() {
   const { setError, setSuccess } = useToastMessage();
   const history = useHistory();
   const {
-    authState: { user },
+    authState: { user, dbUser },
   } = useContext(AuthContext);
 
   const [currentVersion, setCurrentVersion] = useState(null);
@@ -36,7 +36,7 @@ export default function PublishNewVersion() {
 
   useEffect(() => {
     if (data && data.stt_version) {
-      const version = cloneDeep(data.stt_version[0]);
+      const version = VersionSchema.cast(cloneDeep(data.stt_version[0]));
 
       if (!version.publishedAt) {
         version.publishedAt = new Date().toISOString().replace(/T.*/, "");
@@ -46,7 +46,12 @@ export default function PublishNewVersion() {
       }
       version.publishStep = 1;
       // Should only run once user reaches the second step
-      if (!version.theme.cover && version.author && version.title) {
+      if (
+        !version.theme.cover.elements.length &&
+        version.author &&
+        version.title
+      ) {
+        console.log("ellooooo...");
         version.theme.cover = CoverSchema.cast({
           elements: [
             CoverElementSchema.cast({
@@ -73,6 +78,15 @@ export default function PublishNewVersion() {
         // TODO update the action to also generate the cover
         return publishVersion({
           variables: { userId: user.id },
+          update(cache, { data }) {
+            cache.modify({
+              id: cache.identify(dbUser),
+              fields: {
+                versions: () =>
+                  dbUser.versions.concat({ id: data.nextVersionId }),
+              },
+            });
+          },
         }).then(() => {
           // Redirect to publish view
           history.push("/publish");
@@ -144,7 +158,7 @@ export default function PublishNewVersion() {
                   formBag.setFieldValue("publishStep", values.publishStep + 1);
                 });
               }}
-              initialValues={VersionSchema.cast(currentVersion)}
+              initialValues={currentVersion}
               validationSchema={VersionSchema}
               validateOnChange={false}
               validateOnBlur={false}
