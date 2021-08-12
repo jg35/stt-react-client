@@ -1,8 +1,8 @@
 import { useEffect, useContext, useState } from "react";
 import { useHistory } from "react-router";
 import { Formik } from "formik";
-import { useMutation, gql } from "@apollo/client";
-import { pick, cloneDeep } from "lodash";
+import { useMutation } from "@apollo/client";
+import { pick, cloneDeep, omit } from "lodash";
 
 import { useCustomQuery } from "~/hooks/useCustomApollo";
 import { AuthContext } from "~/components/authWrap";
@@ -10,6 +10,7 @@ import { VersionSchema, CoverElementSchema, CoverSchema } from "~/lib/yup";
 import {
   FETCH_CREATE_BOOK_VIEW,
   UPDATE_VERSION,
+  UPDATE_USER,
   ACTION_PUBLISH_VERSION,
 } from "~/lib/gql";
 import Page from "~/components/page";
@@ -26,17 +27,22 @@ export default function PublishNewVersion() {
   const { setError, setSuccess } = useToastMessage();
   const history = useHistory();
   const {
-    authState: { user, dbUser },
+    authState: { user, dbUser, token },
   } = useContext(AuthContext);
 
+  const [publishStep, setPublishStep] = useState(1);
   const [currentVersion, setCurrentVersion] = useState(null);
   const [updateVersion] = useMutation(UPDATE_VERSION);
   const [publishVersion] = useMutation(ACTION_PUBLISH_VERSION);
+  const [updateUser] = useMutation(UPDATE_USER);
   const { data } = useCustomQuery(FETCH_CREATE_BOOK_VIEW, { userId: true });
 
   useEffect(() => {
     if (data && data.stt_version) {
-      const version = VersionSchema.cast(cloneDeep(data.stt_version[0]));
+      const version = VersionSchema(publishStep, token).cast({
+        ...cloneDeep(data.stt_version[0]),
+        publicHandle: (dbUser && dbUser.publicHandle) || "",
+      });
 
       if (!version.publishedAt) {
         version.publishedAt = new Date().toISOString().replace(/T.*/, "");
@@ -44,14 +50,13 @@ export default function PublishNewVersion() {
       if (!version.author) {
         version.author = user.displayName;
       }
-      version.publishStep = 1;
+
       // Should only run once user reaches the second step
       if (
         !version.theme.cover.elements.length &&
         version.author &&
         version.title
       ) {
-        console.log("ellooooo...");
         version.theme.cover = CoverSchema.cast({
           elements: [
             CoverElementSchema.cast({
@@ -70,13 +75,22 @@ export default function PublishNewVersion() {
       }
       setCurrentVersion(version);
     }
-  }, [data]);
+  }, [data, dbUser]);
 
   function publishVersionHandler(values) {
-    return saveVersionHandler(values, true)
-      .then(() => {
-        // TODO update the action to also generate the cover
-        return publishVersion({
+    return new Promise(async (resolve, reject) => {
+      try {
+        const createUserHandle = !dbUser.publicHandle && values.publicHandle;
+        if (createUserHandle) {
+          await updateUser({
+            variables: {
+              data: { publicHandle: createUserHandle },
+              userId: user.id,
+            },
+          });
+        }
+        await saveVersionHandler(omit(values, ["publicHandle"]), true);
+        await publishVersion({
           variables: { userId: user.id },
           update(cache, { data }) {
             cache.modify({
@@ -87,20 +101,21 @@ export default function PublishNewVersion() {
               },
             });
           },
-        }).then(() => {
-          // Redirect to publish view
-          history.push("/publish");
-          setSuccess(
-            "You've succesfully published your book! It can now be found here on your publish list."
-          );
         });
-      })
-      .catch((e) => {
+        // Redirect to publish view
+        history.push("/publish");
+        setSuccess(
+          "You've succesfully published your book! It can now be found here on your publish list."
+        );
+        resolve();
+      } catch (e) {
         setError(
           e,
           "Something went wrong when publishing your book. Please try again"
         );
-      });
+        reject(e);
+      }
+    });
   }
 
   function saveVersionHandler(values) {
@@ -127,13 +142,18 @@ export default function PublishNewVersion() {
   ];
 
   function renderStep(formProps) {
-    switch (formProps.values.publishStep) {
+    switch (publishStep) {
       case 1:
         return <PublishOptionsForm {...formProps} />;
       case 2:
         return <CoverEditorForm {...formProps} />;
       case 3:
-        return <CreateBookForm {...formProps} />;
+        return (
+          <CreateBookForm
+            {...formProps}
+            savedHandle={dbUser && dbUser.publicHandle}
+          />
+        );
     }
   }
 
@@ -150,16 +170,16 @@ export default function PublishNewVersion() {
           <Card css="min-h-full border-4 border-white p-0">
             <Formik
               onSubmit={(values, formBag) => {
-                if (values.publishStep === 3) {
+                if (publishStep === 3) {
                   // Create the book
                   return publishVersionHandler(values);
                 }
                 return saveVersionHandler(values).then(() => {
-                  formBag.setFieldValue("publishStep", values.publishStep + 1);
+                  setPublishStep(publishStep + 1);
                 });
               }}
               initialValues={currentVersion}
-              validationSchema={VersionSchema}
+              validationSchema={VersionSchema(publishStep, token)}
               validateOnChange={false}
               validateOnBlur={false}
             >
@@ -175,13 +195,8 @@ export default function PublishNewVersion() {
                       isSubmitting={props.isSubmitting}
                       totalSteps={steps.length}
                       steps={steps}
-                      currentStep={props.values.publishStep}
-                      stepBack={() =>
-                        props.setFieldValue(
-                          "publishStep",
-                          props.values.publishStep - 1
-                        )
-                      }
+                      currentStep={publishStep}
+                      stepBack={() => setPublishStep(publishStep - 1)}
                     />
                     {renderStep(props)}
                   </form>

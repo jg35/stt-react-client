@@ -17,6 +17,14 @@ export const ACTION_SYNC_USER = gql`
   }
 `;
 
+export const ACTION_CHECK_HANDLE_AVAILABILITY = gql`
+  mutation ($handle: String!) {
+    action_stt_handle_availability(handle: $handle) {
+      available
+    }
+  }
+`;
+
 export const ACTION_REGENERATE_TOKEN = gql`
   mutation ($id: Int!) {
     action_stt_regenerate_token(id: $id) {

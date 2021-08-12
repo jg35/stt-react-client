@@ -1,6 +1,8 @@
 import SubmitButton from "~/components/submitButton";
 import ManagePrivacyStatus from "~/components/accessList/managePrivacyStatus";
 import AccessListStatusButton from "~/components/accessList/accessListStatusButton";
+import FormHandleAvailabilityInput from "~/components/formHandleAvailabilityInput";
+
 export default function PublishOptionsForm({
   values,
   setFieldValue,
@@ -8,7 +10,9 @@ export default function PublishOptionsForm({
   handleChange,
   errors,
   isSubmitting,
-  showAccessModal,
+  setFieldError,
+  savedHandle,
+  isValid,
 }) {
   return (
     <div
@@ -16,7 +20,7 @@ export default function PublishOptionsForm({
       style={{ maxWidth: "768px" }}
     >
       <p className="font-medium mb-6 text-xl p-2">
-        Finally decide how you would like to share your book
+        Decide how you would like to share your book
       </p>
 
       <div className="mb-6">
@@ -32,8 +36,19 @@ export default function PublishOptionsForm({
         )}
       </div>
 
+      {!savedHandle && (
+        <FormHandleAvailabilityInput
+          value={values.publicHandle}
+          error={errors.publicHandle}
+          handleBlur={handleBlur}
+          handleChange={handleChange}
+          setFieldError={setFieldError}
+        />
+      )}
+
       <div className="mx-auto mt-6">
         <SubmitButton
+          disabled={!isValid}
           isSubmitting={isSubmitting}
           bigCta
           width="w-60"

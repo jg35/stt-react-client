@@ -83,14 +83,23 @@ export const ThemeSchema = Yup.object().shape({
   cover: CoverSchema,
 });
 
-export const VersionSchema = Yup.object().shape({
-  id: Yup.number(),
-  theme: ThemeSchema,
-  title: Yup.string().ensure().required(),
-  author: Yup.string().ensure().required(),
-  publishedAt: Yup.string().ensure().required("Publication date is required"),
-  privacyStatus: Yup.string().default("PRIVATE"),
-});
+export const VersionSchema = (publishStep, token = "") =>
+  Yup.object().shape({
+    id: Yup.number(),
+    theme: ThemeSchema,
+    title: Yup.string().ensure().required(),
+    author: Yup.string().ensure().required(),
+    publishedAt: Yup.string().ensure().required("Publication date is required"),
+    privacyStatus: Yup.string().default("PRIVATE"),
+    // Saved on user, but within version flow
+    publicHandle: Yup.string().test(
+      "handle-required",
+      "The handle is required",
+      function (value) {
+        return publishStep !== 3 || !!value;
+      }
+    ),
+  });
 
 export const UserSettingsSchema = Yup.object()
   .shape({

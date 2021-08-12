@@ -8,6 +8,7 @@ export default function FormInput({
   compact = false,
   autoFocus = true,
   type = "text",
+  onKeyUp = null,
 }) {
   return (
     <input
@@ -21,6 +22,7 @@ export default function FormInput({
       type={type}
       onChange={handleChange}
       onBlur={handleBlur}
+      onKeyUp={onKeyUp}
       value={value}
     />
   );
