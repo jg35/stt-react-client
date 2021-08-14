@@ -29,7 +29,8 @@ export default function UserEvent({ event }) {
   }
 
   return (
-    <div
+    <button
+      type="button"
       data-user-event-id={event.id}
       className="bg-lightBlue text-blue rounded-2xl py-1.5 pl-3 pr-2 mr-4 flex items-center cursor-pointer my-2"
       title="Edit event"
@@ -57,6 +58,6 @@ export default function UserEvent({ event }) {
           <LoadingSpinner color={colors.blue} loading={loading} css="h-4 w-4" />
         )}
       </div>
-    </div>
+    </button>
   );
 }

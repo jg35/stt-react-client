@@ -39,7 +39,7 @@ export default function VersionLink({ format, publishedPath, small = false }) {
   }
 
   return (
-    <Button onClick={setLink} css={small ? "text-sm" : ""}>
+    <Button onClick={setLink}>
       <a ref={link} target="_blank" className="cursor-pointer" href={null}>
         {getTitle()}
       </a>

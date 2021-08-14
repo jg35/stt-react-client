@@ -5,7 +5,6 @@ import { UPDATE_FRAGMENT, DELETE_FRAGMENT } from "~/lib/gql";
 import colors from "~/lib/colors";
 import { makeEditFragmentForm } from "~/lib/uiManager";
 import Menu from "~/components/menu";
-import Button from "~/components/button";
 import Svg from "~/components/svg";
 import LoadingSpinner from "~/components/loadingSpinner";
 import useToastMessage from "~/hooks/useToastMessage";
@@ -59,9 +58,8 @@ export default function FragmentHeaderMenu({
   if (!excludeActions.includes("EDIT")) {
     items.push({
       component: (
-        <Button
-          minimal
-          css="w-full justify-between items-center"
+        <span
+          className="flex w-full justify-between items-center"
           id="edit-fragment-btn"
         >
           Edit
@@ -72,7 +70,7 @@ export default function FragmentHeaderMenu({
             height="18"
             color={colors.darkGray}
           />
-        </Button>
+        </span>
       ),
       onClick: () => updateUiState(makeEditFragmentForm(fragment), false),
     });
@@ -97,9 +95,8 @@ export default function FragmentHeaderMenu({
     items.unshift({
       closeOnClick: false,
       component: (
-        <Button
-          minimal
-          css={`w-full justify-between items-center`}
+        <div
+          className={`flex min-w-full justify-between items-center`}
           id="privacy-fragment-btn"
         >
           <div>
@@ -126,7 +123,7 @@ export default function FragmentHeaderMenu({
               />
             )}
           </div>
-        </Button>
+        </div>
       ),
       onClick: (close) => {
         setVisibility(!fragment.hidden).then(() => close());

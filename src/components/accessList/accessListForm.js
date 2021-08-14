@@ -22,6 +22,7 @@ export default function AccessListForm({ formProps, addNewToken }) {
       </div>
       <div className="ml-2">
         <Button
+          variant="secondary"
           disabled={formProps.errors.newToken}
           onClick={() => addNewToken()}
           isSubmitting={formProps.isSubmitting}

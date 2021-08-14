@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Card from "~/components/card";
 import Button from "~/components/button";
+import ButtonGroup from "~/components/buttonGroup";
 import PopoverColorPicker from "~/components/popoverColorPicker";
 import Uppy from "~/components/uppy";
 
@@ -33,48 +34,62 @@ export default function GlobalCoverControls({
             }}
           >
             <span className="w-16">Image</span>
-            <Button onClick={() => update("imagePlacement", "cover")}>
-              <div className="border-2 border-black bg-gray h-8 w-6 shadow-lg">
-                <div className="w-full h-full bg-white"></div>
-              </div>
-            </Button>
-            <Button onClick={() => update("imagePlacement", "rectangle")}>
-              <div className="border-2 border-black bg-gray h-8 w-6 shadow-lg">
-                <div className="h-1/2 w-full bg-white"></div>
-              </div>
-            </Button>
-            <Button onClick={() => update("imagePlacement", "oval")}>
-              <div className="border-2 border-black bg-gray h-8 w-6 shadow-lg relative">
-                <div
-                  className="h-1/2 w-1/2 bg-white absolute"
-                  style={{
-                    borderRadius: "50%",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
-                ></div>
-              </div>
-            </Button>
-            <Button onClick={() => update("imagePlacement", "square")}>
-              <div className="border-2 border-black bg-gray h-8 w-6 shadow-lg relative">
-                <div
-                  className="h-3 w-3 bg-white absolute"
-                  style={{
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
-                ></div>
-              </div>
-            </Button>
+            <ButtonGroup>
+              <Button
+                variant="minimal"
+                size="compact"
+                onClick={() => update("imagePlacement", "cover")}
+              >
+                <div className="border-2 border-black bg-gray h-8 w-6 shadow-lg">
+                  <div className="w-full h-full bg-white"></div>
+                </div>
+              </Button>
+              <Button
+                variant="minimal"
+                size="compact"
+                onClick={() => update("imagePlacement", "rectangle")}
+              >
+                <div className="border-2 border-black bg-gray h-8 w-6 shadow-lg">
+                  <div className="h-1/2 w-full bg-white"></div>
+                </div>
+              </Button>
+              <Button
+                variant="minimal"
+                size="compact"
+                onClick={() => update("imagePlacement", "oval")}
+              >
+                <div className="border-2 border-black bg-gray h-8 w-6 shadow-lg relative">
+                  <div
+                    className="h-1/2 w-1/2 bg-white absolute"
+                    style={{
+                      borderRadius: "50%",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                    }}
+                  ></div>
+                </div>
+              </Button>
+              <Button
+                variant="minimal"
+                size="compact"
+                onClick={() => update("imagePlacement", "square")}
+              >
+                <div className="border-2 border-black bg-gray h-8 w-6 shadow-lg relative">
+                  <div
+                    className="h-3 w-3 bg-white absolute"
+                    style={{
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                    }}
+                  ></div>
+                </div>
+              </Button>
+            </ButtonGroup>
           </div>
           <div>
-            <Button
-              cta
-              css="text-lg h-11 w-full font-medium justify-center"
-              onClick={() => setChangeImage(true)}
-            >
+            <Button variant="secondary" onClick={() => setChangeImage(true)}>
               {!imageUrl ? "Add" : "Change"} cover image
             </Button>
             {changeImage && (

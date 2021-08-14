@@ -3,15 +3,18 @@ import React from "react";
 import Menu from "~/components/menu";
 import Svg from "~/components/svg";
 import colors from "~/lib/colors";
+import Buttton from "~/components/button";
 
 function TagSelectOption({ tag, selectTag }) {
   return (
-    <div
-      className="text-right capitalize w-full p-2"
+    <Buttton
+      variant="minimal"
+      size="compact"
+      css="justify-end capitalize"
       onClick={() => selectTag(tag)}
     >
       {tag}
-    </div>
+    </Buttton>
   );
 }
 
@@ -29,9 +32,7 @@ export default function TagSelect({
     <Menu
       compact
       toggle={
-        <div
-          className={`font-medium flex text-gray rounded-md py-1 px-2 ${toggleCss}`}
-        >
+        <div className={`font-medium flex text-gray ${toggleCss}`}>
           <span className="whitespace-nowrap ">
             {currentTag ? (
               <span className="capitalize">{currentTag}</span>

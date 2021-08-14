@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Button from "~/components/button";
+import ButtonGroup from "~/components/buttonGroup";
 import Svg from "~/components/svg";
 import PopoverColorPicker from "~/components/popoverColorPicker";
 import FontSelect from "~/components/fontSelect";
@@ -29,7 +30,9 @@ export default function TextElementControls({
         <h2 className="text-lg font-normal">{element.content}</h2>
         <div className="flex">
           {!element.originalContent && (
-            <Button onClick={() => remove(element.id)}>Remove</Button>
+            <Button size="compact" onClick={() => remove(element.id)}>
+              Remove
+            </Button>
           )}
           <Svg css="ml-2" width={12} height={12} name="chevron" />
         </div>
@@ -82,33 +85,29 @@ export default function TextElementControls({
           </div>
           <div className="flex items-center justify-between mt-6 mb-4">
             <span className="w-16">Align</span>
-            <div className="flex flex-1 justify-between">
+            <ButtonGroup>
               <Button
-                minimal
-                css={element.textAlign === "left" ? "font-medium" : "font-base"}
+                variant="minimal"
+                css={element.textAlign === "left" && "border-black"}
                 onClick={() => update(element.id, "textAlign", "left")}
               >
                 <Svg name="alignLeft" width={16} height={16} />
               </Button>
               <Button
-                minimal
-                css={
-                  element.textAlign === "center" ? "font-medium" : "font-base"
-                }
+                variant="minimal"
+                css={element.textAlign === "center" && "border-black"}
                 onClick={() => update(element.id, "textAlign", "center")}
               >
                 <Svg name="alignCenter" width={16} height={16} />
               </Button>
               <Button
-                minimal
-                css={
-                  element.textAlign === "right" ? "font-medium" : "font-base"
-                }
+                variant="minimal"
+                css={element.textAlign === "right" && "border-black"}
                 onClick={() => update(element.id, "textAlign", "right")}
               >
                 <Svg name="alignRight" width={16} height={16} />
               </Button>
-            </div>
+            </ButtonGroup>
           </div>
 
           {element.originalContent &&

@@ -106,16 +106,16 @@ export default function EmailForm({
         <div>
           {authView === "LOGIN" ? (
             <Button
-              minimal
-              css="w-full"
+              variant="minimal"
+              size="compact"
               onClick={() => setAuthViewHandler("CREATE_ACCOUNT")}
             >
               Create an account
             </Button>
           ) : (
             <Button
-              minimal
-              css="w-full"
+              variant="minimal"
+              size="compact"
               onClick={() => setAuthViewHandler("LOGIN")}
             >
               Back
@@ -125,8 +125,8 @@ export default function EmailForm({
         <div>
           {authView === "LOGIN" && (
             <Button
-              minimal
-              css="w-full"
+              variant="minimal"
+              size="compact"
               onClick={() => setAuthViewHandler("FORGOT_PASSWORD")}
             >
               Forgotten password?

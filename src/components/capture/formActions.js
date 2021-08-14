@@ -18,8 +18,9 @@ export default function FormActions({
     <div className="flex justify-end pt-6 border-t border-lightGray">
       <Button
         disabled={isSubmitting}
-        minimal
-        css="text-lg mr-2 w-36 py-2 duration-300"
+        variant="minimal"
+        size="large"
+        css="w-36 mr-2"
         onClick={closeModal}
       >
         Cancel

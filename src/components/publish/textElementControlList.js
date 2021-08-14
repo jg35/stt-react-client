@@ -25,8 +25,7 @@ export default function TextElementControlList({
           />
         ))}
         <Button
-          css="h-11 font-medium text-lg"
-          cta
+          variant="secondary"
           onClick={() => {
             const addId = add();
           }}

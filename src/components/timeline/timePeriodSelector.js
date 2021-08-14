@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import Button from "~/components/button";
+import ButtonGroup from "~/components/buttonGroup";
 import { scrollToUndated } from "~/lib/timeline";
 import { UIContext } from "~/app";
 
@@ -9,27 +10,36 @@ export default function TimePeriodSelector({ timelinePeriod, orphanCount }) {
   return (
     <div className="h-10 bg-white sticky bottom-4 w-max flex items-center shadow-lg py-6 px-4 rounded border">
       <span className="font-medium mr-2">View timeline in:</span>
-      <Button
-        onClick={() => updateUiState({ timelinePeriod: "YEAR" })}
-        css={`
-          ${timelinePeriod === "YEAR" && "underline"}
-        `}
-      >
-        Years
-      </Button>
-      <Button
-        onClick={() => updateUiState({ timelinePeriod: "SEASON" })}
-        css={`mx-2 ${timelinePeriod === "SEASON" && "underline"}`}
-      >
-        Seasons
-      </Button>
-      <Button
-        onClick={() => updateUiState({ timelinePeriod: "MONTH" })}
-        css={`mx-2 ${timelinePeriod === "MONTH" && "underline"}`}
-      >
-        Months
-      </Button>
-      {orphanCount > 0 && (
+      <ButtonGroup>
+        <Button
+          size="compact"
+          onClick={() => updateUiState({ timelinePeriod: "YEAR" })}
+          css={`
+            ${timelinePeriod === "YEAR" && "underline"}
+          `}
+        >
+          Years
+        </Button>
+        <Button
+          size="compact"
+          onClick={() => updateUiState({ timelinePeriod: "SEASON" })}
+          css={`
+            ${timelinePeriod === "SEASON" && "underline"}
+          `}
+        >
+          Seasons
+        </Button>
+        <Button
+          size="compact"
+          onClick={() => updateUiState({ timelinePeriod: "MONTH" })}
+          css={`
+            ${timelinePeriod === "MONTH" && "underline"}
+          `}
+        >
+          Months
+        </Button>
+      </ButtonGroup>
+      {/* {orphanCount > 0 && (
         <>
           <span className="font-medium ml-4 pl-4 mr-2 border-l">
             {orphanCount} {orphanCount > 1 ? "memories" : "memory"} outside
@@ -44,7 +54,7 @@ export default function TimePeriodSelector({ timelinePeriod, orphanCount }) {
             View memories
           </Button>
         </>
-      )}
+      )} */}
     </div>
   );
 }

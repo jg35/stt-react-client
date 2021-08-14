@@ -32,12 +32,7 @@ export default function InfoMessage({ name }) {
         <div>
           <p className="flex-1 px-2 mb-2 text-base">{renderMessage}</p>
           <div className="">
-            <Button
-              css="font-medium text-base text-darkGray"
-              onClick={() => hideMessage()}
-            >
-              Discard this message
-            </Button>
+            <Button onClick={() => hideMessage()}>Discard this message</Button>
           </div>
         </div>
       </div>

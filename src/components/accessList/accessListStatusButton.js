@@ -36,16 +36,18 @@ export default function AccessListStatusButton({
   return (
     <div className="flex items-center my-2">
       {isPublic ? (
-        <Button onClick={() => history.push("/settings#privacy")}>
+        <Button
+          variant="secondary"
+          onClick={() => history.push("/settings#privacy")}
+        >
           Your book is public - Manage link
         </Button>
       ) : (
         <Button
-          cta
+          variant="secondary"
           onClick={() => updateUiState({ showAccessListModal: true }, false)}
         >
-          {getStatus()}&nbsp;-&nbsp;
-          <span className="text-md">Manage share list</span>
+          {getStatus()}&nbsp;-&nbsp; Manage share list
         </Button>
       )}
     </div>

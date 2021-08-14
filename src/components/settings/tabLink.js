@@ -14,7 +14,8 @@ export default function TabLink({
   };
 
   return (
-    <div
+    <button
+      type="button"
       className={`${variants.base} ${
         activeTab === tab ? variants.active : variants.default
       }`}
@@ -27,6 +28,6 @@ export default function TabLink({
       {description && (
         <span className="font-normal text-sm text-gray">{description}</span>
       )}
-    </div>
+    </button>
   );
 }

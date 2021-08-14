@@ -32,8 +32,8 @@ export default function SubscriptionOptionCard({
         <p className={`text-lg`}>{formatPrice(option.amount)}</p>
         <div className="pt-6">
           <Button
-            css={selected ? "bg-green hover:bg-green " : ""}
-            onClick={() => selectPlan()}
+            variant="minimal"
+            css={selected ? "bg-green hover:bg-green hover:border-green" : ""}
             disabled={selected}
           >
             {selected ? "Plan selected" : "Select this plan"}

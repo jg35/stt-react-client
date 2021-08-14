@@ -46,7 +46,11 @@ export default function Menu({
   }
   return (
     <div id="menu" className="relative" ref={menuRef}>
-      <Button minimal={minimal} onClick={() => setOpen(!open)}>
+      <Button
+        size="compact"
+        variant={minimal ? "minimal" : "default"}
+        onClick={() => setOpen(!open)}
+      >
         {toggle}
       </Button>
       {open && (
@@ -64,18 +68,16 @@ export default function Menu({
               stateCss.push("rounded-b-lg");
             }
 
-            if (item.seperator && itemIndex !== items.length - 1) {
-              stateCss.push("border-b border-lightGray");
-            }
-
             return (
-              <div
+              <Button
                 key={itemIndex}
-                className={`w-full hover:bg-lightestGray text-right cursor-pointer min-h-10 flex justify-right items-center w-full ${stateCss}`}
+                variant="minimal"
+                size="compact"
+                css={stateCss.concat(item.buttonCss || "").join(" ")}
                 onClick={() => handleItemClick(item)}
               >
                 {item.component}
-              </div>
+              </Button>
             );
           })}
         </div>

@@ -25,7 +25,7 @@ export default function ManageAccount({ dbUser }) {
       <p className="text-lg my-2">
         If you would like to delete your account please click below.
       </p>
-      <Button onClick={() => setShowDeleteAccountModal(true)}>
+      <Button css="w-auto" onClick={() => setShowDeleteAccountModal(true)}>
         Delete my account
       </Button>
       <Modal

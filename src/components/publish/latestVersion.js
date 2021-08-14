@@ -1,10 +1,7 @@
 import { renderVersionDate } from "~/lib/util";
 import { coverImages } from "~/lib/imageSizes";
 import Image from "~/components/image";
-import VersionLink from "~/components/publish/versionLink";
-import WebLink from "~/components/publish/webLink";
 import DeleteModal from "~/components/deleteModal";
-import Button from "~/components/button";
 import Svg from "~/components/svg";
 import AccessListStatusButton from "~/components/accessList/accessListStatusButton";
 

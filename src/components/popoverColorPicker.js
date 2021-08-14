@@ -1,6 +1,7 @@
 import React, { useCallback, useRef, useState } from "react";
 import { HexColorPicker } from "react-colorful";
 
+import Button from "~/components/button";
 import useClickOutside from "~/hooks/useClickOutside";
 
 export default function PopoverPicker({ color, onChange }) {
@@ -12,8 +13,8 @@ export default function PopoverPicker({ color, onChange }) {
 
   return (
     <div className="relative">
-      <div
-        className="h-7 w-7 border-2 border-lightGray shadow cursor-pointer"
+      <Button
+        css="h-7 w-7 border-lightGray"
         style={{ backgroundColor: color, borderRadius: "50%" }}
         onClick={() => toggle(true)}
       />

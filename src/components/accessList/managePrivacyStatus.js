@@ -1,8 +1,11 @@
+import Button from "~/components/button";
+
 function PrivacyOption({ title, description, active, onClick }) {
   return (
-    <div
+    <Button
       onClick={onClick}
-      className={`w-full p-2 rounded-lg mr-6 border-2 ease-in duration-400 transition h-48 cursor-pointer flex flex-col items-center justify-center text-center ${
+      variant="secondary"
+      css={`rounded-lg mr-6 ease-in duration-400 h-48 flex-col items-center font-normal ${
         active
           ? "border-black shadow-lg bg-offWhite"
           : "border-lightGray bg-white"
@@ -10,7 +13,7 @@ function PrivacyOption({ title, description, active, onClick }) {
     >
       <h2 className="text-xl text-center my-2">{title}</h2>
       <p className="p-2">{description}</p>
-    </div>
+    </Button>
   );
 }
 

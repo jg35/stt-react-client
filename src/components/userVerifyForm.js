@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useHistory } from "react-router";
 import Modal from "~/components/modal";
 import Button from "~/components/button";
@@ -5,6 +6,7 @@ import useToastMessage from "~/hooks/useToastMessage";
 import { resendEmailVerification } from "~/lib/firebase";
 
 export default function UserVerifyForm() {
+  const [sending, setSending] = useState(false);
   const { setSuccess } = useToastMessage();
   const history = useHistory();
   return (
@@ -19,17 +21,20 @@ export default function UserVerifyForm() {
         </p>
       </div>
 
-      <Button cta onClick={() => history.go()}>
+      <Button variant="secondary" css="my-1" onClick={() => history.go()}>
         I've verified my account
       </Button>
 
       <Button
-        cta
-        onClick={() =>
-          resendEmailVerification().then(() =>
-            setSuccess({ ref: "SEND_RESET_EMAIL" })
-          )
-        }
+        css="my-1"
+        inProgress={sending}
+        onClick={() => {
+          setSending(true);
+          resendEmailVerification().then(() => {
+            setSuccess({ ref: "SEND_RESET_EMAIL" });
+            setSending(false);
+          });
+        }}
       >
         Resend verification email
       </Button>

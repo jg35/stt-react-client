@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UIContext } from "~/app";
 import Button from "~/components/button";
+import ButtonGroup from "~/components/buttonGroup";
 import {
   makeCreateFragmentForm,
   makeCreateUserEventForm,
@@ -25,69 +26,68 @@ export default function SectionCaptureActions({ show, date, index }) {
       }`}
     >
       {(show || captureActive) && (
-        <div className="flex" id="section-actions-inner">
-          <div id="section-actions-event">
-            <Button
-              css="mr-3"
-              onClick={() =>
-                updateUiState(makeCreateUserEventForm({ date }), false)
-              }
-            >
-              Add event
-            </Button>
-          </div>
-          <div id="section-actions-memory">
-            <Button
-              css="mr-3"
-              onClick={() =>
-                updateUiState(
-                  makeCreateFragmentForm({
-                    type: "TEXT",
-                    date,
-                    dateType: "AUTO",
-                  }),
-                  false
-                )
-              }
-            >
-              Add memory
-            </Button>
-          </div>
-          <div id="section-actions-photo">
-            <Button
-              css="mr-3"
-              onClick={() =>
-                updateUiState(
-                  makeCreateFragmentForm({
-                    type: "PHOTO",
-                    date,
-                    dateType: "AUTO",
-                  }),
-                  false
-                )
-              }
-            >
-              Add photo
-            </Button>
-          </div>
-          <div id="section-actions-chapter">
-            <Button
-              css="mr-3"
-              onClick={() =>
-                updateUiState(
-                  makeCreateFragmentForm({
-                    type: "CHAPTER",
-                    date,
-                    dateType: "AUTO",
-                  }),
-                  false
-                )
-              }
-            >
-              Add chapter
-            </Button>
-          </div>
-        </div>
+        <ButtonGroup id="section-actions-inner">
+          <Button
+            id="section-actions-event"
+            size="compact"
+            onClick={() =>
+              updateUiState(makeCreateUserEventForm({ date }), false)
+            }
+          >
+            Add event
+          </Button>
+
+          <Button
+            id="section-actions-memory"
+            size="compact"
+            onClick={() =>
+              updateUiState(
+                makeCreateFragmentForm({
+                  type: "TEXT",
+                  date,
+                  dateType: "AUTO",
+                }),
+                false
+              )
+            }
+          >
+            Add memory
+          </Button>
+
+          <Button
+            id="section-actions-photo"
+            size="compact"
+            onClick={() =>
+              updateUiState(
+                makeCreateFragmentForm({
+                  type: "PHOTO",
+                  date,
+                  dateType: "AUTO",
+                }),
+                false
+              )
+            }
+          >
+            Add photo
+          </Button>
+
+          <Button
+            id="section-actions-chapter"
+            size="compact"
+            onClick={() =>
+              updateUiState(
+                makeCreateFragmentForm({
+                  type: "CHAPTER",
+                  date,
+                  dateType: "AUTO",
+                }),
+                false
+              )
+            }
+          >
+            Add chapter
+          </Button>
+        </ButtonGroup>
       )}
     </div>
   );

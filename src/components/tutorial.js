@@ -165,7 +165,7 @@ export default function Tutorial() {
           <div className="flex justify-between">
             <div>
               {!currentStep.last && (
-                <Button onClick={endTutorial}>
+                <Button size="compact" css="w-auto" onClick={endTutorial}>
                   <LoadingSpinner
                     loading={updateUserLoading}
                     css="mr-2 h-4 w-4"
@@ -176,7 +176,9 @@ export default function Tutorial() {
             </div>
 
             <Button
-              bigCta
+              variant="secondary"
+              size="compact"
+              css="w-auto"
               disabled={currentStep.async}
               onClick={() => saveCurrentStep(currentStep.step + 1)}
             >

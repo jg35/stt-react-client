@@ -80,8 +80,8 @@ export default function Publish() {
             </div>
             <div className="text-lg my-6">
               <Button
-                css="h-12 w-60 font-medium"
-                cta
+                variant="cta"
+                css="w-auto whitespace-nowrap"
                 onClick={() => history.push("/publish/new")}
               >
                 Publish a new version

@@ -53,11 +53,17 @@ export default function AccessListItems({
                 <span className="w-36 truncate"> {item.token}</span>
                 <div className="w-36 flex justify-end">
                   {!isPublic ? (
-                    <Button onClick={() => removeAccessToken(item)}>
+                    <Button
+                      size="compact"
+                      css="w-auto"
+                      onClick={() => removeAccessToken(item)}
+                    >
                       Remove access
                     </Button>
                   ) : (
                     <Button
+                      size="compact"
+                      css="w-auto"
                       onClick={() => {
                         setIsRegen(true);
                         regeneratePublicToken(item).then(() => {

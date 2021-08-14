@@ -3,7 +3,6 @@ import colors from "~/lib/colors";
 import Modal from "~/components/modal";
 import Button from "~/components/button";
 import Svg from "~/components/svg";
-import LoadingSpinner from "~/components/loadingSpinner";
 import useToastMessage from "~/hooks/useToastMessage";
 
 export default function DeleteModal({
@@ -20,9 +19,10 @@ export default function DeleteModal({
   return (
     <>
       <Button
-        minimal
+        variant="minimal"
+        size="compact"
+        css="flex justify-between"
         onClick={() => setIsOpen(true)}
-        css="flex justify-between min-w-full"
       >
         {!onlyIcon && "Delete"}
         <Svg
@@ -35,9 +35,11 @@ export default function DeleteModal({
       {isOpen && (
         <Modal isOpen={isOpen} close={() => setIsOpen(false)}>
           <h1>{title}</h1>
-          <div>
+          <div className="flex">
             <Button onClick={() => setIsOpen(false)}>Cancel</Button>
             <Button
+              variant="secondary"
+              inProgress={isDeleting}
               onClick={() => {
                 setIsDeleting(true);
                 deleteHandler()
@@ -58,9 +60,7 @@ export default function DeleteModal({
                   });
               }}
             >
-              {!isDeleting && <span>Delete</span>}
-              {isDeleting && <span className="animate-pulse">Deleting...</span>}
-              <LoadingSpinner loading={isDeleting} />
+              {!isDeleting ? "Delete" : "Deleting..."}
             </Button>
           </div>
         </Modal>

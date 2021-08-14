@@ -21,14 +21,10 @@ export default function ModalCloseWarning({
             {text}
           </p>
           <div className="flex justify-center">
-            <Button
-              minimal
-              css="text-lg mr-2 w-36 py-2 duration-300"
-              onClick={back}
-            >
+            <Button variant="minimal" css="w-36" onClick={back}>
               Go back
             </Button>
-            <Button css="text-lg mr-2 w-36 py-2 duration-300" onClick={close}>
+            <Button css="w-36" onClick={close}>
               Yes
             </Button>
           </div>

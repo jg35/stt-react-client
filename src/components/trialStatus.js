@@ -11,6 +11,7 @@ export default function TrialStatus({ expiry, status, stripeCustomerId }) {
   }
   return (
     <Button
+      variant="minimal"
       onClick={() =>
         updateUiState(
           {

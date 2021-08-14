@@ -3,6 +3,7 @@ import { useLazyQuery } from "@apollo/client";
 import { uniq } from "lodash";
 import { SECTION_FETCH_CAPTURE_HEADER } from "~/lib/gql";
 import Button from "~/components/button";
+import ButtonGroup from "~/components/buttonGroup";
 import Svg from "~/components/svg";
 import TagSelect from "~/components/capture/tagSelect";
 import CaptureHeaderSkeleton from "~/components/capture/captureHeaderSkeleton";
@@ -112,7 +113,11 @@ export default function CaptureHeader({ init }) {
                 <h1 className="text-xl">{currentQuestion.title}</h1>
                 {questionOptions.length > 1 && (
                   <div id="shuffle-button-wrapper">
-                    <Button minimal onClick={() => shuffleQuestion()}>
+                    <Button
+                      variant="minimal"
+                      size="compact"
+                      onClick={() => shuffleQuestion()}
+                    >
                       <Svg name="shuffle" width="20" height="20"></Svg>
                     </Button>
                   </div>
@@ -156,9 +161,9 @@ export default function CaptureHeader({ init }) {
           )}
         </div>
 
-        <div className="flex">
+        <ButtonGroup>
           <Button
-            css="ml-3 items-center font-medium px-4 w-24"
+            css="font-medium px-4 w-24 h-full"
             onClick={() =>
               updateUiState(
                 makeCreateUserEventForm({}, { revealAfterCreate: true }),
@@ -169,7 +174,7 @@ export default function CaptureHeader({ init }) {
             Add event
           </Button>
           <Button
-            css="ml-3 items-center font-medium px-4 w-24"
+            css="font-medium px-4 w-24 h-full"
             onClick={() =>
               updateUiState(
                 makeCreateFragmentForm(
@@ -185,7 +190,7 @@ export default function CaptureHeader({ init }) {
             Add memory
           </Button>
           <Button
-            css="ml-3 items-center font-medium px-4 w-24"
+            css="font-medium px-4 w-24 h-full"
             onClick={() =>
               updateUiState(
                 makeCreateFragmentForm(
@@ -200,7 +205,7 @@ export default function CaptureHeader({ init }) {
           >
             Add photo
           </Button>
-        </div>
+        </ButtonGroup>
       </>
     );
   }

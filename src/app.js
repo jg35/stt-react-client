@@ -16,6 +16,7 @@ import Edit from "~/routes/edit";
 import Settings from "~/routes/settings";
 import Login from "~/routes/login";
 import NotFound from "~/routes/404";
+import ComponentLibrary from "~/routes/componentLibrary";
 
 import AuthWrap from "~/components/authWrap";
 import uiManager from "~/lib/uiManager";
@@ -88,6 +89,11 @@ export default function App() {
                 <Route path="/" exact>
                   <Timeline />
                 </Route>
+                {process.env.NODE_ENV === "development" && (
+                  <Route path="/library" exact>
+                    <ComponentLibrary />
+                  </Route>
+                )}
                 <Route path="">
                   <NotFound />
                 </Route>

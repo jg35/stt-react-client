@@ -1,38 +1,78 @@
-import React from "react";
+import { joinTailwindClasses } from "~/lib/util";
+
+function InProgress({ inProgress }) {
+  return (
+    inProgress && (
+      <svg
+        className="animate-spin -ml-1 mr-3 h-5 w-5"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <>
+          <circle
+            className="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            strokeWidth="4"
+          ></circle>
+          <path
+            className="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          ></path>
+        </>
+      </svg>
+    )
+  );
+}
 
 export default function Button({
+  id,
   onClick,
   children,
-  minimal = false,
-  cta = false,
   css = "",
+  size = "default",
+  variant = "default",
   type = "button",
   disabled = false,
-  bigCta = false,
-  id,
+
+  inProgress = false,
+  style = {},
 }) {
-  let variantCSS = "";
-  if (minimal) {
-    variantCSS = "bg-transparent hover:bg-lightestGray";
-  } else if (cta) {
-    variantCSS =
-      "border-2 bg-white border-black hover:bg-black hover:text-white active:border-2";
-  } else if (bigCta) {
-    variantCSS = "bg-offBlack hover:bg-black text-white";
-  } else {
-    variantCSS = "bg-lightestGray hover:bg-lightGray";
-  }
-  const CONTENT_IS_TEXT = typeof children === "string";
+  const baseCss = `flex justify-center items-center border-2 duration-200 ease-in w-full`;
+  const variants = {
+    minimal:
+      "bg-transparent hover:bg-lightestGray border-transparent hover:border-lightestGray",
+    default:
+      "bg-lightestGray hover:bg-lightGray border-lightestGray hover:border-lightGray hover:shadow-sm",
+    secondary:
+      "bg-white hover:bg-offBlack hover:text-white font-medium border-offBlack hover:shadow-md",
+    cta: "bg-offBlack hover:bg-black text-white font-medium border-offBlack hover:border-black hover:shadow-md",
+  };
+  const sizes = {
+    compact: "p-1 rounded",
+    default: "p-2 rounded-md",
+    large: "p-3 rounded-lg text-xl",
+  };
+
   return (
     <button
       id={id}
-      disabled={disabled}
       type={type}
-      className={`duration-200 ease-in flex items-center rounded-md px-2 py-1 ${variantCSS} ${css} ${
-        CONTENT_IS_TEXT ? "justify-center" : "justify-start"
-      }`}
       onClick={onClick}
+      disabled={disabled}
+      style={style}
+      className={joinTailwindClasses([
+        baseCss,
+        variants[variant],
+        sizes[size],
+        css,
+      ])}
     >
+      <InProgress inProgress={inProgress} />
       {children}
     </button>
   );

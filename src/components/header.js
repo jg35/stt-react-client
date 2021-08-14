@@ -61,6 +61,7 @@ export default function Header({ minimal = false }) {
         {isTimeline && isTimeline.isExact && (
           <div id="show-preview-btn">
             <Button
+              variant="minimal"
               onClick={() =>
                 updateUiState({ showPreview: !uiState.showPreview })
               }
