@@ -6,7 +6,7 @@ import { UPDATE_USER } from "~/lib/gql";
 import DatePicker from "~/components/capture/datepicker";
 import CountrySelect from "~/components/countrySelect";
 import FormError from "~/components/formError";
-import SubmitButton from "~/components/submitButton";
+import Button from "~/components/button";
 
 import useToastMessage from "~/hooks/useToastMessage";
 
@@ -91,13 +91,15 @@ export default function UserSettings({ dbUser }) {
                 <FormError error={errors.location} />
               </div>
               <div className="flex justify-end">
-                <SubmitButton
-                  formId="manage-user-settings-form"
+                <Button
+                  type="submit"
+                  variant="secondary"
+                  css="w-36"
                   disabled={!dirty}
-                  isSubmitting={isSubmitting}
+                  inProgress={isSubmitting}
                 >
                   {isSubmitting ? "Saving..." : "Save"}
-                </SubmitButton>
+                </Button>
               </div>
             </form>
           </div>

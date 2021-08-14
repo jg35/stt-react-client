@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import useToastMessage from "~/hooks/useToastMessage";
 import AccessListForm from "~/components/accessList/accessListForm";
 import ManagePrivacyStatus from "~/components/accessList/managePrivacyStatus";
-import SubmitButton from "~/components/submitButton";
+import Button from "~/components/button";
 import AccessListItems from "~/components/accessList/accessListItems";
 import FormHandleAvailabilityInput from "~/components/formHandleAvailabilityInput";
 
@@ -172,13 +172,15 @@ export default function ManagePrivacy({ dbUser }) {
                 </div>
               )}
               <div className="flex justify-end pt-6 mt-6 border-t border-lightGray">
-                <SubmitButton
+                <Button
+                  type="submit"
+                  variant="secondary"
+                  css="w-36"
                   disabled={!props.dirty}
-                  isSubmitting={props.isSubmitting}
-                  formId="manage-privacy-form"
+                  inProgress={props.isSubmitting}
                 >
                   {props.isSubmitting ? "Saving..." : "Save changes"}
-                </SubmitButton>
+                </Button>
               </div>
             </form>
           );

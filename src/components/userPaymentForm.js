@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useCustomQuery } from "~/hooks/useCustomApollo";
 import { ACTION_STRIPE_FETCH_PRICES } from "~/lib/gql";
 import Modal from "~/components/modal";
-import SubmitButton from "~/components/submitButton";
+import Button from "~/components/button";
 import SubscriptionOptionCard from "~/components/settings/subscriptionOptionCard";
 
 export default function UserPaymentForm({
@@ -74,14 +74,9 @@ export default function UserPaymentForm({
           name="appId"
           value={process.env.REACT_APP_HASURA_APP_ID}
         />
-        <SubmitButton
-          style={{ minWidth: "100%" }}
-          bigCta
-          disabled={!priceId}
-          formId="user-payment-form"
-        >
+        <Button type="submit" variant="cta" size="large" disabled={!priceId}>
           Continue
-        </SubmitButton>
+        </Button>
       </form>
     </>
   );

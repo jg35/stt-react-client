@@ -2,13 +2,12 @@ import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import useLogout from "~/hooks/useLogout";
 import { ACTION_DELETE_USER } from "~/lib/gql";
-import SubmitButton from "~/components/submitButton";
+import Button from "~/components/button";
 import useToastMessage from "~/hooks/useToastMessage";
 import Modal from "~/components/modal";
 import { Formik } from "formik";
 import { DeleteAccountSchema } from "~/lib/yup";
 import FormInput from "~/components/formInput";
-import Button from "~/components/button";
 import FormError from "~/components/formError";
 
 export default function ManageAccount({ dbUser }) {
@@ -91,14 +90,14 @@ export default function ManageAccount({ dbUser }) {
                   />
                   <FormError error={errors.confirm} />
                 </div>
-                <SubmitButton
-                  isSubmitting={isSubmitting}
+                <Button
+                  size="large"
+                  inProgress={isSubmitting}
                   disabled={!dirty || errors.confirm}
-                  width="w-full"
-                  formId="delete-account-modal-form"
+                  type="submit"
                 >
                   {isSubmitting ? "Deleting..." : "Delete account"} ⚠️
-                </SubmitButton>
+                </Button>
               </form>
             );
           }}

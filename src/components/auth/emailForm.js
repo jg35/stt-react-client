@@ -1,4 +1,3 @@
-import SubmitButton from "~/components/submitButton";
 import Button from "~/components/button";
 import FormInput from "~/components/formInput";
 import FormError from "~/components/formError";
@@ -11,6 +10,7 @@ export default function EmailForm({
   values,
   isSubmitting,
   dirty,
+  isValid,
   authView,
   resetForm,
   formSchema,
@@ -92,14 +92,14 @@ export default function EmailForm({
           </>
         )}
         <div className="flex">
-          <SubmitButton
-            isSubmitting={isSubmitting}
+          <Button
+            type="submit"
+            variant="cta"
+            inProgress={isSubmitting}
             disabled={!dirty}
-            formId="email-form"
-            width="w-full"
           >
             {getSubmitText(isSubmitting)}
-          </SubmitButton>
+          </Button>
         </div>
       </form>
       <div className="flex justify-between pt-4">

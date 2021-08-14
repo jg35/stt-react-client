@@ -1,12 +1,11 @@
 import Button from "~/components/button";
-import SubmitButton from "~/components/submitButton";
+import ButtonGroup from "~/components/buttonGroup";
 
 export default function FormActions({
   closeModal,
   itemId,
   isSubmitting,
   formIsDirty = false,
-  formId,
 }) {
   let submitText;
   if (isSubmitting) {
@@ -15,23 +14,26 @@ export default function FormActions({
     submitText = !itemId ? "Add" : "Update";
   }
   return (
-    <div className="flex justify-end pt-6 border-t border-lightGray">
+    <ButtonGroup css="justify-end pt-6 border-t border-lightGray">
       <Button
         disabled={isSubmitting}
         variant="minimal"
         size="large"
-        css="w-36 mr-2"
+        css="w-36"
         onClick={closeModal}
       >
         Cancel
       </Button>
-      <SubmitButton
+      <Button
+        type="submit"
+        variant="cta"
+        size="large"
+        css="w-36"
         disabled={!formIsDirty}
-        isSubmitting={isSubmitting}
-        formId={formId}
+        inProgress={isSubmitting}
       >
         {submitText}
-      </SubmitButton>
-    </div>
+      </Button>
+    </ButtonGroup>
   );
 }

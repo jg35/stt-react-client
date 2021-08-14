@@ -9,7 +9,7 @@ import { UPDATE_USER } from "~/lib/gql";
 import FormError from "~/components/formError";
 import CountrySelect from "~/components/countrySelect";
 import DatePicker from "~/components/capture/datepicker";
-import SubmitButton from "~/components/submitButton";
+import Button from "~/components/button";
 import { AuthContext } from "~/components/authWrap";
 import { useEffect } from "react";
 
@@ -126,14 +126,14 @@ export default function UserDeailsForm() {
                   </div>
                 </div>
 
-                <SubmitButton
-                  bigCta
-                  formId="user-details-form"
-                  style={{ width: "100%" }}
-                  isSubmitting={isSubmitting}
+                <Button
+                  type="submit"
+                  size="large"
+                  variant="cta"
+                  inProgress={isSubmitting}
                 >
                   {isSubmitting ? "Creating timeline..." : "Create timeline"}
-                </SubmitButton>
+                </Button>
               </form>
             )}
           </Formik>

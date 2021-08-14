@@ -1,4 +1,4 @@
-import SubmitButton from "~/components/submitButton";
+import Button from "~/components/button";
 import { DateTime } from "luxon";
 import UserPaymentForm from "~/components/userPaymentForm";
 
@@ -75,7 +75,9 @@ export default function ManageStripeCustomer({
           method="POST"
         >
           <input type="hidden" name="customerId" value={stripeCustomerId} />
-          <SubmitButton type="submit">Manage my subscription</SubmitButton>
+          <Button type="submit" variant="secondary" css="w-auto">
+            Manage my subscription
+          </Button>
         </form>
       )}
     </div>

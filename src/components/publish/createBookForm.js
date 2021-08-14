@@ -1,4 +1,4 @@
-import SubmitButton from "~/components/submitButton";
+import Button from "~/components/button";
 import ManagePrivacyStatus from "~/components/accessList/managePrivacyStatus";
 import AccessListStatusButton from "~/components/accessList/accessListStatusButton";
 import FormHandleAvailabilityInput from "~/components/formHandleAvailabilityInput";
@@ -55,15 +55,16 @@ export default function PublishOptionsForm({
       )}
 
       <div className="mx-auto mt-6">
-        <SubmitButton
+        <Button
+          type="submit"
+          size="large"
           disabled={!isValid}
-          isSubmitting={isSubmitting}
-          bigCta
-          width="w-60"
-          formId="publish-new-version-form"
+          inProgress={isSubmitting}
+          variant="cta"
+          css="w-60"
         >
           {isSubmitting ? "Creating your book..." : "Create your book"}
-        </SubmitButton>
+        </Button>
       </div>
     </div>
   );

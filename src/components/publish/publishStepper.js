@@ -1,5 +1,4 @@
 import Button from "~/components/button";
-import SubmitButton from "~/components/submitButton";
 
 export default function PublishStepper({
   stepBack,
@@ -40,12 +39,9 @@ export default function PublishStepper({
 
       <div className="w-36">
         {currentStep !== steps.length && (
-          <SubmitButton
-            formId="publish-new-version-form"
-            isSubmitting={isSubmitting}
-          >
+          <Button type="submit" variant="secondary" inProgress={isSubmitting}>
             {submitText}
-          </SubmitButton>
+          </Button>
         )}
       </div>
     </div>

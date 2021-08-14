@@ -1,6 +1,8 @@
-export default function ButtonGroup({ id, children: buttons }) {
+import { joinTailwindClasses } from "~/lib/util";
+
+export default function ButtonGroup({ id, children: buttons, css = "" }) {
   return (
-    <div id={id} className="flex min-h-full">
+    <div id={id} className={joinTailwindClasses(["flex min-h-full", css])}>
       {buttons.map((button, i) => {
         return (
           <div className="mx-2" key={i}>

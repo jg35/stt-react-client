@@ -12,7 +12,7 @@ import Modal from "~/components/modal";
 
 import FormInput from "~/components/formInput";
 import FormError from "~/components/formError";
-import SubmitButton from "~/components/submitButton";
+import Button from "~/components/button";
 import AccessListItems from "~/components/accessList/accessListItems";
 
 export default function AccessListModal({ closeModal }) {
@@ -112,14 +112,15 @@ export default function AccessListModal({ closeModal }) {
                   />
                   <FormError error={props.errors.email} />
                 </div>
-                <div className="ml-2">
-                  <SubmitButton
+                <div className="ml-2 w-32">
+                  <Button
+                    type="submit"
+                    variant="cta"
                     disabled={!props.dirty}
-                    isSubmitting={props.isSubmitting}
-                    formId="access-token-form"
+                    inProgress={props.isSubmitting}
                   >
                     {!props.isSubmitting ? "Add" : "Adding..."}
-                  </SubmitButton>
+                  </Button>
                 </div>
               </form>
             </div>

@@ -38,19 +38,23 @@ export default function Button({
   variant = "default",
   type = "button",
   disabled = false,
-
   inProgress = false,
   style = {},
 }) {
-  const baseCss = `flex justify-center items-center border-2 duration-200 ease-in w-full`;
+  const baseCss = `flex justify-center items-center border-2 duration-200 ease-in w-full ${
+    disabled ? "cursor-not-allowed opacity-80" : "cursor-pointer"
+  }`;
   const variants = {
-    minimal:
-      "bg-transparent hover:bg-lightestGray border-transparent hover:border-lightestGray",
-    default:
-      "bg-lightestGray hover:bg-lightGray border-lightestGray hover:border-lightGray hover:shadow-sm",
-    secondary:
-      "bg-white hover:bg-offBlack hover:text-white font-medium border-offBlack hover:shadow-md",
-    cta: "bg-offBlack hover:bg-black text-white font-medium border-offBlack hover:border-black hover:shadow-md",
+    minimal: `bg-transparent hover:bg-lightestGray border-transparent hover:border-lightestGray`,
+    default: `bg-lightestGray border-lightestGray ${
+      !disabled && "hover:border-lightGray hover:shadow-sm hover:bg-lightGray "
+    }`,
+    secondary: `bg-white font-medium border-offBlack ${
+      !disabled && "hover:bg-offBlack hover:text-white hover:shadow-md"
+    }`,
+    cta: `bg-offBlack text-white font-medium border-offBlack ${
+      !disabled && "hover:bg-black hover:border-black hover:shadow-md"
+    }`,
   };
   const sizes = {
     compact: "p-1 rounded",
