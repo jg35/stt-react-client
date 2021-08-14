@@ -8,12 +8,12 @@ export default function Card({
   size = "default",
 }) {
   const variants = {
-    default: "bg-white flex flex-col shadow-lg rounded-lg",
+    default: "bg-white flex flex-col",
   };
   const sizes = {
     compact: "p-2",
-    default: "p-4",
-    large: "p-6",
+    default: "p-4 shadow-lg rounded-lg",
+    large: "p-6 shadow-2xl rounded-lg",
   };
 
   return (

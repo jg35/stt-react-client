@@ -7,7 +7,7 @@ import Page from "~/components/page";
 import CaptureModal from "~/components/capture/captureModal";
 
 import EditPreview from "~/components/edit/editPreview";
-import EditPreviewSkeleton from "~/components/edit/editPreviewSkeleton";
+import PreviewSkeleton from "~/components/previewSkeleton";
 import EditPreviewContainer from "~/components/edit/editPreviewContainer";
 import useToastMessage from "~/hooks/useToastMessage";
 
@@ -49,7 +49,7 @@ export default function Edit() {
           {data ? (
             <EditPreview fragments={fragments} saveFragment={saveFragment} />
           ) : (
-            <EditPreviewSkeleton />
+            <PreviewSkeleton />
           )}
         </EditPreviewContainer>
       </div>

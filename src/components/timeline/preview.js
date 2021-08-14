@@ -3,7 +3,7 @@ import { debounce } from "lodash";
 import { scrollToFragment } from "~/lib/timeline";
 import Image from "~/components/image";
 import ChapterNavigator from "~/components/timeline/chapterNavigator";
-import PreivewSkeleton from "~/components/timeline/previewSkeleton";
+import PreivewSkeleton from "~/components/previewSkeleton";
 import { UIContext } from "~/app";
 import imageSizes from "~/lib/imageSizes";
 

@@ -11,5 +11,6 @@ export { default as FormInput } from "./formInput";
 export { default as FormInputRange } from "./formInputRange";
 export { default as FormLabel } from "./formLabel";
 export { default as PageContent } from "./pageContent";
+export { default as Skeleton } from "./skeleton";
 export { default as Surface } from "./surface";
 export { default as TabLink } from "./tabLink";

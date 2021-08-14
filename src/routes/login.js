@@ -10,7 +10,7 @@ import { AuthContext } from "~/components/authWrap";
 import EmailFormWrapper from "~/components/auth/emailFormWrapper";
 import OAuthLogin from "~/components/auth/oAuthLogin";
 import useToastMessage from "~/hooks/useToastMessage";
-import { Title, Text } from "~/components/_styled";
+import { Card, Title, Text } from "~/components/_styled";
 
 export default function Login() {
   const { setSuccess } = useToastMessage();
@@ -69,23 +69,25 @@ export default function Login() {
           filter: "blur(1.5px) grayscale(.4) ",
         }}
       ></div>
-      <div
-        className="h-auto shadow-2xl rounded-lg bg-white p-8 z-20 flex flex-col"
+      <Card
+        size="large"
+        css="z-20"
         style={{ width: "30rem", minHeight: "100%" }}
       >
-        <div className="text-center">
-          <Title size="headline" css="mb-2 text-center">
-            Stories To Tell
-          </Title>
-          <Text size="large">The easy way to create your life story</Text>
-        </div>
+        <Title size="headline" css="mb-2 text-center">
+          Stories To Tell
+        </Title>
+        <Text size="large" css="text-center">
+          The easy way to create your life story
+        </Text>
+
         <EmailFormWrapper
           setAuthView={setAuthView}
           authView={authView}
           submit={getEmailSubmitHandler()}
         />
         {authView === "LOGIN" && <OAuthLogin />}
-      </div>
+      </Card>
     </div>
   );
 }
