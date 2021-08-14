@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { useLazyQuery } from "@apollo/client";
 import { uniq } from "lodash";
 import { SECTION_FETCH_CAPTURE_HEADER } from "~/lib/gql";
-import { Button, ButtonGroup, Title } from "~/components/_styled";
+import { Button, ButtonGroup, Title, FormInput } from "~/components/_styled";
 import Svg from "~/components/svg";
 import TagSelect from "~/components/capture/tagSelect";
 import CaptureHeaderSkeleton from "~/components/capture/captureHeaderSkeleton";
@@ -123,10 +123,10 @@ export default function CaptureHeader({ init }) {
                 )}
               </div>
               <div className="flex justify-between items-center">
-                <input
+                <FormInput
                   id="form-question-text-input"
                   value={questionAnswer}
-                  onChange={(e) => {
+                  handleChange={(e) => {
                     setQuestionAnswer(e.target.value);
                     if (e.target.value.length > 15) {
                       updateUiState(
@@ -145,7 +145,7 @@ export default function CaptureHeader({ init }) {
                       }, 500);
                     }
                   }}
-                  className="input bg-white p-0 text-lg js-question-text-input"
+                  css="bg-white p-0 text-lg js-question-text-input"
                   style={{ maxWidth: "none" }}
                   placeholder={currentQuestion.placeholder}
                 />

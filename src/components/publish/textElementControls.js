@@ -3,6 +3,7 @@ import {
   Button,
   ButtonGroup,
   FormInput,
+  FormInputRange,
   FormLabel,
   Title,
 } from "~/components/_styled";
@@ -47,7 +48,7 @@ export default function TextElementControls({
       {isExpanded && (
         <div className="animate-fade-in px-4 pb-4 absolute top-11 left-0 bg-white z-40 shadow rounded-b">
           <div className="flex items-center justify-between my-4">
-            <span className="w-16">Text</span>
+            <FormLabel css="w-16 text-black">Text</FormLabel>
             <FormInput
               placeholder="Enter content"
               size="compact"
@@ -59,28 +60,26 @@ export default function TextElementControls({
           </div>
 
           <div className="flex justify-between items-center my-6">
-            <FormLabel className="w-16">Font</FormLabel>
+            <FormLabel css="w-16 text-black">Font</FormLabel>
             <FontSelect
               value={element.font}
               onChange={(font) => update(element.id, "font", font)}
             />
           </div>
           <div className="flex justify-between items-center my-6">
-            <FormLabel className="w-16">Size</FormLabel>
-            <input
-              className="flex-1"
-              value={element.size}
-              type="range"
+            <FormLabel css="w-16 text-black">Size</FormLabel>
+            <FormInputRange
               step={0.1}
               min={1}
               max={20}
-              onChange={(e) =>
+              handleChange={(e) =>
                 update(element.id, "size", parseInt(e.target.value))
               }
+              value={element.size}
             />
           </div>
           <div className="flex items-center my-6">
-            <span className="w-16">Color</span>
+            <FormLabel css="w-16 text-black">Color</FormLabel>
             <PopoverColorPicker
               color={element.color}
               onChange={(val) => {
@@ -89,7 +88,7 @@ export default function TextElementControls({
             />
           </div>
           <div className="flex items-center justify-between mt-6 mb-4">
-            <span className="w-16">Align</span>
+            <FormLabel css="w-16 text-black">Align</FormLabel>
             <ButtonGroup>
               <Button
                 variant="minimal"
