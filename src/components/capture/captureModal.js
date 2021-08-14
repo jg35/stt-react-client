@@ -19,6 +19,7 @@ import EventForm from "~/components/capture/eventForm";
 import FormActions from "~/components/capture/formActions";
 import { UIContext } from "~/app";
 import { EventSchema, FragmentSchema } from "~/lib/yup";
+import { Title } from "~/components/_styled";
 
 export default function CaptureModal({
   editView = false,
@@ -218,7 +219,7 @@ export default function CaptureModal({
             size={getModalSize(item.type)}
           >
             <form id="capture-form" onSubmit={props.handleSubmit}>
-              <h1 className="modal-title">{formTitle}</h1>
+              <Title size="large">{formTitle}</Title>
               {item.type === "EVENT" && <EventForm {...props} />}
 
               {item.type === "TEXT" && (

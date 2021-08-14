@@ -1,6 +1,5 @@
 import { useState } from "react";
-import Button from "~/components/button";
-import Card from "~/components/card";
+import { Button, Card, Title } from "~/components/_styled";
 import TextElementControls from "~/components/publish/textElementControls";
 
 export default function TextElementControlList({
@@ -13,7 +12,7 @@ export default function TextElementControlList({
   return (
     <div className="px-4 w-full">
       <Card>
-        <h1 className="text-xl mb-4">Text</h1>
+        <Title>Text</Title>
         {elements.map((el) => (
           <TextElementControls
             key={el.id}

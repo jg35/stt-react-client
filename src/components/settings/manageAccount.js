@@ -2,12 +2,17 @@ import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import useLogout from "~/hooks/useLogout";
 import { ACTION_DELETE_USER } from "~/lib/gql";
-import Button from "~/components/button";
+import {
+  Button,
+  FormInput,
+  FormLabel,
+  Title,
+  Text,
+} from "~/components/_styled";
 import useToastMessage from "~/hooks/useToastMessage";
 import Modal from "~/components/modal";
 import { Formik } from "formik";
 import { DeleteAccountSchema } from "~/lib/yup";
-import FormInput from "~/components/formInput";
 import FormError from "~/components/formError";
 
 export default function ManageAccount({ dbUser }) {
@@ -17,13 +22,11 @@ export default function ManageAccount({ dbUser }) {
 
   return (
     <div className="animate-fade-in">
-      <p className="font-medium mb-4 text-xl mx-auto bg-white py-2 text-left w-full">
-        Manage my account
-      </p>
+      <Title>Manage my account</Title>
 
-      <p className="text-lg my-2">
+      <Text size="large">
         If you would like to delete your account please click below.
-      </p>
+      </Text>
       <Button css="w-auto" onClick={() => setShowDeleteAccountModal(true)}>
         Delete my account
       </Button>
@@ -31,11 +34,9 @@ export default function ManageAccount({ dbUser }) {
         isOpen={showDeleteAccountModal}
         close={() => setShowDeleteAccountModal(false)}
       >
-        <p className="font-medium mb-4 text-xl mx-auto bg-white py-2 text-left w-full">
-          Delete your account
-        </p>
+        <Title>Delete your account</Title>
 
-        <p className="text-lg mb-10">
+        <Text size="large">
           Has it really come to this? We will be sad to see you go.
           <br />
           <br />
@@ -50,7 +51,7 @@ export default function ManageAccount({ dbUser }) {
           <br />
           If you change your mind, login within the next 14 days to restore your
           account.
-        </p>
+        </Text>
         <Formik
           initialValues={DeleteAccountSchema.cast()}
           validationSchema={DeleteAccountSchema}
@@ -77,9 +78,9 @@ export default function ManageAccount({ dbUser }) {
                 className=""
               >
                 <div className="form-control">
-                  <label className="label">
+                  <FormLabel className="label">
                     Enter "Delete my account and all of my data" to continue
-                  </label>
+                  </FormLabel>
                   <FormInput
                     value={values.confirm}
                     handleBlur={handleBlur}

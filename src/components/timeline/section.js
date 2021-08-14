@@ -5,6 +5,7 @@ import FragmentList from "~/components/timeline/fragmentList";
 import UserEvent from "~/components/timeline/userEvent";
 import WorldEvent from "~/components/timeline/worldEvent";
 import SectionCaptureActions from "~/components/timeline/sectionCaptureActions";
+import { Title, Text } from "~/components/_styled";
 
 export default function Section({ section, index }) {
   const [showActions, setShowActions] = useState(false);
@@ -20,10 +21,12 @@ export default function Section({ section, index }) {
     >
       <header className="flex justify-between h-10 pl-2">
         <div className="mb-4 flex items-center">
-          <h1 className="text-lg font-medium">
+          <Title size="compact">
             {section.title} &middot;{" "}
-            <span className="text-gray mb-4">{section.age}</span>
-          </h1>
+            <Text tag="span" size="large" css="text-gray">
+              {section.age}
+            </Text>
+          </Title>
         </div>
 
         <SectionCaptureActions

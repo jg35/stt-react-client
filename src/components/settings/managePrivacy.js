@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
 import useToastMessage from "~/hooks/useToastMessage";
 import AccessListForm from "~/components/accessList/accessListForm";
 import ManagePrivacyStatus from "~/components/accessList/managePrivacyStatus";
-import Button from "~/components/button";
+import { Button, Title } from "~/components/_styled";
 import AccessListItems from "~/components/accessList/accessListItems";
 import FormHandleAvailabilityInput from "~/components/formHandleAvailabilityInput";
 
@@ -56,9 +55,7 @@ export default function ManagePrivacy({ dbUser }) {
 
   return (
     <div>
-      <p className="font-medium mb-4 text-xl mx-auto bg-white py-2 text-left w-full">
-        Manage access to your book
-      </p>
+      <Title>Manage access to your book</Title>
       <Formik
         initialValues={PrivacySettingsForm.cast({
           privacyStatus: data.stt_version[0].privacyStatus,

@@ -5,6 +5,7 @@ import colors from "~/lib/colors";
 import { renderFragmentDate } from "~/lib/util";
 import PhotoFragment from "~/components/edit/photoFragment";
 import FragmentHeaderMenu from "~/components/timeline/fragmentHeaderMenu";
+import { Text } from "~/components/_styled";
 
 export default function EditableFragment({ fragment, saveFragment }) {
   const [showInfo, setShowInfo] = useState(false);
@@ -43,9 +44,9 @@ export default function EditableFragment({ fragment, saveFragment }) {
         <div className="edit-fragment-info absolute -top-8 h-8 animate-fade-in min-w-full flex justify-between items-center z-20">
           <div className="text-gray">{fragment.title || ""}</div>
           <div className="flex items-center">
-            <span className="mr-2 text-gray ">
+            <Text size="compact" tag="span" css="mr-2 text-gray">
               {renderFragmentDate(fragment.date)}
-            </span>
+            </Text>
             <FragmentHeaderMenu
               fragment={fragment}
               excludeActions={["CHANGE_VISIBILITY"]}

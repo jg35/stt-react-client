@@ -1,10 +1,14 @@
 import { useState, useEffect } from "react";
-import Button from "~/components/button";
-import ButtonGroup from "~/components/buttonGroup";
+import {
+  Button,
+  ButtonGroup,
+  FormInput,
+  FormLabel,
+  Title,
+} from "~/components/_styled";
 import Svg from "~/components/svg";
 import PopoverColorPicker from "~/components/popoverColorPicker";
 import FontSelect from "~/components/fontSelect";
-import FormInput from "~/components/formInput";
 
 export default function TextElementControls({
   update,
@@ -27,7 +31,9 @@ export default function TextElementControls({
         className="flex justify-between cursor-pointer py-2 px-4 items-center bg-lightestGray "
         onClick={() => expand(isExpanded ? null : element.id)}
       >
-        <h2 className="text-lg font-normal">{element.content}</h2>
+        <Title tag="h2" size="compact" css="font-normal">
+          {element.content}
+        </Title>
         <div className="flex">
           {!element.originalContent && (
             <Button size="compact" onClick={() => remove(element.id)}>
@@ -44,8 +50,7 @@ export default function TextElementControls({
             <span className="w-16">Text</span>
             <FormInput
               placeholder="Enter content"
-              compact
-              autoFocus={false}
+              size="compact"
               value={element.content}
               handleChange={(e) =>
                 update(element.id, "content", e.target.value)
@@ -54,14 +59,14 @@ export default function TextElementControls({
           </div>
 
           <div className="flex justify-between items-center my-6">
-            <label className="w-16">Font</label>
+            <FormLabel className="w-16">Font</FormLabel>
             <FontSelect
               value={element.font}
               onChange={(font) => update(element.id, "font", font)}
             />
           </div>
           <div className="flex justify-between items-center my-6">
-            <label className="w-16">Size</label>
+            <FormLabel className="w-16">Size</FormLabel>
             <input
               className="flex-1"
               value={element.size}

@@ -1,4 +1,4 @@
-import FormInput from "~/components/formInput";
+import { FormInput, FormLabel, Title } from "~/components/_styled";
 import DatePicker from "~/components/capture/datepicker";
 import FormError from "~/components/formError";
 
@@ -14,13 +14,13 @@ export default function PublishOptionsForm({
       className="flex flex-col justify-center pt-20 w-6/12 mx-auto"
       style={{ maxWidth: "600px" }}
     >
-      <p className="font-medium mb-6 text-xl">
+      <Title>
         Lets start with a few bits of information to help eReaders and other
         devices understand your book
-      </p>
+      </Title>
 
       <div className="form-control w-full">
-        <label>Title</label>
+        <FormLabel>Title</FormLabel>
         <FormInput
           name="title"
           placeholder="The all important title - no pressure! 😊"
@@ -32,7 +32,7 @@ export default function PublishOptionsForm({
         <FormError error={errors.title} />
       </div>
       <div className="form-control w-full">
-        <label>Author</label>
+        <FormLabel>Author</FormLabel>
         <FormInput
           name="author"
           placeholder="Author name (probably you!)"
@@ -44,7 +44,7 @@ export default function PublishOptionsForm({
         <FormError error={errors.author} />
       </div>
       <div className="form-control w-full">
-        <label>Publication date</label>
+        <FormLabel>Publication date</FormLabel>
         <DatePicker
           date={values.publishedAt}
           error={errors.publishedAt}

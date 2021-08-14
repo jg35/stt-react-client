@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import Button from "~/components/button";
+import Button from "~/components/_styled/button";
 import useClickOutside from "~/hooks/useClickOutside";
 
 export default function Menu({

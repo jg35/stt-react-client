@@ -1,5 +1,4 @@
-import Card from "~/components/card";
-import Button from "~/components/button";
+import { Button, Card, Title } from "~/components/_styled";
 
 export default function ModalCloseWarning({
   text = "⚠️ You have unsaved changes. Are you sure you want to continue?",
@@ -17,9 +16,7 @@ export default function ModalCloseWarning({
           css="min-h-full w-full bg-white p-4 flex flex-col justify-center"
           onClick={(e) => e.stopPropagation()}
         >
-          <p className="font-medium my-10 text-xl mx-auto text-center">
-            {text}
-          </p>
+          <Title css="mb-6 mx-auto text-center">{text}</Title>
           <div className="flex justify-center">
             <Button variant="minimal" css="w-36" onClick={back}>
               Go back

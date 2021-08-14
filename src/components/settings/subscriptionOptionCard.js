@@ -1,4 +1,4 @@
-import Button from "~/components/button";
+import { Button, Title, Text } from "~/components/_styled";
 
 function getTitle(interval) {
   switch (interval) {
@@ -28,8 +28,8 @@ export default function SubscriptionOptionCard({
           index === 0 ? "mr-1" : "ml-1"
         } rounded ${selected ? "border-green" : "border-black"}`}
       >
-        <h1 className={`text-xl`}>{getTitle(option.interval)}</h1>
-        <p className={`text-lg`}>{formatPrice(option.amount)}</p>
+        <Title>{getTitle(option.interval)}</Title>
+        <Text size="large">{formatPrice(option.amount)}</Text>
         <div className="pt-6">
           <Button
             variant="minimal"

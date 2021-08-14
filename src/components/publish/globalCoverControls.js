@@ -1,7 +1,11 @@
 import { useState } from "react";
-import Card from "~/components/card";
-import Button from "~/components/button";
-import ButtonGroup from "~/components/buttonGroup";
+import {
+  Button,
+  ButtonGroup,
+  Card,
+  Title,
+  FormLabel,
+} from "~/components/_styled";
 import PopoverColorPicker from "~/components/popoverColorPicker";
 import Uppy from "~/components/uppy";
 
@@ -15,9 +19,9 @@ export default function GlobalCoverControls({
   return (
     <div className="w-full px-4 animate-fade-in">
       <Card>
-        <h1 className="text-xl pb-2 mb-4 ">Layout</h1>
+        <Title className="text-xl pb-2 mb-4 ">Layout</Title>
         <div className="flex items-center border-b border-lightGray pb-6">
-          <span className="mr-6">Background</span>
+          <FormLabel css="mr-6">Background</FormLabel>
           <PopoverColorPicker
             color={bgColor}
             onChange={(val) => {
@@ -33,7 +37,7 @@ export default function GlobalCoverControls({
               pointerEvents: imageUrl ? "auto" : "none",
             }}
           >
-            <span className="w-16">Image</span>
+            <FormLabel css="w-16">Image</FormLabel>
             <ButtonGroup>
               <Button
                 variant="minimal"

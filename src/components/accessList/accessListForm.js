@@ -1,11 +1,12 @@
-import FormInput from "~/components/formInput";
+import { Button, FormInput, Title } from "~/components/_styled";
 import FormError from "~/components/formError";
-import Button from "~/components/button";
 
 export default function AccessListForm({ formProps, addNewToken }) {
   return (
     <>
-      <h2 className="font-medium mb-2 text-lg text-gray">Add readers</h2>
+      <Title tag="h2" size="compact" css="text-gray">
+        Add readers
+      </Title>
 
       <div className="flex-1">
         <FormInput

@@ -3,8 +3,7 @@ import { useMutation } from "@apollo/client";
 import { throttle } from "lodash";
 import { ACTION_CHECK_HANDLE_AVAILABILITY } from "~/lib/gql";
 import colors from "~/lib/colors";
-import FormInput from "~/components/formInput";
-import FormError from "~/components/formError";
+import { FormInput, FormCaption, FormLabel } from "~/components/_styled";
 import LoadingSpinner from "~/components/loadingSpinner";
 
 export default function FormHandleAvailabilityInput({
@@ -52,18 +51,56 @@ export default function FormHandleAvailabilityInput({
     }, 1000),
     []
   );
+
+  function getCaptionText() {
+    if (error) {
+      return error.toLowerCase();
+    } else if (!error && value && !loading && touched) {
+      return (
+        <>
+          Your book will be available at{" "}
+          <strong>read.storiestotell.app/{value}</strong>
+        </>
+      );
+    } else if (!error && value && !loading && !touched && savedHandle) {
+      return (
+        <>
+          Your book is available at{" "}
+          <strong>read.storiestotell.app/{value}</strong>
+        </>
+      );
+    } else if (!error && !value) {
+      return (
+        <>
+          Your book will be available at{" "}
+          <strong>read.storiestotell.app/your-handle</strong>
+        </>
+      );
+    } else {
+      return null;
+    }
+  }
+
+  function getCaptionVariant() {
+    if (error) {
+      return "error";
+    } else if (!error && value && !loading && touched) {
+      return "success";
+    } else {
+      return "info";
+    }
+  }
   return (
     <div>
-      <label className="mb-2 block font-medium text-lg">Handle</label>
+      <FormLabel>Handle</FormLabel>
       <FormInput
-        autoFocus={false}
         error={error}
         value={value}
         name="publicHandle"
         placeholder="read.storiestotell.app/your-handle"
         handleBlur={handleBlur}
         handleChange={handleChange}
-        onKeyUp={(e) => {
+        handleKeyUp={(e) => {
           setTouched(true);
           setFieldError("publicHandle", null);
           setIsLoading(true);
@@ -71,27 +108,10 @@ export default function FormHandleAvailabilityInput({
         }}
       />
       <div className="flex justify-between items-center py-2">
-        <div>
-          {error && <FormError error={error} lowercase={true} />}
-          {!error && value && !loading && touched && (
-            <p className="text-successGreen">
-              Your book will be available at{" "}
-              <strong>read.storiestotell.app/{value}</strong>
-            </p>
-          )}
-          {!error && value && !loading && !touched && savedHandle && (
-            <p className="text-gray">
-              Your book is available at{" "}
-              <strong>read.storiestotell.app/{value}</strong>
-            </p>
-          )}
-          {!error && !value && (
-            <p className="text-gray">
-              Your book will be available at{" "}
-              <strong>read.storiestotell.app/your-handle</strong>
-            </p>
-          )}
-        </div>
+        <FormCaption variant={getCaptionVariant()}>
+          {getCaptionText()}
+        </FormCaption>
+
         {loading && (
           <div className="animate-fade-in flex items-center text-gray">
             <LoadingSpinner

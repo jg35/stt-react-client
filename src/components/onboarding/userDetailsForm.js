@@ -9,7 +9,7 @@ import { UPDATE_USER } from "~/lib/gql";
 import FormError from "~/components/formError";
 import CountrySelect from "~/components/countrySelect";
 import DatePicker from "~/components/capture/datepicker";
-import Button from "~/components/button";
+import { Button, FormLabel, Title, Text } from "~/components/_styled";
 import { AuthContext } from "~/components/authWrap";
 import { useEffect } from "react";
 
@@ -48,13 +48,13 @@ export default function UserDeailsForm() {
     <div className="min-h-full w-screen absolute top-0 left-0 flex justify-center items-center z-40 bg-transparent">
       <div className="w-96 h-3/6 rounded shadow-xl p-4 bg-white border-2 border-black h-auto flex flex-col justify-between animate-fade-in">
         <div className="h-full flex flex-col">
-          <h1 className="text-2xl text-center">
+          <Title css="text-center">
             Hello {user.displayName.split(" ")[0]}! 👋
-          </h1>
-          <p className="text-lg my-6">
+          </Title>
+          <Text size="large">
             Let's fill in your date of birth and location so we can setup your
             timeline.
-          </p>
+          </Text>
 
           <Formik
             initialValues={OnboardingSchema.cast()}
@@ -90,7 +90,7 @@ export default function UserDeailsForm() {
                     className="flex-1 form-control"
                     style={{ marginBottom: "10px" }}
                   >
-                    <label>Date of birth</label>
+                    <FormLabel>Date of birth</FormLabel>
                     <DatePicker
                       minDate={new Date().setYear(
                         new Date().getFullYear() - 100
@@ -114,7 +114,7 @@ export default function UserDeailsForm() {
                     className="flex-1 form-control"
                     style={{ marginBottom: "10px" }}
                   >
-                    <label>Your country</label>
+                    <FormLabel>Your country</FormLabel>
                     <CountrySelect
                       name="location"
                       handleChange={handleChange}

@@ -10,6 +10,7 @@ import { AuthContext } from "~/components/authWrap";
 import EmailFormWrapper from "~/components/auth/emailFormWrapper";
 import OAuthLogin from "~/components/auth/oAuthLogin";
 import useToastMessage from "~/hooks/useToastMessage";
+import { Title, Text } from "~/components/_styled";
 
 export default function Login() {
   const { setSuccess } = useToastMessage();
@@ -73,8 +74,10 @@ export default function Login() {
         style={{ width: "30rem", minHeight: "100%" }}
       >
         <div className="text-center">
-          <h1 className="text-4xl mb-2 font-bold">Stories To Tell</h1>
-          <p className="text-lg mb-6">The easy way to create your life story</p>
+          <Title size="headline" css="mb-2 text-center">
+            Stories To Tell
+          </Title>
+          <Text size="large">The easy way to create your life story</Text>
         </div>
         <EmailFormWrapper
           setAuthView={setAuthView}

@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { useRouteMatch } from "react-router";
 import { NavLink } from "react-router-dom";
 import Svg from "~/components/svg";
-import Button from "~/components/button";
+import { Button } from "~/components/_styled";
 import MainMenu from "~/components/mainMenu";
 import TrialStatus from "~/components/trialStatus";
 import { UIContext } from "~/app";

@@ -1,13 +1,17 @@
 import { signInWithGoogle, signInWithFacebook } from "~/lib/auth";
-import Button from "~/components/button";
+import { Button, Title } from "~/components/_styled";
 import Svg from "~/components/svg";
 
 export default function OAuthForm() {
   return (
     <>
-      <p className="text-lg mb-4 font-medium font-medium text-center border-t border-lightGray mt-4 pt-4">
+      <Title
+        tag="h2"
+        size="compact"
+        css="text-center border-t border-lightGray mt-4 mb-4 pt-4"
+      >
         Or continue with
-      </p>
+      </Title>
       <div className="flex items-center ">
         <div className="flex-1 pr-1">
           <Button variant="cta" size="large" onClick={signInWithGoogle}>

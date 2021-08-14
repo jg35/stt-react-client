@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import messages from "~/lib/messages";
 import Svg from "~/components/svg";
-import Button from "~/components/button";
+import { Button, Text } from "~/components/_styled";
 import { UIContext } from "~/app";
 
 export default function InfoMessage({ name }) {
@@ -30,7 +30,7 @@ export default function InfoMessage({ name }) {
           <Svg name="info" />
         </div>
         <div>
-          <p className="flex-1 px-2 mb-2 text-base">{renderMessage}</p>
+          <Text>{renderMessage}</Text>
           <div className="">
             <Button onClick={() => hideMessage()}>Discard this message</Button>
           </div>

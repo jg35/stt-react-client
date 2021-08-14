@@ -101,14 +101,10 @@ export default function FragmentHeaderMenu({
         >
           <div>
             {!updateFragmentLoading && (
-              <span className="">
-                {fragment.hidden ? "Make public" : "Make private"}
-              </span>
+              <>{fragment.hidden ? "Make public" : "Make private"}</>
             )}
             {updateFragmentLoading && (
-              <span className="animate-pulse">
-                {fragment.hidden ? "Making public..." : "Making private..."}
-              </span>
+              <>{fragment.hidden ? "Making public..." : "Making private..."}</>
             )}
           </div>
           <div className="flex">

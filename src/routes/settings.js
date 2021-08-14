@@ -2,13 +2,12 @@ import { useContext, useState } from "react";
 import { useHistory } from "react-router";
 import { AuthContext } from "~/components/authWrap";
 import Page from "~/components/page";
-import Card from "~/components/card";
+import { Card, TabLink } from "~/components/_styled";
 
 import ManageUser from "~/components/settings/manageUser";
 import ManageBilling from "~/components/settings/manageBilling";
 import ManageAccount from "~/components/settings/manageAccount";
 import ManagePrivacy from "~/components/settings/managePrivacy";
-import TabLink from "~/components/settings/tabLink";
 
 export default function Settings() {
   const TABS = ["SETTINGS", "BILLING", "ACCOUNT", "PRIVACY"];

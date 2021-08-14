@@ -1,4 +1,4 @@
-import Button from "~/components/button";
+import { Button, Text } from "~/components/_styled";
 
 export default function PublishStepper({
   stepBack,
@@ -28,12 +28,13 @@ export default function PublishStepper({
       </div>
       <div className="flex justify-around p-4  w-8/12">
         {steps.map((step, i) => (
-          <span
+          <Text
+            tag="span"
             key={i}
-            className={`font-bold ${currentStep !== i + 1 && "text-gray"}`}
+            css={`font-bold ${currentStep !== i + 1 && "text-gray"}`}
           >
             {step}
-          </span>
+          </Text>
         ))}
       </div>
 

@@ -1,7 +1,7 @@
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import { useMutation } from "@apollo/client";
 import { ACTION_S3_GET_SIGNED_URL } from "~/lib/gql";
-import Button from "~/components/button";
+import { Button } from "~/components/_styled";
 
 export default function VersionLink({ format, publishedPath, small = false }) {
   const link = useRef(null);

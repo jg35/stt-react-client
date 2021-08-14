@@ -2,8 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { useLazyQuery } from "@apollo/client";
 import { uniq } from "lodash";
 import { SECTION_FETCH_CAPTURE_HEADER } from "~/lib/gql";
-import Button from "~/components/button";
-import ButtonGroup from "~/components/buttonGroup";
+import { Button, ButtonGroup, Title } from "~/components/_styled";
 import Svg from "~/components/svg";
 import TagSelect from "~/components/capture/tagSelect";
 import CaptureHeaderSkeleton from "~/components/capture/captureHeaderSkeleton";
@@ -110,7 +109,7 @@ export default function CaptureHeader({ init }) {
           {currentQuestion && (
             <>
               <div className="flex justify-between items-center mb-2">
-                <h1 className="text-xl">{currentQuestion.title}</h1>
+                <Title css="mb-0">{currentQuestion.title}</Title>
                 {questionOptions.length > 1 && (
                   <div id="shuffle-button-wrapper">
                     <Button

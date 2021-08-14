@@ -3,18 +3,18 @@ import React from "react";
 import Menu from "~/components/menu";
 import Svg from "~/components/svg";
 import colors from "~/lib/colors";
-import Buttton from "~/components/button";
+import { Button } from "~/components/_styled";
 
 function TagSelectOption({ tag, selectTag }) {
   return (
-    <Buttton
+    <Button
       variant="minimal"
       size="compact"
       css="justify-end capitalize"
       onClick={() => selectTag(tag)}
     >
       {tag}
-    </Buttton>
+    </Button>
   );
 }
 

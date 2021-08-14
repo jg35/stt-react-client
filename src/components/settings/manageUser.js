@@ -6,7 +6,7 @@ import { UPDATE_USER } from "~/lib/gql";
 import DatePicker from "~/components/capture/datepicker";
 import CountrySelect from "~/components/countrySelect";
 import FormError from "~/components/formError";
-import Button from "~/components/button";
+import { Button, Title, FormLabel } from "~/components/_styled";
 
 import useToastMessage from "~/hooks/useToastMessage";
 
@@ -59,12 +59,10 @@ export default function UserSettings({ dbUser }) {
       }) => {
         return (
           <div className="animate-fade-in">
-            <p className="font-medium mb-4 text-xl mx-auto bg-white py-2 text-left w-full">
-              Update your user settings
-            </p>
+            <Title>Update your user settings</Title>
             <form id="manage-user-settings-form" onSubmit={handleSubmit}>
               <div className="form-control">
-                <label>Date of birth</label>
+                <FormLabel>Date of birth</FormLabel>
                 <DatePicker
                   minDate={new Date().setYear(new Date().getFullYear() - 100)}
                   maxDate={new Date().setYear(new Date().getFullYear() - 18)}
@@ -80,7 +78,7 @@ export default function UserSettings({ dbUser }) {
                 />
               </div>
               <div className="form-control my-6">
-                <label>Your country</label>
+                <FormLabel>Your country</FormLabel>
                 <CountrySelect
                   name="location"
                   handleChange={handleChange}

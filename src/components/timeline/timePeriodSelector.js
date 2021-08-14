@@ -1,7 +1,5 @@
 import React, { useContext } from "react";
-import Button from "~/components/button";
-import ButtonGroup from "~/components/buttonGroup";
-import { scrollToUndated } from "~/lib/timeline";
+import { Button, ButtonGroup, Text } from "~/components/_styled";
 import { UIContext } from "~/app";
 
 export default function TimePeriodSelector({ timelinePeriod, orphanCount }) {
@@ -9,7 +7,9 @@ export default function TimePeriodSelector({ timelinePeriod, orphanCount }) {
 
   return (
     <div className="h-10 bg-white sticky bottom-4 w-max flex items-center shadow-lg py-6 px-4 rounded border">
-      <span className="font-medium mr-2">View timeline in:</span>
+      <Text tag="span" size="compact" css="font-medium mr-2">
+        View timeline in:
+      </Text>
       <ButtonGroup>
         <Button
           size="compact"
@@ -39,22 +39,6 @@ export default function TimePeriodSelector({ timelinePeriod, orphanCount }) {
           Months
         </Button>
       </ButtonGroup>
-      {/* {orphanCount > 0 && (
-        <>
-          <span className="font-medium ml-4 pl-4 mr-2 border-l">
-            {orphanCount} {orphanCount > 1 ? "memories" : "memory"} outside
-            timeline
-          </span>
-
-          <Button
-            cta
-            onClick={() => scrollToUndated()}
-            css={`mx-2 ${timelinePeriod === "MONTH" && "underline"}`}
-          >
-            View memories
-          </Button>
-        </>
-      )} */}
     </div>
   );
 }

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useCustomQuery } from "~/hooks/useCustomApollo";
 import { ACTION_STRIPE_FETCH_PRICES } from "~/lib/gql";
 import Modal from "~/components/modal";
-import Button from "~/components/button";
+import { Title, Button, Text } from "~/components/_styled";
 import SubscriptionOptionCard from "~/components/settings/subscriptionOptionCard";
 
 export default function UserPaymentForm({
@@ -42,10 +42,10 @@ export default function UserPaymentForm({
   const inner = (
     <>
       <div>
-        <h1 className="text-xl">
+        <Title className="text-xl">
           {type === "CHOOSE_PLAN" ? "Pick a plan" : "Manage your subscription"}
-        </h1>
-        <p className="mt-2">{getPaymentMessage()}</p>
+        </Title>
+        <Text>{getPaymentMessage()}</Text>
       </div>
       {subscriptionStatus !== "PAYMENT_FAILED" && (
         <div className="mt-6 flex flex-wrap">

@@ -1,5 +1,5 @@
 import FormError from "~/components/formError";
-import FormInput from "~/components/formInput";
+import { FormInput, FormLabel } from "~/components/_styled";
 import DatePicker from "~/components/capture/datepicker";
 
 export default function EventForm({
@@ -24,7 +24,7 @@ export default function EventForm({
       </div>
 
       <div className="form-control">
-        <label>Date</label>
+        <FormLabel>Date</FormLabel>
         <DatePicker
           error={errors.date}
           date={values.date}

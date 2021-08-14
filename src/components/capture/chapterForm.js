@@ -1,6 +1,6 @@
 import DatePicker from "~/components/capture/datepicker";
 import FormError from "~/components/formError";
-import FormInput from "~/components/formInput";
+import { FormInput, FormLabel } from "~/components/_styled";
 
 export default function ChapterForm({
   handleChange,
@@ -27,7 +27,7 @@ export default function ChapterForm({
       )}
 
       <div className="form-control">
-        <label>Date</label>
+        <FormLabel>Date</FormLabel>
         <DatePicker
           date={values.date}
           error={errors.date}

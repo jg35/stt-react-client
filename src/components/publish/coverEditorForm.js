@@ -10,6 +10,7 @@ import Image from "~/components/image";
 import SnapElement from "~/components/publish/snapElement";
 import TextElementControlList from "~/components/publish/textElementControlList";
 import GlobalCoverControls from "~/components/publish/globalCoverControls";
+import { Card, Title } from "~/components/_styled";
 
 export default function CoverEditorForm({ values, setFieldValue }) {
   const cover = values.theme.cover;
@@ -114,10 +115,12 @@ export default function CoverEditorForm({ values, setFieldValue }) {
         backgroundPosition: "-1px -1px",
       }}
     >
-      <p className="font-medium mb-4 text-xl mx-auto bg-white p-2 rounded shadow text-center">
-        Here you can add photos, alter layout, drag things around and add other
-        text elements to make a beautiful cover for your book!
-      </p>
+      <Card css="mb-4 mx-auto">
+        <Title css="text-center mx-auto mb-0">
+          Here you can add photos, alter layout, drag things around and add
+          other text elements to make a beautiful cover for your book!
+        </Title>
+      </Card>
       <div className="flex justify-between w-full">
         <div className="w-80 flex justify-between flex-col">
           <div>

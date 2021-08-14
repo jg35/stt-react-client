@@ -1,5 +1,5 @@
 import DatePicker from "~/components/capture/datepicker";
-import FormInput from "~/components/formInput";
+import { FormInput, FormLabel } from "~/components/_styled";
 import FormError from "~/components/formError";
 import Uppy from "~/components/uppy";
 
@@ -25,9 +25,8 @@ export default function PhotoForm({
 
       <div className="flex flex-col ml-10 w-96">
         <div className="form-control w-full">
-          <label>Caption</label>
+          <FormLabel>Caption</FormLabel>
           <FormInput
-            autoFocus={false}
             name="mediaCaption"
             placeholder="Add a caption"
             value={values.mediaCaption}
@@ -37,7 +36,7 @@ export default function PhotoForm({
           />
         </div>
         <div className="form-control w-full">
-          <label>Date</label>
+          <FormLabel>Date</FormLabel>
           <DatePicker
             date={values.date}
             error={errors.date}

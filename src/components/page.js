@@ -1,11 +1,12 @@
 import React from "react";
 import Header from "~/components/header";
+import { Surface, PageContent } from "~/components/_styled";
 
 export default function Page({ children, minimal = false, css = "" }) {
   return (
-    <div id="page" className={`page bg-offWhite ${css}`}>
+    <Surface id="page" css={css}>
       <Header minimal={minimal} />
-      <main className="page-content animate-fade-in">{children}</main>
-    </div>
+      <PageContent>{children}</PageContent>
+    </Surface>
   );
 }

@@ -1,4 +1,4 @@
-import Button from "~/components/button";
+import { Button, Title, Text } from "~/components/_styled";
 import ManagePrivacyStatus from "~/components/accessList/managePrivacyStatus";
 import AccessListStatusButton from "~/components/accessList/accessListStatusButton";
 import FormHandleAvailabilityInput from "~/components/formHandleAvailabilityInput";
@@ -19,9 +19,7 @@ export default function PublishOptionsForm({
       className="flex flex-col justify-center pt-20 w-12/12 lg:w-6/12 mx-auto"
       style={{ maxWidth: "768px" }}
     >
-      <p className="font-medium mb-6 text-xl p-2">
-        Decide how you would like to share your book
-      </p>
+      <Title>Decide how you would like to share your book</Title>
 
       <div className="mb-6">
         <ManagePrivacyStatus
@@ -38,11 +36,11 @@ export default function PublishOptionsForm({
 
       {!savedHandle && (
         <div className="mt-6">
-          <p className="text-xl font-medium">URL handle</p>
-          <p className="text-lg mb-4 ">
+          <Title tag="h2">URL handle</Title>
+          <Text size="large">
             Now let's set your handle. This will form the web address where
             readers can access your book.
-          </p>
+          </Text>
           <FormHandleAvailabilityInput
             value={values.publicHandle}
             error={errors.publicHandle}

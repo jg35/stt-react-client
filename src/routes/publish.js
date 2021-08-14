@@ -6,11 +6,10 @@ import { useCustomQuery } from "~/hooks/useCustomApollo";
 import { FETCH_PUBLISH_VIEW, DELETE_VERSION } from "~/lib/gql";
 import { AuthContext } from "~/components/authWrap";
 import Page from "~/components/page";
-import Card from "~/components/card";
+import { Button, Card, Title } from "~/components/_styled";
 import VersionList from "~/components/publish/versionList";
 import LatestVersion from "~/components/publish/latestVersion";
 import PublishSkeleton from "~/components/publish/publishSkeleton";
-import Button from "~/components/button";
 import AccessList from "~/components/accessList/accessList";
 import useToastMessage from "~/hooks/useToastMessage";
 
@@ -69,7 +68,7 @@ export default function Publish() {
         {versions.length > 0 ? (
           <div>
             <div>
-              <h2 className="text-xl my-4">Published version</h2>
+              <Title css="my-4">Published version</Title>
               <Card>
                 <LatestVersion
                   onlyVersion={versions.length === 1}
@@ -89,7 +88,9 @@ export default function Publish() {
             </div>
             {versions.slice(1).length >= 1 && (
               <div>
-                <h2 className="text-lg my-2">Other versions</h2>
+                <Title tag="h3" css="mt-2 mb-2" size="compact">
+                  Other versions
+                </Title>
                 <Card css="pt-4 pl-4 pr-4 pb-2">
                   <VersionList
                     publishedVersions={versions.slice(1)}

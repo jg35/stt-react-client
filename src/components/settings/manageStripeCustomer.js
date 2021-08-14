@@ -1,4 +1,4 @@
-import Button from "~/components/button";
+import { Button, Title, Text } from "~/components/_styled";
 import { DateTime } from "luxon";
 import UserPaymentForm from "~/components/userPaymentForm";
 
@@ -12,40 +12,40 @@ function buildSummary(subscriptionStatus, subscriptionMeta) {
         subscriptionMeta.periodEnd
       ).toFormat("dd MMMM yyyy")}`;
       planMessage = (
-        <p>
-          You're on our <span className="font-medium">{planName}</span> plan.
-          Your next payment of £{subscriptionMeta.amount / 100} will be taken on{" "}
-          <span className="font-medium">{nextPaymentDate}.</span>
-        </p>
+        <>
+          You're on our <strong>{planName}</strong> plan. Your next payment of £
+          {subscriptionMeta.amount / 100} will be taken on{" "}
+          <strong>{nextPaymentDate}.</strong>
+        </>
       );
       break;
     // TODO - should become cancelled when user cancels plan. Becomes CANCELLED_EXPIRED when plan has actually been cancelled
     case "CANCEL_AT_PERIOD_END":
       planMessage = (
-        <p>
+        <>
           You're plan has been cancelled. You'll have access to Stories To Tell
-          until <span className="font-medium">{nextPaymentDate}.</span>
-        </p>
+          until <strong>{nextPaymentDate}.</strong>
+        </>
       );
       break;
     case "IN_TRIAL":
       planMessage = (
-        <p>
+        <>
           You're on our free trial. If you would like to continue using Stories
           To Tell, please follow the instructions below.
-        </p>
+        </>
       );
   }
   return (
     <>
-      {planMessage}
-      <p>
+      <Text>{planMessage}</Text>
+      <Text>
         To update payment information,{" "}
         {subscriptionStatus === "CANCEL_AT_PERIOD_END"
           ? "or to renew your plan"
           : "change plans or cancel"}
         , please click below.
-      </p>
+      </Text>
     </>
   );
 }
@@ -57,10 +57,8 @@ export default function ManageStripeCustomer({
 }) {
   return (
     <div>
-      <h1 className="text-lg">Your subscription</h1>
-      <p className="my-4">
-        {buildSummary(subscriptionStatus, subscriptionMeta)}
-      </p>
+      <Title>Your subscription</Title>
+      {buildSummary(subscriptionStatus, subscriptionMeta)}
       {subscriptionStatus === "IN_TRIAL" ? (
         <UserPaymentForm
           intent="MANUAL"

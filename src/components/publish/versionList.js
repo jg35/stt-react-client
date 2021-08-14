@@ -1,5 +1,6 @@
 import { sortBy } from "lodash";
 import VersionListItem from "~/components/publish/versionListItem";
+import { Text } from "~/components/_styled";
 
 export default function VersionList({ publishedVersions, deleteVersion }) {
   return (
@@ -27,10 +28,10 @@ export default function VersionList({ publishedVersions, deleteVersion }) {
           </ul>
         </div>
       ) : (
-        <p>
+        <Text>
           Your published versions will appear here when you've created your
           first one
-        </p>
+        </Text>
       )}
     </div>
   );

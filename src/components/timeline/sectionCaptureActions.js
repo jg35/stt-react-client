@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UIContext } from "~/app";
-import Button from "~/components/button";
-import ButtonGroup from "~/components/buttonGroup";
+import { Button, ButtonGroup } from "~/components/_styled";
 import {
   makeCreateFragmentForm,
   makeCreateUserEventForm,
@@ -29,6 +28,7 @@ export default function SectionCaptureActions({ show, date, index }) {
         <ButtonGroup id="section-actions-inner">
           <Button
             id="section-actions-event"
+            css="whitespace-nowrap"
             size="compact"
             onClick={() =>
               updateUiState(makeCreateUserEventForm({ date }), false)
@@ -40,6 +40,7 @@ export default function SectionCaptureActions({ show, date, index }) {
           <Button
             id="section-actions-memory"
             size="compact"
+            css="whitespace-nowrap"
             onClick={() =>
               updateUiState(
                 makeCreateFragmentForm({
@@ -57,6 +58,7 @@ export default function SectionCaptureActions({ show, date, index }) {
           <Button
             id="section-actions-photo"
             size="compact"
+            css="whitespace-nowrap"
             onClick={() =>
               updateUiState(
                 makeCreateFragmentForm({
@@ -74,6 +76,7 @@ export default function SectionCaptureActions({ show, date, index }) {
           <Button
             id="section-actions-chapter"
             size="compact"
+            css="whitespace-nowrap"
             onClick={() =>
               updateUiState(
                 makeCreateFragmentForm({

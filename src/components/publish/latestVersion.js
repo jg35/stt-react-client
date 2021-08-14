@@ -4,6 +4,7 @@ import Image from "~/components/image";
 import DeleteModal from "~/components/deleteModal";
 import Svg from "~/components/svg";
 import AccessListStatusButton from "~/components/accessList/accessListStatusButton";
+import { Title, Text } from "~/components/_styled";
 
 export default function LatestVersion({ version, deleteVersion, onlyVersion }) {
   return (
@@ -21,11 +22,11 @@ export default function LatestVersion({ version, deleteVersion, onlyVersion }) {
         <div className="w-full min-h-full flex flex-col justify-between">
           <div className="flex justify-between ml-1 mt-1">
             <div className="flex-1">
-              <h1 className="text-xl">{version.title}</h1>
-              <p className="text-lg text-gray">by {version.author}</p>
-              <p className="">
-                Published {renderVersionDate(version.publishedAt)}
-              </p>
+              <Title tag="h2">{version.title}</Title>
+              <Text size="large" css="text-gray">
+                by {version.author}
+              </Text>
+              <Text>Published {renderVersionDate(version.publishedAt)}</Text>
             </div>
 
             <div>
@@ -49,7 +50,9 @@ export default function LatestVersion({ version, deleteVersion, onlyVersion }) {
           </div>
           <div>
             <div>
-              <span className="text-lg font-medium ml-1">Share</span>
+              <Text tag="span" css="font-medium ml-1">
+                Share
+              </Text>
               <div className="flex">
                 <Svg name="facebook" width={32} height={32} css="m-1" />
                 <Svg name="email" width={32} height={32} css="m-1" />
@@ -57,19 +60,6 @@ export default function LatestVersion({ version, deleteVersion, onlyVersion }) {
                 <Svg name="instagram" width={32} height={32} css="m-1" />
               </div>
             </div>
-            {/* <div>
-              <span className="text-lg font-medium ml-1">Download</span>
-              <div className="flex">
-                {version.publishedFormats.split(",").map((format, i) => (
-                  <span className="text-lg m-1 block" key={format}>
-                    <VersionLink
-                      format={format}
-                      publishedPath={version.publishedPath}
-                    />
-                  </span>
-                ))}
-              </div>
-            </div> */}
           </div>
         </div>
       </div>

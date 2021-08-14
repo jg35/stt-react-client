@@ -3,7 +3,7 @@ import { useHistory } from "react-router";
 import { FETCH_PRIVATE_ACCESS_TOKENS } from "~/lib/gql";
 import { useContext } from "react";
 import { UIContext } from "~/app";
-import Button from "~/components/button";
+import { Button } from "~/components/_styled";
 
 export default function AccessListStatusButton({
   future = false,
@@ -21,11 +21,11 @@ export default function AccessListStatusButton({
     );
 
     return (
-      <span>
+      <>
         {accessTokens.length > 0 ? accessTokens.length : "No"} reader
         {accessTokens.length !== 1 && "s"}{" "}
         {future ? "will be able to " : "can "} view your book
-      </span>
+      </>
     );
   }
 

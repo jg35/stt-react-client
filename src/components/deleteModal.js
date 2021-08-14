@@ -1,7 +1,7 @@
 import { useState } from "react";
 import colors from "~/lib/colors";
 import Modal from "~/components/modal";
-import Button from "~/components/button";
+import { Button, ButtonGroup, Title } from "~/components/_styled";
 import Svg from "~/components/svg";
 import useToastMessage from "~/hooks/useToastMessage";
 
@@ -34,8 +34,8 @@ export default function DeleteModal({
       </Button>
       {isOpen && (
         <Modal isOpen={isOpen} close={() => setIsOpen(false)}>
-          <h1>{title}</h1>
-          <div className="flex">
+          <Title>{title}</Title>
+          <ButtonGroup>
             <Button onClick={() => setIsOpen(false)}>Cancel</Button>
             <Button
               variant="secondary"
@@ -62,7 +62,7 @@ export default function DeleteModal({
             >
               {!isDeleting ? "Delete" : "Deleting..."}
             </Button>
-          </div>
+          </ButtonGroup>
         </Modal>
       )}
     </>

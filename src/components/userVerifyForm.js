@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useHistory } from "react-router";
 import Modal from "~/components/modal";
-import Button from "~/components/button";
+import { Button, Title, Text } from "~/components/_styled";
 import useToastMessage from "~/hooks/useToastMessage";
 import { resendEmailVerification } from "~/lib/firebase";
 
@@ -11,15 +11,11 @@ export default function UserVerifyForm() {
   const history = useHistory();
   return (
     <Modal size="sm" isOpen={true} canClose={false}>
-      <div>
-        <h1 className="text-xl">
-          Please check your email to verify your account
-        </h1>
-        <p className="mt-2">
-          If you have not recieved a verification email, please click below to
-          resend
-        </p>
-      </div>
+      <Title>Please check your email to verify your account</Title>
+      <Text>
+        If you have not recieved a verification email, please click below to
+        resend
+      </Text>
 
       <Button variant="secondary" css="my-1" onClick={() => history.go()}>
         I've verified my account

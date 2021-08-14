@@ -1,4 +1,4 @@
-import Button from "~/components/button";
+import { Button, Title, Text } from "~/components/_styled";
 
 function PrivacyOption({ title, description, active, onClick }) {
   return (
@@ -11,8 +11,10 @@ function PrivacyOption({ title, description, active, onClick }) {
           : "border-lightGray bg-white"
       }`}
     >
-      <h2 className="text-xl text-center my-2">{title}</h2>
-      <p className="p-2">{description}</p>
+      <Title tag="h2" css="text-center mt-2 mb-2">
+        {title}
+      </Title>
+      <Text>{description}</Text>
     </Button>
   );
 }
@@ -23,7 +25,7 @@ export default function ManagePrivacyStatus({
 }) {
   return (
     <>
-      <label className="mb-2 block font-medium text-lg">Privacy status</label>
+      <Text css="font-medium">Privacy status</Text>
       <div className="flex">
         <div className="w-1/2 pr-2">
           <PrivacyOption

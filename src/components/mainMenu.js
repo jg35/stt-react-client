@@ -4,7 +4,7 @@ import { AuthContext } from "~/components/authWrap";
 import useLogout from "~/hooks/useLogout";
 
 import Svg from "~/components/svg";
-import Button from "~/components/button";
+import { Text } from "~/components/_styled";
 import Menu from "~/components/menu";
 
 export default function MainMenu() {
@@ -19,8 +19,12 @@ export default function MainMenu() {
         <NavLink className="fill text-right" to="/settings#account">
           <div className="flex items-center justify-end p-2">
             <div className="px-2 truncate">
-              <span className="block">{user.displayName}</span>
-              <span className="text-gray">{user.email}</span>
+              <Text tag="span" size="compact" css="block">
+                {user.displayName}
+              </Text>
+              <Text tag="span" size="compact" className="text-gray">
+                {user.email}
+              </Text>
             </div>
 
             {user.photoURL ? (

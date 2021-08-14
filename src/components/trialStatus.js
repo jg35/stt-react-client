@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { UIContext } from "~/app";
-import Button from "~/components/button";
+import { Button } from "~/components/_styled";
 import { getTrialDaysRemaining, getNumAsWord } from "~/lib/util";
 
 export default function TrialStatus({ expiry, status, stripeCustomerId }) {

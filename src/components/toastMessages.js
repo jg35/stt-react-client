@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import colors from "~/lib/colors";
 import { UIContext } from "~/app";
 import Svg from "~/components/svg";
+import { Text } from "~/components/_styled";
 
 function ToastMessage({ message }) {
   const [show, setShow] = useState(false);
@@ -44,7 +45,7 @@ function ToastMessage({ message }) {
 
   return (
     <div className={messageStyles}>
-      <p>{message.text}</p>
+      <Text>{message.text}</Text>
       {!message.timeout && !message.blockPage && (
         <div
           className="p-1 ml-2 cursor-pointer"

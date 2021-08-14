@@ -1,7 +1,7 @@
 import DatePicker from "~/components/capture/datepicker";
 import FormError from "~/components/formError";
 import TextEditor from "~/components/capture/textEditor";
-import FormInput from "~/components/formInput";
+import { FormInput, FormLabel } from "~/components/_styled";
 
 export default function TextForm({
   handleChange,
@@ -17,7 +17,7 @@ export default function TextForm({
     <>
       {editContent && (
         <div className="form-control">
-          <label>Memory</label>
+          <FormLabel>Memory</FormLabel>
           <TextEditor
             name="content"
             handleBlur={handleBlur}
@@ -44,10 +44,9 @@ export default function TextForm({
       )}
 
       <div className="form-control">
-        <label>Title</label>
+        <FormLabel>Title</FormLabel>
         <FormInput
           name="title"
-          autoFocus={false}
           placeholder="Title your memory (for reference)"
           handleChange={handleChange}
           handleBlur={handleBlur}
@@ -58,7 +57,7 @@ export default function TextForm({
       </div>
 
       <div className="form-control">
-        <label>Date</label>
+        <FormLabel>Date</FormLabel>
         <DatePicker
           error={errors.date}
           date={values.date}

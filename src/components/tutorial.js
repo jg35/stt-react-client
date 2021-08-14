@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import { AuthContext } from "~/components/authWrap";
-import Button from "~/components/button";
+import { Button, Text } from "~/components/_styled";
 import LoadingSpinner from "~/components/loadingSpinner";
 
 import { FETCH_TIMELINE_VIEW, UPDATE_USER } from "~/lib/gql";
@@ -156,11 +156,16 @@ export default function Tutorial() {
             </span>
           </div>
           <div>
-            <p className={`${currentStep.xl ? "py-4 text-lg" : "py-2"}`}>
+            <Text
+              variant={currentStep.xl ? "large" : "default"}
+              css={`
+                ${currentStep.xl ? "mt-4" : "mt-2"}
+              `}
+            >
               {typeof currentStep.body === "function"
                 ? currentStep.body(data, uiState)
                 : currentStep.body}
-            </p>
+            </Text>
           </div>
           <div className="flex justify-between">
             <div>

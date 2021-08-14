@@ -1,9 +1,5 @@
-import Button from "~/components/button";
 import Page from "~/components/page";
-
-function Title({ children }) {
-  return <h1 className="text-xl">{children}</h1>;
-}
+import { Button, Card, FormInput, Title, Text } from "~/components/_styled";
 
 function Row({ css = "", children }) {
   return <div className={`flex flex-wrap py-2 ${css}`}>{children}</div>;
@@ -16,7 +12,9 @@ function Column({ size = "flex-1", children }) {
 function ComponentLibraryItem({ title, children }) {
   return (
     <Column>
-      <div className="p-2 border-dashed border border-gray">{children}</div>
+      <div className="p-2 border-dashed rounded border border-gray">
+        {children}
+      </div>
       <div className="mt-2 text-gray">{title}</div>
     </Column>
   );
@@ -65,7 +63,43 @@ export default function ComponentLibrary({}) {
         </ComponentLibraryItem>
       </ComponentSection>
 
-      <ComponentSection title="Cards"></ComponentSection>
+      <ComponentSection title="Cards">
+        <ComponentLibraryItem title="Card (Size: Compact)">
+          <Card size="compact">Compact card</Card>
+        </ComponentLibraryItem>
+        <ComponentLibraryItem title="Card (Size: Default)">
+          <Card size="large">Default card</Card>
+        </ComponentLibraryItem>
+        <ComponentLibraryItem title="Card (Size: Large)">
+          <Card size="large">Large card</Card>
+        </ComponentLibraryItem>
+      </ComponentSection>
+
+      <ComponentSection title="Form inputs">
+        <ComponentLibraryItem title="Input: text (empty)">
+          <FormInput placeholder="An empty input" />
+        </ComponentLibraryItem>
+        <ComponentLibraryItem title="Input: text (value)">
+          <FormInput value="With a value" />
+        </ComponentLibraryItem>
+        <ComponentLibraryItem title="Input: text (error)">
+          <FormInput value="With an error" error={true} />
+        </ComponentLibraryItem>
+      </ComponentSection>
+
+      <ComponentSection title="Typography">
+        <ComponentLibraryItem title="Titles">
+          <Title size="compact">Compact</Title>
+          <Title size="default">Default</Title>
+          <Title size="large">Large</Title>
+        </ComponentLibraryItem>
+        <ComponentLibraryItem title="Text">
+          <Text size="compact">Compact</Text>
+          <Text size="default">Default</Text>
+          <Text size="large">Large</Text>
+          <Text size="callout">Callout</Text>
+        </ComponentLibraryItem>
+      </ComponentSection>
     </Page>
   );
 }

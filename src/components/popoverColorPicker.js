@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useState } from "react";
 import { HexColorPicker } from "react-colorful";
 
-import Button from "~/components/button";
+import { Button } from "~/components/_styled";
 import useClickOutside from "~/hooks/useClickOutside";
 
 export default function PopoverPicker({ color, onChange }) {

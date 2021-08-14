@@ -10,9 +10,8 @@ import { AccessTokenPrivateSchema } from "~/lib/yup";
 import useToastMessage from "~/hooks/useToastMessage";
 import Modal from "~/components/modal";
 
-import FormInput from "~/components/formInput";
+import { Button, FormInput, Title } from "~/components/_styled";
 import FormError from "~/components/formError";
-import Button from "~/components/button";
 import AccessListItems from "~/components/accessList/accessListItems";
 
 export default function AccessListModal({ closeModal }) {
@@ -93,9 +92,9 @@ export default function AccessListModal({ closeModal }) {
                 removeAccessToken={(item) => deleteTokenHandler(item.id)}
               />
 
-              <h2 className="font-medium mb-2 text-lg text-gray">
+              <Title tag="h2" size="compact" css="text-gray">
                 Add readers
-              </h2>
+              </Title>
               <form
                 className="flex"
                 onSubmit={props.handleSubmit}

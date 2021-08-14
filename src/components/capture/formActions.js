@@ -1,5 +1,4 @@
-import Button from "~/components/button";
-import ButtonGroup from "~/components/buttonGroup";
+import { Button, ButtonGroup } from "~/components/_styled";
 
 export default function FormActions({
   closeModal,

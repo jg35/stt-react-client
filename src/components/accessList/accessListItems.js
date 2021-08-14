@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Button from "~/components/button";
+import { Button, Text, Title } from "~/components/_styled";
 
 export default function AccessListItems({
   items,
@@ -11,25 +11,16 @@ export default function AccessListItems({
   const itemLength = items.filter((f) =>
     isPublic ? f.type === "PUBLIC" : f.type === "PRIVATE"
   ).length;
-  function getStatus() {
-    if (!isPublic) {
-      return (
-        <span>
-          {itemLength > 0 ? itemLength : "No"} reader
-          {itemLength !== 1 && "s"} have access to your book
-        </span>
-      );
-    }
-    return <span>Public link</span>;
-  }
 
   return (
     <div>
-      <label className="mb-2 text-lg font-medium block">Readers</label>
-      <p className="mb-4 block">
+      <Title size="compact" tag="h2">
+        Readers
+      </Title>
+      <Text>
         When your book is private, readers will gain access by enterring their
         email and login token.
-      </p>
+      </Text>
       <ul className="mb-8">
         <li className="flex justify-between py-2 font-medium items-center">
           <span className="w-36">Email</span>

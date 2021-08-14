@@ -14,7 +14,7 @@ import {
   ACTION_PUBLISH_VERSION,
 } from "~/lib/gql";
 import Page from "~/components/page";
-import Card from "~/components/card";
+import { Card } from "~/components/_styled";
 import PublishSkeleton from "~/components/publish/publishSkeleton";
 import PublishStepper from "~/components/publish/publishStepper";
 import CoverEditorForm from "~/components/publish/coverEditorForm";

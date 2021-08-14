@@ -1,5 +1,4 @@
-import Button from "~/components/button";
-import FormInput from "~/components/formInput";
+import { Button, FormInput } from "~/components/_styled";
 import FormError from "~/components/formError";
 
 export default function EmailForm({
@@ -54,7 +53,6 @@ export default function EmailForm({
             <div className="pl-2">
               <FormInput
                 name="lastName"
-                autoFocus={false}
                 placeholder="Your last name"
                 handleChange={handleChange}
                 handleBlur={handleBlur}
@@ -81,7 +79,6 @@ export default function EmailForm({
             <FormInput
               name="password"
               type="password"
-              autoFocus={false}
               placeholder="Enter password"
               handleChange={handleChange}
               handleBlur={handleBlur}
