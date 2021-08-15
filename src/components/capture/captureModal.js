@@ -237,7 +237,9 @@ export default function CaptureModal({
               {item.type === "CHAPTER" && (
                 <ChapterForm {...props} editContent={!editView} />
               )}
-              {item.type === "PHOTO" && <PhotoForm {...props} />}
+              {item.type === "PHOTO" && (
+                <PhotoForm {...props} closeForm={closeModal} />
+              )}
               <FormActions
                 formIsDirty={props.dirty}
                 closeModal={closeModal}

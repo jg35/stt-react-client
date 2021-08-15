@@ -10,6 +10,7 @@ export default function Modal({
   close,
   canClose = true,
   formIsDirty = false,
+  noScroll = false,
 }) {
   const [showCloseWarning, setShowCloseWarning] = useState(false);
   const modal = useRef();
@@ -50,10 +51,10 @@ export default function Modal({
 
   if (isOpen) {
     return (
-      <div className="animate-fade-in fixed min-w-full h-full bg-lightestGray left-0 top-0 z-40 bg-opacity-90 flex justify-center items-center pt-6 px-4 pb-4">
+      <div className="animate-fade-in fixed min-w-full h-full bg-lightestGray left-0 top-0 z-40 bg-opacity-90 flex justify-center items-center pt-2 md:pt-6 px-2 md:px-4 pb-4">
         <div
           ref={modal}
-          className={`relative ${sizeStyles}`}
+          className={`relative ${sizeStyles} overflow-scroll`}
           id="capture-form-wrapper"
           onClick={(e) => e.stopPropagation()}
         >

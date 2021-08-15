@@ -1,5 +1,5 @@
 import DatePicker from "~/components/capture/datepicker";
-import FormError from "~/components/formError";
+import FormField from "~/components/formField";
 import { FormInput, FormLabel } from "~/components/_styled";
 
 export default function ChapterForm({
@@ -13,7 +13,7 @@ export default function ChapterForm({
   return (
     <>
       {editContent && (
-        <div className="form-control">
+        <FormField label="Chapter name" error={errors.content}>
           <FormInput
             name="content"
             placeholder="Enter chapter name"
@@ -22,12 +22,10 @@ export default function ChapterForm({
             value={values.content}
             error={errors.content}
           />
-          <FormError error={errors.content} />
-        </div>
+        </FormField>
       )}
 
-      <div className="form-control">
-        <FormLabel>Date</FormLabel>
+      <FormField label="Date" error={errors.date}>
         <DatePicker
           date={values.date}
           error={errors.date}
@@ -36,8 +34,7 @@ export default function ChapterForm({
             setFieldValue("dateType", "MANUAL");
           }}
         />
-        <FormError error={errors.date} />
-      </div>
+      </FormField>
     </>
   );
 }

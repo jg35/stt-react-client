@@ -9,13 +9,13 @@ import {
 
 export default function SectionCaptureActions({ show, date, index }) {
   const { updateUiState, uiState } = useContext(UIContext);
-  const [captureActive, setCaptureActive] = useState(window.innerWidth < 768);
+  const [captureActive, setCaptureActive] = useState(window.innerWidth <= 1024);
 
   useEffect(() => {
     setCaptureActive(
       !isNaN(uiState.activeCaptureIndex)
-        ? window.innerWidth < 768 || uiState.activeCaptureIndex === index
-        : window.innerWidth < 768
+        ? window.innerWidth <= 1024 || uiState.activeCaptureIndex === index
+        : window.innerWidth <= 1024
     );
   }, [uiState]);
   return (
@@ -29,7 +29,7 @@ export default function SectionCaptureActions({ show, date, index }) {
         <ButtonGroup id="section-actions-inner">
           <Button
             id="section-actions-event"
-            css="whitespace-nowrap"
+            css="whitespace-nowrap rounded-lg"
             size="compact"
             onClick={() =>
               updateUiState(makeCreateUserEventForm({ date }), false)
@@ -42,7 +42,7 @@ export default function SectionCaptureActions({ show, date, index }) {
           <Button
             id="section-actions-memory"
             size="compact"
-            css="whitespace-nowrap"
+            css="whitespace-nowrap rounded-lg"
             onClick={() =>
               updateUiState(
                 makeCreateFragmentForm({
@@ -61,7 +61,7 @@ export default function SectionCaptureActions({ show, date, index }) {
           <Button
             id="section-actions-photo"
             size="compact"
-            css="whitespace-nowrap"
+            css="whitespace-nowrap rounded-lg"
             onClick={() =>
               updateUiState(
                 makeCreateFragmentForm({
@@ -80,7 +80,7 @@ export default function SectionCaptureActions({ show, date, index }) {
           <Button
             id="section-actions-chapter"
             size="compact"
-            css="whitespace-nowrap"
+            css="whitespace-nowrap rounded-lg"
             onClick={() =>
               updateUiState(
                 makeCreateFragmentForm({

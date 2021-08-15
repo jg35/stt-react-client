@@ -64,7 +64,7 @@ export default function Timeline() {
   }, [timelineScrollContainer, loading]);
 
   return (
-    <Page maxWidth="none">
+    <Page maxWidth="1920px">
       <div ref={captureHeader}>
         <CaptureHeader init={!loading} />
       </div>
@@ -83,7 +83,7 @@ export default function Timeline() {
               <main
                 id="timeline-scroll-container"
                 ref={timelineScrollContainer}
-                className="md:mr-2 overflow-y-scroll overflow-x-hidden js-timeline-scroll-container relative"
+                className="md:mr-2 overflow-y-scroll overflow-x-hidden js-timeline-scroll-container relative w-full"
                 onScroll={debounce((e) => {
                   if (e.target.scrollTop !== uiState.timelineScrollPosition) {
                     updateUiState({
@@ -95,9 +95,9 @@ export default function Timeline() {
                 {timeline.map((timelineSection, i) => (
                   <Section key={i} section={timelineSection} index={i} />
                 ))}
-                {orphanedFragments.length > 0 && (
+                {/* {orphanedFragments.length > 0 && (
                   <OrphanedFragments fragments={orphanedFragments} />
-                )}
+                )} */}
                 <TimePeriodSelector
                   timelinePeriod={timelinePeriod}
                   orphanCount={orphanedFragments.length}

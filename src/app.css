@@ -84,6 +84,10 @@
     @apply border border-red transition duration-200 ease-out;
   }
 
+  .uppy-Dashboard--modal .uppy-Dashboard-overlay {
+    background-color: rgba(0, 0, 0, 0.9) !important;
+  }
+
   /* React datepicker */
   .react-datepicker-wrapper input {
     @apply outline-none bg-offWhite border-2 border-transparent p-3 rounded w-full text-xl;

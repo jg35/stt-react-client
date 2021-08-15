@@ -1,6 +1,8 @@
+import { useState } from "react";
 import DatePicker from "~/components/capture/datepicker";
-import { FormInput, FormLabel, Grid } from "~/components/_styled";
+import { Button, FormInput, Grid } from "~/components/_styled";
 import FormField from "~/components/formField";
+import Image from "~/components/image";
 import Uppy from "~/components/uppy";
 
 export default function PhotoForm({
@@ -10,13 +12,39 @@ export default function PhotoForm({
   errors,
   setFieldValue,
   isSubmitting,
+  closeForm,
 }) {
+  const [modalOpen, setModalOpen] = useState(!values.mediaUrl);
   return (
-    <Grid colSpan={["col-span-12 md:col-span-8", "col-span-12 md:col-span-4"]}>
+    <Grid colSpan={["col-span-12 lg:col-span-7", "col-span-12 lg:col-span-5"]}>
       <FormField label="Photo" error={errors.mediaUrl}>
+        {values.mediaUrl && (
+          <div
+            className="flex flex-col justify-center items-center rounded shadow w-full"
+            onClick={() => setModalOpen(true)}
+          >
+            <div className="rounded cursor-pointer relative">
+              <Image
+                src={values.mediaUrl + "-master"}
+                className="object-cover rounded"
+              />
+              <span className="absolute bottom-0 block bg-black text-white text-center rounded-b py-2 font-medium opacity-70 w-full">
+                Click to edit
+              </span>
+            </div>
+          </div>
+        )}
         <Uppy
           isSubmitting={isSubmitting}
           mediaUrl={values.mediaUrl}
+          open={modalOpen}
+          onClose={() => {
+            if (values.mediaUrl) {
+              setModalOpen(false);
+            } else {
+              closeForm();
+            }
+          }}
           onChange={(url) => setFieldValue("mediaUrl", url)}
           error={errors.mediaUrl}
         />
