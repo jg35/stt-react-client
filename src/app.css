@@ -43,10 +43,6 @@
 }
 
 @layer components {
-  .page {
-    height: 100vh;
-    @apply px-4;
-  }
   .nav-link {
     @apply font-medium mx-3 relative block text-center;
   }
@@ -56,12 +52,12 @@
   }
   .input {
     /* max-width: 40rem; */
-    @apply outline-none bg-lightestGray p-3 rounded w-full text-xl border border-transparent transition duration-200 ease-in;
+    @apply outline-none bg-offWhite p-3 rounded w-full text-lg border-2 border-transparent transition duration-200 ease-in;
   }
 
   .input--compact {
     max-width: 40rem;
-    @apply outline-none bg-lightestGray py-1.5 px-2 text-base rounded w-full border border-transparent transition duration-200 ease-in;
+    @apply outline-none bg-offWhite py-1.5 px-2 text-base rounded w-full border border-transparent transition duration-200 ease-in;
   }
 
   .select option:disabled {
@@ -90,8 +86,7 @@
 
   /* React datepicker */
   .react-datepicker-wrapper input {
-    max-width: 13rem;
-    @apply outline-none bg-lightestGray p-3 rounded w-full text-xl;
+    @apply outline-none bg-offWhite border-2 border-transparent p-3 rounded w-full text-xl;
   }
 
   #root .react-datepicker {
@@ -320,4 +315,10 @@ p.preview-element {
 figcaption.preview-element {
   @apply text-center text-lg whitespace-pre-wrap;
   margin: 0.5em 0 1em;
+}
+
+@media screen and (min-width: 768px) {
+  #preview-container {
+    width: calc(100% - 24px);
+  }
 }

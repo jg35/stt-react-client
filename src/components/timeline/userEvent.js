@@ -32,7 +32,7 @@ export default function UserEvent({ event }) {
     <button
       type="button"
       data-user-event-id={event.id}
-      className="bg-lightBlue text-blue rounded-2xl py-1.5 pl-3 pr-2 mr-4 flex items-center cursor-pointer my-2"
+      className="bg-lightBlue text-blue rounded-2xl py-1.5 pl-3 pr-2 mr-2 md:mr-4 flex items-center cursor-pointer my-2"
       title="Edit event"
       onClick={() => updateUiState(makeEditUserEventForm(event), false)}
     >

@@ -12,7 +12,6 @@ export default function CountrySelect({
       id="form-country-select"
       name={name}
       className={`input select ${error && "input-error"} appearance-none`}
-      autoFocus
       onChange={handleChange}
       onBlur={handleBlur}
       value={value}

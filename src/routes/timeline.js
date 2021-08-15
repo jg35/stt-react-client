@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
-import { debounce, values } from "lodash";
+import { debounce, values, get } from "lodash";
 import { useCustomQuery } from "~/hooks/useCustomApollo";
 
 import { FETCH_TIMELINE_VIEW } from "~/lib/gql";
 
 import Page from "~/components/page";
+import { Grid, Card } from "~/components/_styled";
 
 import CaptureModal from "~/components/capture/captureModal";
 import CaptureHeader from "~/components/capture/captureHeader";
@@ -26,6 +27,7 @@ import { UIContext } from "~/app";
 export default function Timeline() {
   const { uiState, updateUiState } = useContext(UIContext);
   const timelineScrollContainer = useRef(null);
+  const captureHeader = useRef(null);
   const { data, loading } = useCustomQuery(FETCH_TIMELINE_VIEW, {
     name: "FETCH_TIMELINE_VIEW",
     userId: true,
@@ -62,69 +64,73 @@ export default function Timeline() {
   }, [timelineScrollContainer, loading]);
 
   return (
-    <Page>
-      <div className="flex h-full">
-        <div className="flex-1">
-          <div className="h-32 shadow rounded-lg bg-white p-4 flex">
-            <CaptureHeader init={!loading} />
-          </div>
-          <div className="flex py-4" style={{ height: "calc(100% - 8rem)" }}>
-            <div className="flex shadow-lg min-w-full rounded-lg bg-white px-3">
-              {data && data.stt_user_by_pk.dob && timeline ? (
-                <>
-                  <main
-                    id="timeline-scroll-container"
-                    ref={timelineScrollContainer}
-                    className="flex-1 mr-2 max-h-full overflow-auto js-timeline-scroll-container relative"
-                    onScroll={debounce((e) => {
-                      if (
-                        e.target.scrollTop !== uiState.timelineScrollPosition
-                      ) {
-                        updateUiState({
-                          timelineScrollPosition: e.target.scrollTop,
-                        });
+    <Page maxWidth="none">
+      <div ref={captureHeader}>
+        <CaptureHeader init={!loading} />
+      </div>
+
+      <div
+        className="flex-1 py-4"
+        style={{
+          height: `calc(100% - ${
+            (get(captureHeader, "current.clientHeight") || "0") + "px"
+          })`,
+        }}
+      >
+        <Card css="px-2 md:px-4 py-0 flex h-full">
+          {data && data.stt_user_by_pk.dob && timeline ? (
+            <>
+              <main
+                id="timeline-scroll-container"
+                ref={timelineScrollContainer}
+                className="md:mr-2 overflow-y-scroll overflow-x-hidden js-timeline-scroll-container relative"
+                onScroll={debounce((e) => {
+                  if (e.target.scrollTop !== uiState.timelineScrollPosition) {
+                    updateUiState({
+                      timelineScrollPosition: e.target.scrollTop,
+                    });
+                  }
+                }, 1000)}
+              >
+                {timeline.map((timelineSection, i) => (
+                  <Section key={i} section={timelineSection} index={i} />
+                ))}
+                {orphanedFragments.length > 0 && (
+                  <OrphanedFragments fragments={orphanedFragments} />
+                )}
+                <TimePeriodSelector
+                  timelinePeriod={timelinePeriod}
+                  orphanCount={orphanedFragments.length}
+                />
+              </main>
+              <div className="hidden md:block w-12 min-h-full">
+                <ScrollNavigator
+                  dob={data.stt_user_by_pk.dob}
+                  years={values(
+                    timeline.reduce((years, season) => {
+                      if (!years[season.year]) {
+                        years[season.year] = {
+                          year: season.year,
+                          fragments: false,
+                        };
                       }
-                    }, 1000)}
-                  >
-                    {timeline.map((timelineSection, i) => (
-                      <Section key={i} section={timelineSection} index={i} />
-                    ))}
-                    {orphanedFragments.length > 0 && (
-                      <OrphanedFragments fragments={orphanedFragments} />
-                    )}
-                    <TimePeriodSelector
-                      timelinePeriod={timelinePeriod}
-                      orphanCount={orphanedFragments.length}
-                    />
-                  </main>
-                  <div className="w-12 max-h-full">
-                    <ScrollNavigator
-                      dob={data.stt_user_by_pk.dob}
-                      years={values(
-                        timeline.reduce((years, season) => {
-                          if (!years[season.year]) {
-                            years[season.year] = {
-                              year: season.year,
-                              fragments: false,
-                            };
-                          }
-                          if (season.fragments.length) {
-                            years[season.year].fragments = true;
-                          }
-                          return years;
-                        }, {})
-                      )}
-                    />
-                  </div>
-                </>
-              ) : (
-                <TimelineSkeleton />
-              )}
-            </div>
-          </div>
-        </div>
+                      if (season.fragments.length) {
+                        years[season.year].fragments = true;
+                      }
+                      return years;
+                    }, {})
+                  )}
+                />
+              </div>
+            </>
+          ) : (
+            <TimelineSkeleton />
+          )}
+        </Card>
+
         <Preview fragments={fragments} />
       </div>
+
       <CaptureModal
         scrollToFragment={debounce((fragmentId) => {
           scrollToFragment(fragmentId);

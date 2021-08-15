@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { useHistory } from "react-router";
 import { AuthContext } from "~/components/authWrap";
 import Page from "~/components/page";
-import { Card, TabLink } from "~/components/_styled";
+import { Card, TabLink, Grid } from "~/components/_styled";
 
 import ManageUser from "~/components/settings/manageUser";
 import ManageBilling from "~/components/settings/manageBilling";
@@ -41,23 +41,37 @@ export default function Settings() {
         return <ManagePrivacy dbUser={dbUser} />;
     }
   }
+
   return (
     dbUser && (
       <Page minimal>
-        <div className="flex h-full" style={{ maxWidth: "1024px" }}>
-          <div
-            className="w-3/12 pr-2"
-            style={{ height: "fit-content", maxWidth: "275px" }}
-          >
-            <Card css="p-2">
+        <Grid
+          height="h-full"
+          gap="gap-y-2 md:gap-4"
+          autoRows="auto-rows-min"
+          colSpan={[
+            "col-span-12 md:col-span-4 lg:col-span-3",
+            "col-span-12 md:col-span-8 lg:col-span-9",
+          ]}
+        >
+          <Card css="p-2">
+            <Grid
+              gap="gap-x-2"
+              colSpan={[
+                `${
+                  dbUser && dbUser.versions.length > 1
+                    ? "col-span-3"
+                    : "col-span-4"
+                } md:col-span-12`,
+              ]}
+            >
               <TabLink
                 activeTab={activeTab}
                 setActiveTab={setActiveTab}
                 tab="SETTINGS"
-                title="General"
-                description="The way things work and feel"
+                title="Settings"
+                description="Manage the way things work and feel"
               />
-
               {dbUser.versions.length > 1 && (
                 <TabLink
                   activeTab={activeTab}
@@ -67,7 +81,6 @@ export default function Settings() {
                   description="Manage access to your book"
                 />
               )}
-
               <TabLink
                 activeTab={activeTab}
                 setActiveTab={setActiveTab}
@@ -82,12 +95,11 @@ export default function Settings() {
                 title="Account"
                 description="Manage your account"
               />
-            </Card>
-          </div>
-          <div className="pl-2 w-9/12">
-            <Card>{renderActiveTab()}</Card>
-          </div>
-        </div>
+            </Grid>
+          </Card>
+
+          <Card>{renderActiveTab()}</Card>
+        </Grid>
       </Page>
     )
   );

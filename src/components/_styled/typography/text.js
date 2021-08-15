@@ -8,7 +8,6 @@ export default function Text({
   size = "default",
   tag = "p",
 }) {
-  console.log("content", content);
   const sizes = {
     compact: "",
     default: "mb-2",

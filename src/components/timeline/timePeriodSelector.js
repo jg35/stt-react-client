@@ -6,9 +6,9 @@ export default function TimePeriodSelector({ timelinePeriod, orphanCount }) {
   const { updateUiState } = useContext(UIContext);
 
   return (
-    <div className="h-10 bg-white sticky bottom-4 w-max flex items-center shadow-lg py-6 px-4 rounded border">
-      <Text tag="span" size="compact" css="font-medium mr-2">
-        View timeline in:
+    <div className="bg-white sticky bottom-4 w-max flex items-center shadow-lg py-2 pl-4 pr-2 rounded border">
+      <Text tag="span" size="compact" css="font-medium mr-2 flex">
+        View <span className="hidden md:block">&nbsp;timeline&nbsp;</span> in:
       </Text>
       <ButtonGroup>
         <Button

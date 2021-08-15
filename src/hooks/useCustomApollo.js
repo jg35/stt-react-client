@@ -52,8 +52,8 @@ export function useCustomQuery(
           history.push("/login");
           break;
         default:
-          // Blocks the page, so the user can't use the app
-          setToastMessage("ERROR", "FETCH_DEFAULT", false, true);
+        // Blocks the page, so the user can't use the app
+        // setToastMessage("ERROR", "FETCH_DEFAULT", false, true);
       }
     }
   }, [data, error, loading]);

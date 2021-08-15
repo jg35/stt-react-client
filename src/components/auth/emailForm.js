@@ -41,7 +41,6 @@ export default function EmailForm({
             <div className="pr-2">
               <FormInput
                 name="firstName"
-                autoFocus={authView === "CREATE_ACCOUNT"}
                 placeholder="Your first name"
                 handleChange={handleChange}
                 handleBlur={handleBlur}
@@ -64,9 +63,7 @@ export default function EmailForm({
           </div>
         )}
         <FormInput
-          autoFocus
           name="email"
-          autoFocus={authView !== "CREATE_ACCOUNT"}
           placeholder="Your email"
           handleChange={handleChange}
           handleBlur={handleBlur}

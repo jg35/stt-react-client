@@ -5,39 +5,42 @@ import FragmentList from "~/components/timeline/fragmentList";
 import UserEvent from "~/components/timeline/userEvent";
 import WorldEvent from "~/components/timeline/worldEvent";
 import SectionCaptureActions from "~/components/timeline/sectionCaptureActions";
-import { Title, Text } from "~/components/_styled";
+import { Grid, Title, Text } from "~/components/_styled";
 
 export default function Section({ section, index }) {
   const [showActions, setShowActions] = useState(false);
 
   return (
     <section
-      className="py-8 pr-6 border-b border-lightGray"
+      className="py-8 md:pr-6 border-b border-lightGray"
       data-season-year={section.year}
       data-section-index={index}
       onMouseEnter={() => setShowActions(true)}
       onMouseOver={debounce(() => setShowActions(true), 200)}
       onMouseLeave={debounce(() => setShowActions(false), 200)}
     >
-      <header className="flex justify-between h-10 pl-2">
-        <div className="mb-4 flex items-center">
+      <header>
+        <Grid colSpan={["col-span-5", "col-span-7"]} gap="gap-x-2 md:gap-x-4">
           <Title size="compact">
             {section.title} &middot;{" "}
-            <Text tag="span" size="large" css="text-gray">
+            <Text tag="span" size="compact" css="text-gray">
               {section.age}
             </Text>
           </Title>
-        </div>
 
-        <SectionCaptureActions
-          show={showActions}
-          date={section.startDate}
-          index={index}
-        />
+          <SectionCaptureActions
+            show={showActions}
+            date={section.startDate}
+            index={index}
+          />
+        </Grid>
       </header>
       {section.events.length > 0 && (
         <>
-          <div className="flex flex-wrap mt-2 pl-2" id="section-events-grid">
+          <div
+            className="flex whitespace-nowrap md:whitespace-wrap overflow-scroll md:flex-wrap mt-2"
+            id="section-events-grid"
+          >
             {section.events.map((e, i) => {
               if (e.userId) {
                 return <UserEvent event={e} key={i} />;

@@ -3,8 +3,9 @@ export default function PageContent({ children }) {
     <main
       className="animate-fade-in"
       style={{
-        height: "calc(100vh - 64px)",
-        maxHeight: "calc(100vh - 64px)",
+        height: "calc(100% - var(--headerHeight, 64px)",
+        maxHeight: "calc(100% - var(--headerHeight, 64px)",
+        overflow: "hidden",
       }}
     >
       {children}

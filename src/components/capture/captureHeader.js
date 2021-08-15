@@ -2,7 +2,14 @@ import React, { useEffect, useState, useContext } from "react";
 import { useLazyQuery } from "@apollo/client";
 import { uniq } from "lodash";
 import { SECTION_FETCH_CAPTURE_HEADER } from "~/lib/gql";
-import { Button, ButtonGroup, Title, FormInput } from "~/components/_styled";
+import {
+  Button,
+  ButtonGroup,
+  Card,
+  Title,
+  FormInput,
+  Grid,
+} from "~/components/_styled";
 import Svg from "~/components/svg";
 import TagSelect from "~/components/capture/tagSelect";
 import CaptureHeaderSkeleton from "~/components/capture/captureHeaderSkeleton";
@@ -23,6 +30,9 @@ export default function CaptureHeader({ init }) {
     {
       variables: { userId: user.id },
     }
+  );
+  const [questionVisible, setQuestionVisible] = useState(
+    window.innerWidth >= 768
   );
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [tagOptions, setTagOptions] = useState([]);
@@ -101,15 +111,21 @@ export default function CaptureHeader({ init }) {
 
   if (data) {
     return (
-      <>
-        <div
-          id="question-panel"
-          className="w-full h-full bg-white  rounded p-4 border-2 shadow"
+      <Card css="p-2 md:p-4">
+        <Grid
+          gap="gap-y-2 md:gap-4"
+          colSpan={[
+            "col-span-12 md:col-span-7 lg:col-span-8",
+            "col-span-12 md:col-span-5 lg:col-span-4",
+          ]}
         >
-          {currentQuestion && (
-            <>
-              <div className="flex justify-between items-center mb-2">
-                <Title css="mb-0">{currentQuestion.title}</Title>
+          {questionVisible && currentQuestion && (
+            <div
+              id="question-panel"
+              className="animate-fade-in bg-white rounded p-2 border-2 shadow"
+            >
+              <div className="flex justify-between items-center mb-2 h-10">
+                <Title css="mb-0 w-4/5 truncate">{currentQuestion.title}</Title>
                 {questionOptions.length > 1 && (
                   <div id="shuffle-button-wrapper">
                     <Button
@@ -145,8 +161,7 @@ export default function CaptureHeader({ init }) {
                       }, 500);
                     }
                   }}
-                  css="bg-white p-0 text-lg js-question-text-input"
-                  style={{ maxWidth: "none" }}
+                  css="bg-white w-3/4 p-0 truncate js-question-text-input"
                   placeholder={currentQuestion.placeholder}
                 />
                 <TagSelect
@@ -156,56 +171,67 @@ export default function CaptureHeader({ init }) {
                   minimal
                 />
               </div>
-            </>
+            </div>
           )}
-        </div>
 
-        <ButtonGroup>
-          <Button
-            css="font-medium px-4 w-24 h-full"
-            onClick={() =>
-              updateUiState(
-                makeCreateUserEventForm({}, { revealAfterCreate: true }),
-                false
-              )
-            }
-          >
-            Add event
-          </Button>
-          <Button
-            css="font-medium px-4 w-24 h-full"
-            onClick={() =>
-              updateUiState(
-                makeCreateFragmentForm(
-                  {
-                    type: "TEXT",
-                  },
-                  { revealAfterCreate: true }
-                ),
-                false
-              )
-            }
-          >
-            Add memory
-          </Button>
-          <Button
-            css="font-medium px-4 w-24 h-full"
-            onClick={() =>
-              updateUiState(
-                makeCreateFragmentForm(
-                  {
-                    type: "PHOTO",
-                  },
-                  { revealAfterCreate: true }
-                ),
-                false
-              )
-            }
-          >
-            Add photo
-          </Button>
-        </ButtonGroup>
-      </>
+          <Grid colSpan={["col-span-3 md:col-span-4"]} height="h-full">
+            {window.innerWidth < 768 && (
+              <Button
+                css="font-medium px-4"
+                onClick={() => setQuestionVisible(!questionVisible)}
+              >
+                <Svg name="question" css="md:hidden" width={18} height={18} />
+              </Button>
+            )}
+            <Button
+              css="font-medium px-4 md:h-full"
+              onClick={() =>
+                updateUiState(
+                  makeCreateUserEventForm({}, { revealAfterCreate: true }),
+                  false
+                )
+              }
+            >
+              <Svg name="calendar" css="md:hidden " width={18} height={18} />
+              <span className="hidden md:block">Add event</span>
+            </Button>
+            <Button
+              css="font-medium px-4 md:h-full"
+              onClick={() =>
+                updateUiState(
+                  makeCreateFragmentForm(
+                    {
+                      type: "TEXT",
+                    },
+                    { revealAfterCreate: true }
+                  ),
+                  false
+                )
+              }
+            >
+              <Svg name="writing" css="md:hidden" width={18} height={18} />
+              <span className="hidden md:block">Add memory</span>
+            </Button>
+            <Button
+              css="font-medium px-4 md:h-full"
+              onClick={() =>
+                updateUiState(
+                  makeCreateFragmentForm(
+                    {
+                      type: "PHOTO",
+                    },
+                    { revealAfterCreate: true }
+                  ),
+                  false
+                )
+              }
+            >
+              <Svg name="photo" css="md:hidden" width={18} height={18} />
+              <span className="hidden md:block">Add photo</span>
+            </Button>
+          </Grid>
+        </Grid>
+      </Card>
     );
   }
   return <CaptureHeaderSkeleton />;

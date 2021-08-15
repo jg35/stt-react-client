@@ -41,7 +41,7 @@ export default function Button({
   inProgress = false,
   style = {},
 }) {
-  const baseCss = `flex justify-center items-center border-2 duration-200 ease-in w-full ${
+  const baseCss = `flex justify-center items-center rounded border-2 duration-200 ease-in w-full ${
     disabled ? "cursor-not-allowed opacity-80" : "cursor-pointer"
   }`;
   const variants = {
@@ -57,9 +57,9 @@ export default function Button({
     }`,
   };
   const sizes = {
-    compact: "p-1 rounded",
-    default: "p-2 rounded-md",
-    large: "p-3 rounded-lg text-xl",
+    compact: "p-1.5 px-2 text-base",
+    default: "p-3 text-lg ",
+    large: "p-4 text-xl",
   };
 
   return (

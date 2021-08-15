@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UIContext } from "~/app";
 import { Button, ButtonGroup } from "~/components/_styled";
+import Svg from "~/components/svg";
 import {
   makeCreateFragmentForm,
   makeCreateUserEventForm,
@@ -8,19 +9,19 @@ import {
 
 export default function SectionCaptureActions({ show, date, index }) {
   const { updateUiState, uiState } = useContext(UIContext);
-  const [captureActive, setCaptureActive] = useState(false);
+  const [captureActive, setCaptureActive] = useState(window.innerWidth < 768);
 
   useEffect(() => {
     setCaptureActive(
       !isNaN(uiState.activeCaptureIndex)
-        ? uiState.activeCaptureIndex === index
-        : false
+        ? window.innerWidth < 768 || uiState.activeCaptureIndex === index
+        : window.innerWidth < 768
     );
   }, [uiState]);
   return (
     <div
       id="section-actions"
-      className={`flex ${
+      className={`flex justify-end ${
         !captureActive && !show ? "opacity-0" : "animate-fade-in"
       }`}
     >
@@ -34,7 +35,8 @@ export default function SectionCaptureActions({ show, date, index }) {
               updateUiState(makeCreateUserEventForm({ date }), false)
             }
           >
-            Add event
+            <Svg name="calendar" css="md:hidden " width={18} height={18} />
+            <span className="hidden md:block">Add event</span>
           </Button>
 
           <Button
@@ -52,7 +54,8 @@ export default function SectionCaptureActions({ show, date, index }) {
               )
             }
           >
-            Add memory
+            <Svg name="writing" css="md:hidden " width={18} height={18} />
+            <span className="hidden md:block">Add memory</span>
           </Button>
 
           <Button
@@ -70,7 +73,8 @@ export default function SectionCaptureActions({ show, date, index }) {
               )
             }
           >
-            Add photo
+            <Svg name="photo" css="md:hidden " width={18} height={18} />
+            <span className="hidden md:block">Add photo</span>
           </Button>
 
           <Button
@@ -88,7 +92,8 @@ export default function SectionCaptureActions({ show, date, index }) {
               )
             }
           >
-            Add chapter
+            <Svg name="chapter" css="md:hidden " width={18} height={18} />
+            <span className="hidden md:block">Add chapter</span>
           </Button>
         </ButtonGroup>
       )}

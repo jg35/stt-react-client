@@ -5,8 +5,8 @@ import { UPDATE_USER } from "~/lib/gql";
 
 import DatePicker from "~/components/capture/datepicker";
 import CountrySelect from "~/components/countrySelect";
-import FormError from "~/components/formError";
-import { Button, Title, FormLabel } from "~/components/_styled";
+import FormField from "~/components/formField";
+import { Button, Title, Grid } from "~/components/_styled";
 
 import useToastMessage from "~/hooks/useToastMessage";
 
@@ -61,38 +61,37 @@ export default function UserSettings({ dbUser }) {
           <div className="animate-fade-in">
             <Title>Update your user settings</Title>
             <form id="manage-user-settings-form" onSubmit={handleSubmit}>
-              <div className="form-control">
-                <FormLabel>Date of birth</FormLabel>
-                <DatePicker
-                  minDate={new Date().setYear(new Date().getFullYear() - 100)}
-                  maxDate={new Date().setYear(new Date().getFullYear() - 18)}
-                  placeholder="DD/MM/YYYY"
-                  error={errors.dob}
-                  date={values.dob}
-                  handleChange={(newDate) => {
-                    setFieldValue(
-                      "dob",
-                      newDate.toISOString().replace(/T.*/, "")
-                    );
-                  }}
-                />
-              </div>
-              <div className="form-control my-6">
-                <FormLabel>Your country</FormLabel>
-                <CountrySelect
-                  name="location"
-                  handleChange={handleChange}
-                  handleBlur={handleBlur}
-                  value={values.location}
-                  error={errors.location}
-                />
-                <FormError error={errors.location} />
-              </div>
+              <Grid colSpan={["col-span-12 lg:col-span-6"]}>
+                <FormField label="Date of birth" error={errors.dob}>
+                  <DatePicker
+                    minDate={new Date().setYear(new Date().getFullYear() - 100)}
+                    maxDate={new Date().setYear(new Date().getFullYear() - 18)}
+                    placeholder="DD/MM/YYYY"
+                    error={errors.dob}
+                    date={values.dob}
+                    handleChange={(newDate) => {
+                      setFieldValue(
+                        "dob",
+                        newDate.toISOString().replace(/T.*/, "")
+                      );
+                    }}
+                  />
+                </FormField>
+                <FormField label="Your country" error={errors.location}>
+                  <CountrySelect
+                    name="location"
+                    handleChange={handleChange}
+                    handleBlur={handleBlur}
+                    value={values.location}
+                    error={errors.location}
+                  />
+                </FormField>
+              </Grid>
               <div className="flex justify-end">
                 <Button
                   type="submit"
-                  variant="secondary"
-                  css="w-36"
+                  variant="cta"
+                  css="w-full lg:w-36"
                   disabled={!dirty}
                   inProgress={isSubmitting}
                 >

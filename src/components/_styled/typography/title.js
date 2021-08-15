@@ -13,10 +13,10 @@ export default function Title({
     default: "text-left",
   };
   const sizes = {
-    compact: "text-lg mb-2",
-    default: "text-xl mb-6",
-    large: "text-2xl mb-6",
-    headline: "text-4xl mb-6",
+    compact: "text-md md:text-lg mb-2",
+    default: "text-lg md:text-xl mb-6",
+    large: "text-xl md:text-2xl mb-6",
+    headline: "text-2xl md:text-4xl mb-6",
   };
 
   const props = {

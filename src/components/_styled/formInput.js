@@ -16,7 +16,7 @@ export default function FormInput({
   handleBlur,
   handleKeyUp = null,
 }) {
-  const baseCss = `outline-none bg-lightestGray rounded w-full border border-transparent transition duration-200 ease-in ${
+  const baseCss = `outline-none bg-offWhite border-transparent border-2 rounded w-full transition duration-200 ease-in ${
     error && "border-red"
   }`;
 
@@ -26,8 +26,8 @@ export default function FormInput({
 
   const sizes = {
     compact: " py-1.5 px-2 text-base",
-    default: "p-3 text-xl",
-    large: "",
+    default: "p-3 text-lg",
+    large: "text-xl",
   };
 
   return (

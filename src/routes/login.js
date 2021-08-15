@@ -10,7 +10,7 @@ import { AuthContext } from "~/components/authWrap";
 import EmailFormWrapper from "~/components/auth/emailFormWrapper";
 import OAuthLogin from "~/components/auth/oAuthLogin";
 import useToastMessage from "~/hooks/useToastMessage";
-import { Card, Title, Text } from "~/components/_styled";
+import { Card, Title, Text, Grid, Container } from "~/components/_styled";
 
 export default function Login() {
   const { setSuccess } = useToastMessage();
@@ -55,39 +55,41 @@ export default function Login() {
   }
 
   if (status === "in") {
-    history.push("/");
+    history.push("/settings");
   }
 
   return (
-    <div className="flex flex-col min-h-screen justify-center items-center relative">
-      <div
-        className="min-h-screen w-full absolute top-0 left-0 z-10"
-        style={{
-          opacity: ".5",
-          backgroundImage: "url('bg.jpg')",
-          backgroundSize: "cover",
-          filter: "blur(1.5px) grayscale(.4) ",
-        }}
-      ></div>
-      <Card
-        size="large"
-        css="z-20"
-        style={{ width: "30rem", minHeight: "100%" }}
+    <Container
+      css="flex flex-col justify-center"
+      background={{
+        backgroundImage: "url('bg.jpg')",
+        backgroundSize: "cover",
+        // opacity: ".5",
+        // filter: "blur(1.5px) grayscale(.4) ",
+      }}
+    >
+      <Grid
+        colSpan={[
+          "col-span-10 col-start-2 md:col-span-8 md:col-start-3 lg:col-span-4 lg:col-start-5",
+        ]}
+        css="mt-2"
       >
-        <Title size="headline" css="mb-2 text-center">
-          Stories To Tell
-        </Title>
-        <Text size="large" css="text-center">
-          The easy way to create your life story
-        </Text>
+        <Card>
+          <Title size="headline" css="mb-2 text-center">
+            Stories To Tell
+          </Title>
+          <Text size="large" css="text-center">
+            The easy way to create your life story
+          </Text>
 
-        <EmailFormWrapper
-          setAuthView={setAuthView}
-          authView={authView}
-          submit={getEmailSubmitHandler()}
-        />
-        {authView === "LOGIN" && <OAuthLogin />}
-      </Card>
-    </div>
+          <EmailFormWrapper
+            setAuthView={setAuthView}
+            authView={authView}
+            submit={getEmailSubmitHandler()}
+          />
+          {authView === "LOGIN" && <OAuthLogin />}
+        </Card>
+      </Grid>
+    </Container>
   );
 }
