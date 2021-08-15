@@ -218,7 +218,11 @@ export default function CaptureModal({
             close={closeModal}
             size={getModalSize(item.type)}
           >
-            <form id="capture-form" onSubmit={props.handleSubmit}>
+            <form
+              id="capture-form"
+              className="h-full p-2 overflow-scroll"
+              onSubmit={props.handleSubmit}
+            >
               <Title size="large">{formTitle}</Title>
               {item.type === "EVENT" && <EventForm {...props} />}
 

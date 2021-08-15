@@ -1,7 +1,7 @@
 import DatePicker from "~/components/capture/datepicker";
-import FormError from "~/components/formError";
+import FormField from "~/components/formField";
 import TextEditor from "~/components/capture/textEditor";
-import { FormInput, FormLabel } from "~/components/_styled";
+import { FormInput, Grid } from "~/components/_styled";
 
 export default function TextForm({
   handleChange,
@@ -16,8 +16,7 @@ export default function TextForm({
   return (
     <>
       {editContent && (
-        <div className="form-control">
-          <FormLabel>Memory</FormLabel>
+        <FormField label="Memory" error={errors.content}>
           <TextEditor
             name="content"
             handleBlur={handleBlur}
@@ -39,37 +38,34 @@ export default function TextForm({
               return;
             }}
           />
-          <FormError error={errors.content} />
-        </div>
+        </FormField>
       )}
 
-      <div className="form-control">
-        <FormLabel>Title</FormLabel>
-        <FormInput
-          name="title"
-          placeholder="Title your memory (for reference)"
-          handleChange={handleChange}
-          handleBlur={handleBlur}
-          value={values.title}
-          error={errors.title}
-        />
-        <FormError error={errors.title} />
-      </div>
+      <Grid colSpan={["col-span-12 md:col-span-6"]}>
+        <FormField label="Title" error={errors.title}>
+          <FormInput
+            name="title"
+            placeholder="Title your memory (for reference)"
+            handleChange={handleChange}
+            handleBlur={handleBlur}
+            value={values.title}
+            error={errors.title}
+          />
+        </FormField>
 
-      <div className="form-control">
-        <FormLabel>Date</FormLabel>
-        <DatePicker
-          error={errors.date}
-          date={values.date}
-          handleChange={(newDate) => {
-            const date = newDate.toISOString().replace(/T.*/, "");
-            const dateType = "MANUAL";
-            setFieldValue("date", date);
-            setFieldValue("dateType", dateType);
-          }}
-        />
-        <FormError error={errors.date} />
-      </div>
+        <FormField label="Date" error={errors.date}>
+          <DatePicker
+            error={errors.date}
+            date={values.date}
+            handleChange={(newDate) => {
+              const date = newDate.toISOString().replace(/T.*/, "");
+              const dateType = "MANUAL";
+              setFieldValue("date", date);
+              setFieldValue("dateType", dateType);
+            }}
+          />
+        </FormField>
+      </Grid>
     </>
   );
 }

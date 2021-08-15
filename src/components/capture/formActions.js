@@ -1,4 +1,4 @@
-import { Button, ButtonGroup } from "~/components/_styled";
+import { Button, ButtonGroup, Grid } from "~/components/_styled";
 
 export default function FormActions({
   closeModal,
@@ -13,12 +13,11 @@ export default function FormActions({
     submitText = !itemId ? "Add" : "Update";
   }
   return (
-    <ButtonGroup css="justify-end pt-6 border-t border-lightGray">
+    <div className="flex justify-end">
       <Button
         disabled={isSubmitting}
         variant="minimal"
-        size="large"
-        css="w-36"
+        css="w-full md:w-36 mr-4"
         onClick={closeModal}
       >
         Cancel
@@ -26,13 +25,12 @@ export default function FormActions({
       <Button
         type="submit"
         variant="cta"
-        size="large"
-        css="w-36"
+        css="w-full md:w-36"
         disabled={!formIsDirty}
         inProgress={isSubmitting}
       >
         {submitText}
       </Button>
-    </ButtonGroup>
+    </div>
   );
 }

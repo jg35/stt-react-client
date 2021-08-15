@@ -1,6 +1,6 @@
 import DatePicker from "~/components/capture/datepicker";
-import { FormInput, FormLabel } from "~/components/_styled";
-import FormError from "~/components/formError";
+import { FormInput, FormLabel, Grid } from "~/components/_styled";
+import FormField from "~/components/formField";
 import Uppy from "~/components/uppy";
 
 export default function PhotoForm({
@@ -12,20 +12,18 @@ export default function PhotoForm({
   isSubmitting,
 }) {
   return (
-    <div className="flex">
-      <div class="form-control">
+    <Grid colSpan={["col-span-12 md:col-span-8", "col-span-12 md:col-span-4"]}>
+      <FormField label="Photo" error={errors.mediaUrl}>
         <Uppy
           isSubmitting={isSubmitting}
           mediaUrl={values.mediaUrl}
           onChange={(url) => setFieldValue("mediaUrl", url)}
           error={errors.mediaUrl}
         />
-        <FormError error={errors.mediaUrl} />
-      </div>
+      </FormField>
 
-      <div className="flex flex-col ml-10 w-96">
-        <div className="form-control w-full">
-          <FormLabel>Caption</FormLabel>
+      <div>
+        <FormField label="Caption" error={errors.caption}>
           <FormInput
             name="mediaCaption"
             placeholder="Add a caption"
@@ -34,9 +32,8 @@ export default function PhotoForm({
             handleBlur={handleBlur}
             handleChange={handleChange}
           />
-        </div>
-        <div className="form-control w-full">
-          <FormLabel>Date</FormLabel>
+        </FormField>
+        <FormField label="Date" error={errors.date}>
           <DatePicker
             date={values.date}
             error={errors.date}
@@ -45,9 +42,8 @@ export default function PhotoForm({
               setFieldValue("dateType", "MANUAL");
             }}
           />
-          <FormError error={errors.date} />
-        </div>
+        </FormField>
       </div>
-    </div>
+    </Grid>
   );
 }

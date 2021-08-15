@@ -34,30 +34,30 @@ export default function Modal({
   let sizeStyles;
   switch (size) {
     case "sm":
-      sizeStyles = "w-auto max-w-md";
+      sizeStyles = "w-full h-full md:h-auto md:w-auto max-w-md";
       break;
     case "lg":
-      sizeStyles = "w-4/5 max-w-5xl";
+      sizeStyles = "w-full h-full lg:h-auto lg:w-4/5 max-w-5xl";
       break;
     case "full":
-      sizeStyles = "h-full max-h-full w-full max-w-full";
+      sizeStyles = "w-full h-full max-h-full max-w-full";
       break;
     case "md":
     default:
-      sizeStyles = "w-2/5 max-w-2xl";
+      sizeStyles = "w-full h-full md:h-auto md:w-auto max-w-2xl";
       break;
   }
 
   if (isOpen) {
     return (
-      <div className="animate-fade-in fixed min-w-full h-full bg-lightestGray left-0 top-0 z-40 bg-opacity-90 flex justify-center items-center p-4">
+      <div className="animate-fade-in fixed min-w-full h-full bg-lightestGray left-0 top-0 z-40 bg-opacity-90 flex justify-center items-center pt-6 px-4 pb-4">
         <div
           ref={modal}
           className={`relative ${sizeStyles}`}
           id="capture-form-wrapper"
           onClick={(e) => e.stopPropagation()}
         >
-          <Card css="p-6">{children}</Card>
+          <Card css="p-2 md:p-6">{children}</Card>
           <ModalCloseWarning
             isOpen={showCloseWarning}
             back={() => setShowCloseWarning(false)}

@@ -26,9 +26,8 @@ export default function TextEditor({
           e.target.value = "";
           e.target.value = val;
         }}
-        style={{ minHeight: "200px" }}
         placeholder="Write down your memory"
-        className={`w-full h-full rounded focus:outline-none bg-lightestGray resize-none p-4 text-xl ${
+        className={`w-full h-44 md:h-60 rounded focus:outline-none bg-lightestGray resize-none p-4 text-xl ${
           error && "input-error"
         }`}
         onBlur={handleBlur}
