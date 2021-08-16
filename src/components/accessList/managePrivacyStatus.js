@@ -1,20 +1,20 @@
-import { Button, Title, Text } from "~/components/_styled";
+import { Button, FormLabel, Title, Text } from "~/components/_styled";
 
 function PrivacyOption({ title, description, active, onClick }) {
   return (
     <Button
       onClick={onClick}
-      variant="secondary"
-      css={`rounded-lg mr-6 ease-in duration-400 h-48 flex-col items-center font-normal ${
+      variant="privacyStatus"
+      css={
         active
-          ? "border-black shadow-lg bg-offWhite"
-          : "border-lightGray bg-white"
-      }`}
+          ? "border-black shadow-lg"
+          : "border-lightestGray hover:border-lightGray hover:bg-lightestGray"
+      }
     >
-      <Title tag="h2" css="text-center mt-2 mb-2">
+      <Title tag="h2" css="mt-2 mb-2">
         {title}
       </Title>
-      <Text>{description}</Text>
+      <Text css="text-center w-full">{description}</Text>
     </Button>
   );
 }
@@ -25,23 +25,23 @@ export default function ManagePrivacyStatus({
 }) {
   return (
     <>
-      <Text css="font-medium">Privacy status</Text>
-      <div className="flex">
-        <div className="w-1/2 pr-2">
+      <FormLabel>Privacy status</FormLabel>
+      <div className="flex flex-wrap">
+        <div className="w-full sm:w-1/2 sm:pr-2 mt-2">
           <PrivacyOption
             onClick={() => setPrivacyStatus("PUBLIC")}
             active={privacyStatus === "PUBLIC"}
             title="Public 🌎 "
-            description="Your book will be viewable by anyone that has the link. You can regenerate the link in your settings."
+            description="Your book is viewable by anyone that knows your handle. You can change your handle at any time."
           />
         </div>
 
-        <div className="w-1/2 pl-2">
+        <div className="w-full sm:w-1/2 sm:pl-2 mt-2">
           <PrivacyOption
             onClick={() => setPrivacyStatus("PRIVATE")}
             active={privacyStatus === "PRIVATE"}
             title="Private 🔒"
-            description="A unique link will be generated for each email you add to your share list."
+            description="Readers added to your share list will login with their email and a login token."
           />
         </div>
       </div>

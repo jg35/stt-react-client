@@ -8,6 +8,7 @@ import ManageUser from "~/components/settings/manageUser";
 import ManageBilling from "~/components/settings/manageBilling";
 import ManageAccount from "~/components/settings/manageAccount";
 import ManagePrivacy from "~/components/settings/managePrivacy";
+import AccessList from "~/components/accessList/accessList";
 
 export default function Settings() {
   const TABS = ["SETTINGS", "BILLING", "ACCOUNT", "PRIVACY"];
@@ -44,15 +45,12 @@ export default function Settings() {
 
   return (
     dbUser && (
-      <Page minimal>
+      <Page minimal css="overflow-scroll">
         <Grid
           height="h-full"
-          gap="gap-y-2 md:gap-4"
+          gap="gap-y-2 lg:gap-4"
           autoRows="auto-rows-min"
-          colSpan={[
-            "col-span-12 md:col-span-4 lg:col-span-3",
-            "col-span-12 md:col-span-8 lg:col-span-9",
-          ]}
+          colSpan={["col-span-12 lg:col-span-3", "col-span-12 lg:col-span-9"]}
         >
           <Card css="p-2">
             <Grid
@@ -62,7 +60,7 @@ export default function Settings() {
                   dbUser && dbUser.versions.length > 1
                     ? "col-span-3"
                     : "col-span-4"
-                } md:col-span-12`,
+                } lg:col-span-12`,
               ]}
             >
               <TabLink
@@ -100,6 +98,7 @@ export default function Settings() {
 
           <Card>{renderActiveTab()}</Card>
         </Grid>
+        <AccessList userId={dbUser.id} />
       </Page>
     )
   );

@@ -50,8 +50,11 @@ export default function Button({
       !disabled && "hover:border-lightGray hover:shadow-sm hover:bg-lightGray "
     }`,
     secondary: `bg-white font-medium border-offBlack ${
-      !disabled && "hover:bg-offBlack hover:text-white hover:shadow-md"
+      !disabled
+        ? "hover:bg-offBlack hover:text-white hover:shadow-md"
+        : "opacity-50"
     }`,
+    privacyStatus: `bg-white font-medium border-offBlack rounded-lg mr-6 ease-in duration-400 h-full flex-col items-center font-normal xl:h-48`,
     cta: `bg-offBlack text-white font-medium border-offBlack ${
       !disabled && "hover:bg-black hover:border-black hover:shadow-md"
     }`,

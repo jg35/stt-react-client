@@ -55,7 +55,7 @@ export default function Login() {
   }
 
   if (status === "in") {
-    history.push("/settings");
+    history.push("/");
   }
 
   return (

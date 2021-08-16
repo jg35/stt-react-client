@@ -23,8 +23,7 @@ export default function AccessListStatusButton({
     return (
       <>
         {accessTokens.length > 0 ? accessTokens.length : "No"} reader
-        {accessTokens.length !== 1 && "s"}{" "}
-        {future ? "will be able to " : "can "} view your book
+        {accessTokens.length !== 1 && "s"} on your share list
       </>
     );
   }
@@ -37,17 +36,17 @@ export default function AccessListStatusButton({
     <div className="flex items-center my-2">
       {isPublic ? (
         <Button
-          variant="secondary"
+          css="md:w-auto"
           onClick={() => history.push("/settings#privacy")}
         >
-          Your book is public - Manage link
+          Your book is public - manage privacy settings
         </Button>
       ) : (
         <Button
-          variant="secondary"
+          css="md:w-auto"
           onClick={() => updateUiState({ showAccessListModal: true }, false)}
         >
-          {getStatus()}&nbsp;-&nbsp; Manage share list
+          {getStatus()}&nbsp;-&nbsp; click to manage
         </Button>
       )}
     </div>

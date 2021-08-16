@@ -1,71 +1,44 @@
-import { useState } from "react";
-import { Button, Text, Title } from "~/components/_styled";
+import { Button, Text, Title, Grid } from "~/components/_styled";
 
-export default function AccessListItems({
-  items,
-  removeAccessToken,
-  isPublic = false,
-  regeneratePublicToken,
-}) {
-  const [isRegen, setIsRegen] = useState(false);
-  const itemLength = items.filter((f) =>
-    isPublic ? f.type === "PUBLIC" : f.type === "PRIVATE"
-  ).length;
-
+export default function AccessListItems({ items, removeAccessToken }) {
   return (
     <div>
       <Title size="compact" tag="h2">
         Readers
       </Title>
       <Text>
-        When your book is private, readers will gain access by enterring their
-        email and login token.
+        When your book is private, readers will login using their email and
+        login token.
       </Text>
       <ul className="mb-8">
-        <li className="flex justify-between py-2 font-medium items-center">
-          <span className="w-36">Email</span>
-          <span className="w-36">Login token</span>
-          <span className="w-36"></span>
+        <li className="py-2 font-medium">
+          <Grid colSpan={["col-span-4"]}>
+            <span className="block">Email</span>
+            <span className="block">Login token</span>
+            <span className="block"></span>
+          </Grid>
         </li>
         {items
-          .filter((f) =>
-            isPublic ? f.type === "PUBLIC" : f.type === "PRIVATE"
-          )
+          .filter((f) => f.type === "PRIVATE")
           .map((item) => {
             return (
               <li
-                className="flex justify-between p-2 shadow mb-4 rounded items-center bg-offWhite"
+                className="p-2 shadow mb-4 rounded bg-offWhite"
                 key={item.id || item.email}
               >
-                {!isPublic && (
-                  <span className="w-36 truncate">{item.email}</span>
-                )}
-
-                <span className="w-36 truncate"> {item.token}</span>
-                <div className="w-36 flex justify-end">
-                  {!isPublic ? (
+                <Grid colSpan={["col-span-4"]} css="items-center">
+                  <span className="block truncate">{item.email}</span>
+                  <span className="block truncate">{item.token}</span>
+                  <div className="flex justify-end">
                     <Button
                       size="compact"
                       css="w-auto"
                       onClick={() => removeAccessToken(item)}
                     >
-                      Remove access
+                      Remove
                     </Button>
-                  ) : (
-                    <Button
-                      size="compact"
-                      css="w-auto"
-                      onClick={() => {
-                        setIsRegen(true);
-                        regeneratePublicToken(item).then(() => {
-                          setIsRegen(false);
-                        });
-                      }}
-                    >
-                      {isRegen ? "Regenerating link..." : "Regenerate Link"}
-                    </Button>
-                  )}
-                </div>
+                  </div>
+                </Grid>
               </li>
             );
           })}

@@ -1,6 +1,7 @@
 import { useRef, useCallback, useEffect, useState } from "react";
 import useClickOutside from "~/hooks/useClickOutside";
-import { Card } from "~/components/_styled";
+import { Button, Card } from "~/components/_styled";
+import Svg from "~/components/svg";
 import ModalCloseWarning from "~/components/modalCloseWarning";
 
 export default function Modal({
@@ -58,7 +59,18 @@ export default function Modal({
           id="capture-form-wrapper"
           onClick={(e) => e.stopPropagation()}
         >
-          <Card css="p-2 md:p-6">{children}</Card>
+          {canClose && (
+            <Button
+              size="compact"
+              css="absolute right-2 top-2 w-auto font-medium rounded-md"
+              variant="minimal"
+              onClick={() => close()}
+            >
+              Close <Svg name="cancel" width={18} height={18} css="ml-1" />
+            </Button>
+          )}
+
+          <Card css="pt-10 px-2 md:p-6">{children}</Card>
           <ModalCloseWarning
             isOpen={showCloseWarning}
             back={() => setShowCloseWarning(false)}

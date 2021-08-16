@@ -7,6 +7,7 @@ export default function Page({
   children,
   minimal = false,
   maxWidth = "1400px",
+  css = "",
 }) {
   return (
     <Container
@@ -15,7 +16,7 @@ export default function Page({
     >
       <Surface id="page">
         <Header minimal={minimal} />
-        <PageContent>{children}</PageContent>
+        <PageContent css={css}>{children}</PageContent>
       </Surface>
     </Container>
   );

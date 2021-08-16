@@ -65,6 +65,7 @@ export default function EmailForm({
         <FormInput
           name="email"
           placeholder="Your email"
+          type="email"
           handleChange={handleChange}
           handleBlur={handleBlur}
           value={values.email}

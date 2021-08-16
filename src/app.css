@@ -294,7 +294,7 @@ input[type="range"]:focus::-webkit-slider-runnable-track {
 }
 
 .preview-container {
-  @apply px-6;
+  @apply px-4 md:px-6;
 }
 
 .preview-element,
@@ -305,11 +305,11 @@ input[type="range"]:focus::-webkit-slider-runnable-track {
 }
 
 h1.preview-element {
-  @apply text-3xl text-center;
+  @apply text-2xl md:text-3xl text-center;
   margin: 3em 0;
 }
 p.preview-element {
-  @apply text-lg whitespace-pre-wrap;
+  @apply text-base md:text-lg whitespace-pre-wrap;
   margin-bottom: 2em;
 }
 
@@ -317,7 +317,7 @@ p.preview-element {
   @apply my-10;
 }
 figcaption.preview-element {
-  @apply text-center text-lg whitespace-pre-wrap;
+  @apply text-center text-base md:text-lg whitespace-pre-wrap;
   margin: 0.5em 0 1em;
 }
 

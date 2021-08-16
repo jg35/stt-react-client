@@ -14,6 +14,7 @@ export default function Header({ minimal = false }) {
     authState: { dbUser },
   } = useContext(AuthContext);
   const isTimeline = useRouteMatch("/");
+  const isBilling = useRouteMatch("/settings");
   return (
     <header className="py-4 px-2">
       <Grid
@@ -61,6 +62,7 @@ export default function Header({ minimal = false }) {
             <div id="show-preview-btn" className="mr-2 hidden lg:block">
               <Button
                 size="compact"
+                css="w-auto"
                 onClick={() =>
                   updateUiState({ showPreview: !uiState.showPreview })
                 }
@@ -71,17 +73,15 @@ export default function Header({ minimal = false }) {
           )}
           <MainMenu />
         </div>
-        {!uiState.hideTrialStatus ? (
-          <div className="flex justify-center items-center h-full">
-            {dbUser && (
-              <TrialStatus
-                stripeCustomerId={dbUser.stripeCustomerId}
-                expiry={dbUser.trialExpiresDate}
-                status={dbUser.subscriptionStatus}
-              />
-            )}
-          </div>
-        ) : null}
+        <div>
+          {!uiState.hideTrialStatus && !isBilling && dbUser && (
+            <TrialStatus
+              stripeCustomerId={dbUser.stripeCustomerId}
+              expiry={dbUser.trialExpiresDate}
+              status={dbUser.subscriptionStatus}
+            />
+          )}
+        </div>
       </Grid>
     </header>
   );

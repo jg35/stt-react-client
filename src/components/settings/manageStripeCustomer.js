@@ -1,21 +1,30 @@
 import { Button, Title, Text } from "~/components/_styled";
 import { DateTime } from "luxon";
-import UserPaymentForm from "~/components/userPaymentForm";
+import TrialStatus from "~/components/trialStatus";
 
 function buildSummary(subscriptionStatus, subscriptionMeta) {
   let planMessage;
+  let nextPaymentDate;
+  if (subscriptionMeta && subscriptionMeta.periodEnd) {
+    nextPaymentDate = `${DateTime.fromSeconds(
+      subscriptionMeta.periodEnd
+    ).toFormat("dd MMMM yyyy")}`;
+  }
+
   switch (subscriptionStatus) {
     // Other statuses PAYMENT_FAILED / CANCELLED will be handled by global modal
     case "ACTIVE":
       const planName = subscriptionMeta.interval + "ly";
-      const nextPaymentDate = `${DateTime.fromSeconds(
-        subscriptionMeta.periodEnd
-      ).toFormat("dd MMMM yyyy")}`;
+
       planMessage = (
         <>
           You're on our <strong>{planName}</strong> plan. Your next payment of £
           {subscriptionMeta.amount / 100} will be taken on{" "}
-          <strong>{nextPaymentDate}.</strong>
+          <strong>{nextPaymentDate}</strong>.
+          <br />
+          <br />
+          To update payment information, manage or cancel your subscription,
+          please click below.
         </>
       );
       break;
@@ -24,7 +33,11 @@ function buildSummary(subscriptionStatus, subscriptionMeta) {
       planMessage = (
         <>
           You're plan has been cancelled. You'll have access to Stories To Tell
-          until <strong>{nextPaymentDate}.</strong>
+          until <strong>{nextPaymentDate}</strong>.
+          <br />
+          <br />
+          If you've changed your mind about cancelling, click below to manage
+          your subscription.
         </>
       );
       break;
@@ -32,20 +45,13 @@ function buildSummary(subscriptionStatus, subscriptionMeta) {
       planMessage = (
         <>
           You're on our free trial. If you would like to continue using Stories
-          To Tell, please follow the instructions below.
+          To Tell, please subscribe below.
         </>
       );
   }
   return (
     <>
-      <Text>{planMessage}</Text>
-      <Text>
-        To update payment information,{" "}
-        {subscriptionStatus === "CANCEL_AT_PERIOD_END"
-          ? "or to renew your plan"
-          : "change plans or cancel"}
-        , please click below.
-      </Text>
+      <Text css="mb-6">{planMessage}</Text>
     </>
   );
 }
@@ -54,26 +60,28 @@ export default function ManageStripeCustomer({
   stripeCustomerId,
   subscriptionStatus,
   subscriptionMeta,
+  trialExpiresDate,
 }) {
   return (
     <div>
       <Title>Your subscription</Title>
       {buildSummary(subscriptionStatus, subscriptionMeta)}
       {subscriptionStatus === "IN_TRIAL" ? (
-        <UserPaymentForm
-          intent="MANUAL"
-          type="CHOOSE_PLAN"
-          subscriptionStatus={subscriptionStatus}
-          stripeCustomerId={stripeCustomerId}
-          asModal={false}
-        />
+        <div className="mt-6">
+          <TrialStatus
+            stripeCustomerId={stripeCustomerId}
+            expiry={trialExpiresDate}
+            status={subscriptionStatus}
+            css="w-full md:w-auto"
+          />
+        </div>
       ) : (
         <form
           action={`${process.env.REACT_APP_FUNCTIONS_SERVER_URL}/actions/public/stripe/portal`}
           method="POST"
         >
           <input type="hidden" name="customerId" value={stripeCustomerId} />
-          <Button type="submit" variant="secondary" css="w-auto">
+          <Button type="submit" css="w-full md:w-auto">
             Manage my subscription
           </Button>
         </form>

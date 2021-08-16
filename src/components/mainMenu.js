@@ -16,13 +16,13 @@ export default function MainMenu() {
   const items = [
     {
       component: (
-        <NavLink className="fill text-right" to="/settings#account">
+        <NavLink className="fill text-right" to="/settings">
           <div className="flex items-center justify-end p-2">
-            <div className="px-2 truncate">
+            <div className="px-2 truncate w-40">
               <Text tag="span" size="compact" css="block">
                 {user.displayName}
               </Text>
-              <Text tag="span" size="compact" className="text-gray">
+              <Text tag="span" size="compact" css="text-gray text-sm">
                 {user.email}
               </Text>
             </div>

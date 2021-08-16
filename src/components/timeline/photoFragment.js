@@ -9,15 +9,15 @@ export default function PhotoFragment({ fragment }) {
       className="flex-1 relative rounded-b"
       style={{
         backgroundImage: `url(${url})`,
-        backgroundSize: "contain",
-        backgroundPosition: "center top",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
-        backgroundColor: "rgba(0,0,0,.9)",
+        backgroundColor: "rgba(255,255,255.9)",
       }}
     >
       {caption && (
         <>
-          <div className="absolute w-full h-10 bottom-0 bg-black rounded-b-md rounded-b"></div>
+          <div className="absolute w-full h-10 bottom-0 bg-black rounded-b-md rounded-b opacity-70"></div>
           <span className="h-10 absolute bottom-0 block text-white text-center rounded-b py-2 font-medium w-full rounded-b">
             {caption}
           </span>

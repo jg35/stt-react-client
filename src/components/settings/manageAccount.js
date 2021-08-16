@@ -24,9 +24,21 @@ export default function ManageAccount({ dbUser }) {
     <div className="animate-fade-in">
       <Title>Manage my account</Title>
 
+      {/* TODO */}
+      {/* <Title size="compact">My data</Title>
       <Text size="large">
-        If you would like to delete your account please click below.
+        To export your data, please click on one of the options below. Your
+        export will be emailed to you when it's ready.
+      </Text> */}
+
+      <Title size="compact">Delete my account</Title>
+
+      <Text size="large">
+        If you would like to keep your book online and preserve your data
+        consider cancelling your subscription instead. Published books will stay
+        online regardless of your subscription status.
       </Text>
+      <Text size="large">If you want to delete your account, click below.</Text>
       <Button css="w-auto" onClick={() => setShowDeleteAccountModal(true)}>
         Delete my account
       </Button>
@@ -91,14 +103,24 @@ export default function ManageAccount({ dbUser }) {
                   />
                   <FormError error={errors.confirm} />
                 </div>
-                <Button
-                  size="large"
-                  inProgress={isSubmitting}
-                  disabled={!dirty || errors.confirm}
-                  type="submit"
-                >
-                  {isSubmitting ? "Deleting..." : "Delete account"} ⚠️
-                </Button>
+                <div className="flex justify-end">
+                  <Button
+                    onClick={() => setShowDeleteAccountModal(false)}
+                    variant="cta"
+                    css="mr-1 md:w-40"
+                    type="button"
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    inProgress={isSubmitting}
+                    disabled={!dirty || errors.confirm}
+                    css="ml-1 md:w-40"
+                    type="submit"
+                  >
+                    {isSubmitting ? "Deleting..." : "Delete account"} ⚠️
+                  </Button>
+                </div>
               </form>
             );
           }}

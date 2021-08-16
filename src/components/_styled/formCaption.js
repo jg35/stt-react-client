@@ -7,7 +7,7 @@ export default function FormCaption({
   style = {},
   variant = "info",
 }) {
-  const baseCss = "block h-8";
+  const baseCss = "block h-8 text-sm sm:text-base";
   const variants = {
     error: "text-red",
     info: "text-gray",

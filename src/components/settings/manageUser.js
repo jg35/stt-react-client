@@ -91,7 +91,7 @@ export default function UserSettings({ dbUser }) {
                 <Button
                   type="submit"
                   variant="cta"
-                  css="w-full lg:w-36"
+                  css="md:w-36"
                   disabled={!dirty}
                   inProgress={isSubmitting}
                 >

@@ -9,6 +9,7 @@ export default function AccessList({ userId }) {
     return (
       <AccessListModal
         userId={userId}
+        show={uiState.showAccessListModal}
         closeModal={() => updateUiState({ showAccessListModal: false }, false)}
       />
     );

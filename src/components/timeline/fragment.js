@@ -7,7 +7,7 @@ import PhotoFragment from "~/components/timeline/photoFragment";
 export default function Fragment({ fragment }) {
   return (
     <div
-      className="animate-fade-in rounded-md bg-white shadow flex flex-col h-full whitespace-normal"
+      className="animate-fade-in rounded-md bg-white shadow flex flex-col h-full"
       data-fragment-id={fragment.id}
       data-fragment-type={fragment.type}
     >

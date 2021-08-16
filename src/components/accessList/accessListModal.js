@@ -10,11 +10,11 @@ import { AccessTokenPrivateSchema } from "~/lib/yup";
 import useToastMessage from "~/hooks/useToastMessage";
 import Modal from "~/components/modal";
 
-import { Button, FormInput, Title } from "~/components/_styled";
-import FormError from "~/components/formError";
+import { Button, FormInput } from "~/components/_styled";
+import FormField from "~/components/formField";
 import AccessListItems from "~/components/accessList/accessListItems";
 
-export default function AccessListModal({ closeModal }) {
+export default function AccessListModal({ closeModal, show }) {
   const { setError } = useToastMessage();
   const { data, loading } = useCustomQuery(FETCH_PRIVATE_ACCESS_TOKENS, {
     userId: true,
@@ -82,9 +82,9 @@ export default function AccessListModal({ closeModal }) {
         return (
           <Modal
             formIsDirty={props.dirty}
-            isOpen={true}
+            isOpen={show}
             close={closeModal}
-            size="md"
+            size="lg"
           >
             <div>
               <AccessListItems
@@ -92,15 +92,16 @@ export default function AccessListModal({ closeModal }) {
                 removeAccessToken={(item) => deleteTokenHandler(item.id)}
               />
 
-              <Title tag="h2" size="compact" css="text-gray">
-                Add readers
-              </Title>
               <form
-                className="flex"
+                className="flex items-center"
                 onSubmit={props.handleSubmit}
                 id="access-token-form"
               >
-                <div className="flex-1">
+                <FormField
+                  label="Add reader"
+                  error={props.errors.email}
+                  css="flex-1"
+                >
                   <FormInput
                     name="email"
                     placeholder="Enter email"
@@ -109,16 +110,16 @@ export default function AccessListModal({ closeModal }) {
                     value={props.values.email}
                     error={props.errors.email}
                   />
-                  <FormError error={props.errors.email} />
-                </div>
+                </FormField>
                 <div className="ml-2 w-32">
                   <Button
                     type="submit"
                     variant="cta"
+                    css="-mt-2"
                     disabled={!props.dirty}
                     inProgress={props.isSubmitting}
                   >
-                    {!props.isSubmitting ? "Add" : "Adding..."}
+                    {!props.isSubmitting ? "Save" : "Saving..."}
                   </Button>
                 </div>
               </form>

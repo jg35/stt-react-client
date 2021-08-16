@@ -4,7 +4,13 @@ import { Button } from "~/components/_styled";
 import Svg from "~/components/svg";
 import { getTrialDaysRemaining, getNumAsWord } from "~/lib/util";
 
-export default function TrialStatus({ expiry, status, stripeCustomerId }) {
+export default function TrialStatus({
+  expiry,
+  status,
+  stripeCustomerId,
+  showExpiry = true,
+  css = "",
+}) {
   const { updateUiState, uiState } = useContext(UIContext);
   const trialDaysRemaining = getTrialDaysRemaining(expiry);
   if (
@@ -19,7 +25,7 @@ export default function TrialStatus({ expiry, status, stripeCustomerId }) {
     <div className="flex">
       <Button
         size="compact"
-        css="font-medium"
+        css={`font-medium ${css}`}
         onClick={() =>
           updateUiState(
             {
@@ -35,7 +41,8 @@ export default function TrialStatus({ expiry, status, stripeCustomerId }) {
           )
         }
       >
-        {getNumAsWord(trialDaysRemaining)} days remaining - Pick a plan
+        {showExpiry && `${trialDaysRemaining} days remaining - `}
+        choose a subscription
       </Button>
       {window.innerWidth < 768 && (
         <Button

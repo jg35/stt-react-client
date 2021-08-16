@@ -1,4 +1,6 @@
 import { Button, Title, Text } from "~/components/_styled";
+import Svg from "~/components/svg";
+import colors from "~/lib/colors";
 
 function getTitle(interval) {
   switch (interval) {
@@ -6,6 +8,46 @@ function getTitle(interval) {
       return "Annual";
     case "month":
       return "Monthly";
+    default:
+      return "";
+  }
+}
+
+function Benefit({ text, included = true }) {
+  return (
+    <span className="block flex mb-2">
+      <Svg
+        name={included ? "check" : "cross"}
+        css="mr-1"
+        height={16}
+        color={included ? colors.green : colors.red}
+        width={16}
+      />
+      {text}
+    </span>
+  );
+}
+
+function getDesc(interval) {
+  switch (interval) {
+    case "month":
+      return (
+        <>
+          <Benefit text="Unlimited access and uploads" />
+          <Benefit text="Share your book" />
+          <Benefit text="Cancel anytime" />
+          <Benefit text="Save 20%" included={false} />
+        </>
+      );
+    case "year":
+      return (
+        <>
+          <Benefit text="Unlimited access and uploads" />
+          <Benefit text="Share your book" />
+          <Benefit text="Cancel anytime" />
+          <Benefit text="Save 20% over our monthly plan" />
+        </>
+      );
     default:
       return "";
   }
@@ -21,25 +63,31 @@ export default function SubscriptionOptionCard({
   selected,
   index,
 }) {
+  let cardCss =
+    "cursor-pointer mb-4 w-full md:flex-1 shadow-lg bg-white border-2 p-4 h-full flex flex-col justify-between rounded ";
+  cardCss += index === 0 ? "md:mr-2 " : "md:ml-2 ";
+  cardCss += selected ? "border-green " : "border-black ";
+
+  const buttonCss = `mt-2 md:mt-6 ${
+    selected &&
+    "bg-green border-green hover:bg-green hover:border-green text-white"
+  }`;
+
+  const planName = getTitle(option.interval);
+
   return (
-    <div onClick={() => selectPlan()} className={`cursor-pointer w-48 mb-4`}>
-      <div
-        className={`shadow-lg bg-white border-2 p-4 ${
-          index === 0 ? "mr-1" : "ml-1"
-        } rounded ${selected ? "border-green" : "border-black"}`}
-      >
-        <Title>{getTitle(option.interval)}</Title>
+    <div onClick={() => selectPlan()} className={cardCss}>
+      <div>
+        <Title css={`mb-0`}>{planName}</Title>
         <Text size="large">{formatPrice(option.amount)}</Text>
-        <div className="pt-6">
-          <Button
-            variant="minimal"
-            css={selected ? "bg-green hover:bg-green hover:border-green" : ""}
-            disabled={selected}
-          >
-            {selected ? "Plan selected" : "Select this plan"}
-          </Button>
-        </div>
+        <Text>{getDesc(option.interval)}</Text>
       </div>
+
+      <Button css={buttonCss} variant="secondary">
+        {selected
+          ? `${planName} plan selected`
+          : `Select ${planName.toLowerCase()} plan`}
+      </Button>
     </div>
   );
 }

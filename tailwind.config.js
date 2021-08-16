@@ -41,6 +41,14 @@ module.exports = {
           },
         },
       },
+      minWidth: {
+        0: "0",
+        // For fragment scroll (need to be slightly bigger than stated)
+        "f1/3": "35",
+        "f1/2": "52%",
+        "f1/4": "26.5",
+        full: "100%",
+      },
     },
     colors: {
       offBlack: "#1e1e1e",
@@ -58,7 +66,7 @@ module.exports = {
       red: "#ff6a66",
       transparent: "transparent",
       google: "#4285f4",
-      green: "#a9e292",
+      green: "#9fe682",
       successGreen: "#76c73c",
       facebook: "#3b5998",
     },

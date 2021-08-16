@@ -122,7 +122,7 @@ export default function CaptureHeader({ init }) {
           {questionVisible && currentQuestion && (
             <div
               id="question-panel"
-              className="animate-fade-in bg-white rounded p-2 border-2 shadow"
+              className="animate-fade-in bg-white rounded p-2 border-2 shadow md:pl-3"
             >
               <div className="flex justify-between items-center mb-2 h-10">
                 <Title css="mb-0 w-4/5 truncate">{currentQuestion.title}</Title>
@@ -234,5 +234,9 @@ export default function CaptureHeader({ init }) {
       </Card>
     );
   }
-  return <CaptureHeaderSkeleton />;
+  return (
+    <div className="animate-fade-in bg-white rounded pt-4 pb-2 px-4 shadow">
+      <CaptureHeaderSkeleton />
+    </div>
+  );
 }

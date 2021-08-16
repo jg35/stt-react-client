@@ -1,8 +1,7 @@
 import useToastMessage from "~/hooks/useToastMessage";
-import AccessListForm from "~/components/accessList/accessListForm";
 import ManagePrivacyStatus from "~/components/accessList/managePrivacyStatus";
-import { Button, Title } from "~/components/_styled";
-import AccessListItems from "~/components/accessList/accessListItems";
+import { Button, Title, FormLabel } from "~/components/_styled";
+import AccessListStatusButton from "~/components/accessList/accessListStatusButton";
 import FormHandleAvailabilityInput from "~/components/formHandleAvailabilityInput";
 
 import { Formik } from "formik";
@@ -118,7 +117,7 @@ export default function ManagePrivacy({ dbUser }) {
         {(props) => {
           return (
             <form onSubmit={props.handleSubmit} id="manage-privacy-form">
-              <div className="mb-6">
+              <div className="mb-3">
                 <FormHandleAvailabilityInput
                   value={props.values.publicHandle}
                   error={props.errors.publicHandle}
@@ -128,6 +127,11 @@ export default function ManagePrivacy({ dbUser }) {
                   savedHandle={data.stt_user[0].publicHandle}
                 />
               </div>
+              <div className="mb-3">
+                <FormLabel>Share list</FormLabel>
+
+                <AccessListStatusButton />
+              </div>
               <ManagePrivacyStatus
                 setPrivacyStatus={(status) =>
                   props.setFieldValue("privacyStatus", status)
@@ -135,48 +139,15 @@ export default function ManagePrivacy({ dbUser }) {
                 privacyStatus={props.values.privacyStatus}
               />
 
-              {props.values.privacyStatus === "PRIVATE" && (
-                <div className="mt-6">
-                  <AccessListItems
-                    regeneratePublicToken={regeneratePublicTokenHandler}
-                    savedPublicStatus={data.stt_version[0].privacyStatus}
-                    isPublic={props.values.privacyStatus === "PUBLIC"}
-                    items={props.values.tokens}
-                    removeAccessToken={(token) => {
-                      props.setFieldValue(
-                        "tokens",
-                        props.values.tokens.filter(
-                          (t) => t.email !== token.email
-                        )
-                      );
-                    }}
-                  />
-
-                  <AccessListForm
-                    formProps={{ ...props }}
-                    addNewToken={() => {
-                      console.log(props.values.newToken);
-                      props.setFieldValue(
-                        "tokens",
-                        props.values.tokens.concat({ ...props.values.newToken })
-                      );
-                      props.setFieldValue(
-                        "newToken",
-                        AccessTokenPrivateSchema.cast()
-                      );
-                    }}
-                  />
-                </div>
-              )}
-              <div className="flex justify-end pt-6 mt-6 border-t border-lightGray">
+              <div className="flex justify-end mt-6 ">
                 <Button
                   type="submit"
-                  variant="secondary"
-                  css="w-36"
+                  variant="cta"
+                  css="md:w-36"
                   disabled={!props.dirty}
                   inProgress={props.isSubmitting}
                 >
-                  {props.isSubmitting ? "Saving..." : "Save changes"}
+                  {props.isSubmitting ? "Saving..." : "Save"}
                 </Button>
               </div>
             </form>

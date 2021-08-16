@@ -14,7 +14,7 @@ const colours = {
   red: "#ff6a66",
   transparent: "transparent",
   google: "#4285f4",
-  green: "#a9e292",
+  green: "#9fe682",
   facebook: "#3b5998",
 };
 

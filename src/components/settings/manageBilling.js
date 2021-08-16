@@ -7,6 +7,7 @@ export default function ManageBilling({ dbUser }) {
         subscriptionStatus={dbUser.subscriptionStatus}
         subscriptionMeta={dbUser.subscriptionMeta}
         stripeCustomerId={dbUser.stripeCustomerId}
+        trialExpiresDate={dbUser.trialExpiresDate}
       />
     </div>
   );
