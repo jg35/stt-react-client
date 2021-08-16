@@ -8,6 +8,7 @@ import {
 } from "~/components/_styled";
 import PopoverColorPicker from "~/components/popoverColorPicker";
 import Uppy from "~/components/uppy";
+import { values } from "lodash";
 
 export default function GlobalCoverControls({
   imageUrl,
@@ -44,8 +45,8 @@ export default function GlobalCoverControls({
                 size="compact"
                 onClick={() => update("imagePlacement", "cover")}
               >
-                <div className="border-2 border-black bg-gray h-8 w-6 shadow-lg">
-                  <div className="w-full h-full bg-white"></div>
+                <div className="border-2 border-black h-8 w-6 shadow-lg">
+                  <div className="w-full h-full bg-lightGray"></div>
                 </div>
               </Button>
               <Button
@@ -53,8 +54,11 @@ export default function GlobalCoverControls({
                 size="compact"
                 onClick={() => update("imagePlacement", "rectangle")}
               >
-                <div className="border-2 border-black bg-gray h-8 w-6 shadow-lg">
-                  <div className="h-1/2 w-full bg-white"></div>
+                <div
+                  className="border-2 border-black h-8 w-6 shadow-lg"
+                  style={{ background: bgColor }}
+                >
+                  <div className="h-1/2 w-full bg-lightGray"></div>
                 </div>
               </Button>
               <Button
@@ -62,9 +66,12 @@ export default function GlobalCoverControls({
                 size="compact"
                 onClick={() => update("imagePlacement", "oval")}
               >
-                <div className="border-2 border-black bg-gray h-8 w-6 shadow-lg relative">
+                <div
+                  className="border-2 border-black h-8 w-6 shadow-lg relative"
+                  style={{ background: bgColor }}
+                >
                   <div
-                    className="h-1/2 w-1/2 bg-white absolute"
+                    className="h-1/2 w-1/2 absolute bg-lightGray"
                     style={{
                       borderRadius: "50%",
                       top: "50%",
@@ -79,9 +86,12 @@ export default function GlobalCoverControls({
                 size="compact"
                 onClick={() => update("imagePlacement", "square")}
               >
-                <div className="border-2 border-black bg-gray h-8 w-6 shadow-lg relative">
+                <div
+                  className="border-2 border-black h-8 w-6 shadow-lg relative"
+                  style={{ background: bgColor }}
+                >
                   <div
-                    className="h-3 w-3 bg-white absolute"
+                    className="h-3 w-3 absolute bg-lightGray"
                     style={{
                       top: "50%",
                       left: "50%",
