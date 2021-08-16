@@ -193,7 +193,11 @@ export default function CaptureHeader({ init }) {
               }
             >
               <Svg name="calendar" css="md:hidden " width={18} height={18} />
-              <span className="hidden md:block">Add event</span>
+              <span className="hidden md:block">
+                Add
+                <br />
+                event
+              </span>
             </Button>
             <Button
               css="font-medium px-4 md:h-full"
@@ -210,7 +214,10 @@ export default function CaptureHeader({ init }) {
               }
             >
               <Svg name="writing" css="md:hidden" width={18} height={18} />
-              <span className="hidden md:block">Add memory</span>
+              <span className="hidden md:block">
+                Add <br />
+                memory
+              </span>
             </Button>
             <Button
               css="font-medium px-4 md:h-full"
@@ -227,7 +234,10 @@ export default function CaptureHeader({ init }) {
               }
             >
               <Svg name="photo" css="md:hidden" width={18} height={18} />
-              <span className="hidden md:block">Add photo</span>
+              <span className="hidden md:block">
+                Add <br />
+                photo
+              </span>
             </Button>
           </Grid>
         </Grid>

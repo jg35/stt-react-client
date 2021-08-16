@@ -8,6 +8,7 @@ import { Button } from "~/components/_styled";
 export default function AccessListStatusButton({
   future = false,
   isPublic = false,
+  size = "compact",
 }) {
   const history = useHistory();
   const { data, loading } = useCustomQuery(FETCH_PRIVATE_ACCESS_TOKENS, {
@@ -23,7 +24,7 @@ export default function AccessListStatusButton({
     return (
       <>
         {accessTokens.length > 0 ? accessTokens.length : "No"} reader
-        {accessTokens.length !== 1 && "s"} on your share list
+        {accessTokens.length !== 1 && "s"}
       </>
     );
   }
@@ -33,20 +34,25 @@ export default function AccessListStatusButton({
   }
 
   return (
-    <div className="flex items-center my-2">
+    <div className="my-2">
       {isPublic ? (
         <Button
+          // variant="secondary"
+          size={size}
           css="md:w-auto"
           onClick={() => history.push("/settings#privacy")}
         >
-          Your book is public - manage privacy settings
+          Manage privacy settings
         </Button>
       ) : (
         <Button
+          // variant="secondary"
+          size={size}
           css="md:w-auto"
           onClick={() => updateUiState({ showAccessListModal: true }, false)}
         >
-          {getStatus()}&nbsp;-&nbsp; click to manage
+          Manage share list
+          {/* {getStatus()}&nbsp;-&nbsp; manage share list */}
         </Button>
       )}
     </div>

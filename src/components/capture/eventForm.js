@@ -13,6 +13,7 @@ export default function EventForm({
     <>
       <div className="form-control">
         <FormInput
+          autoFocus
           name="title"
           placeholder="Enter event title"
           handleChange={handleChange}

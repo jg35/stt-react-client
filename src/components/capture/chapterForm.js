@@ -15,6 +15,7 @@ export default function ChapterForm({
       {editContent && (
         <FormField label="Chapter name" error={errors.content}>
           <FormInput
+            autoFocus
             name="content"
             placeholder="Enter chapter name"
             handleChange={handleChange}

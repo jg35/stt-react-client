@@ -6,11 +6,18 @@ import { useCustomQuery } from "~/hooks/useCustomApollo";
 import { FETCH_PUBLISH_VIEW, DELETE_VERSION } from "~/lib/gql";
 import { AuthContext } from "~/components/authWrap";
 import Page from "~/components/page";
-import { Button, Card, Title } from "~/components/_styled";
+import {
+  Button,
+  Card,
+  Title,
+  Grid,
+  BookPrivacyStatus,
+} from "~/components/_styled";
 import VersionList from "~/components/publish/versionList";
 import LatestVersion from "~/components/publish/latestVersion";
 import PublishSkeleton from "~/components/publish/publishSkeleton";
 import AccessList from "~/components/accessList/accessList";
+import AccessListStatusButton from "~/components/accessList/accessListStatusButton";
 import useToastMessage from "~/hooks/useToastMessage";
 
 export default function Publish() {
@@ -63,49 +70,46 @@ export default function Publish() {
   }, [data]);
 
   return (
-    <Page>
-      <div style={{ maxWidth: "1056px", margin: "0 auto" }}>
-        {versions.length > 0 ? (
-          <div>
-            <div>
-              <Title css="my-4">Published version</Title>
-              <Card>
-                <LatestVersion
-                  onlyVersion={versions.length === 1}
-                  version={versions[0]}
-                  deleteVersion={deleteVersionHandler}
-                />
-              </Card>
-            </div>
-            <div className="text-lg my-6">
-              <Button
-                variant="cta"
-                css="w-auto whitespace-nowrap"
-                onClick={() => history.push("/publish/new")}
-              >
-                Publish a new version
-              </Button>
-            </div>
-            {versions.slice(1).length >= 1 && (
-              <div>
-                <Title tag="h3" css="mt-2 mb-2" size="compact">
-                  Other versions
-                </Title>
-                <Card css="pt-4 pl-4 pr-4 pb-2">
+    <Page css="px-2">
+      <Title css="mb-4 text-center lg:text-left">Your book</Title>
+      {versions.length > 0 ? (
+        <div className="pb-8">
+          <Grid
+            colSpan={[
+              "col-span-12 md:col-span-8 md:col-start-3 lg:col-span-7 lg:col-start-0 ",
+              "col-span-12 lg:col-span-5",
+            ]}
+          >
+            <LatestVersion
+              handle={dbUser && dbUser.publicHandle}
+              onlyVersion={versions.length === 1}
+              version={versions[0]}
+              deleteVersion={deleteVersionHandler}
+            />
+            <Card css="w-full" style={{ height: "fit-content" }}>
+              {versions.slice(1).length >= 1 && (
+                <>
+                  <Title
+                    tag="h3"
+                    css="mb-4 md:text-center lg:text-left pb-2"
+                    size="compact"
+                  >
+                    Previous versions
+                  </Title>
+
                   <VersionList
                     publishedVersions={versions.slice(1)}
                     deleteVersion={deleteVersionHandler}
                   />
-                </Card>
-              </div>
-            )}
-          </div>
-        ) : (
-          <Card>
-            <PublishSkeleton />
-          </Card>
-        )}
-      </div>
+                </>
+              )}
+            </Card>
+          </Grid>
+        </div>
+      ) : (
+        <PublishSkeleton />
+      )}
+
       <AccessList userId={user.id} />
     </Page>
   );

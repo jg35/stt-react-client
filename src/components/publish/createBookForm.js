@@ -1,4 +1,4 @@
-import { Button, Title, Text } from "~/components/_styled";
+import { BookPrivacyStatus, Button, Title, Text } from "~/components/_styled";
 import ManagePrivacyStatus from "~/components/accessList/managePrivacyStatus";
 import AccessListStatusButton from "~/components/accessList/accessListStatusButton";
 import FormHandleAvailabilityInput from "~/components/formHandleAvailabilityInput";
@@ -26,12 +26,6 @@ export default function PublishOptionsForm({
           privacyStatus={values.privacyStatus}
           setPrivacyStatus={(val) => setFieldValue("privacyStatus", val)}
         />
-
-        {values.privacyStatus === "PRIVATE" && (
-          <div className="mt-6">
-            <AccessListStatusButton userId={values.userId} future={true} />
-          </div>
-        )}
       </div>
 
       {!savedHandle && (

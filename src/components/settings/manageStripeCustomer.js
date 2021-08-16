@@ -65,7 +65,7 @@ export default function ManageStripeCustomer({
   return (
     <div>
       <Title>Your subscription</Title>
-      {buildSummary(subscriptionStatus, subscriptionMeta)}
+      <Text>{buildSummary(subscriptionStatus, subscriptionMeta)}</Text>
       {subscriptionStatus === "IN_TRIAL" ? (
         <div className="mt-6">
           <TrialStatus

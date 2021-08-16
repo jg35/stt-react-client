@@ -33,12 +33,12 @@ export default function ManageAccount({ dbUser }) {
 
       <Title size="compact">Delete my account</Title>
 
-      <Text size="large">
+      <Text>
         If you would like to keep your book online and preserve your data
         consider cancelling your subscription instead. Published books will stay
         online regardless of your subscription status.
       </Text>
-      <Text size="large">If you want to delete your account, click below.</Text>
+      <Text>If you want to delete your account, click below.</Text>
       <Button css="w-auto" onClick={() => setShowDeleteAccountModal(true)}>
         Delete my account
       </Button>
@@ -48,7 +48,7 @@ export default function ManageAccount({ dbUser }) {
       >
         <Title>Delete your account</Title>
 
-        <Text size="large">
+        <Text>
           Has it really come to this? We will be sad to see you go.
           <br />
           <br />

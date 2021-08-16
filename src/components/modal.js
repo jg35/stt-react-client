@@ -46,7 +46,7 @@ export default function Modal({
       break;
     case "md":
     default:
-      sizeStyles = "w-full h-full md:h-auto md:w-auto max-w-2xl";
+      sizeStyles = "w-full h-full md:h-auto md:w-1/2 max-w-2xl";
       break;
   }
 
@@ -62,7 +62,7 @@ export default function Modal({
           {canClose && (
             <Button
               size="compact"
-              css="absolute right-2 top-2 w-auto font-medium rounded-md"
+              css="absolute right-2 top-2 w-auto font-medium rounded-md z-50"
               variant="minimal"
               onClick={() => close()}
             >
@@ -70,7 +70,7 @@ export default function Modal({
             </Button>
           )}
 
-          <Card css="pt-10 px-2 md:p-6">{children}</Card>
+          <Card css="pt-12 pb-6 md:p-6">{children}</Card>
           <ModalCloseWarning
             isOpen={showCloseWarning}
             back={() => setShowCloseWarning(false)}

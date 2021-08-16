@@ -25,7 +25,7 @@ export default function ManagePrivacyStatus({
 }) {
   return (
     <>
-      <FormLabel>Privacy status</FormLabel>
+      <FormLabel>Choose privacy status</FormLabel>
       <div className="flex flex-wrap">
         <div className="w-full sm:w-1/2 sm:pr-2 mt-2">
           <PrivacyOption

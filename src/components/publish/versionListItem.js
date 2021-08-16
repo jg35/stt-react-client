@@ -16,13 +16,20 @@ export default function VersionListItem({ last, version, deleteVersion }) {
         style={{ minWidth: "75px", width: "75px" }}
       />
 
-      <div className="flex flex-col justify-between">
+      <div
+        className="flex flex-col justify-between"
+        style={{ minWidth: "150px" }}
+      >
         <div className="flex justify-between px-1">
           <div className="flex-1">
-            <Title css="text-base whitespace-no-wrap truncate mr-2 mb-0">
+            <Title css="text-base whitespace-nowrap truncate mr-2 mb-0">
               {version.title}
             </Title>
-            <Text tag="span" size="compact" css="text-gray">
+            <Text
+              tag="span"
+              size="compact"
+              css="text-gray whitespace-nowrap truncate"
+            >
               {renderVersionDate(version.publishedAt)}
             </Text>
           </div>
@@ -38,7 +45,7 @@ export default function VersionListItem({ last, version, deleteVersion }) {
           </div>
         </div>
 
-        <div className="flex">
+        {/* <div className="flex">
           {version.publishedFormats.split(",").map((format) => (
             <Text tag="span" size="compact" css="mr-1 block" key={format}>
               <VersionLink
@@ -48,7 +55,7 @@ export default function VersionListItem({ last, version, deleteVersion }) {
               />
             </Text>
           ))}
-        </div>
+        </div> */}
       </div>
     </li>
   );

@@ -127,17 +127,19 @@ export default function ManagePrivacy({ dbUser }) {
                   savedHandle={data.stt_user[0].publicHandle}
                 />
               </div>
-              <div className="mb-3">
-                <FormLabel>Share list</FormLabel>
 
-                <AccessListStatusButton />
-              </div>
               <ManagePrivacyStatus
                 setPrivacyStatus={(status) =>
                   props.setFieldValue("privacyStatus", status)
                 }
                 privacyStatus={props.values.privacyStatus}
               />
+
+              <div className="mt-3">
+                <FormLabel>Share list</FormLabel>
+
+                <AccessListStatusButton size="default" />
+              </div>
 
               <div className="flex justify-end mt-6 ">
                 <Button

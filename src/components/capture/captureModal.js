@@ -220,7 +220,7 @@ export default function CaptureModal({
           >
             <form
               id="capture-form"
-              className="h-full p-2 overflow-scroll"
+              className="h-full overflow-scroll"
               onSubmit={props.handleSubmit}
             >
               <Title size="large">{formTitle}</Title>

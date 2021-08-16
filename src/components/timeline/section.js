@@ -19,12 +19,8 @@ export default function Section({ section, index }) {
       onMouseOver={debounce(() => setShowActions(true), 200)}
       onMouseLeave={debounce(() => setShowActions(false), 200)}
     >
-      <header className="pb-4">
-        <Grid
-          colSpan={["col-span-5", "col-span-7"]}
-          gap="gap-x-2 md:gap-x-4"
-          css="items-center"
-        >
+      <header className="pb-4 h-12">
+        <Grid colSpan={["col-span-5", "col-span-7"]} gap="gap-x-2 md:gap-x-4">
           <Title size="compact">
             {section.title} &middot;{" "}
             <Text tag="span" size="compact" css="text-gray">
