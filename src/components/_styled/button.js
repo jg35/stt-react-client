@@ -60,8 +60,8 @@ export default function Button({
     }`,
   };
   const sizes = {
-    compact: "p-1.5 px-2 text-base",
-    default: "p-3 text-lg ",
+    compact: "py-1 px-2 text-base",
+    default: "py-1 px-3 md:py-2 text-lg",
     large: "p-4 text-xl",
   };
 

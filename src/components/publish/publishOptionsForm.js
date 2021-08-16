@@ -11,7 +11,7 @@ export default function PublishOptionsForm({
 }) {
   return (
     <div
-      className="flex flex-col justify-center pt-20 w-6/12 mx-auto"
+      className="flex flex-col justify-center pt-10 md:pt-20 md:w-6/12 mx-auto px-4"
       style={{ maxWidth: "600px" }}
     >
       <Title>

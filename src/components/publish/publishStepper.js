@@ -1,8 +1,7 @@
-import { Button, Text } from "~/components/_styled";
+import { Grid, Button, Text } from "~/components/_styled";
 
 export default function PublishStepper({
   stepBack,
-  saveProgress,
   currentStep,
   steps,
   isSubmitting,
@@ -15,10 +14,19 @@ export default function PublishStepper({
     submitText = currentStep === totalSteps ? "Publish" : "Save";
   }
   return (
-    <div className="flex justify-between border-b-2 border-lightGray p-2 px-4 items-center">
-      <div className="w-36">
+    <Grid
+      colSpan={[
+        "col-span-6 md:col-span-3",
+        "col-span-6 md:col-span-3 md:order-3",
+        "col-span-12 md:col-span-6 md:order-2",
+      ]}
+      css="border-b-2 border-lightGray items-center p-2"
+    >
+      <div className="flex-justify-start">
         {currentStep > 1 && (
           <Button
+            css="w-32"
+            variant="minimal"
             disabled={isSubmitting}
             onClick={() => stepBack(currentStep - 1)}
           >
@@ -26,7 +34,20 @@ export default function PublishStepper({
           </Button>
         )}
       </div>
-      <div className="flex justify-around p-4  w-8/12">
+
+      <div className="flex justify-end">
+        {currentStep !== steps.length && (
+          <Button
+            css="w-32"
+            type="submit"
+            variant="secondary"
+            inProgress={isSubmitting}
+          >
+            {submitText}
+          </Button>
+        )}
+      </div>
+      <div className="flex justify-around">
         {steps.map((step, i) => (
           <Text
             tag="span"
@@ -37,14 +58,6 @@ export default function PublishStepper({
           </Text>
         ))}
       </div>
-
-      <div className="w-36">
-        {currentStep !== steps.length && (
-          <Button type="submit" variant="secondary" inProgress={isSubmitting}>
-            {submitText}
-          </Button>
-        )}
-      </div>
-    </div>
+    </Grid>
   );
 }

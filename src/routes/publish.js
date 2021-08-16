@@ -6,18 +6,11 @@ import { useCustomQuery } from "~/hooks/useCustomApollo";
 import { FETCH_PUBLISH_VIEW, DELETE_VERSION } from "~/lib/gql";
 import { AuthContext } from "~/components/authWrap";
 import Page from "~/components/page";
-import {
-  Button,
-  Card,
-  Title,
-  Grid,
-  BookPrivacyStatus,
-} from "~/components/_styled";
+import { Button, Card, Title, Grid } from "~/components/_styled";
 import VersionList from "~/components/publish/versionList";
 import LatestVersion from "~/components/publish/latestVersion";
 import PublishSkeleton from "~/components/publish/publishSkeleton";
 import AccessList from "~/components/accessList/accessList";
-import AccessListStatusButton from "~/components/accessList/accessListStatusButton";
 import useToastMessage from "~/hooks/useToastMessage";
 
 export default function Publish() {
@@ -71,7 +64,18 @@ export default function Publish() {
 
   return (
     <Page css="px-2">
-      <Title css="mb-4 text-center lg:text-left">Your book</Title>
+      <div className="flex justify-between items-center">
+        <Title css="mb-4 text-center lg:text-left">Your book</Title>
+
+        <Button
+          variant="cta"
+          css="w-auto whitespace-nowrap mb-4"
+          onClick={() => history.push("/publish/new")}
+        >
+          Create book
+        </Button>
+      </div>
+
       {versions.length > 0 ? (
         <div className="pb-8">
           <Grid

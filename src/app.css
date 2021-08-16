@@ -52,7 +52,7 @@
   }
   .input {
     /* max-width: 40rem; */
-    @apply outline-none bg-offWhite p-3 rounded w-full text-lg border-2 border-transparent transition duration-200 ease-in;
+    @apply outline-none bg-offWhite py-2 px-3 rounded w-full text-lg border-2 border-transparent transition duration-200 ease-in;
   }
 
   .input--compact {
@@ -90,7 +90,7 @@
 
   /* React datepicker */
   .react-datepicker-wrapper input {
-    @apply outline-none bg-offWhite border-2 border-transparent p-3 rounded w-full text-xl;
+    @apply outline-none bg-offWhite border-2 border-transparent px-3 py-2 rounded w-full text-lg;
   }
 
   #root .react-datepicker {

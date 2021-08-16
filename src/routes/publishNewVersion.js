@@ -135,11 +135,7 @@ export default function PublishNewVersion() {
     });
   }
 
-  const steps = [
-    "1. Publish options",
-    "2. Design your cover",
-    "3. Privacy options",
-  ];
+  const steps = ["1. Metadata", "2. Design cover", "3. Privacy"];
 
   function renderStep(formProps) {
     switch (publishStep) {
@@ -160,51 +156,43 @@ export default function PublishNewVersion() {
   if (currentVersion) {
     return (
       <Page>
-        <div
-          style={{
-            maxWidth: "1400px",
-            margin: "0 auto",
-            height: "calc(100% - 16px)",
-          }}
-        >
-          <Card css="min-h-full border-4 border-white p-0">
-            <Formik
-              onSubmit={(values, formBag) => {
-                if (publishStep === 3) {
-                  // Create the book
-                  return publishVersionHandler(values);
-                }
-                return saveVersionHandler(values).then(() => {
-                  setPublishStep(publishStep + 1);
-                });
-              }}
-              initialValues={currentVersion}
-              validationSchema={VersionSchema(publishStep, token)}
-              validateOnChange={false}
-              validateOnBlur={false}
-            >
-              {(props) => {
-                return (
-                  <form
-                    id="publish-new-version-form"
-                    onSubmit={props.handleSubmit}
-                    className="flex-1 flex flex-col"
-                  >
-                    <PublishStepper
-                      saveProgress={props.handleSubmit}
-                      isSubmitting={props.isSubmitting}
-                      totalSteps={steps.length}
-                      steps={steps}
-                      currentStep={publishStep}
-                      stepBack={() => setPublishStep(publishStep - 1)}
-                    />
-                    {renderStep(props)}
-                  </form>
-                );
-              }}
-            </Formik>
-          </Card>
-        </div>
+        <Card css="min-h-full border-4 border-white p-0">
+          <Formik
+            onSubmit={(values, formBag) => {
+              if (publishStep === 3) {
+                // Create the book
+                return publishVersionHandler(values);
+              }
+              return saveVersionHandler(values).then(() => {
+                setPublishStep(publishStep + 1);
+              });
+            }}
+            initialValues={currentVersion}
+            validationSchema={VersionSchema(publishStep, token)}
+            validateOnChange={false}
+            validateOnBlur={false}
+          >
+            {(props) => {
+              return (
+                <form
+                  id="publish-new-version-form"
+                  onSubmit={props.handleSubmit}
+                  className="flex-1 flex flex-col"
+                >
+                  <PublishStepper
+                    isSubmitting={props.isSubmitting}
+                    totalSteps={steps.length}
+                    steps={steps}
+                    currentStep={publishStep}
+                    stepBack={() => setPublishStep(publishStep - 1)}
+                  />
+                  {renderStep(props)}
+                </form>
+              );
+            }}
+          </Formik>
+        </Card>
+
         <AccessList userId={user.id} />
       </Page>
     );

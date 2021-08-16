@@ -19,7 +19,7 @@ export default function LinkButton({
   };
   const sizes = {
     compact: "p-1.5 px-2 text-base",
-    default: "p-3 text-lg ",
+    default: "px-3 py-2 text-lg",
     large: "p-4 text-xl",
   };
 

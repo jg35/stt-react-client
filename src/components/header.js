@@ -73,7 +73,8 @@ export default function Header({ minimal = false }) {
           )}
           <MainMenu />
         </div>
-        <div>
+        {/* TODO - makes header too big when not there */}
+        {/* <div>
           {!uiState.hideTrialStatus && !isBilling && dbUser && (
             <TrialStatus
               stripeCustomerId={dbUser.stripeCustomerId}
@@ -81,7 +82,7 @@ export default function Header({ minimal = false }) {
               status={dbUser.subscriptionStatus}
             />
           )}
-        </div>
+        </div> */}
       </Grid>
     </header>
   );
