@@ -19,9 +19,13 @@ export default function Section({ section, index }) {
       onMouseOver={debounce(() => setShowActions(true), 200)}
       onMouseLeave={debounce(() => setShowActions(false), 200)}
     >
-      <header className="pb-2">
-        <Grid colSpan={["col-span-5", "col-span-7"]} gap="gap-x-2 md:gap-x-4">
-          <Title size="compact" css="mt-2">
+      <header className="pb-4">
+        <Grid
+          colSpan={["col-span-5", "col-span-7"]}
+          gap="gap-x-2 md:gap-x-4"
+          css="items-center"
+        >
+          <Title size="compact">
             {section.title} &middot;{" "}
             <Text tag="span" size="compact" css="text-gray">
               {section.age}
@@ -38,7 +42,7 @@ export default function Section({ section, index }) {
       {section.events.length > 0 && (
         <>
           <div
-            className="flex whitespace-nowrap md:whitespace-wrap overflow-scroll md:flex-wrap mt-2"
+            className="flex whitespace-nowrap lg:whitespace-wrap overflow-scroll lg:flex-wrap mt-2"
             id="section-events-grid"
           >
             {section.events.map((e, i) => {

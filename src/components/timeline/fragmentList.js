@@ -22,7 +22,7 @@ export default function FragmentList({ fragments, editView = false }) {
       {fragments.map((fragment) => (
         <div
           className="py-2 px-2 min-w-f1/2 sm:min-w-f1/3 md:min-w-f1/4 lg:min-w-0 lg:w-1/3"
-          style={{ height: "250px", minWidth: "275px" }}
+          style={{ height: "250px", minWidth: "275px", maxWidth: "375px" }}
           key={fragment.id}
         >
           <Fragment fragment={fragment} editView={editView} />

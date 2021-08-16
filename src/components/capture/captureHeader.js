@@ -115,8 +115,8 @@ export default function CaptureHeader({ init }) {
         <Grid
           gap="gap-y-2 md:gap-4"
           colSpan={[
-            "col-span-12 md:col-span-7 lg:col-span-8",
-            "col-span-12 md:col-span-5 lg:col-span-4",
+            "col-span-12 md:col-span-7 lg:col-span-8 xl:col-span-9",
+            "col-span-12 md:col-span-5 lg:col-span-4 xl:col-span-3",
           ]}
         >
           {questionVisible && currentQuestion && (
