@@ -249,7 +249,7 @@ export default function CoverEditorForm({ values, setFieldValue }) {
             Layout controls
           </Button>
           <Button
-            css="font-medium whitespace-nowrap"
+            css="font-medium whitespace-nowrap mr-2"
             size="compact"
             onClick={() => {
               setShowTextControls(!showTextControls);
@@ -259,6 +259,13 @@ export default function CoverEditorForm({ values, setFieldValue }) {
             }}
           >
             Text controls
+          </Button>
+          <Button
+            css="font-medium whitespace-nowrap mr-2"
+            size="compact"
+            onClick={addTextElement}
+          >
+            Add text
           </Button>
         </div>
       </div>

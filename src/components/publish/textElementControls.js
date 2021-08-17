@@ -27,23 +27,17 @@ export default function TextElementControls({
     <div
       className={`animate-fade-in rounded-t shadow relative ${
         !isExpanded && "rounded-b"
-      } ${isSticky ? "mx-2" : "mb-4"}`}
+      } ${!isSticky && "mb-4"}`}
     >
       <div
-        className="flex justify-between cursor-pointer py-2 px-4 items-center bg-lightestGray "
+        className={`flex justify-between cursor-pointer py-2 px-4 items-center bg-lightestGray`}
         onClick={() => expand(isExpanded ? null : element.id)}
       >
-        <Title tag="h2" size="compact" css="font-normal truncate">
+        <Title tag="h2" size="compact" css="font-normal truncate mb-0">
           {element.content}
         </Title>
-        <div className="flex">
-          {!element.originalContent && (
-            <Button size="compact" onClick={() => remove(element.id)}>
-              Remove
-            </Button>
-          )}
-          <Svg css="ml-2" width={12} height={12} name="chevron" />
-        </div>
+
+        <Svg css="ml-2" width={12} height={12} name="chevron" />
       </div>
 
       {isExpanded && (
@@ -125,6 +119,12 @@ export default function TextElementControls({
                 Reset text content
               </Button>
             )}
+
+          {!element.originalContent && (
+            <Button size="compact" onClick={() => remove(element.id)}>
+              Remove
+            </Button>
+          )}
         </div>
       )}
     </div>

@@ -16,11 +16,11 @@ module.exports = {
           "100%": { opacity: "1" },
         },
         "slide-down": {
-          "0%": { top: "-6rem" },
+          "0%": { top: "-25rem" },
           "100%": { top: "0rem" },
         },
         "slide-up": {
-          "100%": { top: "-6rem" },
+          "100%": { top: "-25rem" },
           "0%": { top: "0rem" },
         },
         expand: {

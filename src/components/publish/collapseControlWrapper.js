@@ -1,6 +1,9 @@
+import { joinTailwindClasses } from "~/lib/util";
+
 export default function CollapseControlWrapper({
   isCollapsed = true,
   children: controls,
+  css = "",
 }) {
   const baseCss = [
     "-top-12",
@@ -17,6 +20,7 @@ export default function CollapseControlWrapper({
     "shadow",
     "w-11/12",
     "whitespace-nowrap",
+    isCollapsed ? "animate-slide-in" : "animate-slide-out",
   ].join(" ");
 
   return (
@@ -24,9 +28,7 @@ export default function CollapseControlWrapper({
       style={{
         transform: "translateX(-50%)",
       }}
-      className={`${baseCss} ${
-        isCollapsed ? "animate-slide-in" : "animate-slide-out"
-      }`}
+      className={joinTailwindClasses([baseCss, css])}
     >
       {controls}
     </div>
