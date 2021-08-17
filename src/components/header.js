@@ -23,7 +23,7 @@ export default function Header({ minimal = false, scrollable = false }) {
 
   return (
     <header
-      className={`px-4 py-2 ${scrollable && "shadow z-50 lg:shadow-none"}`}
+      className={`px-4 py-2 ${scrollable && "shadow z-40 lg:shadow-none"}`}
     >
       <Grid
         autoRows="auto-rows-max"

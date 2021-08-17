@@ -46,7 +46,7 @@ export default function Modal({
       break;
     case "md":
     default:
-      sizeStyles = "w-full h-full md:h-auto md:w-1/2 max-w-2xl";
+      sizeStyles = "w-full h-full lg:h-auto lg:w-1/2 max-w-2xl";
       break;
   }
 
