@@ -27,7 +27,7 @@ import { UIContext } from "~/app";
 export default function Timeline() {
   const { uiState, updateUiState } = useContext(UIContext);
   const timelineScrollContainer = useRef(null);
-  const captureHeader = useRef(null);
+
   const { data, loading } = useCustomQuery(FETCH_TIMELINE_VIEW, {
     name: "FETCH_TIMELINE_VIEW",
     userId: true,
@@ -64,26 +64,17 @@ export default function Timeline() {
   }, [timelineScrollContainer, loading]);
 
   return (
-    <Page maxWidth="1920px">
-      <div ref={captureHeader}>
-        <CaptureHeader init={!loading} />
-      </div>
+    <Page maxWidth="1920px" paddingBottom={false}>
+      <CaptureHeader init={!loading} />
 
-      <div
-        className="flex-1 py-4"
-        style={{
-          height: `calc(100% - ${
-            (get(captureHeader, "current.clientHeight") || "0") + "px"
-          })`,
-        }}
-      >
-        <Card css="px-2 md:px-4 py-0 flex h-full">
-          {data && data.stt_user_by_pk.dob && timeline ? (
-            <>
+      <div className="pt-2 overflow-hidden pb-2 flex">
+        {data && data.stt_user_by_pk.dob && timeline ? (
+          <>
+            <Card css="max-h-full max-w-full px-2 md:px-4 py-0 flex">
               <main
                 id="timeline-scroll-container"
                 ref={timelineScrollContainer}
-                className="md:mr-2 overflow-y-scroll overflow-x-hidden js-timeline-scroll-container relative w-full"
+                className="md:mr-2 overflow-y-scroll overflow-x-hidden js-timeline-scroll-container w-full"
                 onScroll={debounce((e) => {
                   if (e.target.scrollTop !== uiState.timelineScrollPosition) {
                     updateUiState({
@@ -95,15 +86,12 @@ export default function Timeline() {
                 {timeline.map((timelineSection, i) => (
                   <Section key={i} section={timelineSection} index={i} />
                 ))}
-                {/* {orphanedFragments.length > 0 && (
-                  <OrphanedFragments fragments={orphanedFragments} />
-                )} */}
                 <TimePeriodSelector
                   timelinePeriod={timelinePeriod}
                   orphanCount={orphanedFragments.length}
                 />
               </main>
-              <div className="hidden md:block w-12 min-h-full">
+              <div className="hidden md:block w-12 min-h-full bg-white">
                 <ScrollNavigator
                   dob={data.stt_user_by_pk.dob}
                   years={values(
@@ -122,13 +110,12 @@ export default function Timeline() {
                   )}
                 />
               </div>
-            </>
-          ) : (
-            <TimelineSkeleton />
-          )}
-        </Card>
-
-        <Preview fragments={fragments} />
+            </Card>
+            <Preview fragments={fragments} />
+          </>
+        ) : (
+          <TimelineSkeleton />
+        )}
       </div>
 
       <CaptureModal

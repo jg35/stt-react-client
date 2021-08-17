@@ -4,7 +4,7 @@ import { Text } from "~/components/_styled";
 
 export default function VersionList({ publishedVersions, deleteVersion }) {
   return (
-    <div className="overflow-scroll pb-2">
+    <div className="overflow-x-scroll pb-2">
       {publishedVersions.length ? (
         <div className="inline-flex">
           <ul

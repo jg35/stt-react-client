@@ -41,18 +41,13 @@ export default function Edit() {
 
   return (
     <Page>
-      <div
-        className="flex h-full w-full justify-center"
-        style={{ margin: "0 auto" }}
-      >
-        <EditPreviewContainer>
-          {data ? (
-            <EditPreview fragments={fragments} saveFragment={saveFragment} />
-          ) : (
-            <PreviewSkeleton />
-          )}
-        </EditPreviewContainer>
-      </div>
+      <EditPreviewContainer>
+        {data ? (
+          <EditPreview fragments={fragments} saveFragment={saveFragment} />
+        ) : (
+          <PreviewSkeleton />
+        )}
+      </EditPreviewContainer>
       <CaptureModal editView />
     </Page>
   );

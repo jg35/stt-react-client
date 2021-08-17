@@ -5,6 +5,8 @@ module.exports = {
     extend: {
       animation: {
         "fade-in": "fade-in ease-in 300ms ",
+        // TODO - refactor animate-fade-ins with fade-outs
+        "fade-out": "fade-out ease-out 300ms forwards",
         "slide-in": "slide-down ease-in 300ms forwards",
         "slide-out": "slide-up ease-out 300ms forwards",
         expand: "expand 400ms forwards",
@@ -14,6 +16,10 @@ module.exports = {
         "fade-in": {
           "0%": { opacity: "0" },
           "100%": { opacity: "1" },
+        },
+        "fade-out": {
+          "100%": { opacity: "0", height: 0 },
+          "0%": { opacity: "1" },
         },
         "slide-down": {
           "0%": { top: "-25rem" },

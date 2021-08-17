@@ -45,7 +45,7 @@ export default function Settings() {
 
   return (
     dbUser && (
-      <Page minimal css="overflow-scroll">
+      <Page minimal scrollable>
         <Grid
           height="h-full"
           gap="gap-y-2 lg:gap-4"

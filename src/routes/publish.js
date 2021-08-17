@@ -63,7 +63,7 @@ export default function Publish() {
   }, [data]);
 
   return (
-    <Page css="px-2">
+    <Page scrollable>
       <div className="flex justify-between items-center">
         <Title css="mb-4 text-center lg:text-left">Your book</Title>
 
@@ -77,39 +77,37 @@ export default function Publish() {
       </div>
 
       {versions.length > 0 ? (
-        <div className="pb-8">
-          <Grid
-            colSpan={[
-              "col-span-12 md:col-span-8 md:col-start-3 lg:col-span-7 lg:col-start-0 ",
-              "col-span-12 lg:col-span-5",
-            ]}
-          >
-            <LatestVersion
-              handle={dbUser && dbUser.publicHandle}
-              onlyVersion={versions.length === 1}
-              version={versions[0]}
-              deleteVersion={deleteVersionHandler}
-            />
-            <Card css="w-full" style={{ height: "fit-content" }}>
-              {versions.slice(1).length >= 1 && (
-                <>
-                  <Title
-                    tag="h3"
-                    css="mb-4 md:text-center lg:text-left pb-2"
-                    size="compact"
-                  >
-                    Previous versions
-                  </Title>
+        <Grid
+          colSpan={[
+            "col-span-12 md:col-span-8 md:col-start-3 lg:col-span-7 lg:col-start-0 ",
+            "col-span-12 lg:col-span-5",
+          ]}
+        >
+          <LatestVersion
+            handle={dbUser && dbUser.publicHandle}
+            onlyVersion={versions.length === 1}
+            version={versions[0]}
+            deleteVersion={deleteVersionHandler}
+          />
+          <Card css="w-full" style={{ height: "fit-content" }}>
+            {versions.slice(1).length >= 1 && (
+              <>
+                <Title
+                  tag="h3"
+                  css="mb-4 md:text-center lg:text-left pb-2"
+                  size="compact"
+                >
+                  Previous versions
+                </Title>
 
-                  <VersionList
-                    publishedVersions={versions.slice(1)}
-                    deleteVersion={deleteVersionHandler}
-                  />
-                </>
-              )}
-            </Card>
-          </Grid>
-        </div>
+                <VersionList
+                  publishedVersions={versions.slice(1)}
+                  deleteVersion={deleteVersionHandler}
+                />
+              </>
+            )}
+          </Card>
+        </Grid>
       ) : (
         <PublishSkeleton />
       )}

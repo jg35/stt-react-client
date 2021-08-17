@@ -38,7 +38,7 @@ export default function Section({ section, index }) {
       {section.events.length > 0 && (
         <>
           <div
-            className="flex whitespace-nowrap lg:whitespace-wrap overflow-scroll lg:flex-wrap mt-2"
+            className="flex whitespace-nowrap lg:whitespace-wrap overflow-x-scroll lg:flex-wrap mt-2"
             id="section-events-grid"
           >
             {section.events.map((e, i) => {

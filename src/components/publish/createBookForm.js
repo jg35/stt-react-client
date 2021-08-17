@@ -1,6 +1,5 @@
-import { BookPrivacyStatus, Button, Title, Text } from "~/components/_styled";
+import { Button, Title } from "~/components/_styled";
 import ManagePrivacyStatus from "~/components/accessList/managePrivacyStatus";
-import AccessListStatusButton from "~/components/accessList/accessListStatusButton";
 import FormHandleAvailabilityInput from "~/components/formHandleAvailabilityInput";
 
 export default function PublishOptionsForm({
@@ -19,7 +18,7 @@ export default function PublishOptionsForm({
       className="pt-10 md:pt-20 w-12/12 lg:w-6/12 mx-auto px-4"
       style={{ maxWidth: "600px" }}
     >
-      {savedHandle && (
+      {!savedHandle && (
         <div className="mb-6">
           <Title tag="h2">
             Now let's set your handle. This is where readers will access your

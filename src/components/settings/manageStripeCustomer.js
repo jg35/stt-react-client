@@ -73,6 +73,7 @@ export default function ManageStripeCustomer({
             expiry={trialExpiresDate}
             status={subscriptionStatus}
             css="w-full md:w-auto"
+            isBillingView
           />
         </div>
       ) : (

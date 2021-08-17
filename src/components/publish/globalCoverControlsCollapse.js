@@ -102,7 +102,7 @@ export default function GlobalCoverControls({
               {!imageUrl ? "Add" : "Change"} photo
             </span>
             <span className="md:hidden">
-              <Svg name="image" css="h-8 w-8" />
+              <Svg name="photo" css="h-8 w-8" />
             </span>
           </Button>
         </div>

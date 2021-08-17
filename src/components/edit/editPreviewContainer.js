@@ -1,7 +1,7 @@
 export default function EditPreviewContainer({ children }) {
   return (
     <div
-      className="px-2 pb-4 h-full max-h-full w-full"
+      className="h-full max-h-full w-full mx-auto"
       style={{ maxWidth: "768px" }}
     >
       <div id="preview-container" className="h-full relative">

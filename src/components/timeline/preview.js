@@ -30,7 +30,7 @@ export default function Preview({ fragments }) {
   if (uiState.showPreview) {
     return (
       <div
-        className="pl-3 pr-1 pb-4 h-full max-h-full w-2/5 relative"
+        className="pl-3 h-full max-h-full w-2/5 relative"
         style={{ maxWidth: "768px" }}
       >
         <div

@@ -7,7 +7,8 @@ export default function Page({
   children,
   minimal = false,
   maxWidth = "1400px",
-  css = "",
+  scrollable = false,
+  paddingBottom = true,
 }) {
   return (
     <Container
@@ -15,8 +16,10 @@ export default function Page({
       maxWidth={maxWidth}
     >
       <Surface id="page">
-        <Header minimal={minimal} />
-        <PageContent css={css}>{children}</PageContent>
+        <Header minimal={minimal} scrollable={scrollable} />
+        <PageContent scrollable={scrollable} paddingBottom={paddingBottom}>
+          {children}
+        </PageContent>
       </Surface>
     </Container>
   );

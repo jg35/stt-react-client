@@ -1,13 +1,15 @@
-import { joinTailwindClasses } from "~/lib/util";
-
-export default function PageContent({ children: content, css = "" }) {
+export default function PageContent({
+  children: content,
+  scrollable = false,
+  paddingBottom = true,
+}) {
   return (
     <main
-      className={joinTailwindClasses(["animate-fade-in overflow-hiden", css])}
-      style={{
-        height: "calc(100% - var(--headerHeight, 64px)",
-        maxHeight: "calc(100% - var(--headerHeight, 64px)",
-      }}
+      className={`animate-fade-in flex-1 flex flex-col pt-2 ${
+        paddingBottom && "pb-2"
+      } h-full max-h-full ${
+        scrollable ? "overflow-scroll px-4" : "overflow-hidden px-2"
+      }`}
     >
       {content}
     </main>

@@ -36,13 +36,6 @@ function setCSSVars() {
   // Set VH to accomodate for mobile keyboards etc
   const vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty("--vh", `${vh}px`);
-
-  // Set header height to calculate overall page height
-  const header = document.querySelector("header");
-  document.documentElement.style.setProperty(
-    "--headerHeight",
-    (header ? header.clientHeight : "64") + "px"
-  );
 }
 
 setCSSVars();

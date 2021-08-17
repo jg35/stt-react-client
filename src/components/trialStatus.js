@@ -10,11 +10,12 @@ export default function TrialStatus({
   stripeCustomerId,
   showExpiry = true,
   css = "",
+  isBillingView = false,
 }) {
   const { updateUiState, uiState } = useContext(UIContext);
   const trialDaysRemaining = getTrialDaysRemaining(expiry);
   if (
-    uiState.hideTrialStatus ||
+    (uiState.hideTrialStatus && !isBillingView) ||
     status !== "IN_TRIAL" ||
     trialDaysRemaining <= 0
   ) {
@@ -44,7 +45,7 @@ export default function TrialStatus({
         {showExpiry && `${trialDaysRemaining} days remaining - `}
         choose a subscription
       </Button>
-      {window.innerWidth < 768 && (
+      {window.innerWidth < 768 && !isBillingView && (
         <Button
           size="compact"
           variant="minimal"

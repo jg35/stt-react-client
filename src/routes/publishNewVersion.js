@@ -155,7 +155,7 @@ export default function PublishNewVersion() {
 
   if (currentVersion) {
     return (
-      <Page css="px-2 pb-2">
+      <Page>
         <Card css="border-4 border-white p-0 flex flex-col h-full rounded-lg overflow-scroll">
           <Formik
             onSubmit={(values, formBag) => {

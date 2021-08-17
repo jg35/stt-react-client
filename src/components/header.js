@@ -8,22 +8,31 @@ import TrialStatus from "~/components/trialStatus";
 import { UIContext } from "~/app";
 import { AuthContext } from "~/components/authWrap";
 
-export default function Header({ minimal = false }) {
+export default function Header({ minimal = false, scrollable = false }) {
   const { uiState, updateUiState } = useContext(UIContext);
   const {
     authState: { dbUser },
   } = useContext(AuthContext);
   const isTimeline = useRouteMatch("/");
   const isBilling = useRouteMatch("/settings");
+  const showTrialStatusMessage =
+    !uiState.hideTrialStatus &&
+    !isBilling &&
+    dbUser &&
+    dbUser.subscriptionStatus === "IN_TRIAL";
+
   return (
-    <header className="py-4 px-2">
+    <header
+      className={`px-4 py-2 ${scrollable && "shadow z-50 lg:shadow-none"}`}
+    >
       <Grid
-        autoRows="auto-rows-min"
+        autoRows="auto-rows-max"
         colSpan={[
-          "col-span-6 md:col-span-4 md:order-1",
-          "col-span-6 md:col-span-4 md:order-3",
-          "col-span-12 md:col-span-4 md:order-2",
-        ]}
+          `col-span-6 ${showTrialStatusMessage && "md:col-span-4"}`,
+          `col-span-6 ${showTrialStatusMessage && "md:col-span-4 md:order-3"}`,
+        ].concat(
+          showTrialStatusMessage ? "col-span-12 md:col-span-4 md:order-2" : []
+        )}
       >
         <div className="flex items-center h-full">
           <NavLink to="/">
@@ -73,16 +82,15 @@ export default function Header({ minimal = false }) {
           )}
           <MainMenu />
         </div>
-        {/* TODO - makes header too big when not there */}
-        {/* <div>
-          {!uiState.hideTrialStatus && !isBilling && dbUser && (
+        {showTrialStatusMessage && (
+          <div>
             <TrialStatus
               stripeCustomerId={dbUser.stripeCustomerId}
               expiry={dbUser.trialExpiresDate}
               status={dbUser.subscriptionStatus}
             />
-          )}
-        </div> */}
+          </div>
+        )}
       </Grid>
     </header>
   );
