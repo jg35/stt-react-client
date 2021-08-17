@@ -15,7 +15,7 @@ export function useGetSignedImageUrl(path) {
     if (path) {
       if (uiState.signedUrls[path]) {
         setUrl(uiState.signedUrls[path]);
-      } else {
+      } else if (uiState.signedUrlsInit) {
         getSignedUrls({
           variables: {
             paths: path,
@@ -125,6 +125,7 @@ export function useSignedImageUrls() {
           updateUiState({ signedUrls });
         });
       }
+      updateUiState({ signedUrlsInit: true }, false);
     }
   }, [data, user]);
 

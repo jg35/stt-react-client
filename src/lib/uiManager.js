@@ -29,6 +29,7 @@ export default {
       editPreviewScrollPosition: null,
       previewScrollPosition: null,
       googleFontStyles: [{ family: "Roboto", weight: 400 }],
+      signedUrlsInit: false,
       signedUrls: {},
     };
 
