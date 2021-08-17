@@ -11,6 +11,12 @@ export default {
         item: null,
         event: null,
       },
+      deleteModal: {
+        show: false,
+        cancelled: false,
+        confirm: false,
+        title: "",
+      },
       showAccessListModal: false,
       displayMessages: {
         ORPHANED_FRAGMENTS: true,

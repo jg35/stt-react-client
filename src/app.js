@@ -24,6 +24,13 @@ import { createToastMessage } from "~/lib/toast";
 import { useSignedImageUrls } from "~/hooks/useSignedUrl";
 import ToastMessages from "~/components/toastMessages";
 
+const deleteModalInitState = () => ({
+  show: false,
+  cancelled: false,
+  confirm: false,
+  title: "",
+});
+
 export const UIContext = createContext({});
 
 function Hooks({ children }) {
@@ -47,6 +54,11 @@ export default function App() {
   const [uiState, setUiState] = useState(uiManager.init());
 
   function update(newUi, persist = true) {
+    if (persist) {
+      console.log("------ PERSIST TO STORAGE ------");
+      console.table(newUi);
+      console.log("------ END PERSIST TO STORAGE ------");
+    }
     setUiState((uiState) => ({ ...uiState, ...newUi }));
     if (persist) {
       localStorage.setItem(
@@ -71,9 +83,44 @@ export default function App() {
     );
   }
 
+  function showDeleteWarning({ title }) {
+    return new Promise((resolve, reject) => {
+      update(
+        {
+          deleteModal: {
+            show: true,
+            cancelled: false,
+            confirm: false,
+            title,
+          },
+        },
+        false
+      );
+      // FIXME/TODO - this is grim. Better way of checking fresh state without putting it in set call?
+      const wait = setInterval(() => {
+        setUiState((uiState) => {
+          if (uiState.deleteModal.confirm) {
+            resolve();
+            clearInterval(wait);
+          } else if (uiState.deleteModal.cancelled) {
+            clearInterval(wait);
+            update({ deleteModal: deleteModalInitState() }, false);
+            reject();
+          }
+          return uiState;
+        });
+      }, 500);
+    });
+  }
+
   return (
     <UIContext.Provider
-      value={{ uiState, updateUiState: update, setToastMessage }}
+      value={{
+        uiState,
+        updateUiState: update,
+        setToastMessage,
+        showDeleteWarning,
+      }}
     >
       <style>{buildGoogleFontFaceString(uiState.googleFontStyles)}</style>
       <ApolloProvider client={client}>

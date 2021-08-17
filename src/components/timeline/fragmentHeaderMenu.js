@@ -8,7 +8,6 @@ import Menu from "~/components/menu";
 import Svg from "~/components/svg";
 import LoadingSpinner from "~/components/loadingSpinner";
 import useToastMessage from "~/hooks/useToastMessage";
-import DeleteModal from "~/components/deleteModal";
 
 export default function FragmentHeaderMenu({
   fragment,
@@ -16,7 +15,7 @@ export default function FragmentHeaderMenu({
   menuColor = colors.black,
 }) {
   const { setError } = useToastMessage();
-  const { updateUiState } = useContext(UIContext);
+  const { updateUiState, showDeleteWarning } = useContext(UIContext);
   const [updateFragment, { loading: updateFragmentLoading }] =
     useMutation(UPDATE_FRAGMENT);
   const [deleteFragment, { loading: deleteFragmentLoading }] =
@@ -80,11 +79,24 @@ export default function FragmentHeaderMenu({
     items.push({
       closeOnClick: false,
       component: (
-        <DeleteModal
-          title="Are you sure you want to delete this memory?"
-          deleteHandler={deleteHandler}
-        />
+        <span className="w-full flex justify-between">
+          Delete
+          <Svg name="delete" width="18" height="18" color={colors.darkGray} />
+        </span>
       ),
+      onClick: (close) => {
+        let type =
+          fragment.type === "TEXT" ? "memory" : fragment.type.toLowerCase();
+        showDeleteWarning({
+          title: `Are you sure you want to delete this ${type}?`,
+        })
+          .then(() => {
+            deleteHandler().then(() => {
+              updateUiState({ deleteModal: { show: false } });
+            });
+          })
+          .finally(() => close());
+      },
     });
   }
 

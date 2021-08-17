@@ -1,11 +1,13 @@
+import { useContext } from "react";
 import { renderVersionDate } from "~/lib/util";
 import { coverImages } from "~/lib/imageSizes";
 import Image from "~/components/image";
-import { Title, Text } from "~/components/_styled";
-import VersionLink from "~/components/publish/versionLink";
-import DeleteModal from "~/components/deleteModal";
+import { Button, Title, Text } from "~/components/_styled";
+import Svg from "~/components/svg";
+import { UIContext } from "~/app";
 
 export default function VersionListItem({ last, version, deleteVersion }) {
+  const { updateUiState, showDeleteWarning } = useContext(UIContext);
   return (
     <li
       className={`max-w-md flex ${!last && "mr-4 border-lightGray border-r"}`}
@@ -35,27 +37,22 @@ export default function VersionListItem({ last, version, deleteVersion }) {
           </div>
 
           <div>
-            <DeleteModal
-              iconSize={16}
-              onlyIcon={true}
-              deleteSuccessMessage="DELETE_VERSION"
-              title="Are you sure you want to delete this version?"
-              deleteHandler={() => deleteVersion(version.id)}
-            />
+            <Button
+              type="minimal"
+              onClick={() => {
+                showDeleteWarning({
+                  title: "Are you sure you want to delete this version?",
+                }).then(() => {
+                  deleteVersion(version.id).then(() => {
+                    updateUiState({ deleteModal: { show: false } });
+                  });
+                });
+              }}
+            >
+              <Svg name="delete" />
+            </Button>
           </div>
         </div>
-
-        {/* <div className="flex">
-          {version.publishedFormats.split(",").map((format) => (
-            <Text tag="span" size="compact" css="mr-1 block" key={format}>
-              <VersionLink
-                small
-                format={format}
-                publishedPath={version.publishedPath}
-              />
-            </Text>
-          ))}
-        </div> */}
       </div>
     </li>
   );
