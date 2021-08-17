@@ -70,7 +70,7 @@ export default function Timeline() {
       <div className="pt-2 overflow-hidden pb-2 flex">
         {data && data.stt_user_by_pk.dob && timeline ? (
           <>
-            <Card css="max-h-full max-w-full px-2 md:px-4 py-0 flex">
+            <Card css="max-h-full max-w-full px-2 md:px-4 py-0 flex flex-1">
               <main
                 id="timeline-scroll-container"
                 ref={timelineScrollContainer}
