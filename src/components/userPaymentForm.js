@@ -40,6 +40,7 @@ export default function UserPaymentForm({
     }
     switch (subscriptionStatus) {
       case "CANCELLED":
+      case "CANCEL_AT_PERIOD_END":
         return "Your subscription has ended. To restore access to Stories To Tell, please choose a subscription.";
       case "PAYMENT_FAILED":
         return "Your last payment failed. Please update your payment method by clicking 'Manage subscription' below.";

@@ -18,7 +18,12 @@ export default function AccessControlModals() {
   const [showUserForm, setShowUserForm] = useState(false);
   const [showTutorial, setShowTutorial] = useState(false);
 
-  function trialHasExpired(expiresDate) {
+  function hasExpired(expiresDate, isSeconds) {
+    if (isSeconds) {
+      return (
+        DateTime.fromSeconds(expiresDate).diffNow().toObject().milliseconds <= 0
+      );
+    }
     return DateTime.fromISO(expiresDate).diffNow().toObject().milliseconds <= 0;
   }
 
@@ -30,9 +35,10 @@ export default function AccessControlModals() {
         stripeCustomerId: dbUser.stripeCustomerId,
       };
       if (
-        (subStatus === "IN_TRIAL" &&
-          trialHasExpired(dbUser.trialExpiresDate)) ||
-        subStatus === "CANCELLED"
+        (subStatus === "IN_TRIAL" && hasExpired(dbUser.trialExpiresDate)) ||
+        subStatus === "CANCELLED" ||
+        (subStatus === "CANCEL_AT_PERIOD_END" &&
+          hasExpired(dbUser.subscriptionMeta?.periodEnd, true))
       ) {
         paymentState.showModal = true;
         paymentState.type = "CHOOSE_PLAN";
