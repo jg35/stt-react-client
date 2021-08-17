@@ -17,12 +17,62 @@ import { Card, Title, Button, Grid } from "~/components/_styled";
 export default function CoverEditorForm({ values, setFieldValue }) {
   const [showLayoutControls, setShowLayoutControls] = useState(false);
   const [showTextControls, setShowTextControls] = useState(false);
+  const [coverContainerStyle, setCoverContainerStyle] = useState({});
+  const [renderDragEls, setRenderDragEls] = useState(false);
+
+  function getCoverContainerStyle(height, width) {
+    console.log(height, width);
+    let sizeStyle = {};
+
+    if (width && height) {
+      console.log("width more than height", width > height);
+      console.log("width", width);
+      console.log("height", height);
+      const xAsBasis = width < height;
+      // Cover should render as 4:3
+      const ratioWidth = xAsBasis ? width : (height / 4) * 3;
+      const ratioHeight = xAsBasis ? (width / 3) * 4 : height;
+      sizeStyle = {
+        width: `${ratioWidth}px`,
+        height: `${ratioHeight}px`,
+        minHeight: `${ratioHeight}px`,
+        minWidth: `${ratioWidth}px`,
+      };
+    } else {
+      sizeStyle = {
+        height: "100%",
+        width: "100%",
+      };
+    }
+
+    return {
+      ...sizeStyle,
+      position: "relative",
+      overflow: "hidden",
+      backgroundColor: colors.lightGray,
+      fontSize: "100%",
+      backgroundRepeat: "no-repeat",
+      backgroundPosition: "center center",
+      backgroundSize: "cover",
+    };
+  }
+
+  useEffect(() => {
+    if (
+      coverContainerStyle.height &&
+      coverContainerStyle.height.includes("px")
+    ) {
+      setRenderDragEls(true);
+    }
+  }, [coverContainerStyle]);
+
   const cover = values.theme.cover;
   const signedImageUrl = useGetSignedImageUrl(
     cover.image ? cover.image + "-master" : null
   );
   const { uiState, updateUiState } = useContext(UIContext);
   const coverContainerRef = useRef(null);
+  const editContainer = useRef(null);
 
   function getPosition(coverContainer, relativePosition) {
     if (!coverContainer || !relativePosition) {
@@ -37,9 +87,24 @@ export default function CoverEditorForm({ values, setFieldValue }) {
   }
 
   useEffect(() => {
+    document.querySelector("body").style.overflow = "hidden";
+    return () => {
+      document.querySelector("body").style.overflow = "auto";
+    };
+  }, []);
+
+  useEffect(() => {
     if (coverContainerRef.current) {
-      const width = coverContainerRef.current.clientWidth;
-      const height = coverContainerRef.current.clientHeight;
+      // if(!canRenderCols) {
+      //   coverContainerRef.current.parentElement.style['max-height'] =
+      // }
+      setCoverContainerStyle(
+        getCoverContainerStyle(
+          coverContainerRef.current.parentElement.clientHeight,
+          coverContainerRef.current.parentElement.clientWidth
+        )
+      );
+
       let gFonts = [];
       const elements = cloneDeep(cover.elements).map((el) => {
         gFonts.push(el.font);
@@ -51,6 +116,19 @@ export default function CoverEditorForm({ values, setFieldValue }) {
       });
       setFieldValue("theme.cover.elements", elements);
       updateGoogleFonts(gFonts);
+
+      const windowListener = () => {
+        setCoverContainerStyle(
+          getCoverContainerStyle(
+            coverContainerRef.current.parentElement.clientHeight,
+            coverContainerRef.current.parentElement.clientWidth
+          )
+        );
+      };
+      window.addEventListener("resize", windowListener);
+      return () => {
+        window.removeEventListener("resize", windowListener);
+      };
     }
   }, [coverContainerRef.current]);
 
@@ -61,22 +139,6 @@ export default function CoverEditorForm({ values, setFieldValue }) {
 
     updateUiState({ googleFontStyles }, false);
   }
-  const height = 65;
-  const width = (height / 4) * 3;
-
-  const coverContainer = {
-    width: `${width}vh`,
-    height: `${height}vh`,
-    minHeight: `${height}vh`,
-    minWidth: `${width}vh`,
-    position: "relative",
-    overflow: "hidden",
-    backgroundColor: colors.lightGray,
-    fontSize: "100%",
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "center center",
-    backgroundSize: "cover",
-  };
 
   function getImageCss(placement) {
     switch (placement) {
@@ -149,7 +211,11 @@ export default function CoverEditorForm({ values, setFieldValue }) {
   }
 
   return (
-    <div className="rounded-b-lg overflow-hidden flex-1" style={gridBackground}>
+    <div
+      className="rounded-b-lg flex-1 overflow-hidden"
+      style={gridBackground}
+      ref={editContainer}
+    >
       <div className="xl:hidden relative z-50">
         <GlobalCoverControlsCollapse
           show={showLayoutControls}
@@ -205,12 +271,13 @@ export default function CoverEditorForm({ values, setFieldValue }) {
       </Card> */}
 
       <Grid
-        css="pt-12"
+        css="py-6 md:py-10 min-h-full"
         colSpan={[
           "col-span-0 xl:col-span-3",
           "col-span-10 col-start-2 xl:col-start:4 xl:col-span-6",
           "col-span-0 xl:col-span-3",
         ]}
+        autoRows="auto-rows-fr"
       >
         <div className="hidden xl:block">
           <GlobalCoverControls
@@ -225,7 +292,7 @@ export default function CoverEditorForm({ values, setFieldValue }) {
 
         <div
           style={{
-            ...coverContainer,
+            ...coverContainerStyle,
             ...(cover.imagePlacement === "cover"
               ? { backgroundImage: `url('${signedImageUrl}')` }
               : { backgroundColor: cover.bgColor }),
@@ -233,7 +300,7 @@ export default function CoverEditorForm({ values, setFieldValue }) {
           className="container shadow-xl rounded-r-xl rounded-l mx-auto"
           ref={coverContainerRef}
         >
-          {coverContainerRef.current ? (
+          {renderDragEls ? (
             <>
               {cover.imagePlacement !== "cover" && (
                 <SnapElement

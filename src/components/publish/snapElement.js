@@ -5,7 +5,7 @@ import React, { useState } from "react";
 function Draggable({ children, position, parentRef, maxWidth, css, getRef }) {
   return (
     <div
-      className={css}
+      className={`${css} noselect`}
       ref={getRef}
       style={{
         transform: `translate(${position.x}px, ${position.y}px)`,
@@ -14,6 +14,7 @@ function Draggable({ children, position, parentRef, maxWidth, css, getRef }) {
         position: "absolute",
         left: 0,
         top: 0,
+        userSelect: "none",
       }}
     >
       {children}

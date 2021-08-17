@@ -26,6 +26,7 @@ export default function TextElementControlList({
       ))}
       <Button
         variant="secondary"
+        size="compact"
         onClick={() => {
           const addId = add();
         }}
