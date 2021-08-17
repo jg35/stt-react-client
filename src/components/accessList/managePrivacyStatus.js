@@ -22,17 +22,19 @@ function PrivacyOption({ title, description, active, onClick }) {
 export default function ManagePrivacyStatus({
   privacyStatus,
   setPrivacyStatus,
+  showLabel = true,
 }) {
   return (
     <>
-      <FormLabel>Choose privacy status</FormLabel>
+      {showLabel && <FormLabel>Choose privacy status</FormLabel>}
+
       <div className="flex flex-wrap">
         <div className="w-full sm:w-1/2 sm:pr-2 mt-2">
           <PrivacyOption
             onClick={() => setPrivacyStatus("PUBLIC")}
             active={privacyStatus === "PUBLIC"}
             title="Public 🌎 "
-            description="Your book is viewable by anyone that knows your handle. You can change your handle at any time."
+            description="Visible to anyone that knows your handle"
           />
         </div>
 

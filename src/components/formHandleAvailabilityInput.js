@@ -58,21 +58,18 @@ export default function FormHandleAvailabilityInput({
     } else if (!error && value && !loading && touched) {
       return (
         <>
-          Your book will be available at{" "}
           <strong>read.storiestotell.app/{value}</strong>
         </>
       );
     } else if (!error && value && !loading && !touched && savedHandle) {
       return (
         <>
-          Your book is available at{" "}
           <strong>read.storiestotell.app/{value}</strong>
         </>
       );
     } else if (!error && !value) {
       return (
         <>
-          Your book will be available at{" "}
           <strong>read.storiestotell.app/your-handle</strong>
         </>
       );

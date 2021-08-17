@@ -135,7 +135,7 @@ export default function PublishNewVersion() {
     });
   }
 
-  const steps = ["1. Metadata", "2. Create cover", "3. Privacy"];
+  const steps = ["1. Metadata", "2. Create cover", "3. Sharing"];
 
   function renderStep(formProps) {
     switch (publishStep) {
@@ -155,8 +155,8 @@ export default function PublishNewVersion() {
 
   if (currentVersion) {
     return (
-      <Page css="overflow-hidden px-2 pb-2">
-        <Card css="border-4 border-white p-0 flex flex-col h-full rounded-lg">
+      <Page css="px-2 pb-2">
+        <Card css="border-4 border-white p-0 flex flex-col h-full rounded-lg overflow-scroll">
           <Formik
             onSubmit={(values, formBag) => {
               if (publishStep === 3) {
@@ -186,6 +186,7 @@ export default function PublishNewVersion() {
                     currentStep={publishStep}
                     stepBack={() => setPublishStep(publishStep - 1)}
                   />
+
                   {renderStep(props)}
                 </form>
               );

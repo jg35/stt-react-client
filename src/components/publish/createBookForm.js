@@ -16,25 +16,15 @@ export default function PublishOptionsForm({
 }) {
   return (
     <div
-      className="flex flex-col justify-center pt-20 w-12/12 lg:w-6/12 mx-auto"
-      style={{ maxWidth: "768px" }}
+      className="pt-10 md:pt-20 w-12/12 lg:w-6/12 mx-auto px-4"
+      style={{ maxWidth: "600px" }}
     >
-      <Title>Decide how you would like to share your book</Title>
-
-      <div className="mb-6">
-        <ManagePrivacyStatus
-          privacyStatus={values.privacyStatus}
-          setPrivacyStatus={(val) => setFieldValue("privacyStatus", val)}
-        />
-      </div>
-
-      {!savedHandle && (
-        <div className="mt-6">
-          <Title tag="h2">URL handle</Title>
-          <Text size="large">
-            Now let's set your handle. This will form the web address where
-            readers can access your book.
-          </Text>
+      {savedHandle && (
+        <div className="mb-6">
+          <Title tag="h2">
+            Now let's set your handle. This is where readers will access your
+            book.
+          </Title>
           <FormHandleAvailabilityInput
             value={values.publicHandle}
             error={errors.publicHandle}
@@ -46,14 +36,25 @@ export default function PublishOptionsForm({
         </div>
       )}
 
-      <div className="mx-auto mt-6">
+      <div className="mb-6">
+        <Title tag="h2">
+          Finally, decide how you would like to share your book.
+        </Title>
+        <ManagePrivacyStatus
+          showLabel={false}
+          privacyStatus={values.privacyStatus}
+          setPrivacyStatus={(val) => setFieldValue("privacyStatus", val)}
+        />
+      </div>
+
+      <div className="flex justify-center">
         <Button
           type="submit"
           size="large"
           disabled={!isValid}
           inProgress={isSubmitting}
           variant="cta"
-          css="w-60"
+          css="md:w-60"
         >
           {isSubmitting ? "Creating your book..." : "Create your book"}
         </Button>
