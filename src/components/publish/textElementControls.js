@@ -17,6 +17,7 @@ export default function TextElementControls({
   remove,
   expandedId,
   expand,
+  isSticky = false,
 }) {
   const [isExpanded, setIsExpanded] = useState(expandedId === element.id);
   useEffect(() => {
@@ -24,15 +25,15 @@ export default function TextElementControls({
   }, [expandedId]);
   return (
     <div
-      className={`animate-fade-in mb-4 w-full rounded-t shadow relative ${
+      className={`animate-fade-in rounded-t shadow relative ${
         !isExpanded && "rounded-b"
-      }`}
+      } ${isSticky ? "mx-2" : "mb-4"}`}
     >
       <div
         className="flex justify-between cursor-pointer py-2 px-4 items-center bg-lightestGray "
         onClick={() => expand(isExpanded ? null : element.id)}
       >
-        <Title tag="h2" size="compact" css="font-normal">
+        <Title tag="h2" size="compact" css="font-normal truncate">
           {element.content}
         </Title>
         <div className="flex">

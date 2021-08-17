@@ -1,4 +1,4 @@
-import { useRef, useContext, useEffect } from "react";
+import { useRef, useContext, useEffect, useState } from "react";
 import { css } from "@emotion/css";
 import { cloneDeep, get } from "lodash";
 import colors from "~/lib/colors";
@@ -10,9 +10,13 @@ import Image from "~/components/image";
 import SnapElement from "~/components/publish/snapElement";
 import TextElementControlList from "~/components/publish/textElementControlList";
 import GlobalCoverControls from "~/components/publish/globalCoverControls";
-import { Card, Title } from "~/components/_styled";
+import GlobalCoverControlsCollapse from "~/components/publish/globalCoverControlsCollapse";
+import TextElementControlListCollapse from "~/components/publish/textElementControlListCollapse";
+import { Card, Title, Button, Grid } from "~/components/_styled";
 
 export default function CoverEditorForm({ values, setFieldValue }) {
+  const [showLayoutControls, setShowLayoutControls] = useState(false);
+  const [showTextControls, setShowTextControls] = useState(false);
   const cover = values.theme.cover;
   const signedImageUrl = useGetSignedImageUrl(
     cover.image ? cover.image + "-master" : null
@@ -104,35 +108,119 @@ export default function CoverEditorForm({ values, setFieldValue }) {
     return `${(parentWidth / 100) * size}px`;
   }
 
+  const gridBackground = {
+    backgroundColor: "#e5e5f7",
+    backgroundImage:
+      "linear-gradient(rgba(0, 0, 0, .1) 1px, transparent 1px), linear-gradient(to right, rgba(0, 0, 0, .1) 1px, #F8F8F8 1px)",
+    backgroundSize: "24px 24px",
+    backgroundPosition: "-1px -1px",
+  };
+
+  function addTextElement() {
+    const relativePosition = { x: 50, y: 50 };
+    const newEl = CoverElementSchema.cast({
+      content: "New text",
+      relativePosition,
+      size: 10,
+      position: getPosition(coverContainerRef.current, relativePosition),
+    });
+
+    setFieldValue("theme.cover.elements", cover.elements.concat(newEl));
+    return newEl.id;
+  }
+
+  function removeTextElement(elId) {
+    setFieldValue(
+      "theme.cover.elements",
+      cover.elements.filter((e) => e.id !== elId)
+    );
+  }
+
+  function updateTextElement(elId, field, value) {
+    if (field === "font") {
+      updateGoogleFonts([value]);
+    }
+    setFieldValue(
+      `theme.cover.elements[${cover.elements.findIndex(
+        (e) => e.id === elId
+      )}][${field}]`,
+      value
+    );
+  }
+
   return (
-    <div
-      className="flex flex-col flex-1 p-4 rounded-b-lg"
-      style={{
-        backgroundColor: "#e5e5f7",
-        backgroundImage:
-          "linear-gradient(rgba(0, 0, 0, .1) 1px, transparent 1px), linear-gradient(to right, rgba(0, 0, 0, .1) 1px, #F8F8F8 1px)",
-        backgroundSize: "24px 24px",
-        backgroundPosition: "-1px -1px",
-      }}
-    >
-      <Card css="mb-4 mx-auto">
+    <div className="rounded-b-lg overflow-hidden flex-1" style={gridBackground}>
+      <div className="xl:hidden relative z-50">
+        <GlobalCoverControlsCollapse
+          show={showLayoutControls}
+          imageUrl={cover.image}
+          imagePlacement={cover.imagePlacement}
+          bgColor={cover.bgColor}
+          update={(field, value) =>
+            setFieldValue(`theme.cover.${field}`, value)
+          }
+        />
+
+        <TextElementControlListCollapse
+          show={showTextControls}
+          elements={cover.elements}
+          add={addTextElement}
+          remove={removeTextElement}
+          update={updateTextElement}
+        />
+
+        <div className="bg-white p-2 fixed bottom-8 left-8 flex rounded shadow">
+          <Button
+            css="font-medium whitespace-nowrap mr-2"
+            size="compact"
+            onClick={() => {
+              setShowLayoutControls(!showLayoutControls);
+              if (showTextControls) {
+                setShowTextControls(false);
+              }
+            }}
+          >
+            Layout controls
+          </Button>
+          <Button
+            css="font-medium whitespace-nowrap"
+            size="compact"
+            onClick={() => {
+              setShowTextControls(!showTextControls);
+              if (showLayoutControls) {
+                setShowLayoutControls(false);
+              }
+            }}
+          >
+            Text controls
+          </Button>
+        </div>
+      </div>
+
+      {/* <Card css="m-2 mx-auto">
         <Title css="text-center mx-auto mb-0">
           Here you can add photos, alter layout, drag things around and add
           other text elements to make a beautiful cover for your book!
         </Title>
-      </Card>
-      <div className="flex justify-between w-full">
-        <div className="w-80 flex justify-between flex-col">
-          <div>
-            <GlobalCoverControls
-              imageUrl={cover.image}
-              imagePlacement={cover.imagePlacement}
-              bgColor={cover.bgColor}
-              update={(field, value) =>
-                setFieldValue(`theme.cover.${field}`, value)
-              }
-            />
-          </div>
+      </Card> */}
+
+      <Grid
+        css="pt-12"
+        colSpan={[
+          "col-span-0 xl:col-span-3",
+          "col-span-10 col-start-2 xl:col-start:4 xl:col-span-6",
+          "col-span-0 xl:col-span-3",
+        ]}
+      >
+        <div className="hidden xl:block">
+          <GlobalCoverControls
+            imageUrl={cover.image}
+            imagePlacement={cover.imagePlacement}
+            bgColor={cover.bgColor}
+            update={(field, value) =>
+              setFieldValue(`theme.cover.${field}`, value)
+            }
+          />
         </div>
 
         <div
@@ -142,7 +230,7 @@ export default function CoverEditorForm({ values, setFieldValue }) {
               ? { backgroundImage: `url('${signedImageUrl}')` }
               : { backgroundColor: cover.bgColor }),
           }}
-          className="container shadow-xl rounded-r-xl rounded-l"
+          className="container shadow-xl rounded-r-xl rounded-l mx-auto"
           ref={coverContainerRef}
         >
           {coverContainerRef.current ? (
@@ -213,47 +301,16 @@ export default function CoverEditorForm({ values, setFieldValue }) {
             </>
           ) : null}
         </div>
-        <div className="w-80 flex justify-between flex-col">
+
+        <div className="hidden xl:block">
           <TextElementControlList
             elements={cover.elements}
-            add={() => {
-              const relativePosition = { x: 50, y: 50 };
-              const newEl = CoverElementSchema.cast({
-                content: "New text",
-                relativePosition,
-                size: 10,
-                position: getPosition(
-                  coverContainerRef.current,
-                  relativePosition
-                ),
-              });
-
-              setFieldValue(
-                "theme.cover.elements",
-                cover.elements.concat(newEl)
-              );
-              return newEl.id;
-            }}
-            remove={(elId) => {
-              setFieldValue(
-                "theme.cover.elements",
-                cover.elements.filter((e) => e.id !== elId)
-              );
-            }}
-            update={(elId, field, value) => {
-              if (field === "font") {
-                updateGoogleFonts([value]);
-              }
-              setFieldValue(
-                `theme.cover.elements[${cover.elements.findIndex(
-                  (e) => e.id === elId
-                )}][${field}]`,
-                value
-              );
-            }}
+            add={addTextElement}
+            remove={removeTextElement}
+            update={updateTextElement}
           />
         </div>
-      </div>
+      </Grid>
     </div>
   );
 }

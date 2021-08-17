@@ -16,17 +16,16 @@ export default function PublishStepper({
   return (
     <Grid
       colSpan={[
-        "col-span-6 md:col-span-3",
-        "col-span-6 md:col-span-3 md:order-3",
-        "col-span-12 md:col-span-6 md:order-2",
+        "col-span-3 md:col-span-3",
+        "col-span-6 md:col-span-6",
+        "col-span-3 md:col-span-3",
       ]}
-      css="border-b-2 border-lightGray items-center p-2"
+      css="items-center p-2"
     >
       <div className="flex-justify-start">
         {currentStep > 1 && (
           <Button
-            css="w-32"
-            variant="minimal"
+            css="w-auto md:w-32"
             disabled={isSubmitting}
             onClick={() => stepBack(currentStep - 1)}
           >
@@ -35,28 +34,30 @@ export default function PublishStepper({
         )}
       </div>
 
+      <div className="flex justify-around items-center">
+        {steps.map((step, i) => (
+          <Text
+            tag="span"
+            key={i}
+            css={`mb-0 ${
+              currentStep !== i + 1 ? "text-gray hidden md:block" : ""
+            }`}
+          >
+            {step}
+          </Text>
+        ))}
+      </div>
       <div className="flex justify-end">
         {currentStep !== steps.length && (
           <Button
-            css="w-32"
+            css="w-auto md:w-32"
             type="submit"
-            variant="secondary"
+            variant="cta"
             inProgress={isSubmitting}
           >
             {submitText}
           </Button>
         )}
-      </div>
-      <div className="flex justify-around">
-        {steps.map((step, i) => (
-          <Text
-            tag="span"
-            key={i}
-            css={`font-bold ${currentStep !== i + 1 && "text-gray"}`}
-          >
-            {step}
-          </Text>
-        ))}
       </div>
     </Grid>
   );
