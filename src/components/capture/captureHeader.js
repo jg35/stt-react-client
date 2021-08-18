@@ -31,9 +31,7 @@ export default function CaptureHeader({ init }) {
       variables: { userId: user.id },
     }
   );
-  const [questionVisible, setQuestionVisible] = useState(
-    window.innerWidth >= 768
-  );
+  const [questionVisible, setQuestionVisible] = useState(true);
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [tagOptions, setTagOptions] = useState([]);
   const [questionOptions, setQuestionOptions] = useState([]);
@@ -109,7 +107,7 @@ export default function CaptureHeader({ init }) {
     }
   }, [currentQuestion]);
 
-  if (data) {
+  if (data && currentQuestion) {
     return (
       <Card css="p-2 md:p-4">
         <Grid
@@ -119,7 +117,7 @@ export default function CaptureHeader({ init }) {
             "col-span-12 md:col-span-5 lg:col-span-4 xl:col-span-3",
           ]}
         >
-          {questionVisible && currentQuestion && (
+          {questionVisible && (
             <div
               id="question-panel"
               className="animate-fade-in bg-white rounded p-2 border-2 shadow md:pl-3"
@@ -177,14 +175,24 @@ export default function CaptureHeader({ init }) {
           <Grid colSpan={["col-span-3 md:col-span-4"]} height="h-full">
             {window.innerWidth < 768 && (
               <Button
-                css="font-medium px-4"
+                css={`font-medium px-4 flex-col ${
+                  questionVisible &&
+                  "shadow bg-darkGray border-darkGray text-white"
+                } `}
                 onClick={() => setQuestionVisible(!questionVisible)}
               >
-                <Svg name="question" css="md:hidden" width={18} height={18} />
+                <Svg
+                  name="question"
+                  css="md:hidden"
+                  color={questionVisible && "#ffffff"}
+                  width={18}
+                  height={18}
+                />
+                <span className="text-sm md:text-base">Questions</span>
               </Button>
             )}
             <Button
-              css="font-medium px-4 md:h-full"
+              css="px-4 font-medium md:h-full flex-col md:flex-row"
               onClick={() =>
                 updateUiState(
                   makeCreateUserEventForm({}, { revealAfterCreate: true }),
@@ -193,14 +201,16 @@ export default function CaptureHeader({ init }) {
               }
             >
               <Svg name="calendar" css="md:hidden " width={18} height={18} />
-              <span className="hidden md:block">
-                Add
-                <br />
-                event
+              <span className="text-sm md:text-base ">
+                <span className="hidden md:block">
+                  Add
+                  <br />
+                </span>
+                Event
               </span>
             </Button>
             <Button
-              css="font-medium px-4 md:h-full"
+              css="font-medium px-4 md:h-full flex-col md:flex-row"
               onClick={() =>
                 updateUiState(
                   makeCreateFragmentForm(
@@ -214,13 +224,16 @@ export default function CaptureHeader({ init }) {
               }
             >
               <Svg name="writing" css="md:hidden" width={18} height={18} />
-              <span className="hidden md:block">
-                Add <br />
-                memory
+              <span className="text-sm md:text-base ">
+                <span className="hidden md:block">
+                  Add
+                  <br />
+                </span>
+                Memory
               </span>
             </Button>
             <Button
-              css="font-medium px-4 md:h-full"
+              css="font-medium px-4 md:h-full flex-col md:flex-row"
               onClick={() =>
                 updateUiState(
                   makeCreateFragmentForm(
@@ -234,9 +247,12 @@ export default function CaptureHeader({ init }) {
               }
             >
               <Svg name="photo" css="md:hidden" width={18} height={18} />
-              <span className="hidden md:block">
-                Add <br />
-                photo
+              <span className="text-sm md:text-base ">
+                <span className="hidden md:block">
+                  Add
+                  <br />
+                </span>
+                Photo
               </span>
             </Button>
           </Grid>

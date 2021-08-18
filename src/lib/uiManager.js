@@ -23,7 +23,7 @@ export default {
       },
       tutorialStep: -1,
       tutorialClickedPreviewFragment: false,
-      activeCaptureIndex: null,
+      activeCaptureIndex: false,
       payment: {
         showModal: false,
         type: "CHOOSE_PLAN",
