@@ -8,6 +8,7 @@ import DeleteModal from "~/components/deleteModal";
 import { UIContext } from "~/app";
 import UserPaymentForm from "~/components/userPaymentForm";
 import UserVerifyForm from "~/components/userVerifyForm";
+import AccessListModal from "~/components/accessList/accessListModal";
 
 export default function AccessControlModals() {
   const {
@@ -107,6 +108,16 @@ export default function AccessControlModals() {
             false
           );
         }}
+      />
+    );
+  }
+
+  if (uiState.showAccessListModal) {
+    return (
+      <AccessListModal
+        userId={user.id}
+        show={true}
+        closeModal={() => updateUiState({ showAccessListModal: false }, false)}
       />
     );
   }

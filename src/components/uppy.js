@@ -133,6 +133,9 @@ export default function UppyDashboard({
     } else {
       setInit(true);
     }
+    return () => {
+      document.querySelector("body").classList.remove("uppy-Dashboard-isFixed");
+    };
   }, []);
 
   return (

@@ -64,60 +64,61 @@ export default function Timeline() {
   }, [timelineScrollContainer, loading]);
 
   return (
-    <Page maxWidth="1920px" paddingBottom={false}>
-      <CaptureHeader init={!loading} />
+    <>
+      <Page maxWidth="1920px" paddingBottom={false}>
+        <CaptureHeader init={!loading} />
 
-      <div className="pt-2 overflow-hidden pb-2 flex">
-        {data && data.stt_user_by_pk.dob && timeline ? (
-          <>
-            <Card css="max-h-full max-w-full px-2 md:px-4 py-0 flex flex-1">
-              <main
-                id="timeline-scroll-container"
-                ref={timelineScrollContainer}
-                className="md:mr-2 overflow-y-scroll overflow-x-hidden js-timeline-scroll-container w-full"
-                onScroll={debounce((e) => {
-                  if (e.target.scrollTop !== uiState.timelineScrollPosition) {
-                    updateUiState({
-                      timelineScrollPosition: e.target.scrollTop,
-                    });
-                  }
-                }, 1000)}
-              >
-                {timeline.map((timelineSection, i) => (
-                  <Section key={i} section={timelineSection} index={i} />
-                ))}
-                <TimePeriodSelector
-                  timelinePeriod={timelinePeriod}
-                  orphanCount={orphanedFragments.length}
-                />
-              </main>
-              <div className="hidden md:block w-12 min-h-full bg-white">
-                <ScrollNavigator
-                  dob={data.stt_user_by_pk.dob}
-                  years={values(
-                    timeline.reduce((years, season) => {
-                      if (!years[season.year]) {
-                        years[season.year] = {
-                          year: season.year,
-                          fragments: false,
-                        };
-                      }
-                      if (season.fragments.length) {
-                        years[season.year].fragments = true;
-                      }
-                      return years;
-                    }, {})
-                  )}
-                />
-              </div>
-            </Card>
-            <Preview fragments={fragments} />
-          </>
-        ) : (
-          <TimelineSkeleton />
-        )}
-      </div>
-
+        <div className="pt-2 overflow-hidden pb-2 flex">
+          {data && data.stt_user_by_pk.dob && timeline ? (
+            <>
+              <Card css="max-h-full max-w-full px-2 md:px-4 py-0 flex flex-1">
+                <main
+                  id="timeline-scroll-container"
+                  ref={timelineScrollContainer}
+                  className="md:mr-2 overflow-y-scroll overflow-x-hidden js-timeline-scroll-container w-full"
+                  onScroll={debounce((e) => {
+                    if (e.target.scrollTop !== uiState.timelineScrollPosition) {
+                      updateUiState({
+                        timelineScrollPosition: e.target.scrollTop,
+                      });
+                    }
+                  }, 1000)}
+                >
+                  {timeline.map((timelineSection, i) => (
+                    <Section key={i} section={timelineSection} index={i} />
+                  ))}
+                  <TimePeriodSelector
+                    timelinePeriod={timelinePeriod}
+                    orphanCount={orphanedFragments.length}
+                  />
+                </main>
+                <div className="hidden md:block w-12 min-h-full bg-white">
+                  <ScrollNavigator
+                    dob={data.stt_user_by_pk.dob}
+                    years={values(
+                      timeline.reduce((years, season) => {
+                        if (!years[season.year]) {
+                          years[season.year] = {
+                            year: season.year,
+                            fragments: false,
+                          };
+                        }
+                        if (season.fragments.length) {
+                          years[season.year].fragments = true;
+                        }
+                        return years;
+                      }, {})
+                    )}
+                  />
+                </div>
+              </Card>
+              <Preview fragments={fragments} />
+            </>
+          ) : (
+            <TimelineSkeleton />
+          )}
+        </div>
+      </Page>
       <CaptureModal
         scrollToFragment={debounce((fragmentId) => {
           scrollToFragment(fragmentId);
@@ -126,6 +127,6 @@ export default function Timeline() {
           scrollToEvent(eventId);
         }, 500)}
       />
-    </Page>
+    </>
   );
 }

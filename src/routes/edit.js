@@ -40,15 +40,17 @@ export default function Edit() {
   }
 
   return (
-    <Page>
-      <EditPreviewContainer>
-        {data ? (
-          <EditPreview fragments={fragments} saveFragment={saveFragment} />
-        ) : (
-          <PreviewSkeleton />
-        )}
-      </EditPreviewContainer>
+    <>
+      <Page>
+        <EditPreviewContainer>
+          {data ? (
+            <EditPreview fragments={fragments} saveFragment={saveFragment} />
+          ) : (
+            <PreviewSkeleton />
+          )}
+        </EditPreviewContainer>
+      </Page>
       <CaptureModal editView />
-    </Page>
+    </>
   );
 }

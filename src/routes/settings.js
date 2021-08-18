@@ -8,7 +8,6 @@ import ManageUser from "~/components/settings/manageUser";
 import ManageBilling from "~/components/settings/manageBilling";
 import ManageAccount from "~/components/settings/manageAccount";
 import ManagePrivacy from "~/components/settings/managePrivacy";
-import AccessList from "~/components/accessList/accessList";
 
 export default function Settings() {
   const TABS = ["SETTINGS", "BILLING", "ACCOUNT", "PRIVACY"];
@@ -98,7 +97,6 @@ export default function Settings() {
 
           <Card>{renderActiveTab()}</Card>
         </Grid>
-        <AccessList userId={dbUser.id} />
       </Page>
     )
   );

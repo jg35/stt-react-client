@@ -15,12 +15,11 @@ import {
 } from "~/lib/gql";
 import Page from "~/components/page";
 import { Card } from "~/components/_styled";
-import PublishSkeleton from "~/components/publish/publishSkeleton";
+import PublishNewSkeleton from "~/components/publish/publishNewSkeleton";
 import PublishStepper from "~/components/publish/publishStepper";
 import CoverEditorForm from "~/components/publish/coverEditorForm";
 import PublishOptionsForm from "~/components/publish/publishOptionsForm";
 import CreateBookForm from "~/components/publish/createBookForm";
-import AccessList from "~/components/accessList/accessList";
 import useToastMessage from "~/hooks/useToastMessage";
 
 export default function PublishNewVersion() {
@@ -193,17 +192,13 @@ export default function PublishNewVersion() {
             }}
           </Formik>
         </Card>
-
-        <AccessList userId={user.id} />
       </Page>
     );
   }
 
   return (
     <Page>
-      <Card>
-        <PublishSkeleton />
-      </Card>
+      <PublishNewSkeleton />
     </Page>
   );
 }

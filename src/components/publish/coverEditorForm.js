@@ -300,9 +300,12 @@ export default function CoverEditorForm({ values, setFieldValue }) {
         <div
           style={{
             ...coverContainerStyle,
+            backgroundColor: cover.bgColor,
             ...(cover.imagePlacement === "cover"
-              ? { backgroundImage: `url('${signedImageUrl}')` }
-              : { backgroundColor: cover.bgColor }),
+              ? {
+                  backgroundImage: `url('${signedImageUrl}')`,
+                }
+              : {}),
           }}
           className="container shadow-xl rounded-r-xl rounded-l mx-auto"
           ref={coverContainerRef}

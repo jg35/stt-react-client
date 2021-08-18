@@ -17,6 +17,7 @@ export default function GlobalCoverControls({
   update,
 }) {
   const [changeImage, setChangeImage] = useState(false);
+  const [uppyOpen, setUppyOpen] = useState(false);
   return (
     <div className="w-full px-4 animate-fade-in">
       <Card>
@@ -103,23 +104,21 @@ export default function GlobalCoverControls({
             </ButtonGroup>
           </div>
           <div>
-            <Button variant="secondary" onClick={() => setChangeImage(true)}>
+            <Button variant="secondary" onClick={() => setUppyOpen(true)}>
               {!imageUrl ? "Add" : "Change"} cover image
             </Button>
-            {changeImage && (
-              <Uppy
-                asModal={true}
-                imageFolder="coverImages"
-                mediaUrl={imageUrl}
-                onClose={() => setChangeImage(false)}
-                onChange={(url) => {
-                  update("image", url);
-                  setChangeImage(false);
-                  // wait until the image is loaded?
-                  // setChangeImage(false);
-                }}
-              />
-            )}
+            <Uppy
+              open={uppyOpen}
+              imageFolder="coverImages"
+              mediaUrl={imageUrl}
+              onClose={() => setUppyOpen(false)}
+              onChange={(url) => {
+                update("image", url);
+                setUppyOpen(false);
+                // wait until the image is loaded?
+                // setChangeImage(false);
+              }}
+            />
           </div>
         </div>
       </Card>

@@ -10,7 +10,6 @@ import { Button, Card, Title, Grid } from "~/components/_styled";
 import VersionList from "~/components/publish/versionList";
 import LatestVersion from "~/components/publish/latestVersion";
 import PublishSkeleton from "~/components/publish/publishSkeleton";
-import AccessList from "~/components/accessList/accessList";
 import useToastMessage from "~/hooks/useToastMessage";
 
 export default function Publish() {
@@ -111,8 +110,6 @@ export default function Publish() {
       ) : (
         <PublishSkeleton />
       )}
-
-      <AccessList userId={user.id} />
     </Page>
   );
 }

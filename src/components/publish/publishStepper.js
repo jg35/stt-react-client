@@ -6,19 +6,18 @@ export default function PublishStepper({
   steps,
   isSubmitting,
 }) {
-  const totalSteps = steps.length;
   let submitText;
   if (isSubmitting) {
-    submitText = currentStep === totalSteps ? "Publishing..." : "Saving...";
+    submitText = "Saving";
   } else {
-    submitText = currentStep === totalSteps ? "Publish" : "Save";
+    submitText = "Save";
   }
   return (
     <Grid
       colSpan={[
-        "col-span-3 md:col-span-3",
-        "col-span-6 md:col-span-6",
-        "col-span-3 md:col-span-3",
+        "col-span-4 md:col-span-3",
+        "col-span-4 md:col-span-6",
+        "col-span-4 md:col-span-3",
       ]}
       css="items-center p-2"
     >
@@ -50,7 +49,7 @@ export default function PublishStepper({
       <div className="flex justify-end">
         {currentStep !== steps.length && (
           <Button
-            css="w-auto md:w-32"
+            css="w-auto md:w-32 h-10"
             type="submit"
             variant="cta"
             inProgress={isSubmitting}
