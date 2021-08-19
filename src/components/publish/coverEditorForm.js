@@ -1,6 +1,6 @@
 import { useRef, useContext, useEffect, useState } from "react";
 import { css } from "@emotion/css";
-import { cloneDeep, get } from "lodash";
+import { cloneDeep } from "lodash";
 import colors from "~/lib/colors";
 import { CoverElementSchema } from "~/lib/yup";
 import { setGoogleFontStyles } from "~/lib/uiManager";
@@ -12,16 +12,15 @@ import TextElementControlList from "~/components/publish/textElementControlList"
 import GlobalCoverControls from "~/components/publish/globalCoverControls";
 import GlobalCoverControlsCollapse from "~/components/publish/globalCoverControlsCollapse";
 import TextElementControlListCollapse from "~/components/publish/textElementControlListCollapse";
-import { Card, Title, Button, Grid } from "~/components/_styled";
+import { Button, Grid } from "~/components/_styled";
 
-export default function CoverEditorForm({ values, setFieldValue }) {
+export default function CoverEditorForm({ values, setFieldValue, setValues }) {
   const [showLayoutControls, setShowLayoutControls] = useState(false);
   const [showTextControls, setShowTextControls] = useState(false);
   const [coverContainerStyle, setCoverContainerStyle] = useState({});
   const [renderDragEls, setRenderDragEls] = useState(false);
 
   function getCoverContainerStyle(height, width) {
-    console.log(height, width);
     let sizeStyle = {};
 
     if (width && height) {
@@ -95,9 +94,6 @@ export default function CoverEditorForm({ values, setFieldValue }) {
 
   useEffect(() => {
     if (coverContainerRef.current) {
-      // if(!canRenderCols) {
-      //   coverContainerRef.current.parentElement.style['max-height'] =
-      // }
       setCoverContainerStyle(
         getCoverContainerStyle(
           coverContainerRef.current.parentElement.clientHeight,
@@ -106,6 +102,12 @@ export default function CoverEditorForm({ values, setFieldValue }) {
       );
 
       let gFonts = [];
+
+      setFieldValue(
+        "theme.cover.imagePosition",
+        getImagePositionFromRelative(cover.imageRelativePosition)
+      );
+
       const elements = cloneDeep(cover.elements).map((el) => {
         gFonts.push(el.font);
         el.position = getPosition(
@@ -132,6 +134,10 @@ export default function CoverEditorForm({ values, setFieldValue }) {
     }
   }, [coverContainerRef.current]);
 
+  function getImagePositionFromRelative(relativePosition) {
+    return getPosition(coverContainerRef.current, relativePosition);
+  }
+
   function updateGoogleFonts(fonts) {
     const googleFontStyles = fonts.reduce((styles, fontFamily) => {
       return setGoogleFontStyles(styles, fontFamily);
@@ -156,7 +162,7 @@ export default function CoverEditorForm({ values, setFieldValue }) {
         `;
       case "square":
         return css`
-          width: 65%;
+          width: 60%;
           &:after {
             content: "";
             display: block;
@@ -164,6 +170,49 @@ export default function CoverEditorForm({ values, setFieldValue }) {
           }
         `;
     }
+  }
+
+  function getImageRelativePosition(
+    placement,
+    previousPlacement,
+    previousRelPosition
+  ) {
+    switch (placement) {
+      case "cover":
+        return { x: 0, y: 0 };
+      case "oval":
+        if (
+          previousPlacement === "cover" ||
+          previousPlacement === "rectangle"
+        ) {
+          return { x: 25, y: 25 };
+        }
+        return { x: 25, y: previousRelPosition.y };
+      case "square":
+        if (
+          previousPlacement === "cover" ||
+          previousPlacement === "rectangle"
+        ) {
+          return { x: 25, y: 25 };
+        }
+        return { x: 20, y: previousRelPosition.y };
+      case "rectangle":
+        return { x: 0, y: 50 };
+      default:
+        return { x: 0, y: 0 };
+    }
+  }
+
+  function setImagePlacement(placement) {
+    const imageRelativePosition = getImageRelativePosition(
+      placement,
+      values.theme.cover.imagePlacement,
+      values.theme.cover.imageRelativePosition
+    );
+    const imagePosition = getImagePositionFromRelative(imageRelativePosition);
+    setFieldValue("theme.cover.imagePosition", imagePosition);
+    setFieldValue("theme.cover.imageRelativePosition", imageRelativePosition);
+    setFieldValue("theme.cover.imagePlacement", placement);
   }
 
   function getRenderFontSize(size, parentWidth) {
@@ -251,6 +300,7 @@ export default function CoverEditorForm({ values, setFieldValue }) {
           </Button>
         </div>
         <GlobalCoverControlsCollapse
+          setImagePlacement={setImagePlacement}
           show={showLayoutControls}
           imageUrl={cover.image}
           imagePlacement={cover.imagePlacement}
@@ -287,6 +337,7 @@ export default function CoverEditorForm({ values, setFieldValue }) {
       >
         <div className="hidden xl:block">
           <GlobalCoverControls
+            setImagePlacement={setImagePlacement}
             imageUrl={cover.image}
             imagePlacement={cover.imagePlacement}
             bgColor={cover.bgColor}

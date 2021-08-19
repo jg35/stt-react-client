@@ -6,6 +6,7 @@ import {
   Title,
   FormLabel,
   Grid,
+  ImagePlacementOption,
 } from "~/components/_styled";
 import Svg from "~/components/svg";
 import PopoverColorPicker from "~/components/popoverColorPicker";
@@ -14,80 +15,12 @@ import Uppy from "~/components/uppy";
 
 export default function GlobalCoverControls({
   imageUrl,
-  imagePlacement,
   bgColor,
   update,
   show,
+  setImagePlacement,
 }) {
   const [changeImage, setChangeImage] = useState(false);
-
-  function ImagePlacementButton({ value, update, bgColor }) {
-    let shape;
-    switch (value) {
-      case "cover":
-        shape = (
-          <div className="border-2 border-black h-8 w-6 shadow-lg">
-            <div className="w-full h-full bg-lightGray"></div>
-          </div>
-        );
-        break;
-      case "rectangle":
-        shape = (
-          <div
-            className="border-2 border-black h-8 w-6 shadow-lg"
-            style={{ background: bgColor }}
-          >
-            <div className="h-1/2 w-full bg-lightGray"></div>
-          </div>
-        );
-        break;
-      case "oval":
-        shape = (
-          <div
-            className="border-2 border-black h-8 w-6 shadow-lg relative"
-            style={{ background: bgColor }}
-          >
-            <div
-              className="h-1/2 w-1/2 absolute bg-lightGray"
-              style={{
-                borderRadius: "50%",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-              }}
-            ></div>
-          </div>
-        );
-        break;
-      case "square":
-        shape = (
-          <div
-            className="border-2 border-black h-8 w-6 shadow-lg relative"
-            style={{ background: bgColor }}
-          >
-            <div
-              className="h-3 w-3 absolute bg-lightGray"
-              style={{
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-              }}
-            ></div>
-          </div>
-        );
-        break;
-    }
-    return (
-      <Button
-        size="compact"
-        css="mr-1"
-        variant="minimal"
-        onClick={() => update("imagePlacement", value)}
-      >
-        {shape}
-      </Button>
-    );
-  }
 
   return (
     <>
@@ -116,24 +49,24 @@ export default function GlobalCoverControls({
         >
           <FormLabel css="mx-2 hidden sm:block">Image</FormLabel>
           <div className="flex">
-            <ImagePlacementButton
+            <ImagePlacementOption
               value="cover"
-              update={update}
+              setImagePlacement={setImagePlacement}
               bgColor={bgColor}
             />
-            <ImagePlacementButton
+            <ImagePlacementOption
               value="rectangle"
-              update={update}
+              setImagePlacement={setImagePlacement}
               bgColor={bgColor}
             />
-            <ImagePlacementButton
+            <ImagePlacementOption
               value="oval"
-              update={update}
+              setImagePlacement={setImagePlacement}
               bgColor={bgColor}
             />
-            <ImagePlacementButton
+            <ImagePlacementOption
               value="square"
-              update={update}
+              setImagePlacement={setImagePlacement}
               bgColor={bgColor}
             />
           </div>

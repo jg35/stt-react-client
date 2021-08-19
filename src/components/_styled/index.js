@@ -15,6 +15,7 @@ export { default as FormInput } from "./formInput";
 export { default as FormInputRange } from "./formInputRange";
 export { default as FormLabel } from "./formLabel";
 export { default as Grid } from "./grid";
+export { default as ImagePlacementOption } from "./imagePlacementOption";
 export { default as LinkButton } from "./linkButton";
 export { default as PageContent } from "./pageContent";
 export { default as Paper } from "./paper";

@@ -1,6 +1,6 @@
 import reactable from "reactablejs";
 import interact from "interactjs";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 function Draggable({ children, position, parentRef, maxWidth, css, getRef }) {
   return (
@@ -36,6 +36,10 @@ export default function SnapElement({
     x: position.x,
     y: position.y,
   });
+
+  useEffect(() => {
+    setCoords(position);
+  }, [position]);
 
   return (
     <Reactable
