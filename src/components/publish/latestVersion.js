@@ -38,7 +38,7 @@ export default function LatestVersion({
               <LinkButton
                 external
                 size="compact"
-                css="w-auto font-medium"
+                css="w-auto font-medium mr-2"
                 href={`${process.env.REACT_APP_READER_VIEW_URL}/${handle}`}
               >
                 View

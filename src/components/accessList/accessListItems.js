@@ -1,4 +1,4 @@
-import { Button, Text, Title, Grid } from "~/components/_styled";
+import { Button, ClickToCopy, Text, Title, Grid } from "~/components/_styled";
 
 export default function AccessListItems({ items, removeAccessToken }) {
   return (
@@ -13,7 +13,7 @@ export default function AccessListItems({ items, removeAccessToken }) {
       {items.length > 0 && (
         <ul className="my-6">
           <li className="py-2 font-medium">
-            <Grid colSpan={["col-span-4"]}>
+            <Grid colSpan={["col-span-5", "col-span-5", "col-span-2"]}>
               <span className="block">Email</span>
               <span className="block">Login token</span>
               <span className="block"></span>
@@ -27,9 +27,18 @@ export default function AccessListItems({ items, removeAccessToken }) {
                   className="p-2 shadow mb-4 rounded bg-offWhite"
                   key={item.id || item.email}
                 >
-                  <Grid colSpan={["col-span-4"]} css="items-center">
+                  <Grid
+                    colSpan={["col-span-5", "col-span-5", "col-span-2"]}
+                    css="items-center"
+                  >
                     <span className="block truncate">{item.email}</span>
-                    <span className="block truncate">{item.token}</span>
+                    <span className="block truncate">
+                      <ClickToCopy
+                        value={item.token}
+                        copyText={item.token}
+                        css="font-normal w-auto justify-start"
+                      />
+                    </span>
                     <div className="flex justify-end">
                       <Button
                         size="compact"

@@ -40,6 +40,7 @@ export default function Button({
   disabled = false,
   inProgress = false,
   style = {},
+  title = "",
 }) {
   const baseCss = `flex justify-center items-center rounded border-2 duration-200 ease-in w-full ${
     disabled ? "cursor-not-allowed opacity-80" : "cursor-pointer"
@@ -68,6 +69,7 @@ export default function Button({
   return (
     <button
       id={id}
+      title={title}
       type={type}
       onClick={onClick}
       disabled={disabled}

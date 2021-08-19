@@ -15,7 +15,6 @@ export default function GlobalCoverControls({
   update,
   setImagePlacement,
 }) {
-  const [changeImage, setChangeImage] = useState(false);
   const [uppyOpen, setUppyOpen] = useState(false);
   return (
     <div className="w-full px-4 animate-fade-in">

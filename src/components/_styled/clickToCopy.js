@@ -1,20 +1,25 @@
 import { useState } from "react";
+import { joinTailwindClasses } from "~/lib/util";
 import { Button } from "~/components/_styled";
 
 export default function ClickToCopy({
   value,
   copyText = "Copy",
   copySuccessText = "Copied!",
+  css = "",
 }) {
   const [showCopied, setShowCopied] = useState(false);
+
+  const baseCss = `ml-0 w-32 max-w-full justify-center font-medium ${
+    showCopied
+      ? "bg-green border-green hover:bg-green active:bg-green hover:border-green active:border-green"
+      : ""
+  }`;
   return (
     <Button
+      title="Click to copy"
       size="compact"
-      css={`ml-2 w-32 font-medium ${
-        showCopied
-          ? "bg-green border-green hover:bg-green active:bg-green hover:border-green active:border-green"
-          : ""
-      }`}
+      css={joinTailwindClasses([baseCss, css])}
       onClick={() => {
         navigator.clipboard.writeText(value);
         setShowCopied(true);
@@ -26,7 +31,7 @@ export default function ClickToCopy({
       {showCopied ? (
         <span className="animate-fade-in">{copySuccessText}</span>
       ) : (
-        <span>{copyText}</span>
+        <span className="truncate w-full">{copyText}</span>
       )}
     </Button>
   );

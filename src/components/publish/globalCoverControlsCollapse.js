@@ -1,13 +1,5 @@
 import { useState } from "react";
-import {
-  Button,
-  ButtonGroup,
-  Card,
-  Title,
-  FormLabel,
-  Grid,
-  ImagePlacementOption,
-} from "~/components/_styled";
+import { Button, FormLabel, ImagePlacementOption } from "~/components/_styled";
 import Svg from "~/components/svg";
 import PopoverColorPicker from "~/components/popoverColorPicker";
 import CollapseControlWrapper from "~/components/publish/collapseControlWrapper";
@@ -20,8 +12,7 @@ export default function GlobalCoverControls({
   show,
   setImagePlacement,
 }) {
-  const [changeImage, setChangeImage] = useState(false);
-
+  const [uppyOpen, setUppyOpen] = useState(false);
   return (
     <>
       <CollapseControlWrapper isCollapsed={!show}>
@@ -29,7 +20,7 @@ export default function GlobalCoverControls({
           <Button
             size="compact"
             css="w-auto whitespace-nowrap mr-2"
-            onClick={() => setChangeImage(true)}
+            onClick={() => setUppyOpen(true)}
           >
             <span className="hidden md:block">
               {!imageUrl ? "Add" : "Change"} photo
@@ -82,20 +73,18 @@ export default function GlobalCoverControls({
         </div>
       </CollapseControlWrapper>
 
-      {changeImage && (
-        <Uppy
-          asModal={true}
-          imageFolder="coverImages"
-          mediaUrl={imageUrl}
-          onClose={() => setChangeImage(false)}
-          onChange={(url) => {
-            update("image", url);
-            setChangeImage(false);
-            // wait until the image is loaded?
-            // setChangeImage(false);
-          }}
-        />
-      )}
+      <Uppy
+        open={uppyOpen}
+        imageFolder="coverImages"
+        mediaUrl={imageUrl}
+        onClose={() => setUppyOpen(false)}
+        onChange={(url) => {
+          update("image", url);
+          setUppyOpen(false);
+          // wait until the image is loaded?
+          // setChangeImage(false);
+        }}
+      />
     </>
   );
 }
