@@ -7,14 +7,7 @@ export default function VersionList({ publishedVersions, deleteVersion }) {
     <div className="overflow-x-scroll pb-2">
       {publishedVersions.length ? (
         <div className="inline-flex">
-          <ul
-            style={{
-              width: "100%",
-              display: "flex",
-              flexWrap: "nowrap",
-              overflowX: "scroll",
-            }}
-          >
+          <ul className="w-full flex flexnowrap overflow-x-scroll">
             {sortBy(publishedVersions, ["date", "id"])
               .reverse()
               .map((v, i) => (
