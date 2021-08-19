@@ -46,7 +46,7 @@ export default function Modal({
       break;
     case "md":
     default:
-      sizeStyles = "w-full h-full lg:h-auto lg:w-1/2 max-w-2xl";
+      sizeStyles = "w-full h-full lg:h-auto lg:w-3/5 xl:w-1/2 max-w-2xl";
       break;
   }
 
@@ -55,14 +55,14 @@ export default function Modal({
       <div className="animate-fade-in fixed min-w-full h-full bg-lightestGray left-0 top-0 z-40 bg-opacity-90 flex justify-center items-center pt-2 md:pt-6 px-2 md:px-4 pb-4">
         <div
           ref={modal}
-          className={`relative ${sizeStyles} overflow-scroll`}
+          className={`${sizeStyles} overflow-scroll relative`}
           id="capture-form-wrapper"
           onClick={(e) => e.stopPropagation()}
         >
           {canClose && (
             <Button
               size="compact"
-              css="absolute right-2 top-2 w-auto font-medium rounded-md z-50"
+              css="fixed right-4 top-4 w-auto font-medium rounded-2xl z-50 shadow bg-white"
               variant="minimal"
               onClick={() => close()}
             >

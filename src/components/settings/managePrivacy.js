@@ -1,6 +1,6 @@
 import useToastMessage from "~/hooks/useToastMessage";
 import ManagePrivacyStatus from "~/components/accessList/managePrivacyStatus";
-import { Button, Title, FormLabel } from "~/components/_styled";
+import { Button, Title, FormLabel, Skeleton } from "~/components/_styled";
 import AccessListStatusButton from "~/components/accessList/accessListStatusButton";
 import FormHandleAvailabilityInput from "~/components/formHandleAvailabilityInput";
 
@@ -23,8 +23,12 @@ export default function ManagePrivacy({ dbUser }) {
   const [updatePrivacySettings] = useMutation(SECTION_UPDATE_PRIVACY_SETTINGS);
   const [regeneratePublicToken] = useMutation(ACTION_REGENERATE_TOKEN);
 
-  if (loading) {
-    return null;
+  if (loading || !data) {
+    return (
+      <div className="overflow-hidden">
+        <Skeleton height="h-12" spacing="my-2" wrapSpacing="my-0" repeat={10} />
+      </div>
+    );
   }
 
   function regeneratePublicTokenHandler(accessToken) {
@@ -136,7 +140,7 @@ export default function ManagePrivacy({ dbUser }) {
                 privacyStatus={props.values.privacyStatus}
               />
 
-              <div className="mt-3">
+              <div className="mt-6">
                 <FormLabel>Share list</FormLabel>
 
                 <AccessListStatusButton size="default" />

@@ -5,6 +5,7 @@ import Svg from "~/components/svg";
 import {
   ClickToCopy,
   LinkButton,
+  ManagePrivacySettingsButton,
   Paper,
   Title,
   BookPrivacyStatus,
@@ -58,10 +59,19 @@ export default function LatestVersion({
               prefix="Your book is"
               isPublic={version.privacyStatus === "PUBLIC"}
             />
-            <AccessListStatusButton
-              isPublic={version.privacyStatus === "PUBLIC"}
-              userId={version.userId}
-            />
+            <div className="flex">
+              <ManagePrivacySettingsButton
+                css={`
+                  ${version.privacyStatus === "PRIVATE" && "hidden xs:block"}
+                `}
+              />
+              {version.privacyStatus === "PRIVATE" && (
+                <AccessListStatusButton
+                  userId={version.userId}
+                  showEmptyCta={false}
+                />
+              )}
+            </div>
           </div>
         </div>
       </div>

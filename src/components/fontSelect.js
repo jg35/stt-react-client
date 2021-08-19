@@ -115,6 +115,7 @@ export default function GoogleFontSelect({
             borderWidth: "1px",
             boxShadow: "rgb(0 0 0 / 10%) 0px 0px 6px 2px",
             borderColor: colors.lightGray,
+            maxHeight: "200px",
           }),
           option: (styles, state) => {
             return {

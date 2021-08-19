@@ -1,6 +1,7 @@
 import { Button, Title } from "~/components/_styled";
 import ManagePrivacyStatus from "~/components/accessList/managePrivacyStatus";
 import FormHandleAvailabilityInput from "~/components/formHandleAvailabilityInput";
+import AccessListStatusButton from "~/components/accessList/accessListStatusButton";
 
 export default function PublishOptionsForm({
   values,
@@ -16,7 +17,7 @@ export default function PublishOptionsForm({
   return (
     <div
       className="pt-10 md:pt-20 w-12/12 lg:w-6/12 mx-auto px-4"
-      style={{ maxWidth: "600px" }}
+      style={{ maxWidth: "768px" }}
     >
       {!savedHandle && (
         <div className="mb-6">
@@ -45,6 +46,15 @@ export default function PublishOptionsForm({
           privacyStatus={values.privacyStatus}
           setPrivacyStatus={(val) => setFieldValue("privacyStatus", val)}
         />
+      </div>
+
+      <div className="mb-12">
+        {values.privacyStatus === "PRIVATE" && (
+          <AccessListStatusButton
+            emptyMessage="Add your reader to your share list"
+            size="default"
+          />
+        )}
       </div>
 
       <div className="flex justify-center">

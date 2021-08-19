@@ -21,6 +21,7 @@ export const ACTION_CHECK_HANDLE_AVAILABILITY = gql`
   mutation ($handle: String!) {
     action_stt_handle_availability(handle: $handle) {
       available
+      message
     }
   }
 `;

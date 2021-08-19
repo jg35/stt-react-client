@@ -37,11 +37,18 @@ export default function TextElementControls({
           {element.content}
         </Title>
 
-        <Svg css="ml-2" width={12} height={12} name="chevron" />
+        <div className="flex">
+          {!element.originalContent && (
+            <Button size="compact" onClick={() => remove(element.id)}>
+              <Svg name="cancel" width={16} height={16} />
+            </Button>
+          )}
+          <Svg css="ml-2" width={12} height={12} name="chevron" />
+        </div>
       </div>
 
       {isExpanded && (
-        <div className="animate-fade-in px-4 pb-4 absolute top-11 left-0 bg-white z-40 shadow rounded-b">
+        <div className="animate-fade-in px-4 pb-4 absolute top-10 left-0 bg-white z-40 shadow rounded-b w-full">
           <div className="flex items-center justify-between my-4">
             <FormLabel css="w-16 text-black">Text</FormLabel>
             <FormInput
@@ -76,6 +83,7 @@ export default function TextElementControls({
           <div className="flex items-center my-6">
             <FormLabel css="w-16 text-black">Color</FormLabel>
             <PopoverColorPicker
+              x="left-0"
               color={element.color}
               onChange={(val) => {
                 update(element.id, "color", val);
@@ -119,12 +127,6 @@ export default function TextElementControls({
                 Reset text content
               </Button>
             )}
-
-          {!element.originalContent && (
-            <Button size="compact" onClick={() => remove(element.id)}>
-              Remove
-            </Button>
-          )}
         </div>
       )}
     </div>

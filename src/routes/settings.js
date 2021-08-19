@@ -94,8 +94,7 @@ export default function Settings() {
               />
             </Grid>
           </Card>
-
-          <Card>{renderActiveTab()}</Card>
+          <Card css="min-h-full p-0 pt-8 px-4 pb-4">{renderActiveTab()}</Card>
         </Grid>
       </Page>
     )

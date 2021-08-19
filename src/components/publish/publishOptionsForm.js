@@ -12,7 +12,7 @@ export default function PublishOptionsForm({
   return (
     <div
       className="pt-10 md:pt-20 md:w-6/12 mx-auto px-4"
-      style={{ maxWidth: "600px" }}
+      style={{ maxWidth: "768px" }}
     >
       <Title>
         Lets start with a few bits of information to help eReaders and other

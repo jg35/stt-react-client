@@ -40,21 +40,24 @@ export default function EditableFragment({ fragment, saveFragment }) {
       className="relative"
       data-preview-fragment-id={fragment.id}
     >
-      {showInfo && (
-        <div className="edit-fragment-info absolute -top-8 h-8 animate-fade-in min-w-full flex justify-between items-center z-20">
-          <div className="text-gray">{fragment.title || ""}</div>
-          <div className="flex items-center">
-            <Text size="compact" tag="span" css="mr-2 text-gray">
-              {renderFragmentDate(fragment.date)}
-            </Text>
-            <FragmentHeaderMenu
-              fragment={fragment}
-              excludeActions={["CHANGE_VISIBILITY"]}
-              menuColor={colors.gray}
-            />
-          </div>
+      <div
+        className={`${
+          showInfo ? "flex" : "hidden"
+        } edit-fragment-info absolute -top-10 h-10 animate-fade-in min-w-full justify-between items-center z-20`}
+      >
+        <div className="text-gray">{fragment.title || ""}</div>
+        <div className="flex items-center">
+          <Text size="compact" tag="span" css="mr-2 text-gray">
+            {renderFragmentDate(fragment.date)}
+          </Text>
+          <FragmentHeaderMenu
+            fragment={fragment}
+            excludeActions={["CHANGE_VISIBILITY"]}
+            menuColor={colors.gray}
+          />
         </div>
-      )}
+      </div>
+
       {fragment.type === "PHOTO" ? (
         <PhotoFragment fragment={fragment} />
       ) : (

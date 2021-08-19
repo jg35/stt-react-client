@@ -7,7 +7,7 @@ export default function DeleteModal({ title, onDelete, onCancel }) {
 
   return (
     <Modal isOpen={true} size="sm" close={() => onCancel()}>
-      <Title css="mt-10">{title}</Title>
+      <Title>{title}</Title>
       <Grid colSpan={["col-span-6"]}>
         <Button onClick={onCancel}>Cancel</Button>
         <Button

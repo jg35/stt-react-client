@@ -5,6 +5,7 @@ export { default as Text } from "./typography/text";
 // Everything else
 export { default as BookPrivacyStatus } from "./bookPrivacyStatus";
 export { default as Button } from "./button";
+export { default as ManagePrivacySettingsButton } from "./managePrivacySettingsButton";
 export { default as ButtonGroup } from "./buttonGroup";
 export { default as Card } from "./card";
 export { default as ClickToCopy } from "./clickToCopy";

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Grid, Card, Title } from "~/components/_styled";
 import TextElementControls from "~/components/publish/textElementControls";
 import CollapseControlWrapper from "~/components/publish/collapseControlWrapper";
@@ -12,7 +12,7 @@ export default function TextElementControlList({
 }) {
   const [expandId, setExpandId] = useState(null);
   return (
-    <CollapseControlWrapper isCollapsed={show} css="block sm:w-10/12">
+    <CollapseControlWrapper isCollapsed={!show} css="block sm:w-10/12">
       <Grid colSpan={["col-span-12 sm:col-span-6 md:col-span-4"]}>
         {elements.map((el) => (
           <TextElementControls

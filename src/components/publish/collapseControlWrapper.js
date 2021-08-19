@@ -20,7 +20,8 @@ export default function CollapseControlWrapper({
     "shadow",
     "w-11/12",
     "whitespace-nowrap",
-    isCollapsed ? "animate-slide-in" : "animate-slide-out",
+    "z-50",
+    isCollapsed ? "animate-slide-out" : "animate-slide-in",
   ].join(" ");
 
   return (

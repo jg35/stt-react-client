@@ -216,26 +216,8 @@ export default function CoverEditorForm({ values, setFieldValue }) {
       style={gridBackground}
       ref={editContainer}
     >
-      <div className="xl:hidden relative z-50">
-        <GlobalCoverControlsCollapse
-          show={showLayoutControls}
-          imageUrl={cover.image}
-          imagePlacement={cover.imagePlacement}
-          bgColor={cover.bgColor}
-          update={(field, value) =>
-            setFieldValue(`theme.cover.${field}`, value)
-          }
-        />
-
-        <TextElementControlListCollapse
-          show={showTextControls}
-          elements={cover.elements}
-          add={addTextElement}
-          remove={removeTextElement}
-          update={updateTextElement}
-        />
-
-        <div className="bg-white p-2 fixed bottom-8 left-8 flex rounded shadow">
+      <div className="xl:hidden relative">
+        <div className="bg-white p-2 fixed bottom-8 left-8 flex rounded shadow z-40">
           <Button
             css="font-medium whitespace-nowrap mr-2"
             size="compact"
@@ -268,6 +250,23 @@ export default function CoverEditorForm({ values, setFieldValue }) {
             Add text
           </Button>
         </div>
+        <GlobalCoverControlsCollapse
+          show={showLayoutControls}
+          imageUrl={cover.image}
+          imagePlacement={cover.imagePlacement}
+          bgColor={cover.bgColor}
+          update={(field, value) =>
+            setFieldValue(`theme.cover.${field}`, value)
+          }
+        />
+
+        <TextElementControlListCollapse
+          show={showTextControls}
+          elements={cover.elements}
+          add={addTextElement}
+          remove={removeTextElement}
+          update={updateTextElement}
+        />
       </div>
 
       {/* <Card css="m-2 mx-auto">

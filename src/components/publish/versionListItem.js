@@ -38,6 +38,7 @@ export default function VersionListItem({ last, version, deleteVersion }) {
 
           <div>
             <Button
+              size="compact"
               type="minimal"
               onClick={() => {
                 showDeleteWarning({
@@ -49,7 +50,7 @@ export default function VersionListItem({ last, version, deleteVersion }) {
                 });
               }}
             >
-              <Svg name="delete" />
+              <Svg name="delete" height={16} width={16} />
             </Button>
           </div>
         </div>

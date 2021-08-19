@@ -170,6 +170,11 @@
   }
 }
 
+.react-datepicker__tab-loop {
+  position: fixed;
+  z-index: 1000;
+}
+
 #page[class*="tutorial-step"] > * {
   pointer-events: none;
 }
@@ -314,7 +319,7 @@ p.preview-element {
 }
 
 .preview-container figure {
-  @apply my-10;
+  @apply my-12 pt-1;
 }
 figcaption.preview-element {
   @apply text-center text-base md:text-lg whitespace-pre-wrap;

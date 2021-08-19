@@ -46,7 +46,7 @@ export default function DatePicker({
       startDate={jsDate || new Date()}
       dateFormat="dd/MM/yyyy"
       placeholderText={placeholder}
-      className={error && "border border-red rounded"}
+      className={`${error && "border border-red rounded"}`}
       selected={jsDate}
       onChange={(newDate) => {
         if (newDate) {

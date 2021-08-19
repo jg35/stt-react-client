@@ -91,7 +91,7 @@ export default function GlobalCoverControls({
 
   return (
     <>
-      <CollapseControlWrapper isCollapsed={show}>
+      <CollapseControlWrapper isCollapsed={!show}>
         <div className="flex-1 flex justify-center">
           <Button
             size="compact"

@@ -41,11 +41,13 @@ export default function FormHandleAvailabilityInput({
         checkHandleAvailability({
           variables: { handle },
         }).then(({ data }) => {
-          const isAvailable = data.action_stt_handle_availability.available;
+          const { available, message } = data.action_stt_handle_availability;
           setIsLoading(false);
           setFieldError(
             "publicHandle",
-            isAvailable ? undefined : `${handle} is not an available handle`
+            available
+              ? undefined
+              : message || `${handle} is not an available handle`
           );
         });
       }
@@ -55,7 +57,7 @@ export default function FormHandleAvailabilityInput({
 
   function getCaptionText() {
     if (error) {
-      return error.toLowerCase();
+      return error;
     } else if (!error && value && !loading && touched) {
       return (
         <>

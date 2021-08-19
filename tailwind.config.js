@@ -3,6 +3,9 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      screens: {
+        xs: "400px",
+      },
       animation: {
         "fade-in": "fade-in ease-in 300ms ",
         // TODO - refactor animate-fade-ins with fade-outs

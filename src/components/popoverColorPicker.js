@@ -4,7 +4,12 @@ import { HexColorPicker } from "react-colorful";
 import { Button } from "~/components/_styled";
 import useClickOutside from "~/hooks/useClickOutside";
 
-export default function PopoverPicker({ color, onChange }) {
+export default function PopoverPicker({
+  color,
+  onChange,
+  x = "right-0",
+  y = "top-8",
+}) {
   const popover = useRef();
   const [isOpen, toggle] = useState(false);
 
@@ -16,11 +21,11 @@ export default function PopoverPicker({ color, onChange }) {
       <Button
         css="h-7 w-7 border-lightGray"
         style={{ backgroundColor: color, borderRadius: "50%" }}
-        onClick={() => toggle(true)}
+        onClick={() => toggle(!isOpen)}
       />
 
       {isOpen && (
-        <div className="absolute left-0 top-8 z-50" ref={popover}>
+        <div className={`absolute ${x} ${y} z-50`} ref={popover}>
           <HexColorPicker color={color} onChange={onChange} />
         </div>
       )}

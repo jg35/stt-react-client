@@ -25,6 +25,7 @@ export default function GlobalCoverControls({
         <div className="flex items-center border-b border-lightGray pb-6">
           <FormLabel css="mr-6">Background</FormLabel>
           <PopoverColorPicker
+            x="left-0"
             color={bgColor}
             onChange={(val) => {
               update("bgColor", val);

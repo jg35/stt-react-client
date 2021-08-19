@@ -41,7 +41,7 @@ export default function TextForm({
         </FormField>
       )}
 
-      <Grid colSpan={["col-span-12 md:col-span-6"]}>
+      <Grid colSpan={[`col-span-12 ${!editContent && "col-span-6"}`]}>
         <FormField label="Title" error={errors.title}>
           <FormInput
             name="title"
