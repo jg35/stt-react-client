@@ -125,6 +125,8 @@ export function useSignedImageUrls() {
           updateUiState({ signedUrlsInit: true }, false);
           updateUiState({ signedUrls });
         });
+      } else {
+        updateUiState({ signedUrlsInit: true }, false);
       }
     }
   }, [data, user]);
