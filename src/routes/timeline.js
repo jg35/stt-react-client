@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
 import { debounce, values, get } from "lodash";
 import { useCustomQuery } from "~/hooks/useCustomApollo";
+import { refreshToken } from "~/lib/firebase";
 
 import { FETCH_TIMELINE_VIEW } from "~/lib/gql";
 

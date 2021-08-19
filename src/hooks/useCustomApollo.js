@@ -3,6 +3,7 @@ import { useHistory } from "react-router";
 import { useQuery } from "@apollo/client";
 import { AuthContext } from "~/components/authWrap";
 import { UIContext } from "~/app";
+import { refreshToken } from "~/lib/firebase";
 import { createToastMessage } from "~/lib/toast";
 
 export function useCustomQuery(
@@ -48,8 +49,10 @@ export function useCustomQuery(
         case "jwt-invalid-claims":
         case "invalid-jwt":
         case "invalid-jwt-key":
-          setToastMessage("ERROR", "SESSION_EXPIRED");
-          history.push("/login");
+          refreshToken().catch((e) => {
+            setToastMessage("ERROR", "SESSION_EXPIRED");
+            history.push("/login");
+          });
           break;
         default:
         // Blocks the page, so the user can't use the app

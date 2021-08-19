@@ -15,6 +15,25 @@ export const resendEmailVerification = () => {
   return Promise.reject();
 };
 
+export const refreshToken = () => {
+  console.log("JWT EXPIRED - Attempting to refresh...");
+  if (fbAuthUser) {
+    return fbAuthUser
+      .getIdToken(true)
+      .then((token) => {
+        console.log("JWT EXPIRED - JWT now refreshed, update token");
+        authStateVar({ ...authStateVar, token });
+      })
+      .catch((e) => {
+        console.log("JWT EXPIRED - Could not refresh, remove auth");
+        authStateVar({ status: "out" });
+      });
+  }
+  console.log("JWT EXPIRED - No firebase user, remove auth");
+  authStateVar({ status: "out" });
+  return Promise.reject();
+};
+
 export const onAuthStateChange = (syncUserMutation, authState) => {
   // console.log("set onAuthStateChangeListener");
   const onAuthStateChangeListener = firebase
