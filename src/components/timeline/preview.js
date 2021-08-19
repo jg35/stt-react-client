@@ -73,7 +73,8 @@ export default function Preview({ fragments }) {
                           >
                             <Image
                               src={frag.mediaUrl + imageSizes["1400px"]}
-                              className="min-w-full shadow"
+                              className="w-auto shadow mx-auto"
+                              style={{ maxHeight: "500px" }}
                               data-preview-fragment-id={frag.id}
                             />
                             <figcaption className="preview-element cursor-pointer">

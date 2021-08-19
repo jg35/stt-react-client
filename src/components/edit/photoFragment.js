@@ -6,8 +6,9 @@ export default function PhotoFragment({ fragment }) {
     <figure>
       <Image
         src={fragment.mediaUrl + imageSizes["1400px"]}
-        className="w-full shadow"
+        className="w-auto shadow mx-auto"
         data-preview-fragment-id={fragment.id}
+        style={{ maxHeight: "500px" }}
       />
       <figcaption className="preview-element">
         {fragment.mediaCaption}

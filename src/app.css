@@ -332,7 +332,7 @@ h1.preview-element {
   margin: 3em 0;
 }
 p.preview-element {
-  @apply text-base md:text-lg whitespace-pre-wrap;
+  @apply text-base whitespace-pre-wrap;
   margin-bottom: 2em;
 }
 

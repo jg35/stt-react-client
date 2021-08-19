@@ -41,11 +41,7 @@ export default function ScrollNavigator({ fragments }) {
   function ChapterWrap({ chapterId, children, left, isHover = false }) {
     return (
       <div
-        className="absolute flex-1 flex items-center justify-center z-10 top-1/2"
-        style={{
-          left: `${left}%`,
-          transform: `translate(${isHover ? "-50%" : "-12px"}, -50%)`,
-        }}
+        className="flex-1 flex items-center justify-center"
         onClick={() => setHoverChapter(chapterId)}
         onMouseEnter={() => setHoverChapter(chapterId)}
         onMouseLeave={() => setHoverChapter(null)}
@@ -66,26 +62,24 @@ export default function ScrollNavigator({ fragments }) {
     );
   }
   return (
-    <div className="relative flex justify-center items-between w-full h-10">
+    <div className="relative flex items-center w-full h-10">
       {chapters.length > 0 && <TimelineMarker />}
-      <div className="relative" style={{ width: "calc(100% - 2rem)" }}>
+      <div
+        className="relative flex items-center justify-around"
+        style={{ width: "calc(100% - 2rem)" }}
+      >
         {chapters.map((chapter, index) => {
           if (hoverChapter && hoverChapter === chapter.id) {
             return (
-              <ChapterWrap
-                isHover
-                chapterId={chapter.id}
-                key={chapter.id}
-                left={getLeftPosition(chapter.position)}
-              >
+              <ChapterWrap isHover chapterId={chapter.id} key={chapter.id}>
                 <div
                   style={{ maxWidth: "8rem" }}
-                  className="bg-white font-medium cursor-pointer text-center border-b-2 py-1/2 px-1 border-black animate-expand overflow-hidden"
+                  className="absolute bg-white font-medium cursor-pointer text-center border-b-2 py-1/2 px-1 border-black animate-expand overflow-hidden"
                   onClick={() => scrollToFragment(chapter.id)}
                 >
                   <div
                     style={{ textOverflow: "ellipsis", overflow: "hidden" }}
-                    className="whitespace-nowrap"
+                    className=" whitespace-nowrap"
                     title={
                       (chapter.content.length > 15 && chapter.content) || ""
                     }
@@ -97,11 +91,7 @@ export default function ScrollNavigator({ fragments }) {
             );
           } else {
             return (
-              <ChapterWrap
-                chapterId={chapter.id}
-                key={chapter.id}
-                left={getLeftPosition(chapter.position)}
-              >
+              <ChapterWrap chapterId={chapter.id} key={chapter.id}>
                 <Svg name="chapter" />
               </ChapterWrap>
             );
