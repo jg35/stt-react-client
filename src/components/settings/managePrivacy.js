@@ -121,6 +121,7 @@ export default function ManagePrivacy({ dbUser }) {
                 <FormHandleAvailabilityInput
                   value={props.values.publicHandle}
                   error={props.errors.publicHandle}
+                  setFieldValue={props.setFieldValue}
                   handleBlur={props.handleBlur}
                   handleChange={props.handleChange}
                   setFieldError={props.setFieldError}

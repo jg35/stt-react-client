@@ -30,6 +30,7 @@ export default function PublishOptionsForm({
             handleBlur={handleBlur}
             handleChange={handleChange}
             setFieldError={setFieldError}
+            setFieldValue={setFieldValue}
             savedHandle={savedHandle}
           />
         </div>

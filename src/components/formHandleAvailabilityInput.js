@@ -12,6 +12,7 @@ export default function FormHandleAvailabilityInput({
   value,
   error,
   setFieldError,
+  setFieldValue,
   savedHandle,
 }) {
   const [touched, setTouched] = useState(false);
@@ -96,7 +97,9 @@ export default function FormHandleAvailabilityInput({
         name="publicHandle"
         placeholder="read.storiestotell.app/your-handle"
         handleBlur={handleBlur}
-        handleChange={handleChange}
+        handleChange={(e) =>
+          setFieldValue("publicHandle", e.target.value.toLowerCase())
+        }
         handleKeyUp={(e) => {
           setTouched(true);
           setFieldError("publicHandle", null);
