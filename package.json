@@ -47,7 +47,7 @@
   },
   "scripts": {
     "start": "craco start",
-    "build": "npm run tailwind && craco build",
+    "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
     "tailwind": "tailwindcss build -o myTailwind.css && node_modules/.bin/tailwind-override --inputFile myTailwind.css --outputFile src/tailwindProperties.json"
