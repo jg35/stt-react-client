@@ -36,33 +36,34 @@ export default function Modal({
   let sizeStyles;
   switch (size) {
     case "sm":
-      sizeStyles = "w-full h-full md:h-auto md:w-auto max-w-md";
+      sizeStyles = "w-full h-auto md:h-auto md:w-auto max-w-md";
       break;
     case "lg":
-      sizeStyles = "w-full h-full lg:h-auto lg:w-4/5 max-w-5xl";
+      sizeStyles = "w-full h-auto lg:h-auto lg:w-4/5 max-w-5xl";
       break;
     case "full":
-      sizeStyles = "w-full h-full max-h-full max-w-full";
+      sizeStyles = "w-full h-auto lg:h-auto max-h-full max-w-full";
       break;
     case "md":
     default:
-      sizeStyles = "w-full h-full lg:h-auto lg:w-3/5 xl:w-1/2 max-w-2xl";
+      sizeStyles = "w-full md:w-4/5 lg:w-3/5 xl:w-1/2 max-w-2xl";
       break;
   }
 
   if (isOpen) {
     return (
-      <div className="animate-fade-in fixed min-w-full h-full bg-lightestGray left-0 top-0 z-40 bg-opacity-90 flex justify-center items-center pt-2 md:pt-6 px-2 md:px-4 pb-4">
+      <div className="animate-fade-in fixed min-w-full h-full bg-lightestGray left-0 top-0 z-40 bg-opacity-90 flex justify-center md:items-baseline lg:items-center pt-2 md:pt-6 px-2 md:px-4 pb-4">
         <div
           ref={modal}
           className={`${sizeStyles} overflow-scroll relative`}
           id="capture-form-wrapper"
+          style={{ maxWidth: "1400px" }}
           onClick={(e) => e.stopPropagation()}
         >
           {canClose && (
             <Button
               size="compact"
-              css="fixed right-4 top-4 w-auto font-medium rounded-2xl z-50 shadow bg-white"
+              css="fixed lg:absolute lg:shadow-none right-4 top-4 w-auto font-medium rounded-2xl z-50 shadow bg-white"
               variant="minimal"
               onClick={() => {
                 if (formIsDirty) {
@@ -76,7 +77,7 @@ export default function Modal({
             </Button>
           )}
 
-          <Card css="pt-12 pb-6 md:p-6">{children}</Card>
+          <Card css="min-h-full pt-12 pb-6 md:p-6">{children}</Card>
           <ModalCloseWarning
             isOpen={showCloseWarning}
             back={() => setShowCloseWarning(false)}

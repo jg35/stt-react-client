@@ -16,22 +16,29 @@ export default function PhotoForm({
 }) {
   const [modalOpen, setModalOpen] = useState(!values.mediaUrl);
   return (
-    <Grid colSpan={["col-span-12 lg:col-span-7", "col-span-12 lg:col-span-5"]}>
+    <Grid
+      colSpan={[
+        "col-span-12 lg:col-span-9 2xl:col-span-12",
+        "col-span-12 lg:col-span-3 2xl:col-span-12",
+      ]}
+    >
       <FormField label="Photo" error={errors.mediaUrl}>
         {values.mediaUrl && (
           <div
-            className="flex flex-col justify-center items-center rounded shadow w-full"
+            style={{ background: "rgba(0,0,0,.78)" }}
+            className="flex flex-col justify-center items-center rounded shadow w-full relative"
             onClick={() => setModalOpen(true)}
           >
-            <div className="rounded cursor-pointer relative">
+            <div className="rounded cursor-pointer">
               <Image
                 src={values.mediaUrl + "-master"}
                 className="object-cover rounded"
+                style={{ maxHeight: "65vh" }}
               />
-              <span className="absolute bottom-0 block bg-black text-white text-center rounded-b py-2 font-medium opacity-70 w-full">
-                Click to edit
-              </span>
             </div>
+            <span className="absolute bottom-0 block bg-black text-white text-center rounded-b py-2 font-medium opacity-70 w-full">
+              Click to edit
+            </span>
           </div>
         )}
         <Uppy
@@ -50,7 +57,7 @@ export default function PhotoForm({
         />
       </FormField>
 
-      <div>
+      <Grid colSpan={["col-span-12"]} css="lg:mt-8">
         <FormField label="Caption" error={errors.caption}>
           <FormInput
             name="mediaCaption"
@@ -72,7 +79,7 @@ export default function PhotoForm({
             }}
           />
         </FormField>
-      </div>
+      </Grid>
     </Grid>
   );
 }
