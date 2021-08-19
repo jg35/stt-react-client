@@ -1,60 +1,51 @@
 import { gql } from "@apollo/client";
+import {
+  userFragment,
+  questionFragment,
+  fragmentFragment,
+  versionFragment,
+  accessTokenFragment,
+} from "~/lib/gql/_fragments";
 
 // Identical to timeline query, enables access to partial timeline
 // data without prop drilling
 export const SECTION_FETCH_CAPTURE_HEADER = gql`
+  ${fragmentFragment}
+  ${questionFragment}
   query ($userId: String!) {
     stt_question {
-      id
-      title
-      placeholder
-      tag
+      ...questionFragment
     }
     stt_fragment(where: { userId: { _eq: $userId } }) {
-      id
-      title
-      content
-      date
-      dateType
-      type
-      mediaUrl
-      mediaCaption
-      questionId
-      hidden
-      tag
-      createdAt
-      updatedAt
+      ...fragmentFragment
     }
   }
 `;
 
 export const SECTION_FETCH_PRIVACY_SETTINGS = gql`
+  ${userFragment}
+  ${accessTokenFragment}
+  ${versionFragment}
   query ($userId: String!) {
     stt_version(
       where: { userId: { _eq: $userId }, _and: { generated: { _eq: true } } }
       order_by: { id: desc }
       limit: 1
     ) {
-      id
-      privacyStatus
+      ...versionFragment
     }
     stt_accessToken(where: { userId: { _eq: $userId } }) {
-      id
-      token
-      email
-      userId
-      createdAt
-      updatedAt
-      type
+      ...accessTokenFragment
     }
     stt_user(where: { id: { _eq: $userId } }) {
-      id
-      publicHandle
+      ...userFragment
     }
   }
 `;
 
 export const SECTION_UPDATE_PRIVACY_SETTINGS = gql`
+  ${userFragment}
+  ${accessTokenFragment}
   mutation (
     $userId: String!
     $privacyStatus: String!
@@ -66,11 +57,7 @@ export const SECTION_UPDATE_PRIVACY_SETTINGS = gql`
       pk_columns: { id: $userId }
       _set: { publicHandle: $publicHandle }
     ) {
-      location
-      dob
-      onboarding
-      publicHandle
-      deleteAt
+      ...userFragment
     }
     update_stt_version(
       where: { userId: { _eq: $userId } }
@@ -88,18 +75,12 @@ export const SECTION_UPDATE_PRIVACY_SETTINGS = gql`
       }
     ) {
       returning {
-        id
-        email
-        type
-        userId
+        ...accessTokenFragment
       }
     }
     insert_stt_accessToken(objects: $newTokens) {
       returning {
-        id
-        email
-        type
-        userId
+        ...accessTokenFragment
       }
     }
   }

@@ -1,6 +1,18 @@
 import { gql } from "@apollo/client";
+import {
+  userFragment,
+  versionFragment,
+  eventFragment,
+  fragmentFragment,
+  questionFragment,
+} from "~/lib/gql/_fragments";
 
 export const FETCH_TIMELINE_VIEW = gql`
+  ${userFragment}
+  ${eventFragment}
+  ${fragmentFragment}
+  ${questionFragment}
+  ${versionFragment}
   query ($userId: String!) {
     stt_worldEvent(order_by: { date: asc, id: asc }) {
       id
@@ -12,134 +24,68 @@ export const FETCH_TIMELINE_VIEW = gql`
       order_by: { date: asc }
       where: { userId: { _eq: $userId } }
     ) {
-      id
-      title
-      date
-      createdAt
-      updatedAt
-      userId
+      ...eventFragment
     }
     stt_fragment(where: { userId: { _eq: $userId } }) {
-      id
-      title
-      content
-      date
-      dateType
-      type
-      mediaUrl
-      mediaCaption
-      questionId
-      hidden
-      tag
-      createdAt
-      updatedAt
+      ...fragmentFragment
     }
     stt_user_by_pk(id: $userId) {
-      id
-      location
-      dob
-      onboarding
-      publicHandle
-      deleteAt
+      ...userFragment
     }
     stt_question {
-      id
-      title
-      placeholder
-      tag
+      ...questionFragment
     }
     stt_version(
       where: { userId: { _eq: $userId }, _and: { generated: { _eq: false } } }
     ) {
-      id
-      theme
-      coverUrl
+      ...versionFragment
     }
   }
 `;
 
 // TODO - cache theme in storage, until it's fetched from the other view
 export const FETCH_EDIT_VIEW = gql`
+  ${fragmentFragment}
+  ${versionFragment}
   query ($userId: String!) {
     stt_fragment(where: { userId: { _eq: $userId } }) {
-      id
-      title
-      content
-      date
-      dateType
-      type
-      mediaUrl
-      mediaCaption
-      questionId
-      hidden
-      tag
-      createdAt
-      updatedAt
+      ...fragmentFragment
     }
     stt_version(
       where: { userId: { _eq: $userId }, _and: { generated: { _eq: false } } }
     ) {
-      id
-      theme
-      coverUrl
+      ...versionFragment
     }
   }
 `;
 
 export const FETCH_SHARE_VIEW = gql`
+  ${versionFragment}
   query ($userId: String!) {
     stt_version(where: { userId: { _eq: $userId } }) {
-      id
-      theme
-      title
-      author
-      coverUrl
-      publishedAt
-      publishedPath
-      publishedFormats
-      privacyStatus
-      generated
-      userId
+      ...versionFragment
     }
   }
 `;
 
 export const FETCH_PUBLISH_VIEW = gql`
+  ${versionFragment}
   query ($userId: String!) {
     stt_version(where: { userId: { _eq: $userId } }, order_by: { id: desc }) {
-      id
-      theme
-      title
-      author
-      coverUrl
-      publishedAt
-      publishedPath
-      publishedFormats
-      privacyStatus
-      generated
-      userId
+      ...versionFragment
     }
   }
 `;
 
 export const FETCH_CREATE_BOOK_VIEW = gql`
+  ${versionFragment}
   query ($userId: String!) {
     stt_version(
       where: { generated: { _eq: false }, userId: { _eq: $userId } }
       order_by: { id: desc }
       limit: 1
     ) {
-      id
-      theme
-      title
-      author
-      coverUrl
-      publishedAt
-      publishedPath
-      publishedFormats
-      privacyStatus
-      generated
-      userId
+      ...versionFragment
     }
   }
 `;

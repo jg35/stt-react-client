@@ -7,7 +7,7 @@ import Uppy from "@uppy/core";
 import ImageEditor from "@uppy/image-editor";
 import XHRUpload from "@uppy/xhr-upload";
 
-import { Dashboard, DashboardModal, useUppy } from "@uppy/react";
+import { DashboardModal, useUppy } from "@uppy/react";
 import { UIContext } from "~/app";
 import { AuthContext } from "~/components/authWrap";
 
@@ -22,13 +22,7 @@ export default function UppyDashboard({
   error,
   onClose = null,
   open = false,
-  // isSubmitting,
-  // height = 250,
-  // resetAfterUpload = false,
-  // formId = null,
 }) {
-  // const [filesChanged, setFilesChanged] = useState(false);
-  // const editorTarget = useRef();
   const [init, setInit] = useState(false);
   const {
     authState: { token },
@@ -74,16 +68,6 @@ export default function UppyDashboard({
           rotate: false,
         },
       });
-
-    // .on("dashboard:file-edit-start", () => {
-    //   setTimeout(() => {
-    //     const el = document.querySelector(".uppy-Dashboard-FileCard-edit");
-    //     if (el) {
-    //       // console.log("el", el);
-    //       el.click();
-    //     }
-    //   });
-    // })
   });
 
   uppy.on("upload-success", (file, response) => {
@@ -91,7 +75,6 @@ export default function UppyDashboard({
     setSignedUrl(path).then(() => {
       onChange(path);
       onClose();
-      // uppy.reset();
     });
   });
 
@@ -114,7 +97,6 @@ export default function UppyDashboard({
   }
 
   async function addRemoteImage(path) {
-    console.log("adding remote image");
     return fetch(path)
       .then((response) => response.blob())
       .then((blob) => {
@@ -143,18 +125,17 @@ export default function UppyDashboard({
       <DashboardModal
         open={open}
         uppy={uppy}
-        // autoOpenFileEditor
-        proudlyDisplayPoweredByUppy={false}
         hideProgressAfterFinish
-        showLinkToFileUploadResult={false}
-        plugins={["ImageEditor"]}
-        // animateOpenClose={false}
         closeModalOnClickOutside
+        showLinkToFileUploadResult={false}
+        proudlyDisplayPoweredByUppy={false}
+        plugins={["ImageEditor"]}
         onRequestClose={() => {
           if (onClose) {
             onClose();
           }
-          uppy.reset();
+          // Don't think we want to reset it.
+          // uppy.reset();
         }}
       />
     )
