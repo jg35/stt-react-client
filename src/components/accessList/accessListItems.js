@@ -1,4 +1,5 @@
 import { Button, ClickToCopy, Text, Title, Grid } from "~/components/_styled";
+import Svg from "~/components/svg";
 
 export default function AccessListItems({ items, removeAccessToken }) {
   return (
@@ -45,7 +46,13 @@ export default function AccessListItems({ items, removeAccessToken }) {
                         css="w-auto"
                         onClick={() => removeAccessToken(item)}
                       >
-                        Remove
+                        <span className="hidden sm:block">Remove</span>
+                        <Svg
+                          name="cancel"
+                          css="sm:hidden"
+                          height={16}
+                          width={16}
+                        ></Svg>
                       </Button>
                     </div>
                   </Grid>

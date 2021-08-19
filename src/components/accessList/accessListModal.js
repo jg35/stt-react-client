@@ -10,7 +10,7 @@ import { AccessTokenPrivateSchema } from "~/lib/yup";
 import useToastMessage from "~/hooks/useToastMessage";
 import Modal from "~/components/modal";
 
-import { Button, FormInput } from "~/components/_styled";
+import { Button, FormInput, Grid } from "~/components/_styled";
 import FormField from "~/components/formField";
 import AccessListItems from "~/components/accessList/accessListItems";
 
@@ -92,36 +92,39 @@ export default function AccessListModal({ closeModal, show }) {
                 removeAccessToken={(item) => deleteTokenHandler(item.id)}
               />
 
-              <form
-                className="flex items-center"
-                onSubmit={props.handleSubmit}
-                id="access-token-form"
-              >
-                <FormField
-                  label="Add reader"
-                  error={props.errors.email}
-                  css="flex-1"
+              <form onSubmit={props.handleSubmit} id="access-token-form">
+                <Grid
+                  colSpan={[
+                    "col-span-12 md:col-span-9 lg:col-span-10",
+                    "col-span-12 md:col-span-3 lg:col-span-2",
+                  ]}
+                  css="items-center"
                 >
-                  <FormInput
-                    name="email"
-                    placeholder="Enter email"
-                    handleChange={props.handleChange}
-                    handleBlur={props.handleBlur}
-                    value={props.values.email}
+                  <FormField
+                    label="Add reader"
                     error={props.errors.email}
-                  />
-                </FormField>
-                <div className="ml-2 w-32">
+                    css="lg:w-full"
+                  >
+                    <FormInput
+                      name="email"
+                      placeholder="Enter email"
+                      handleChange={props.handleChange}
+                      handleBlur={props.handleBlur}
+                      value={props.values.email}
+                      error={props.errors.email}
+                    />
+                  </FormField>
+
                   <Button
                     type="submit"
                     variant="cta"
-                    css="-mt-2"
+                    css="-mt-1"
                     disabled={!props.dirty}
                     inProgress={props.isSubmitting}
                   >
                     {!props.isSubmitting ? "Save" : "Saving..."}
                   </Button>
-                </div>
+                </Grid>
               </form>
             </div>
           </Modal>

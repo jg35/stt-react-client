@@ -45,7 +45,7 @@ export default function LatestVersion({
               </LinkButton>
               <ClickToCopy
                 copyText="Copy share url"
-                text={`${process.env.REACT_APP_READER_VIEW_URL}/${handle}`}
+                value={`${process.env.REACT_APP_READER_VIEW_URL}/${handle}`}
               />
             </div>
           </div>

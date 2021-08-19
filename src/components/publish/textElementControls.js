@@ -39,8 +39,12 @@ export default function TextElementControls({
 
         <div className="flex">
           {!element.originalContent && (
-            <Button size="compact" onClick={() => remove(element.id)}>
-              <Svg name="cancel" width={16} height={16} />
+            <Button
+              size="compact"
+              css="py-2"
+              onClick={() => remove(element.id)}
+            >
+              <Svg name="cancel" height={16} width={16}></Svg>
             </Button>
           )}
           <Svg css="ml-2" width={12} height={12} name="chevron" />
