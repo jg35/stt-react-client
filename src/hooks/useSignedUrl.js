@@ -15,7 +15,7 @@ export function useGetSignedImageUrl(path) {
     if (path) {
       if (uiState.signedUrls[path]) {
         setUrl(uiState.signedUrls[path]);
-      } else if (uiState.signedUrlsInit) {
+      } else if (!uiState.signedUrls[path] && uiState.signedUrlsInit) {
         getSignedUrls({
           variables: {
             paths: path,
