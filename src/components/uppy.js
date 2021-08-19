@@ -114,7 +114,6 @@ export default function UppyDashboard({
 
   useEffect(() => {
     return () => {
-      setInit(false);
       document.querySelector("body").classList.remove("uppy-Dashboard-isFixed");
     };
   }, []);
