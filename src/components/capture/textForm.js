@@ -57,6 +57,7 @@ export default function TextForm({
           <DatePicker
             error={errors.date}
             date={values.date}
+            popperPlacement="top-start"
             handleChange={(newDate) => {
               const date = newDate.toISOString().replace(/T.*/, "");
               const dateType = "MANUAL";

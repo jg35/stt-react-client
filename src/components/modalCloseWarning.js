@@ -9,11 +9,11 @@ export default function ModalCloseWarning({
   return (
     isOpen && (
       <div
-        className="animate-fade-in absolute min-w-full h-full bg-lightestGray left-0 top-0"
+        className="animate-fade-in absolute min-w-full min-h-full h-full bg-lightestGray left-0 top-0"
         style={{ zIndex: 999999 }}
       >
         <Card
-          css="min-h-full w-full bg-white p-4 flex flex-col justify-center"
+          css="min-h-full h-full w-full bg-white p-4 flex flex-col justify-center"
           onClick={(e) => e.stopPropagation()}
         >
           <Title css="mb-6 mx-auto text-center">{text}</Title>

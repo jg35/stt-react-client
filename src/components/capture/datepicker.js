@@ -10,6 +10,7 @@ export default function DatePicker({
   placeholder = "Enter a date",
   minDate,
   maxDate = null,
+  popperPlacement = "bottom-start",
 }) {
   const {
     authState: { user },
@@ -46,6 +47,7 @@ export default function DatePicker({
       startDate={jsDate || new Date()}
       dateFormat="dd/MM/yyyy"
       placeholderText={placeholder}
+      popperPlacement={popperPlacement}
       className={`${error && "border border-red rounded"}`}
       selected={jsDate}
       onChange={(newDate) => {

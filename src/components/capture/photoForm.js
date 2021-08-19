@@ -65,6 +65,7 @@ export default function PhotoForm({
           <DatePicker
             date={values.date}
             error={errors.date}
+            popperPlacement="top-start"
             handleChange={(newDate) => {
               setFieldValue("date", newDate.toISOString().replace(/T.*/, ""));
               setFieldValue("dateType", "MANUAL");

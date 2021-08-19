@@ -20,6 +20,24 @@ import {
   makeCreateUserEventForm,
 } from "~/lib/uiManager";
 
+function CaptureHeaderActionButton({ action, icon, type }) {
+  return (
+    <Button
+      css="px-4 font-medium md:h-full flex-col justify-around md:justify-center h-14 md:flex-row"
+      onClick={action}
+    >
+      <Svg name={icon} css="md:hidden " width={18} height={18} />
+      <span className="text-sm md:text-base ">
+        <span className="hidden md:block">
+          Add
+          <br />
+        </span>
+        {type}
+      </span>
+    </Button>
+  );
+}
+
 export default function CaptureHeader({ init }) {
   const {
     authState: { user },
@@ -176,7 +194,7 @@ export default function CaptureHeader({ init }) {
           <Grid colSpan={["col-span-3 md:col-span-4"]} height="h-full">
             {window.innerWidth < 768 && (
               <Button
-                css={`font-medium px-4 flex-col ${
+                css={`font-medium px-4 h-14 justify-around flex-col ${
                   questionVisible &&
                   "shadow bg-darkGray border-darkGray text-white"
                 } `}
@@ -192,27 +210,21 @@ export default function CaptureHeader({ init }) {
                 <span className="text-sm md:text-base">Questions</span>
               </Button>
             )}
-            <Button
-              css="px-4 font-medium md:h-full flex-col md:flex-row"
-              onClick={() =>
+            <CaptureHeaderActionButton
+              icon="calendar"
+              type="Event"
+              action={() =>
                 updateUiState(
                   makeCreateUserEventForm({}, { revealAfterCreate: true }),
                   false
                 )
               }
-            >
-              <Svg name="calendar" css="md:hidden " width={18} height={18} />
-              <span className="text-sm md:text-base ">
-                <span className="hidden md:block">
-                  Add
-                  <br />
-                </span>
-                Event
-              </span>
-            </Button>
-            <Button
-              css="font-medium px-4 md:h-full flex-col md:flex-row"
-              onClick={() =>
+            />
+
+            <CaptureHeaderActionButton
+              icon="writing"
+              type="Memory"
+              action={() =>
                 updateUiState(
                   makeCreateFragmentForm(
                     {
@@ -223,19 +235,12 @@ export default function CaptureHeader({ init }) {
                   false
                 )
               }
-            >
-              <Svg name="writing" css="md:hidden" width={18} height={18} />
-              <span className="text-sm md:text-base ">
-                <span className="hidden md:block">
-                  Add
-                  <br />
-                </span>
-                Memory
-              </span>
-            </Button>
-            <Button
-              css="font-medium px-4 md:h-full flex-col md:flex-row"
-              onClick={() =>
+            />
+
+            <CaptureHeaderActionButton
+              icon="photo"
+              type="Photo"
+              action={() =>
                 updateUiState(
                   makeCreateFragmentForm(
                     {
@@ -246,16 +251,7 @@ export default function CaptureHeader({ init }) {
                   false
                 )
               }
-            >
-              <Svg name="photo" css="md:hidden" width={18} height={18} />
-              <span className="text-sm md:text-base ">
-                <span className="hidden md:block">
-                  Add
-                  <br />
-                </span>
-                Photo
-              </span>
-            </Button>
+            />
           </Grid>
         </Grid>
       </Card>

@@ -92,6 +92,7 @@ export default function UserDeailsForm() {
                   >
                     <FormLabel>Date of birth</FormLabel>
                     <DatePicker
+                      popperPlacement="top-start"
                       minDate={new Date().setYear(
                         new Date().getFullYear() - 100
                       )}

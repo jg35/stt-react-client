@@ -97,8 +97,24 @@
     @apply shadow-xl border-none;
   }
 
+  .react-datepicker__navigation--previous
+    .react-datepicker__navigation-icon::before {
+    right: 25%;
+  }
+
+  .react-datepicker__navigation--next
+    .react-datepicker__navigation-icon::before {
+    left: 25%;
+  }
+
+  #root .react-datepicker__navigation-icon {
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+  }
   #root .react-datepicker__navigation-icon::before {
-    top: 12px;
+    top: 40%;
   }
 
   #root .react-datepicker__header {

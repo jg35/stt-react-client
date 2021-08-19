@@ -64,7 +64,13 @@ export default function Modal({
               size="compact"
               css="fixed right-4 top-4 w-auto font-medium rounded-2xl z-50 shadow bg-white"
               variant="minimal"
-              onClick={() => close()}
+              onClick={() => {
+                if (formIsDirty) {
+                  setShowCloseWarning(true);
+                } else {
+                  close(true);
+                }
+              }}
             >
               Close <Svg name="cancel" width={18} height={18} css="ml-1" />
             </Button>

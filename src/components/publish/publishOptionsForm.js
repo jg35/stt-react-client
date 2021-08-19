@@ -46,6 +46,7 @@ export default function PublishOptionsForm({
       <div className="form-control w-full">
         <FormLabel>Publication date</FormLabel>
         <DatePicker
+          popperPlacement="top-start"
           date={values.publishedAt}
           error={errors.publishedAt}
           handleChange={(newDate) => {
