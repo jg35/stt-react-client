@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { useMutation } from "@apollo/client";
 import { ACTION_S3_GET_SIGNED_URL } from "~/lib/gql";
 import { useGetSignedImageUrl } from "~/hooks/useSignedUrl";
@@ -19,11 +19,9 @@ export default function UppyDashboard({
   imageFolder = "fragments",
   mediaUrl,
   onChange,
-  error,
   onClose = null,
   open = false,
 }) {
-  const [init, setInit] = useState(false);
   const {
     authState: { token },
   } = useContext(AuthContext);
@@ -74,7 +72,6 @@ export default function UppyDashboard({
     const { path } = response.body;
     setSignedUrl(path).then(() => {
       onChange(path);
-      onClose();
     });
   });
 
@@ -110,10 +107,7 @@ export default function UppyDashboard({
 
   useEffect(() => {
     if (signedUrl) {
-      setInit(true);
       addRemoteImage(signedUrl);
-    } else {
-      setInit(true);
     }
     return () => {
       document.querySelector("body").classList.remove("uppy-Dashboard-isFixed");
@@ -121,23 +115,15 @@ export default function UppyDashboard({
   }, []);
 
   return (
-    init && (
-      <DashboardModal
-        open={open}
-        uppy={uppy}
-        hideProgressAfterFinish
-        closeModalOnClickOutside
-        showLinkToFileUploadResult={false}
-        proudlyDisplayPoweredByUppy={false}
-        plugins={["ImageEditor"]}
-        onRequestClose={() => {
-          if (onClose) {
-            onClose();
-          }
-          // Don't think we want to reset it.
-          // uppy.reset();
-        }}
-      />
-    )
+    <DashboardModal
+      open={open}
+      uppy={uppy}
+      hideProgressAfterFinish
+      closeModalOnClickOutside
+      showLinkToFileUploadResult={false}
+      proudlyDisplayPoweredByUppy={false}
+      plugins={["ImageEditor"]}
+      onRequestClose={onClose}
+    />
   );
 }

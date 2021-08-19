@@ -1,6 +1,6 @@
 import { useState } from "react";
 import DatePicker from "~/components/capture/datepicker";
-import { Button, FormInput, Grid } from "~/components/_styled";
+import { FormInput, Grid } from "~/components/_styled";
 import FormField from "~/components/formField";
 import Image from "~/components/image";
 import Uppy from "~/components/uppy";
@@ -12,9 +12,8 @@ export default function PhotoForm({
   errors,
   setFieldValue,
   isSubmitting,
-  closeForm,
 }) {
-  const [modalOpen, setModalOpen] = useState(!values.mediaUrl);
+  const [uppyOpen, setUppyOpen] = useState(!values.mediaUrl);
   return (
     <Grid
       colSpan={[
@@ -27,7 +26,7 @@ export default function PhotoForm({
           <div
             style={{ background: "rgba(0,0,0,.78)" }}
             className="flex flex-col justify-center items-center rounded shadow w-full relative"
-            onClick={() => setModalOpen(true)}
+            onClick={() => setUppyOpen(true)}
           >
             <div className="rounded cursor-pointer">
               <Image
@@ -44,15 +43,14 @@ export default function PhotoForm({
         <Uppy
           isSubmitting={isSubmitting}
           mediaUrl={values.mediaUrl}
-          open={modalOpen}
+          open={uppyOpen}
           onClose={() => {
-            if (values.mediaUrl) {
-              setModalOpen(false);
-            } else {
-              closeForm();
-            }
+            setUppyOpen(false);
           }}
-          onChange={(url) => setFieldValue("mediaUrl", url)}
+          onChange={(url) => {
+            setFieldValue("mediaUrl", url);
+            setUppyOpen(false);
+          }}
           error={errors.mediaUrl}
         />
       </FormField>

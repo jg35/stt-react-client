@@ -81,8 +81,6 @@ export default function GlobalCoverControls({
         onChange={(url) => {
           update("image", url);
           setUppyOpen(false);
-          // wait until the image is loaded?
-          // setChangeImage(false);
         }}
       />
     </>
