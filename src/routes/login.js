@@ -64,8 +64,8 @@ export default function Login() {
       background={{
         backgroundImage: "url('bg.jpg')",
         backgroundSize: "cover",
-        // opacity: ".5",
-        // filter: "blur(1.5px) grayscale(.4) ",
+        opacity: ".5",
+        filter: "blur(1.5px) grayscale(.4) ",
       }}
     >
       <Grid
