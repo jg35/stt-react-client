@@ -97,9 +97,9 @@ function getPeriodAge(dateOfBirth, currentPeriod) {
   if (ageYears <= 0 && ageMonths <= 0) {
     return "Newborn";
   } else if (ageYears <= 0) {
-    return `${ageMonths} ${ageMonths === 1 ? "month" : "months"} old`;
+    return `${ageMonths} ${ageMonths === 1 ? "month" : "months"}`;
   } else {
-    return `${ageYears} ${ageYears === 1 ? "year" : "years"} old`;
+    return `${ageYears} ${ageYears === 1 ? "year" : "years"}`;
   }
 }
 

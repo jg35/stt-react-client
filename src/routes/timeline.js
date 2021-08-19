@@ -85,7 +85,12 @@ export default function Timeline() {
                   }, 1000)}
                 >
                   {timeline.map((timelineSection, i) => (
-                    <Section key={i} section={timelineSection} index={i} />
+                    <Section
+                      key={i}
+                      section={timelineSection}
+                      index={i}
+                      isLast={i === timeline.length - 1}
+                    />
                   ))}
                   <TimePeriodSelector
                     timelinePeriod={timelinePeriod}

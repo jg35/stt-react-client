@@ -63,9 +63,7 @@ export default function Publish() {
 
   return (
     <Page scrollable>
-      <div className="flex justify-between items-center">
-        <Title css="mb-4 text-center lg:text-left">Your book</Title>
-
+      <div className="flex justify-end items-center">
         <Button
           variant="cta"
           css="w-auto whitespace-nowrap mb-4"
@@ -78,8 +76,8 @@ export default function Publish() {
       {versions.length > 0 ? (
         <Grid
           colSpan={[
-            "col-span-12 md:col-span-8 md:col-start-3 lg:col-span-7 lg:col-start-0 ",
-            "col-span-12 lg:col-span-5",
+            "col-span-12 md:col-span-8 md:col-start-3 lg:col-span-6 lg:col-start-0 ",
+            "col-span-12 lg:col-span-6",
           ]}
         >
           <LatestVersion
