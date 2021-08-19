@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useMutation } from "@apollo/client";
 import { ACTION_S3_GET_SIGNED_URL } from "~/lib/gql";
 import { useGetSignedImageUrl } from "~/hooks/useSignedUrl";
@@ -106,10 +106,15 @@ export default function UppyDashboard({
   }
 
   useEffect(() => {
-    if (signedUrl) {
+    const files = uppy.getFiles();
+    if (files.length === 0 && signedUrl && open) {
       addRemoteImage(signedUrl);
     }
+  }, [open]);
+
+  useEffect(() => {
     return () => {
+      setInit(false);
       document.querySelector("body").classList.remove("uppy-Dashboard-isFixed");
     };
   }, []);
