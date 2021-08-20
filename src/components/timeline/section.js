@@ -7,7 +7,7 @@ import WorldEvent from "~/components/timeline/worldEvent";
 import SectionCaptureActions from "~/components/timeline/sectionCaptureActions";
 import { Grid, Title, Text } from "~/components/_styled";
 
-export default function Section({ section, index, isLast }) {
+export default function Section({ section, index, isLast, timelinePeriod }) {
   const [showActions, setShowActions] = useState(false);
 
   return (
@@ -23,12 +23,18 @@ export default function Section({ section, index, isLast }) {
         <Grid colSpan={["col-span-5", "col-span-7"]} gap="gap-x-2 md:gap-x-4">
           <div className="flex flex-col md:flex-row md:items-center">
             <Title size="large" css="flex items-center mb-0">
-              <span className="md:hidden">
-                {section.title.replace(/\d{4}(.+)?$/, (m1) => {
-                  return m1.slice(-2);
-                })}
+              {timelinePeriod !== "YEAR" && (
+                <span className="md:hidden">
+                  {section.title.replace(/\d{4}(.+)?$/, (m1) => {
+                    return m1.slice(-2);
+                  })}
+                </span>
+              )}
+              <span
+                className={`${timelinePeriod !== "YEAR" && "hidden md:block"}`}
+              >
+                {section.title}
               </span>
-              <span className="hidden md:block">{section.title}</span>
             </Title>
             <Text
               tag="span"

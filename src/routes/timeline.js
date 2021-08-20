@@ -106,6 +106,7 @@ export default function Timeline() {
                     <Section
                       key={i}
                       section={timelineSection}
+                      timelinePeriod={timelinePeriod}
                       index={i}
                       isLast={i === timeline.length - 1}
                     />
