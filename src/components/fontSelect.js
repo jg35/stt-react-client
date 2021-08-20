@@ -9,12 +9,12 @@ import colors from "~/lib/colors";
 export default function GoogleFontSelect({
   value,
   onChange,
-  category = "all",
+  category = "display",
 }) {
   const availableFontsUrl = useGetSignedImageUrl(
     "resources/fonts/available.json"
   );
-  const fontSpriteUrl = useGetSignedImageUrl("resources/fonts/sprite20Px.png");
+  const fontSpriteUrl = useGetSignedImageUrl("resources/fonts/sprite50Px.png");
   const { uiState, updateUiState } = useContext(UIContext);
   const [options, setOptions] = useState([]);
   function selectFont(font) {
@@ -39,7 +39,14 @@ export default function GoogleFontSelect({
           font.value = font.family;
           font.label = font.family;
           if (category === "all" || category === font.category) {
-            fonts.push(font);
+            const lastFont = fonts[fonts.length - 1];
+            // Don't bother with variations of the same font
+            if (
+              !lastFont ||
+              !lastFont.family.includes(font.value.slice(0, 5))
+            ) {
+              fonts.push(font);
+            }
           }
           return fonts;
         }, []);
@@ -95,11 +102,12 @@ export default function GoogleFontSelect({
                 ":before": {
                   content: '""',
                   backgroundImage: `url(${fontSpriteUrl})`,
-                  backgroundPositionY: `-${selected.sprite20PxY}px`,
+                  backgroundPositionY: `-${selected.sprite50PxY}px`,
                   position: "absolute",
-                  height: "20px",
+                  height: "50px",
                   left: "6px",
-                  width: "100%",
+                  width: "400px",
+                  transform: "scale(.5) translateX(-50%)",
                 },
               };
             }
@@ -121,8 +129,8 @@ export default function GoogleFontSelect({
             return {
               ...styles,
               padding: "0",
-              height: "30px",
-              maxHeight: "30px",
+              height: "25px",
+              minHeight: "25px",
               position: "relative",
               overflow: "hidden",
               backgroundColor: state.isSelected
@@ -132,12 +140,12 @@ export default function GoogleFontSelect({
               ":before": {
                 content: '""',
                 backgroundImage: `url(${fontSpriteUrl})`,
-                backgroundPositionY: `-${state.data.sprite20PxY}px`,
+                backgroundPositionY: `-${state.data.sprite50PxY}px`,
                 position: "absolute",
-                top: "5px",
-                height: "20px",
+                transform: "scale(.5) translateX(-50%) translateY(-50%)",
+                height: "50px",
+                width: "400px",
                 left: "6px",
-                width: "100%",
               },
               ":hover": {
                 backgroundColor: colors.lightestGray,
