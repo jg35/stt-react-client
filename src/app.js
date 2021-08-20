@@ -1,6 +1,7 @@
 import React, { createContext, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ApolloProvider } from "@apollo/client/react";
+import smoothscroll from "smoothscroll-polyfill";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "~/app.css";
@@ -23,6 +24,8 @@ import uiManager from "~/lib/uiManager";
 import { createToastMessage } from "~/lib/toast";
 import { useSignedImageUrls } from "~/hooks/useSignedUrl";
 import ToastMessages from "~/components/toastMessages";
+
+smoothscroll.polyfill();
 
 const deleteModalInitState = () => ({
   show: false,

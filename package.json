@@ -37,6 +37,7 @@
     "react-scripts": "4.0.3",
     "react-select": "^4.3.1",
     "reactablejs": "^0.2.0",
+    "smoothscroll-polyfill": "^0.4.4",
     "tailwind-override": "^0.0.10",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.2",
     "uuid": "^8.3.2",
