@@ -19,14 +19,26 @@ export default function Section({ section, index, isLast }) {
       onMouseOver={debounce(() => setShowActions(true), 200)}
       onMouseLeave={debounce(() => setShowActions(false), 200)}
     >
-      <header className="pb-4 h-12">
+      <header className="pb-4" style={{ minHeight: "3rem" }}>
         <Grid colSpan={["col-span-5", "col-span-7"]} gap="gap-x-2 md:gap-x-4">
-          <Title size="large" css="flex items-center">
-            {section.title}
-            <Text tag="span" size="compact" css="ml-2 text-gray text-base">
-              &middot;&nbsp;{section.age}
+          <div className="flex flex-col md:flex-row md:items-center">
+            <Title size="large" css="flex items-center mb-0">
+              <span className="md:hidden">
+                {section.title.replace(/\d{4}(.+)?$/, (m1) => {
+                  return m1.slice(-2);
+                })}
+              </span>
+              <span className="hidden md:block">{section.title}</span>
+            </Title>
+            <Text
+              tag="span"
+              size="compact"
+              css="md:ml-2 text-gray text-base md:text-lg"
+            >
+              <span className="hidden md:inline">&middot;&nbsp;</span>
+              {section.age}
             </Text>
-          </Title>
+          </div>
 
           <SectionCaptureActions
             show={showActions}

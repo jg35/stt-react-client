@@ -196,7 +196,7 @@ export default function CaptureHeader({ init }) {
               <Button
                 css={`font-medium px-4 h-14 justify-around flex-col ${
                   questionVisible &&
-                  "shadow bg-darkGray border-darkGray text-white"
+                  "shadow bg-darkGray hover:bg-darkGray hover:border-darkGray border-darkGray text-white"
                 } `}
                 onClick={() => setQuestionVisible(!questionVisible)}
               >

@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        xs: "400px",
+        xs: "420px",
       },
       animation: {
         "fade-in": "fade-in ease-in 300ms ",

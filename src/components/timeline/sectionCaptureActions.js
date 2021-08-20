@@ -42,7 +42,7 @@ export default function SectionCaptureActions({ show, date, index }) {
       <div className={`flex-1 flex justify-end`}>
         <Button
           id="section-actions-event"
-          css={`whitespace-nowrap rounded-lg mr-2 w-auto ${
+          css={`whitespace-nowrap rounded-lg mr-1 xs:mr-2 w-auto ${
             showActions ? animateIn : animateOut
           }`}
           size="compact"
@@ -57,7 +57,7 @@ export default function SectionCaptureActions({ show, date, index }) {
         <Button
           id="section-actions-memory"
           size="compact"
-          css={`whitespace-nowrap rounded-lg mr-2 w-auto ${
+          css={`whitespace-nowrap rounded-lg mr-1 xs:mr-2 w-auto ${
             showActions ? animateIn : animateOut
           }`}
           onClick={() =>
@@ -78,7 +78,7 @@ export default function SectionCaptureActions({ show, date, index }) {
         <Button
           id="section-actions-photo"
           size="compact"
-          css={`whitespace-nowrap rounded-lg mr-2 w-auto ${
+          css={`whitespace-nowrap rounded-lg mr-1 xs:mr-2 w-auto ${
             showActions ? animateIn : animateOut
           }`}
           onClick={() =>
@@ -99,7 +99,7 @@ export default function SectionCaptureActions({ show, date, index }) {
         <Button
           id="section-actions-chapter"
           size="compact"
-          css={`whitespace-nowrap rounded-lg mr-2 w-auto ${
+          css={`whitespace-nowrap rounded-lg mr-1 xs:mr-2 w-auto ${
             showActions ? animateIn : animateOut
           }`}
           onClick={() =>
