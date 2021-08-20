@@ -5,6 +5,8 @@ export default {
     const uiState = localStorage.getItem("uiState");
     const defaultState = {
       timelinePeriod: "YEAR",
+      timelineScrollYear: null,
+      timelineScrollPosition: null,
       showPreview: false,
       capture: {
         showModal: false,

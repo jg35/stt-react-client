@@ -179,7 +179,12 @@ export default function CaptureModal({
           },
           id: form.id,
         },
-      }).then(() => closeModal());
+      }).then(() => {
+        if (item.date !== form.date) {
+          scrollToEvent(form.id);
+        }
+        closeModal();
+      });
     }
   }
 

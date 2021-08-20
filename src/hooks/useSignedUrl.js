@@ -49,7 +49,6 @@ export function useSignedImageUrls() {
 
   useEffect(() => {
     if (user && user.id) {
-      console.log("getting images...");
       // TODO - this works initially, but then need to make additional requests for signed urls for every image added further
       getImages({
         variables: {

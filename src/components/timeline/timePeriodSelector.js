@@ -1,9 +1,35 @@
 import React, { useContext } from "react";
 import { Button, ButtonGroup, Text } from "~/components/_styled";
 import { UIContext } from "~/app";
+import { scrollToYear } from "~/lib/timeline";
 
 export default function TimePeriodSelector({ timelinePeriod, orphanCount }) {
-  const { updateUiState } = useContext(UIContext);
+  const { uiState, updateUiState } = useContext(UIContext);
+
+  const TIMELINE_RECALC_DURATION = 100;
+  const FADE_OUT_DURATION = 300;
+
+  function selectTimePeriod(timelinePeriod) {
+    if (uiState.timelineScrollYear) {
+      const timelineScrollContainer = document.querySelector(
+        "#timeline-scroll-container"
+      );
+      timelineScrollContainer.classList.remove("animate-fade-in");
+      timelineScrollContainer.classList.add("animate-fade-out");
+
+      setTimeout(() => {
+        updateUiState({ timelinePeriod });
+
+        setTimeout(() => {
+          scrollToYear(uiState.timelineScrollYear, false);
+          timelineScrollContainer.classList.add("animate-fade-in");
+          timelineScrollContainer.classList.remove("animate-fade-out");
+        }, TIMELINE_RECALC_DURATION);
+      }, FADE_OUT_DURATION);
+    } else {
+      updateUiState({ timelinePeriod });
+    }
+  }
 
   return (
     <div className="bg-white sticky bottom-4 w-max flex items-center shadow-lg py-2 pl-4 pr-2 rounded border">
@@ -13,7 +39,7 @@ export default function TimePeriodSelector({ timelinePeriod, orphanCount }) {
       <ButtonGroup>
         <Button
           size="compact"
-          onClick={() => updateUiState({ timelinePeriod: "YEAR" })}
+          onClick={() => selectTimePeriod("YEAR")}
           css={`
             ${timelinePeriod === "YEAR" && "underline"}
           `}
@@ -22,7 +48,7 @@ export default function TimePeriodSelector({ timelinePeriod, orphanCount }) {
         </Button>
         <Button
           size="compact"
-          onClick={() => updateUiState({ timelinePeriod: "SEASON" })}
+          onClick={() => selectTimePeriod("SEASON")}
           css={`
             ${timelinePeriod === "SEASON" && "underline"}
           `}
@@ -31,7 +57,7 @@ export default function TimePeriodSelector({ timelinePeriod, orphanCount }) {
         </Button>
         <Button
           size="compact"
-          onClick={() => updateUiState({ timelinePeriod: "MONTH" })}
+          onClick={() => selectTimePeriod("MONTH")}
           css={`
             ${timelinePeriod === "MONTH" && "underline"}
           `}

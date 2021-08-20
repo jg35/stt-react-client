@@ -79,7 +79,24 @@ export default function Timeline() {
                   className="md:mr-2 overflow-y-scroll overflow-x-hidden js-timeline-scroll-container w-full"
                   onScroll={debounce((e) => {
                     if (e.target.scrollTop !== uiState.timelineScrollPosition) {
+                      // Find the current scrolled year and store it
+                      const sections = e.target.querySelectorAll("section");
+                      const scrollTop = e.target.scrollTop;
+                      let currentSection;
+                      for (var i = 0; i < sections.length; i++) {
+                        if (
+                          sections[i].offsetTop - sections[i].clientHeight >=
+                            scrollTop ||
+                          i === sections.length - 1
+                        ) {
+                          currentSection = sections[i];
+                          break;
+                        }
+                      }
                       updateUiState({
+                        timelineScrollYear:
+                          currentSection &&
+                          currentSection.getAttribute("data-season-year"),
                         timelineScrollPosition: e.target.scrollTop,
                       });
                     }

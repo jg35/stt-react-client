@@ -140,10 +140,7 @@ export function generateTimeline(
         ? dateOfBirth.toISODate()
         : currentPeriod.toISODate(),
       endDate: nextPeriod.minus({ seconds: 1 }).toISODate(),
-      year:
-        timespan === "SEASON" && currentPeriod.month === 12
-          ? currentPeriod.year + 1
-          : currentPeriod.year,
+      year: currentPeriod.year,
       title: getPeriodTitle(user.location, currentPeriod, timespan),
       age: getPeriodAge(dateOfBirth, currentPeriod, timespan),
     };
@@ -193,6 +190,7 @@ export function generateTimeline(
 
 export function scrollToFragment(fragmentId = null, smooth = true) {
   let timelineFragment;
+
   if (fragmentId) {
     timelineFragment = document.querySelector(
       `div[data-fragment-id="${fragmentId}"]`
@@ -200,6 +198,10 @@ export function scrollToFragment(fragmentId = null, smooth = true) {
   } else {
     timelineFragment = document.querySelector(`div[data-fragment-id]`);
   }
+
+  const timelineSection = timelineFragment.closest(
+    "section[data-section-index]"
+  );
 
   const timelineContainer = document.querySelector(
     ".js-timeline-scroll-container"
@@ -212,9 +214,9 @@ export function scrollToFragment(fragmentId = null, smooth = true) {
   const previewFragment = document.querySelector(
     `[data-preview-fragment-id="${fragmentId}"]`
   );
-  if (timelineFragment && timelineContainer) {
+  if (timelineSection && timelineContainer) {
     timelineContainer.scrollTo({
-      top: timelineFragment.offsetTop - timelineContainer.offsetTop - 10,
+      top: timelineSection.offsetTop - timelineContainer.offsetTop + 10,
       behavior: smooth ? "smooth" : "auto",
     });
   }
@@ -231,20 +233,20 @@ export function scrollToEvent(eventId = null, smooth = true) {
   let timelineEvent;
   if (eventId) {
     timelineEvent = document.querySelector(
-      `div[data-user-event-id="${eventId}"]`
+      `button[data-user-event-id="${eventId}"]`
     );
   } else {
-    timelineEvent = document.querySelector(`div[data-user-event-id]`);
+    timelineEvent = document.querySelector(`button[data-user-event-id]`);
   }
 
-  console.log(eventId, timelineEvent);
+  const timelineSection = timelineEvent.closest("section[data-section-index]");
 
   const timelineContainer = document.querySelector(
     ".js-timeline-scroll-container"
   );
-  if (timelineEvent && timelineContainer) {
+  if (timelineSection && timelineContainer) {
     timelineContainer.scrollTo({
-      top: timelineEvent.offsetTop - timelineContainer.offsetTop - 10,
+      top: timelineSection.offsetTop - timelineContainer.offsetTop + 10,
       behavior: smooth ? "smooth" : "auto",
     });
   }
@@ -262,10 +264,10 @@ export function scrollToTimelineTop(smooth = true) {
   }
 }
 
-export function scrollToYear(year) {
-  const match = document.querySelector(`section[data-season-year="${year}"]`);
+export function scrollToYear(year, smooth = true) {
+  const match = document.querySelector(`section[data-season-year='${year}']`);
   if (match) {
-    match.scrollIntoView({ behavior: "smooth" });
+    match.scrollIntoView({ behavior: smooth ? "smooth" : "auto" });
   }
 }
 
