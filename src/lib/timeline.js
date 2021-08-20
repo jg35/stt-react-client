@@ -155,20 +155,21 @@ export function generateTimeline(
       return false;
     });
 
-    timePeriod.events = userEvents.filter((event) => {
-      return (
-        event.date >= timePeriod.startDate && event.date <= timePeriod.endDate
-      );
-    });
-    timePeriod.events = sortBy(
-      timePeriod.events.concat(
-        worldEvents.filter((event) => {
-          return (
-            event.date >= timePeriod.startDate &&
-            event.date <= timePeriod.endDate
-          );
-        })
-      ),
+    timePeriod.userEvents = sortBy(
+      userEvents.filter((event) => {
+        return (
+          event.date >= timePeriod.startDate && event.date <= timePeriod.endDate
+        );
+      }),
+      ["date"]
+    );
+
+    timePeriod.worldEvents = sortBy(
+      worldEvents.filter((event) => {
+        return (
+          event.date >= timePeriod.startDate && event.date <= timePeriod.endDate
+        );
+      }),
       ["date"]
     );
     timeline.push(timePeriod);

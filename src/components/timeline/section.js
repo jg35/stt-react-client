@@ -35,16 +35,17 @@ export default function Section({ section, index, isLast }) {
           />
         </Grid>
       </header>
-      {section.events.length > 0 && (
+      {(section.userEvents.length > 0 || section.worldEvents.length > 0) && (
         <>
           <div
             className="flex whitespace-nowrap lg:whitespace-wrap overflow-x-scroll lg:flex-wrap mt-2"
             id="section-events-grid"
           >
-            {section.events.map((e, i) => {
-              if (e.userId) {
-                return <UserEvent event={e} key={i} />;
-              }
+            {section.userEvents.map((e, i) => {
+              return <UserEvent event={e} key={i} />;
+            })}
+
+            {section.worldEvents.map((e, i) => {
               return <WorldEvent event={e} key={i} />;
             })}
           </div>
