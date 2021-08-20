@@ -85,6 +85,8 @@ export default function Publish() {
             onlyVersion={versions.length === 1}
             version={versions[0]}
             deleteVersion={deleteVersionHandler}
+            userId={user.id}
+            bookOnline={dbUser !== null ? dbUser.bookOnline : false}
           />
           <Card css="w-full" style={{ height: "fit-content" }}>
             {versions.slice(1).length >= 1 && (

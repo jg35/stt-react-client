@@ -11,6 +11,7 @@ import {
   BookPrivacyStatus,
 } from "~/components/_styled";
 
+import OnlineToggle from "~/components/publish/onlineToggle";
 import AccessListStatusButton from "~/components/accessList/accessListStatusButton";
 
 export default function LatestVersion({
@@ -18,7 +19,10 @@ export default function LatestVersion({
   deleteVersion,
   onlyVersion,
   handle,
+  userId,
+  bookOnline,
 }) {
+  const isPublic = version.privacyStatus === "PUBLIC";
   return (
     <>
       <div className="flex justify-center">
@@ -33,6 +37,14 @@ export default function LatestVersion({
                 <Svg name="instagram" css="m-1 md:mr-2 md:h-8 md:w-8" />
               </span>
             </div>
+
+            {bookOnline !== null && (
+              <OnlineToggle
+                isOnline={bookOnline}
+                userId={userId}
+                isPublic={isPublic}
+              />
+            )}
 
             <div className="flex">
               <LinkButton
@@ -55,17 +67,14 @@ export default function LatestVersion({
             style={{ minWidth: "150px", maxHeight: "65vh" }}
           />
           <div className="flex justify-between items-center px-2">
-            <BookPrivacyStatus
-              prefix="Your book is"
-              isPublic={version.privacyStatus === "PUBLIC"}
-            />
+            <BookPrivacyStatus prefix="Your book is" isPublic={isPublic} />
             <div className="flex">
               <ManagePrivacySettingsButton
                 css={`
-                  ${version.privacyStatus === "PRIVATE" && "hidden xs:block"}
+                  ${!isPublic && "hidden xs:block"}
                 `}
               />
-              {version.privacyStatus === "PRIVATE" && (
+              {!isPublic && (
                 <AccessListStatusButton
                   userId={version.userId}
                   showEmptyCta={false}

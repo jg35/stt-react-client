@@ -32,7 +32,7 @@ export default function PhotoForm({
               <Image
                 src={values.mediaUrl + "-master"}
                 className="object-cover rounded"
-                style={{ maxHeight: "65vh" }}
+                style={{ maxHeight: "50vh" }}
               />
             </div>
             <span className="absolute bottom-0 block bg-black text-white text-center rounded-b py-2 font-medium opacity-70 w-full">
@@ -55,7 +55,7 @@ export default function PhotoForm({
         />
       </FormField>
 
-      <Grid colSpan={["col-span-12"]} css="lg:mt-8">
+      <Grid colSpan={["col-span-12"]}>
         <FormField label="Caption" error={errors.caption}>
           <FormInput
             name="mediaCaption"

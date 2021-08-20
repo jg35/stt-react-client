@@ -11,6 +11,7 @@ export const userFragment = gql`
     subscriptionStatus
     subscriptionMeta
     publicHandle
+    bookOnline
     deleteAt
     versions {
       id

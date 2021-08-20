@@ -364,3 +364,14 @@ figcaption.preview-element {
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none; /* Non-prefixed version, currently*/
 }
+
+.toggle-checkbox + .toggle-label {
+  @apply bg-red right-0 border-red;
+}
+
+.toggle-checkbox:checked {
+  @apply right-0 border-green;
+}
+.toggle-checkbox:checked + .toggle-label {
+  @apply bg-green;
+}
