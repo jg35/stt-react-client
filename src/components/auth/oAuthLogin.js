@@ -14,7 +14,7 @@ export default function OAuthForm() {
       </Title>
       <div className="flex items-center ">
         <div className="flex-1 pr-1">
-          <Button variant="cta" size="large" onClick={signInWithGoogle}>
+          <Button variant="cta" onClick={signInWithGoogle}>
             <Svg name="google" css="h-5 w-5 mr-3" color="white" />
             Google
           </Button>
@@ -22,7 +22,6 @@ export default function OAuthForm() {
         <div className="flex-1 pl-1">
           <Button
             variant="cta"
-            size="large"
             css="bg-facebook border-facebook"
             onClick={signInWithFacebook}
           >

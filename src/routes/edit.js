@@ -10,6 +10,7 @@ import EditPreview from "~/components/edit/editPreview";
 import PreviewSkeleton from "~/components/previewSkeleton";
 import EditPreviewContainer from "~/components/edit/editPreviewContainer";
 import useToastMessage from "~/hooks/useToastMessage";
+import { Empty } from "~/components/_styled";
 
 export default function Edit() {
   const { setError } = useToastMessage();
@@ -44,7 +45,11 @@ export default function Edit() {
       <Page>
         <EditPreviewContainer>
           {data ? (
-            <EditPreview fragments={fragments} saveFragment={saveFragment} />
+            data.stt_fragment.length > 0 ? (
+              <EditPreview fragments={fragments} saveFragment={saveFragment} />
+            ) : (
+              <Empty info="Add some things to your timeline to begin editing your book. " />
+            )
           ) : (
             <PreviewSkeleton />
           )}

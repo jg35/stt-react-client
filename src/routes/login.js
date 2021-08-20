@@ -70,12 +70,15 @@ export default function Login() {
     >
       <Grid
         colSpan={[
-          "col-span-10 col-start-2 md:col-span-8 md:col-start-3 lg:col-span-4 lg:col-start-5",
+          "col-span-10 col-start-2 md:col-span-6 md:col-start-4 xl:col-span-4 xl:col-start-5",
         ]}
         css="mt-2"
       >
-        <Card>
-          <Title size="headline" css="mb-2 text-center">
+        <Card css="md:p-6">
+          <Title
+            size="headline"
+            css="my-4 text-center brand text-5xl md:text-6xl"
+          >
             Stories To Tell
           </Title>
           <Text size="large" css="text-center">

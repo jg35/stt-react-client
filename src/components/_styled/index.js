@@ -10,6 +10,7 @@ export { default as ButtonGroup } from "./buttonGroup";
 export { default as Card } from "./card";
 export { default as ClickToCopy } from "./clickToCopy";
 export { default as Container } from "./container";
+export { default as Empty } from "./empty";
 export { default as FormCaption } from "./formCaption";
 export { default as FormInput } from "./formInput";
 export { default as FormInputRange } from "./formInputRange";
