@@ -10,9 +10,11 @@ import { AuthContext } from "~/components/authWrap";
 import EmailFormWrapper from "~/components/auth/emailFormWrapper";
 import OAuthLogin from "~/components/auth/oAuthLogin";
 import useToastMessage from "~/hooks/useToastMessage";
+import usePageTitle from "~/hooks/usePageTitle";
 import { Card, Title, Text, Grid, Container } from "~/components/_styled";
 
 export default function Login() {
+  usePageTitle("Login");
   const { setSuccess } = useToastMessage();
   const [authView, setAuthView] = useState("LOGIN");
   const history = useHistory();

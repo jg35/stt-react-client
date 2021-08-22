@@ -8,8 +8,10 @@ import ManageUser from "~/components/settings/manageUser";
 import ManageBilling from "~/components/settings/manageBilling";
 import ManageAccount from "~/components/settings/manageAccount";
 import ManagePrivacy from "~/components/settings/managePrivacy";
+import usePageTitle from "~/hooks/usePageTitle";
 
 export default function Settings() {
+  usePageTitle("Settings");
   const TABS = ["SETTINGS", "BILLING", "ACCOUNT", "PRIVACY"];
   const history = useHistory();
   const urlTab =

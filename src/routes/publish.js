@@ -11,8 +11,10 @@ import VersionList from "~/components/publish/versionList";
 import LatestVersion from "~/components/publish/latestVersion";
 import PublishSkeleton from "~/components/publish/publishSkeleton";
 import useToastMessage from "~/hooks/useToastMessage";
+import usePageTitle from "~/hooks/usePageTitle";
 
 export default function Publish() {
+  usePageTitle("Publish");
   const { setError } = useToastMessage();
   const [versions, setVersions] = useState([]);
   const history = useHistory();

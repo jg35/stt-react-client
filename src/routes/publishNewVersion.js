@@ -21,8 +21,10 @@ import CoverEditorForm from "~/components/publish/coverEditorForm";
 import PublishOptionsForm from "~/components/publish/publishOptionsForm";
 import CreateBookForm from "~/components/publish/createBookForm";
 import useToastMessage from "~/hooks/useToastMessage";
+import usePageTitle from "~/hooks/usePageTitle";
 
 export default function PublishNewVersion() {
+  usePageTitle("Create book");
   const { setError, setSuccess } = useToastMessage();
   const history = useHistory();
   const {

@@ -1,5 +1,6 @@
 import { DateTime } from "luxon";
 import tailwindProperties from "~/tailwindProperties.json";
+import translations from "~/translations.json";
 import { overrideTailwindClasses } from "tailwind-override";
 
 export const getTrialDaysRemaining = (trialExpireDate) => {
@@ -57,4 +58,18 @@ export const joinTailwindClasses = (classes) => {
   return overrideTailwindClasses(classes.join(" ").trim(), {
     tailwindProperties,
   });
+};
+
+export const getTranslation = (key, params = []) => {
+  const translationRaw = translations[key];
+  if (!key) {
+    console.error(`No translation key found for key: ${key}`);
+    return "";
+  } else {
+    let translation = translationRaw;
+    params.forEach(({ key, value }) => {
+      translation = translation.replace(`{{${key}}}`, value);
+    });
+    return translation;
+  }
 };

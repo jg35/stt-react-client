@@ -11,17 +11,20 @@ import {
   BookPrivacyStatus,
 } from "~/components/_styled";
 
+import {
+  EmailShareButton,
+  FacebookShareButton,
+  FacebookMessengerShareButton,
+  WhatsappShareButton,
+  TwitterShareButton,
+} from "react-share";
+import { getTranslation } from "~/lib/util";
+
 import OnlineToggle from "~/components/publish/onlineToggle";
 import AccessListStatusButton from "~/components/accessList/accessListStatusButton";
 
-export default function LatestVersion({
-  version,
-  deleteVersion,
-  onlyVersion,
-  handle,
-  userId,
-  bookOnline,
-}) {
+export default function LatestVersion({ version, handle, userId, bookOnline }) {
+  const shareUrl = `${process.env.REACT_APP_READER_VIEW_URL}/${handle}`;
   const isPublic = version.privacyStatus === "PUBLIC";
   return (
     <>
@@ -31,10 +34,57 @@ export default function LatestVersion({
             <div>
               {/* TODO */}
               <span className="flex mr-2">
-                <Svg name="facebook" css="md:mr-2 md:h-8 md:w-8" />
-                <Svg name="email" css="m-1 md:mr-2 md:h-8 md:w-8" />
-                <Svg name="whatsapp" css="m-1 md:mr-2 md:h-8 md:w-8" />
-                <Svg name="instagram" css="m-1 md:mr-2 md:h-8 md:w-8" />
+                <EmailShareButton
+                  url={shareUrl}
+                  subject={getTranslation("share.email.subject")}
+                  body={getTranslation("share.email.body", [
+                    { key: "BOOK_NAME", value: version.title },
+                    { key: "BOOK_AUTHOR", value: version.author },
+                  ])}
+                  separator={"\n\n"}
+                >
+                  <Svg name="email" css="m-1 md:mr-2 md:h-8 md:w-8" />
+                </EmailShareButton>
+                <WhatsappShareButton
+                  url={shareUrl}
+                  title={getTranslation("share.whatsapp.title", [
+                    { key: "BOOK_NAME", value: version.title },
+                    { key: "BOOK_AUTHOR", value: version.author },
+                  ])}
+                >
+                  <Svg name="whatsapp" css="m-1 md:mr-2 md:h-8 md:w-8" />
+                </WhatsappShareButton>
+                <FacebookMessengerShareButton
+                  url={shareUrl}
+                  appId={process.env.REACT_APP_FACEBOOK_POGGL_APP_ID}
+                  redirectUri={`${process.env.REACT_APP_BASE_URL}/publish`}
+                >
+                  <Svg
+                    name="facebookMessenger"
+                    css="m-1 md:mr-2 md:h-8 md:w-8"
+                  />
+                </FacebookMessengerShareButton>
+                {isPublic && (
+                  <>
+                    <FacebookShareButton
+                      url={shareUrl}
+                      quote={getTranslation("share.facebook.quote")}
+                    >
+                      <Svg name="facebook" css="md:mr-2 md:h-8 md:w-8" />
+                    </FacebookShareButton>
+
+                    <TwitterShareButton
+                      url={shareUrl}
+                      hashtags={["storiestotell", "memoir", "autobiography"]}
+                      title={getTranslation("share.twitter.title", [
+                        { key: "BOOK_NAME", value: version.title },
+                        { key: "BOOK_AUTHOR", value: version.author },
+                      ])}
+                    >
+                      <Svg name="twitter" css="m-1 md:mr-2 md:h-8 md:w-8" />
+                    </TwitterShareButton>
+                  </>
+                )}
               </span>
             </div>
 
@@ -55,10 +105,10 @@ export default function LatestVersion({
               >
                 View
               </LinkButton>
-              <ClickToCopy
+              {/* <ClickToCopy
                 copyText="Copy share url"
                 value={`${process.env.REACT_APP_READER_VIEW_URL}/${handle}`}
-              />
+              /> */}
             </div>
           </div>
           <Image

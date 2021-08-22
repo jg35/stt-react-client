@@ -7,6 +7,7 @@ import {
   Text,
   Grid,
 } from "~/components/_styled";
+import usePageTitle from "~/hooks/usePageTitle";
 
 function ComponentLibraryItem({ title, children }) {
   return (
@@ -31,6 +32,7 @@ function ComponentSection({ title, children }) {
 }
 
 export default function ComponentLibrary({}) {
+  usePageTitle("Component library");
   return (
     <Page minimal>
       <ComponentSection title="Buttons">

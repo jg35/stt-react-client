@@ -1,0 +1,7 @@
+{
+  "share.facebook.quote": "I made a book all about my life with Stories To Tell!",
+  "share.email.subject": "Check out the book I made with Stories To Tell",
+  "share.email.body": "Read my newly published autobiography - \"{{BOOK_NAME}} by {{BOOK_AUTHOR}}\"",
+  "share.twitter.title": "Read my newly published autobiography - \"{{BOOK_NAME}} by {{BOOK_AUTHOR}}\"",
+  "share.whatsapp.title": "Read my newly published autobiography - \"{{BOOK_NAME}} by {{BOOK_AUTHOR}}\""
+}

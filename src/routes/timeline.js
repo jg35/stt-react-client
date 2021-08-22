@@ -13,6 +13,7 @@ import CaptureHeader from "~/components/capture/captureHeader";
 import Section from "~/components/timeline/section";
 import Preview from "~/components/timeline/preview";
 import ScrollNavigator from "~/components/timeline/scrollNavigator";
+import usePageTitle from "~/hooks/usePageTitle";
 
 import {
   generateTimeline,
@@ -26,6 +27,7 @@ import OrphanedFragments from "~/components/timeline/orphanedFragments";
 import { UIContext } from "~/app";
 
 export default function Timeline() {
+  usePageTitle("Timeline");
   const { uiState, updateUiState } = useContext(UIContext);
   const timelineScrollContainer = useRef(null);
 

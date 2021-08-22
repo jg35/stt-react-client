@@ -11,8 +11,10 @@ import PreviewSkeleton from "~/components/previewSkeleton";
 import EditPreviewContainer from "~/components/edit/editPreviewContainer";
 import useToastMessage from "~/hooks/useToastMessage";
 import { Empty } from "~/components/_styled";
+import usePageTitle from "~/hooks/usePageTitle";
 
 export default function Edit() {
+  usePageTitle("Edit");
   const { setError } = useToastMessage();
   const { data } = useCustomQuery(FETCH_EDIT_VIEW, {
     userId: true,
