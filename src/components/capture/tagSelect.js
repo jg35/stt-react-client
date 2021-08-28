@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import Menu from "~/components/menu";
 import Svg from "~/components/svg";
@@ -10,16 +10,20 @@ function TagSelectOption({ tag, selectTag }) {
     <Button
       variant="minimal"
       size="compact"
-      css="justify-end capitalize"
-      onClick={() => selectTag(tag)}
+      css="justify-end capitalize items-center"
+      onClick={() => selectTag(tag.tag)}
     >
-      {tag}
+      {tag.tag}
+      <span className="text-sm text-gray">
+        &nbsp;({tag.questionCount - tag.answeredCount})
+      </span>
     </Button>
   );
 }
 
 export default function TagSelect({
   currentTag,
+  currentQuestionTag,
   tagOptions,
   selectTag,
   minimal,
@@ -28,17 +32,27 @@ export default function TagSelect({
   if (minimal) {
     toggleCss = "text-gray";
   }
-  return (
+
+  function renderCurrentTag() {
+    if (currentTag.tag === "all") {
+      return (
+        <>
+          All
+          <span className="text-gray text-sm">
+            &nbsp;({currentQuestionTag})
+          </span>
+        </>
+      );
+    }
+    return currentTag.tag;
+  }
+  return currentTag ? (
     <Menu
       compact
       toggle={
-        <div className={`font-medium flex text-gray ${toggleCss}`}>
-          <span className="whitespace-nowrap ">
-            {currentTag ? (
-              <span className="capitalize">{currentTag}</span>
-            ) : (
-              "Select a tag"
-            )}
+        <div className={`font-medium flex ${toggleCss}`}>
+          <span className="whitespace-nowrap capitalize">
+            {renderCurrentTag()}
           </span>
           <Svg
             name="chevron"
@@ -56,5 +70,5 @@ export default function TagSelect({
         };
       })}
     />
-  );
+  ) : null;
 }

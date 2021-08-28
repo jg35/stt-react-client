@@ -106,21 +106,39 @@ export default function CaptureHeader({ init }) {
 
   useEffect(() => {
     if (currentQuestion) {
+      const tagOptions = [
+        {
+          tag: "all",
+          questionCount: data.stt_question.length,
+          answeredCount: questionsAnswered.length,
+        },
+      ];
+      // if (questionTagCategory !== "all") {
+      //   tagOptions.push({
+      //     tag: "all",
+      //     questionCount: data.stt_question.length,
+      //     answeredCount: questionsAnswered.length,
+      //   });
+      // }
       setTagOptions(
-        uniq(
-          data.stt_question
-            .filter((q) => !questionsAnswered.includes(q.id))
-            .reduce(
-              (tags, q) => {
-                if (q.tag !== questionTagCategory) {
-                  tags.push(q.tag);
-                }
-                return tags;
-              },
-              [questionTagCategory !== "all" ? "all" : null]
-            )
-            .filter((x) => x !== null)
-        )
+        data.stt_question
+          .filter((q) => !questionsAnswered.includes(q.id))
+          .reduce((tags, q) => {
+            if (!tags.find((option) => option.tag === q.tag)) {
+              const tagQuestions = data.stt_question.filter(
+                (x) => x.tag === q.tag
+              );
+              tags.push({
+                tag: q.tag,
+                questionCount: tagQuestions.length,
+                answeredCount: tagQuestions.filter((q) =>
+                  questionsAnswered.includes(q.id)
+                ).length,
+              });
+            }
+            return tags;
+          }, tagOptions)
+          .filter((x) => x !== null)
       );
     }
   }, [currentQuestion]);
@@ -179,10 +197,13 @@ export default function CaptureHeader({ init }) {
                     }
                   }}
                   css="bg-white w-3/4 p-0 truncate js-question-text-input"
-                  placeholder={currentQuestion.placeholder}
+                  placeholder="Start writing here..."
                 />
                 <TagSelect
-                  currentTag={questionTagCategory}
+                  currentQuestionTag={currentQuestion.tag}
+                  currentTag={tagOptions.find(
+                    (t) => t.tag === questionTagCategory
+                  )}
                   tagOptions={tagOptions}
                   selectTag={setQuestionTagCategory}
                   minimal

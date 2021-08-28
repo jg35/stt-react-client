@@ -79,7 +79,8 @@ export const questionFragment = gql`
   fragment questionFragment on stt_question {
     id
     title
-    placeholder
+    minAge
+    maxAge
     tag
   }
 `;

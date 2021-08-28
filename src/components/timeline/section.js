@@ -12,7 +12,7 @@ export default function Section({ section, index, isLast, timelinePeriod }) {
 
   return (
     <section
-      className={`py-12 md:pr-6 ${!isLast && "border-b-2 border-lightGray"}`}
+      className={`py-12 md:pr-6 ${!isLast && "border-b-8 border-lightGray"}`}
       data-season-year={section.year}
       data-section-index={index}
       onMouseEnter={() => setShowActions(true)}
