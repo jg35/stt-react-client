@@ -277,7 +277,7 @@ export default function CoverEditorForm({ values, setFieldValue, setValues }) {
               }
             }}
           >
-            Layout controls
+            Edit layout
           </Button>
           <Button
             css="font-medium whitespace-nowrap mr-2"
@@ -289,7 +289,7 @@ export default function CoverEditorForm({ values, setFieldValue, setValues }) {
               }
             }}
           >
-            Text controls
+            Edit text
           </Button>
           <Button
             css="font-medium whitespace-nowrap mr-2"

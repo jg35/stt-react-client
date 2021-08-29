@@ -78,6 +78,7 @@ export const CoverSchema = Yup.object().shape({
   imagePlacement: Yup.string().default("cover"),
   bgColor: Yup.string().default("#f8f8f8"),
   elements: Yup.array().of(CoverElementSchema).default([]),
+  init: Yup.boolean().default(false),
 });
 
 export const ThemeSchema = Yup.object().shape({

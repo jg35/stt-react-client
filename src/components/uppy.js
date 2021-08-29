@@ -65,33 +65,28 @@ export default function UppyDashboard({
         actions: {
           rotate: false,
         },
+      })
+      .on("upload-success", (file, response) => {
+        const { path } = response.body;
+        console.log("upload-success");
+        getSignedUrls({
+          variables: {
+            paths: photoSizes.map((size) => `${path}-${size}`).join(","),
+          },
+        }).then(({ data }) => {
+          updateUiState({
+            signedUrls: {
+              ...uiState.signedUrls,
+              ...photoSizes.reduce((obj, size, i) => {
+                obj[`${path}-${size}`] = data.action_s3_get_signed_url[i];
+                return obj;
+              }, {}),
+            },
+          });
+          onChange(path);
+        });
       });
   });
-
-  uppy.on("upload-success", (file, response) => {
-    const { path } = response.body;
-    setSignedUrl(path).then(() => {
-      onChange(path);
-    });
-  });
-
-  function setSignedUrl(path) {
-    return getSignedUrls({
-      variables: {
-        paths: photoSizes.map((size) => `${path}-${size}`).join(","),
-      },
-    }).then(({ data }) => {
-      updateUiState({
-        signedUrls: {
-          ...uiState.signedUrls,
-          ...photoSizes.reduce((obj, size, i) => {
-            obj[`${path}-${size}`] = data.action_s3_get_signed_url[i];
-            return obj;
-          }, {}),
-        },
-      });
-    });
-  }
 
   async function addRemoteImage(path) {
     return fetch(path)

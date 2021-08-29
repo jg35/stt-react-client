@@ -39,7 +39,7 @@ export default function PublishNewVersion() {
   const { data } = useCustomQuery(FETCH_CREATE_BOOK_VIEW, { userId: true });
 
   useEffect(() => {
-    if (data && data.stt_version) {
+    if (publishStep === 1 && data && data.stt_version) {
       const version = VersionSchema(publishStep, token).cast({
         ...cloneDeep(data.stt_version[0]),
         publicHandle: (dbUser && dbUser.publicHandle) || "",
@@ -50,29 +50,6 @@ export default function PublishNewVersion() {
       }
       if (!version.author) {
         version.author = user.displayName;
-      }
-
-      // Should only run once user reaches the second step
-      if (
-        !version.theme.cover.elements.length &&
-        version.author &&
-        version.title
-      ) {
-        version.theme.cover = CoverSchema.cast({
-          elements: [
-            CoverElementSchema.cast({
-              content: version.title,
-              originalContent: version.title,
-              size: 10,
-              relativePosition: { y: 10, x: 10 },
-            }),
-            CoverElementSchema.cast({
-              content: version.author,
-              originalContent: version.author,
-              relativePosition: { y: 80, x: 10 },
-            }),
-          ],
-        });
       }
       setCurrentVersion(version);
     }
@@ -160,11 +137,30 @@ export default function PublishNewVersion() {
         <Card css="border-4 border-white p-0 flex flex-col h-full rounded-lg overflow-scroll">
           <Formik
             onSubmit={(values, formBag) => {
-              if (publishStep === 3) {
+              let saveValues = { ...values };
+              if (publishStep === 1 && !saveValues.theme.cover.init) {
+                saveValues.theme.cover = CoverSchema.cast({
+                  init: true,
+                  elements: [
+                    CoverElementSchema.cast({
+                      content: values.title,
+                      originalContent: values.title,
+                      size: 10,
+                      relativePosition: { y: 10, x: 10 },
+                    }),
+                    CoverElementSchema.cast({
+                      content: values.author,
+                      originalContent: values.author,
+                      relativePosition: { y: 80, x: 10 },
+                    }),
+                  ],
+                });
+              } else if (publishStep === 3) {
                 // Create the book
                 return publishVersionHandler(values);
               }
-              return saveVersionHandler(values).then(() => {
+              return saveVersionHandler(saveValues).then(() => {
+                formBag.setValues(saveValues);
                 setPublishStep(publishStep + 1);
               });
             }}

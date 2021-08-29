@@ -22,10 +22,10 @@ export default function GlobalCoverControls({
             css="w-auto whitespace-nowrap mr-2"
             onClick={() => setUppyOpen(true)}
           >
-            <span className="hidden md:block">
+            <span className="hidden xs:block">
               {!imageUrl ? "Add" : "Change"} photo
             </span>
-            <span className="md:hidden">
+            <span className="xs:hidden">
               <Svg name="photo" css="h-8 w-8" />
             </span>
           </Button>

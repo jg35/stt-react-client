@@ -34,11 +34,10 @@ export default function GlobalCoverControls({
           <div
             className="flex items-center justify-between my-4 border-b border-lightGray pb-2"
             style={{
-              opacity: imageUrl ? "1" : ".1",
               pointerEvents: imageUrl ? "auto" : "none",
             }}
           >
-            <FormLabel css="w-16">Image</FormLabel>
+            <FormLabel css="mr-6">Image</FormLabel>
             <div className="flex">
               <ImagePlacementOption
                 value="cover"

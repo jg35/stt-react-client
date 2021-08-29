@@ -212,7 +212,11 @@ export default function CaptureHeader({ init }) {
             </div>
           )}
 
-          <Grid colSpan={["col-span-3 md:col-span-4"]} height="h-full">
+          <Grid
+            colSpan={["col-span-3 md:col-span-4"]}
+            height="h-full"
+            gap="gap-x-2 md:gap-x-4"
+          >
             {window.innerWidth < 768 && (
               <Button
                 css={`font-medium px-4 h-14 justify-around flex-col ${
