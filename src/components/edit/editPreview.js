@@ -36,7 +36,7 @@ export default function Preview({ fragments, saveFragment }) {
 
   return (
     <>
-      <div className="absolute top-2 left-4">
+      <div className="absolute top-1 left-4">
         <SaveStatus saving={saving} lastSaved={lastSaved} />
       </div>
       <div
@@ -60,7 +60,7 @@ export default function Preview({ fragments, saveFragment }) {
             />
           ))}
       </div>
-      <ChapterNavigator fragments={fragments} />
+      <ChapterNavigator fragments={fragments} editView />
     </>
   );
 }

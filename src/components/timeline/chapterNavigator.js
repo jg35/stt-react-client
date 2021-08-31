@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Svg from "~/components/svg";
-import { scrollToFragment } from "~/lib/timeline";
+import { scrollToFragment, scrollToEditFragment } from "~/lib/timeline";
 
-export default function ScrollNavigator({ fragments }) {
+export default function ScrollNavigator({ fragments, editView = false }) {
   const [hoverChapter, setHoverChapter] = useState(null);
   const [chapters, setChapters] = useState([]);
   const [totalLength, setTotalLength] = useState(0);
@@ -61,6 +61,15 @@ export default function ScrollNavigator({ fragments }) {
       ></div>
     );
   }
+
+  function scrollHandler(fragmentId) {
+    if (editView) {
+      scrollToEditFragment(fragmentId);
+    } else {
+      scrollToFragment(fragmentId);
+    }
+  }
+
   return (
     <div className="relative flex items-center w-full h-10">
       {chapters.length > 0 && <TimelineMarker />}
@@ -75,7 +84,7 @@ export default function ScrollNavigator({ fragments }) {
                 <div
                   style={{ maxWidth: "8rem" }}
                   className="absolute bg-white font-medium cursor-pointer text-center border-b-2 py-1/2 px-1 border-black animate-expand overflow-hidden"
-                  onClick={() => scrollToFragment(chapter.id)}
+                  onClick={() => scrollHandler(chapter.id)}
                 >
                   <div
                     style={{ textOverflow: "ellipsis", overflow: "hidden" }}

@@ -228,7 +228,9 @@ export default function CaptureModal({
               className="h-full overflow-scroll"
               onSubmit={props.handleSubmit}
             >
-              <Title size="large">{formTitle}</Title>
+              <Title size="large" style={{ maxWidth: "calc(100% - 4rem)" }}>
+                {formTitle}
+              </Title>
               {item.type === "EVENT" && <EventForm {...props} />}
 
               {item.type === "TEXT" && (

@@ -39,13 +39,15 @@ const icons = {
   },
 
   chapter: {
-    path: (color) => (
+    path: (color, stroke, strokeWidth) => (
       <>
         <path d="M0 0h24v24H0z" fill="none" />
         <path
           data-name="Path 41"
           d="M17 3H7a2.006 2.006 0 00-2 2v16l7-3 7 3V5a2.006 2.006 0 00-2-2z"
-          fill={color}
+          fill="transparent"
+          stroke="#000"
+          strokeWidth="2px"
         />
       </>
     ),

@@ -6,7 +6,7 @@ export default function EditPreviewContainer({ children }) {
     >
       <div id="preview-container" className="h-full relative">
         <div
-          className={`absolute left-0 top-0 shadow-lg rounded-lg bg-white h-full w-full py-10 z-20 relative px-2 md:px-6`}
+          className={`absolute left-0 top-0 shadow-lg rounded-lg bg-white h-full w-full py-8 z-20 relative px-2 md:px-6`}
         >
           {children}
         </div>

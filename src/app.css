@@ -335,7 +335,7 @@ input[type="range"]:focus::-webkit-slider-runnable-track {
 
 h1.preview-element {
   @apply text-2xl md:text-3xl text-center;
-  margin: 3em 0 1em;
+  margin: 3em 0 2em;
 }
 p.preview-element {
   @apply text-base whitespace-pre-wrap;

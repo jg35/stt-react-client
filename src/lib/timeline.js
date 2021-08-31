@@ -189,6 +189,33 @@ export function generateTimeline(
   ];
 }
 
+export function scrollToEditFragment(fragmentId = null, smooth = true) {
+  let timelineFragment;
+
+  if (fragmentId) {
+    timelineFragment = document.querySelector(
+      `div[data-preview-fragment-id="${fragmentId}"]`
+    );
+  } else {
+    timelineFragment = document.querySelector(`div[data-preview-fragment-id]`);
+  }
+
+  const previewContainer = document.querySelector(
+    ".js-preview-scroll-container"
+  );
+
+  const previewFragment = document.querySelector(
+    `[data-preview-fragment-id="${fragmentId}"]`
+  );
+
+  if (previewFragment && previewContainer) {
+    previewContainer.scrollTo({
+      top: previewFragment.offsetTop - previewContainer.offsetTop - 10,
+      behavior: smooth ? "smooth" : "auto",
+    });
+  }
+}
+
 export function scrollToFragment(fragmentId = null, smooth = true) {
   let timelineFragment;
 
