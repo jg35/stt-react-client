@@ -68,7 +68,7 @@ export default function Publish() {
       <div className="flex justify-end items-center">
         <Button
           variant="cta"
-          css="w-auto whitespace-nowrap mb-4"
+          css="w-auto whitespace-nowrap mt-2 mb-4"
           onClick={() => history.push("/publish/new")}
         >
           Create book

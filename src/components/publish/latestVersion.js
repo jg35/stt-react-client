@@ -28,11 +28,10 @@ export default function LatestVersion({ version, handle, userId, bookOnline }) {
   const isPublic = version.privacyStatus === "PUBLIC";
   return (
     <>
-      <div className="flex justify-center">
+      <div className="flex justify-center lg:justify-end">
         <div className="bg-white rounded-lg shadow-xl border-l-8 border-r-8 border-t-4 border-b-4 border-white">
-          <div className="w-full flex bg-white p-2 justify-between items-center rounded-t-lg">
+          <div className="w-full flex bg-white py-2 justify-between items-center rounded-t-lg">
             <div>
-              {/* TODO */}
               <span className="flex mr-2">
                 <EmailShareButton
                   url={shareUrl}
@@ -43,7 +42,7 @@ export default function LatestVersion({ version, handle, userId, bookOnline }) {
                   ])}
                   separator={"\n\n"}
                 >
-                  <Svg name="email" css="m-1 md:mr-2 md:h-8 md:w-8" />
+                  <Svg name="email" css="m-1 md:mr-2 " />
                 </EmailShareButton>
                 <WhatsappShareButton
                   url={shareUrl}
@@ -52,17 +51,14 @@ export default function LatestVersion({ version, handle, userId, bookOnline }) {
                     { key: "BOOK_AUTHOR", value: version.author },
                   ])}
                 >
-                  <Svg name="whatsapp" css="m-1 md:mr-2 md:h-8 md:w-8" />
+                  <Svg name="whatsapp" css="m-1 md:mr-2 " />
                 </WhatsappShareButton>
                 <FacebookMessengerShareButton
                   url={shareUrl}
                   appId={process.env.REACT_APP_FACEBOOK_POGGL_APP_ID}
                   redirectUri={`${process.env.REACT_APP_BASE_URL}/publish`}
                 >
-                  <Svg
-                    name="facebookMessenger"
-                    css="m-1 md:mr-2 md:h-8 md:w-8"
-                  />
+                  <Svg name="facebookMessenger" css="m-1 md:mr-2 " />
                 </FacebookMessengerShareButton>
                 {isPublic && (
                   <>
@@ -70,7 +66,7 @@ export default function LatestVersion({ version, handle, userId, bookOnline }) {
                       url={shareUrl}
                       quote={getTranslation("share.facebook.quote")}
                     >
-                      <Svg name="facebook" css="md:mr-2 md:h-8 md:w-8" />
+                      <Svg name="facebook" css="md:mr-2 " />
                     </FacebookShareButton>
 
                     <TwitterShareButton
@@ -81,26 +77,25 @@ export default function LatestVersion({ version, handle, userId, bookOnline }) {
                         { key: "BOOK_AUTHOR", value: version.author },
                       ])}
                     >
-                      <Svg name="twitter" css="m-1 md:mr-2 md:h-8 md:w-8" />
+                      <Svg name="twitter" css="m-1 md:mr-2 " />
                     </TwitterShareButton>
                   </>
                 )}
               </span>
             </div>
 
-            {bookOnline !== null && (
-              <OnlineToggle
-                isOnline={bookOnline}
-                userId={userId}
-                isPublic={isPublic}
-              />
-            )}
-
-            <div className="flex">
+            <div className="flex items-center">
+              {bookOnline !== null && (
+                <OnlineToggle
+                  isOnline={bookOnline}
+                  userId={userId}
+                  isPublic={isPublic}
+                />
+              )}
               <LinkButton
                 external
                 size="compact"
-                css="w-auto font-medium mr-2"
+                css="w-auto font-medium"
                 href={`${process.env.REACT_APP_READER_VIEW_URL}/${handle}`}
               >
                 View
@@ -114,9 +109,9 @@ export default function LatestVersion({ version, handle, userId, bookOnline }) {
           <Image
             src={version.coverUrl + coverImages["1200px"]}
             className="rounded mx-auto"
-            style={{ minWidth: "150px", maxHeight: "65vh" }}
+            style={{ minWidth: "150px", maxHeight: "60vh" }}
           />
-          <div className="flex justify-between items-center px-2">
+          <div className="flex justify-between items-center pl-2">
             <BookPrivacyStatus prefix="Your book is" isPublic={isPublic} />
             <div className="flex">
               <ManagePrivacySettingsButton

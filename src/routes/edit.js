@@ -46,7 +46,8 @@ export default function Edit() {
     <>
       <Page>
         <EditPreviewContainer>
-          {data ? (
+          <Empty info="Add some things to your timeline to begin editing your book. " />
+          {/* {data ? (
             data.stt_fragment.length > 0 ? (
               <EditPreview fragments={fragments} saveFragment={saveFragment} />
             ) : (
@@ -54,7 +55,7 @@ export default function Edit() {
             )
           ) : (
             <PreviewSkeleton />
-          )}
+          )} */}
         </EditPreviewContainer>
       </Page>
       <CaptureModal editView />

@@ -73,22 +73,19 @@ export default function ScrollNavigator({ fragments, editView = false }) {
   return (
     <div className="relative flex items-center w-full h-10">
       {chapters.length > 0 && <TimelineMarker />}
-      <div
-        className="relative flex items-center justify-around"
-        style={{ width: "calc(100% - 2rem)" }}
-      >
+      <div className="relative flex items-center justify-around w-full">
         {chapters.map((chapter, index) => {
           if (hoverChapter && hoverChapter === chapter.id) {
             return (
               <ChapterWrap isHover chapterId={chapter.id} key={chapter.id}>
                 <div
                   style={{ maxWidth: "8rem" }}
-                  className="absolute bg-white font-medium cursor-pointer text-center border-b-2 py-1/2 px-1 border-black animate-expand overflow-hidden"
+                  className="-top-1 absolute bg-white font-medium cursor-pointer text-center border-b-2 py-1/2 px-1 border-black animate-expand overflow-hidden"
                   onClick={() => scrollHandler(chapter.id)}
                 >
                   <div
                     style={{ textOverflow: "ellipsis", overflow: "hidden" }}
-                    className=" whitespace-nowrap"
+                    className=" whitespace-nowrap text-sm"
                     title={
                       (chapter.content.length > 15 && chapter.content) || ""
                     }
@@ -101,7 +98,7 @@ export default function ScrollNavigator({ fragments, editView = false }) {
           } else {
             return (
               <ChapterWrap chapterId={chapter.id} key={chapter.id}>
-                <Svg name="chapter" />
+                <Svg name="chapter" height="20" width="20" />
               </ChapterWrap>
             );
           }

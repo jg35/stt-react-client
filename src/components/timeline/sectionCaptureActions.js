@@ -10,6 +10,7 @@ import colors from "~/lib/colors";
 
 export default function SectionCaptureActions({ show, date, index }) {
   const { updateUiState, uiState } = useContext(UIContext);
+  // Until activeCaptureIndex has a value, captureActive is always null
   const [captureActive, setCaptureActive] = useState(null);
   const showActionToggle = window.innerWidth < 768;
 
@@ -17,11 +18,18 @@ export default function SectionCaptureActions({ show, date, index }) {
     ? "animate-slide-in-left"
     : "animate-fade-in";
   const animateOut = showActionToggle
-    ? `animate-slide-out-right ${captureActive === null && "opacity-0"}`
+    ? `${!captureActive ? "hidden" : "animate-slide-out-right"}`
     : "animate-fade-out";
 
   useEffect(() => {
-    if (uiState.activeCaptureIndex !== false) {
+    if (index === 0) {
+      console.log(captureActive);
+    }
+  }, [captureActive]);
+
+  useEffect(() => {
+    console.log(uiState.activeCaptureIndex);
+    if (uiState.activeCaptureIndex !== null) {
       setCaptureActive(
         !isNaN(uiState.activeCaptureIndex)
           ? uiState.activeCaptureIndex === index
@@ -32,6 +40,7 @@ export default function SectionCaptureActions({ show, date, index }) {
 
   let showActions = false;
   if (showActionToggle) {
+    // On mobile, show actions based on capture active
     showActions = captureActive;
   } else {
     showActions = show || captureActive;
@@ -127,7 +136,7 @@ export default function SectionCaptureActions({ show, date, index }) {
             updateUiState(
               {
                 activeCaptureIndex:
-                  uiState.activeCaptureIndex === index ? null : index,
+                  uiState.activeCaptureIndex === index ? false : index,
               },
               false
             );
