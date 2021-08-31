@@ -13,7 +13,7 @@ export default function ScrollNavigator({ years, dob }) {
     // // accomadate for showing first and last year (2)
     const displayYears = Math.floor(containerHeight / minYearHeight) - 2;
     const age = new Date().getFullYear() - DateTime.fromISO(dob).year;
-    setHightlightN(5);
+    setHightlightN(4);
     const nYears = Math.floor(age / displayYears);
     const sliceYears = [...years];
     const firstYear = sliceYears.shift();
@@ -71,23 +71,13 @@ export default function ScrollNavigator({ years, dob }) {
         ) {
           return (
             <YearWrap year={year.year} key={index}>
-              <div
-                className={`bg-white text-center ${
-                  year.fragments && "font-medium"
-                }`}
-              >
-                {year.year}
-              </div>
+              <div className={`bg-white text-center`}>{year.year}</div>
             </YearWrap>
           );
         } else {
           return (
             <YearWrap year={year.year} key={index}>
-              <span
-                className={`w-1.5 h-1.5 rounded ${
-                  year.fragments ? "bg-black" : "bg-gray"
-                }`}
-              ></span>
+              <span className={`w-1.5 h-1.5 rounded bg-gray`}></span>
             </YearWrap>
           );
         }
