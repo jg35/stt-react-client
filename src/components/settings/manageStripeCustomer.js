@@ -1,6 +1,7 @@
 import { Button, Title, Text } from "~/components/_styled";
 import { DateTime } from "luxon";
 import TrialStatus from "~/components/trialStatus";
+import { getTranslation } from "~/lib/util";
 
 function buildSummary(subscriptionStatus, subscriptionMeta) {
   let planMessage;
@@ -16,37 +17,25 @@ function buildSummary(subscriptionStatus, subscriptionMeta) {
     case "ACTIVE":
       const planName = subscriptionMeta.interval + "ly";
 
-      planMessage = (
-        <>
-          You're on our <strong>{planName}</strong> plan. Your next payment of £
-          {subscriptionMeta.amount / 100} will be taken on{" "}
-          <strong>{nextPaymentDate}</strong>.
-          <br />
-          <br />
-          To update payment information, manage or cancel your subscription,
-          please click below.
-        </>
+      planMessage = getTranslation(
+        "components.settings.manageStripeCustomer.plan.active",
+        [
+          { key: "NEXT_PAYMENT_DATE", value: nextPaymentDate },
+          { key: "PLAN_NAME", value: planName },
+          { key: "NEXT_PAYMENT_AMOUNT", value: subscriptionMeta.amount / 100 },
+        ]
       );
       break;
     // TODO - should become cancelled when user cancels plan. Becomes CANCELLED_EXPIRED when plan has actually been cancelled
     case "CANCEL_AT_PERIOD_END":
-      planMessage = (
-        <>
-          You're plan has been cancelled. You'll have access to Stories To Tell
-          until <strong>{nextPaymentDate}</strong>.
-          <br />
-          <br />
-          If you've changed your mind about cancelling, click below to manage
-          your subscription.
-        </>
+      planMessage = getTranslation(
+        "components.settings.manageStripeCustomer.plan.cancelAtPeriodEnd",
+        [{ key: "NEXT_PAYMENT_DATE", value: nextPaymentDate }]
       );
       break;
     case "IN_TRIAL":
-      planMessage = (
-        <>
-          You're on our free trial. If you would like to continue using Stories
-          To Tell, please subscribe below.
-        </>
+      planMessage = getTranslation(
+        "components.settings.manageStripeCustomer.plan.inTrial"
       );
   }
   return (

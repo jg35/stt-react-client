@@ -1,4 +1,5 @@
 import { Text } from "~/components/_styled";
+import { getTranslation } from "~/lib/util";
 
 export default function BookPrivacyStatus({
   isPublic,
@@ -10,8 +11,8 @@ export default function BookPrivacyStatus({
   const smText = isPublic ? `Public` : `Private`;
   const mdText = `${prefix} ${isPublic ? "public" : "private"}`;
   const describeText = isPublic
-    ? "Anyone that knows your handle will be able to read your book"
-    : "Readers on your share list will be able to login and read your book";
+    ? getTranslation("components.bookPrivacyStatus.description.public")
+    : getTranslation("components.bookPrivacyStatus.description.private");
 
   return (
     <>

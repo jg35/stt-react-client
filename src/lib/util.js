@@ -1,4 +1,5 @@
 import { DateTime } from "luxon";
+import React from "react";
 import tailwindProperties from "~/tailwindProperties.json";
 import translations from "~/translations.json";
 import { overrideTailwindClasses } from "tailwind-override";
@@ -70,6 +71,6 @@ export const getTranslation = (key, params = []) => {
     params.forEach(({ key, value }) => {
       translation = translation.replace(`{{${key}}}`, value);
     });
-    return translation;
+    return <span dangerouslySetInnerHTML={{ __html: translation }} />;
   }
 };

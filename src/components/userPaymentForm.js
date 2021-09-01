@@ -4,6 +4,7 @@ import { ACTION_STRIPE_FETCH_PRICES } from "~/lib/gql";
 import Modal from "~/components/modal";
 import { Title, Button, Text } from "~/components/_styled";
 import SubscriptionOptionCard from "~/components/settings/subscriptionOptionCard";
+import { getTranslation } from "~/lib/util";
 
 export default function UserPaymentForm({
   type,
@@ -27,25 +28,18 @@ export default function UserPaymentForm({
 
   function getPaymentMessage() {
     if (intent === "MANUAL") {
-      return (
-        <>
-          We hope you've enjoyed Stories To Tell so far, and have the beginnings
-          of a wonderful book to share with your loved ones.
-          <br />
-          <br />
-          If you'd like to stick around once your trial is up, become a
-          permanent member today by choosing a subscription below.
-        </>
-      );
+      return getTranslation("components.userPaymentForm.openMessage");
     }
     switch (subscriptionStatus) {
       case "CANCELLED":
       case "CANCEL_AT_PERIOD_END":
-        return "Your subscription has ended. To restore access to Stories To Tell, please choose a subscription.";
+        return getTranslation("components.userPaymentForm.cancelled");
+
       case "PAYMENT_FAILED":
-        return "Your last payment failed. Please update your payment method by clicking 'Manage subscription' below.";
+        return getTranslation("components.userPaymentForm.paymentFailed");
+
       case "IN_TRIAL":
-        return "Your trial has expired. If you have enjoyed Stories To Tell, please choose a subscription.";
+        return getTranslation("components.userPaymentForm.inTrial");
     }
   }
 

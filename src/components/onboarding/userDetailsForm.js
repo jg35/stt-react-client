@@ -12,10 +12,10 @@ import DatePicker from "~/components/capture/datepicker";
 import { Button, FormLabel, Title, Text } from "~/components/_styled";
 import { AuthContext } from "~/components/authWrap";
 import { useEffect } from "react";
+import { getTranslation } from "~/lib/util";
 
 export default function UserDeailsForm() {
   const { setError } = useToastMessage();
-  const history = useHistory();
   const {
     authState: { dbUser, user },
   } = useContext(AuthContext);
@@ -49,11 +49,14 @@ export default function UserDeailsForm() {
       <div className="w-96 h-3/6 rounded shadow-xl p-4 bg-white border-2 border-black h-auto flex flex-col justify-between animate-fade-in">
         <div className="h-full flex flex-col">
           <Title css="text-center">
-            Hello {user.displayName.split(" ")[0]}! 👋
+            {getTranslation("components.onboarding.userDetailsForm.welcome", [
+              { key: "FIRST_NAME", value: user.displayName.split(" ")[0] },
+            ])}
           </Title>
           <Text size="large">
-            Let's fill in your date of birth and location so we can setup your
-            timeline.
+            {getTranslation(
+              "components.onboarding.userDetailsForm.description"
+            )}
           </Text>
 
           <Formik

@@ -18,12 +18,16 @@ const TOAST_MESSAGES = {
     FRAGMENT_VISIBILITY: () =>
       `The visibility could not be changed. Please try agian.`,
     SESSION_EXPIRED: () => `Your session has expired. Please login.`,
+    PUBLISH_VERSION: () =>
+      `"Something went wrong when publishing your book. Please try again"`,
   },
   SUCCESS: {
     CREATE: ([thing]) => `You've successfully created a new ${thing}`,
     UPDATE: ([thing]) => `You've succcesfully updated your ${thing}`,
     LOGIN: () => `Welcome back`,
     DELETE_VERSION: () => `Your book was deleted`,
+    PUBLISHED_VERSION: () =>
+      `You've succesfully published your book! It can now be found here on your publish list`,
     DELETE_LATEST_VERSION: () =>
       `Your book was deleted. Your previously published version will now be visible to readers.`,
     SEND_RESET_EMAIL: () =>

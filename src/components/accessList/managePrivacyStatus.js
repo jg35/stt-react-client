@@ -1,4 +1,5 @@
 import { Button, FormLabel, Title, Text } from "~/components/_styled";
+import { getTranslation } from "~/lib/util";
 
 function PrivacyOption({ title, description, active, onClick }) {
   return (
@@ -34,7 +35,9 @@ export default function ManagePrivacyStatus({
             onClick={() => setPrivacyStatus("PUBLIC")}
             active={privacyStatus === "PUBLIC"}
             title="Public 🌎 "
-            description="Visible to anyone that knows your handle"
+            description={getTranslation(
+              "components.accessList.managePrivacyStatus.description.public"
+            )}
           />
         </div>
 
@@ -43,7 +46,9 @@ export default function ManagePrivacyStatus({
             onClick={() => setPrivacyStatus("PRIVATE")}
             active={privacyStatus === "PRIVATE"}
             title="Private 🔒"
-            description="Readers added to your share list will login with their email and a login token."
+            description={getTranslation(
+              "components.accessList.managePrivacyStatus.description.private"
+            )}
           />
         </div>
       </div>

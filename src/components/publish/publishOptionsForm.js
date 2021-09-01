@@ -1,6 +1,7 @@
 import { FormInput, FormLabel, Title } from "~/components/_styled";
 import DatePicker from "~/components/capture/datepicker";
 import FormError from "~/components/formError";
+import { getTranslation } from "~/lib/util";
 
 export default function PublishOptionsForm({
   values,
@@ -15,8 +16,7 @@ export default function PublishOptionsForm({
       style={{ maxWidth: "768px" }}
     >
       <Title>
-        Lets start with a few bits of information to help eReaders and other
-        devices understand your book
+        {getTranslation("components.publish.publishOptionsForm.details")}
       </Title>
 
       <div className="form-control w-full">

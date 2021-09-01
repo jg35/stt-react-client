@@ -9,6 +9,7 @@ import {
 import Modal from "~/components/modal";
 import { UPDATE_USER } from "~/lib/gql";
 import { useMutation } from "@apollo/client";
+import { getTranslation } from "~/lib/util";
 
 export default function OnlineToggle({ isOnline, userId, isPublic }) {
   const [updateUser, { data, loading }] = useMutation(UPDATE_USER);
@@ -56,8 +57,9 @@ export default function OnlineToggle({ isOnline, userId, isPublic }) {
         <div className="py-6 px-3 h-auto bg-white flex flex-col  mb-12">
           {isOnline ? (
             <Text css="mb-0 text-center">
-              While your book is offline, readers will no longer have access to
-              your book.
+              {getTranslation(
+                "components.publish.onlineToggle.offline.description"
+              )}
             </Text>
           ) : (
             <BookPrivacyStatus

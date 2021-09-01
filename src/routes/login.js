@@ -12,6 +12,7 @@ import OAuthLogin from "~/components/auth/oAuthLogin";
 import useToastMessage from "~/hooks/useToastMessage";
 import usePageTitle from "~/hooks/usePageTitle";
 import { Card, Title, Text, Grid, Container } from "~/components/_styled";
+import { getTranslation } from "~/lib/util";
 
 export default function Login() {
   usePageTitle("Login");
@@ -81,10 +82,10 @@ export default function Login() {
             size="headline"
             css="my-4 text-center brand text-5xl md:text-6xl"
           >
-            Stories To Tell
+            {getTranslation("routes.login.app.name")}
           </Title>
           <Text size="large" css="text-center">
-            The easy way to create your life story
+            {getTranslation("routes.login.app.slogan")}
           </Text>
 
           <EmailFormWrapper

@@ -82,15 +82,10 @@ export default function PublishNewVersion() {
         });
         // Redirect to publish view
         history.push("/publish");
-        setSuccess(
-          "You've succesfully published your book! It can now be found here on your publish list."
-        );
+        setSuccess({ ref: "PUBLISHED_VERSION" });
         resolve();
       } catch (e) {
-        setError(
-          e,
-          "Something went wrong when publishing your book. Please try again"
-        );
+        setError(e, { ref: "PUBLISH_VERSION" });
         reject(e);
       }
     });

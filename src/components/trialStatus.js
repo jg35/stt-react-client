@@ -3,6 +3,7 @@ import { UIContext } from "~/app";
 import { Button } from "~/components/_styled";
 import Svg from "~/components/svg";
 import { getTrialDaysRemaining, getNumAsWord } from "~/lib/util";
+import { getTranslation } from "../lib/util";
 
 export default function TrialStatus({
   expiry,
@@ -42,8 +43,10 @@ export default function TrialStatus({
           )
         }
       >
-        {showExpiry && `${trialDaysRemaining} days remaining - `}
-        choose a subscription
+        {showExpiry &&
+          getTranslation("components.trialStatus.status", [
+            { key: "TRIAL_DAYS_REMAINING", value: trialDaysRemaining },
+          ])}
       </Button>
       {window.innerWidth < 768 && !isBillingView && (
         <Button

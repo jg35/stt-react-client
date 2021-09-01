@@ -14,6 +14,7 @@ import Modal from "~/components/modal";
 import { Formik } from "formik";
 import { DeleteAccountSchema } from "~/lib/yup";
 import FormError from "~/components/formError";
+import { getTranslation } from "~/lib/util";
 
 export default function ManageAccount({ dbUser }) {
   const logout = useLogout();
@@ -34,11 +35,11 @@ export default function ManageAccount({ dbUser }) {
       <Title size="compact">Delete my account</Title>
 
       <Text>
-        If you would like to keep your book online and preserve your data
-        consider cancelling your subscription instead. Published books will stay
-        online regardless of your subscription status.
+        {getTranslation("components.settings.manageAccount.delete.description")}
       </Text>
-      <Text>If you want to delete your account, click below.</Text>
+      <Text>
+        {getTranslation("components.settings.manageAccount.delete.continue")}
+      </Text>
       <Button css="w-auto" onClick={() => setShowDeleteAccountModal(true)}>
         Delete my account
       </Button>
@@ -49,20 +50,7 @@ export default function ManageAccount({ dbUser }) {
         <Title>Delete your account</Title>
 
         <Text>
-          Has it really come to this? We will be sad to see you go.
-          <br />
-          <br />
-          Proceeding will cancel any active subscription and schedule your
-          account for deletion in <strong>14 days</strong>.
-          <br />
-          <br />
-          All of your data will be <strong>permanently deleted</strong> and your
-          book will no longer accessible online. If you want to keep your book
-          online, consider cancelling your subscription instead.
-          <br />
-          <br />
-          If you change your mind, login within the next 14 days to restore your
-          account.
+          {getTranslation("components.settings.manageAccount.delete.plea")}
         </Text>
         <Formik
           initialValues={DeleteAccountSchema.cast()}

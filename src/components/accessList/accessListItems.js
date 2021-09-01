@@ -1,5 +1,6 @@
 import { Button, ClickToCopy, Text, Title, Grid } from "~/components/_styled";
 import Svg from "~/components/svg";
+import { getTranslation } from "~/lib/util";
 
 export default function AccessListItems({ items, removeAccessToken }) {
   return (
@@ -8,8 +9,7 @@ export default function AccessListItems({ items, removeAccessToken }) {
         Readers
       </Title>
       <Text css="mb-6">
-        When your book is private, readers will login using their email and
-        login token.
+        {getTranslation("components.accessList.accessListItems.description")}
       </Text>
       {items.length > 0 && (
         <ul className="my-6">
