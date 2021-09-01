@@ -1,4 +1,5 @@
 import { gql } from "@apollo/client";
+import { versionFragment } from "./_fragments";
 
 export const ACTION_DELETE_USER = gql`
   mutation {
@@ -72,6 +73,14 @@ export const ACTION_STRIPE_FETCH_PRICES = gql`
       id
       interval
       amount
+    }
+  }
+`;
+
+export const ACTION_VIEW_OLD_VERSION = gql`
+  mutation ($versionId: Int!) {
+    action_stt_view_old_version(versionId: $versionId) {
+      version
     }
   }
 `;

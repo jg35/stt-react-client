@@ -51,15 +51,13 @@ export default function OnlineToggle({ isOnline, userId, isPublic }) {
       </div>
       <Modal size="sm" isOpen={showModal} close={() => setShowModal(false)}>
         <Title css="mb-6 text-center" size="large">
-          {isOnline
-            ? "This will take your book offline..."
-            : "This will put your book online..."}
+          {isOnline ? "Take book offline..." : "Put book online..."}
         </Title>
-        <div className="py-6 px-3 h-auto rounded shadow bg-white justify-center flex flex-col items-center text-darkGray mb-12">
+        <div className="py-6 px-3 h-auto bg-white flex flex-col  mb-12">
           {isOnline ? (
-            <Text css="font-medium mb-0 text-gray text-lg text-center">
-              While your book is offline, readers will be logged out from their
-              session.
+            <Text css="mb-0 text-center">
+              While your book is offline, readers will no longer have access to
+              your book.
             </Text>
           ) : (
             <BookPrivacyStatus
@@ -72,14 +70,12 @@ export default function OnlineToggle({ isOnline, userId, isPublic }) {
         <Grid colSpan={["col-span-12 md:col-span-6"]}>
           <Button
             variant="minimal"
-            size="large"
             css="w-full"
             onClick={() => setShowModal(false)}
           >
             Cancel
           </Button>
           <Button
-            size="large"
             variant="secondary"
             css="w-full"
             onClick={proceed}

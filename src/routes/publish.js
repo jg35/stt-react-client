@@ -53,15 +53,17 @@ export default function Publish() {
   }
 
   useEffect(() => {
-    if (data) {
-      const published = data.stt_version.filter((v) => v.generated);
-      if (!published.length) {
+    if (data && dbUser) {
+      const hasPublished = dbUser.publishedVersion !== null;
+      if (!hasPublished) {
         history.push("/publish/new");
       } else {
         setVersions(data.stt_version.filter((v) => v.generated));
       }
     }
-  }, [data]);
+  }, [data, dbUser]);
+
+  const hasPrevVersions = versions.slice(1).length >= 1;
 
   return (
     <Page scrollable>
@@ -71,43 +73,49 @@ export default function Publish() {
           css="w-auto whitespace-nowrap mt-2 mb-4"
           onClick={() => history.push("/publish/new")}
         >
-          Create book
+          Create new version
         </Button>
       </div>
 
       {versions.length > 0 ? (
         <Grid
-          colSpan={[
-            "col-span-12 md:col-span-8 md:col-start-3 lg:col-span-6 lg:col-start-0 ",
-            "col-span-12 lg:col-span-6",
-          ]}
+          colSpan={
+            hasPrevVersions
+              ? [
+                  "col-span-12 md:col-span-8 md:col-start-3 lg:col-span-6 lg:col-start-0 ",
+                  "col-span-12 lg:col-span-6",
+                ]
+              : ["col-span-12"]
+          }
         >
           <LatestVersion
             handle={dbUser && dbUser.publicHandle}
-            onlyVersion={versions.length === 1}
-            version={versions[0]}
+            onlyVersion={!hasPrevVersions}
+            version={versions.find((v) => v.id === dbUser.publishedVersion)}
             deleteVersion={deleteVersionHandler}
             userId={user.id}
             bookOnline={dbUser !== null ? dbUser.bookOnline : false}
           />
-          <Card css="w-full" style={{ height: "fit-content" }}>
-            {versions.slice(1).length >= 1 && (
+          {hasPrevVersions && (
+            <Card css="w-full" style={{ height: "fit-content" }}>
               <>
                 <Title
                   tag="h3"
                   css="mb-4 md:text-center lg:text-left pb-2"
                   size="compact"
                 >
-                  Previous versions
+                  Other versions
                 </Title>
 
                 <VersionList
-                  publishedVersions={versions.slice(1)}
+                  publishedVersions={versions.filter(
+                    (v) => v.id !== dbUser.publishedVersion
+                  )}
                   deleteVersion={deleteVersionHandler}
                 />
               </>
-            )}
-          </Card>
+            </Card>
+          )}
         </Grid>
       ) : (
         <PublishSkeleton />

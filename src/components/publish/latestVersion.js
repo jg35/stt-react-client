@@ -1,13 +1,9 @@
 import { coverImages } from "~/lib/imageSizes";
 import Image from "~/components/image";
-import DeleteModal from "~/components/deleteModal";
 import Svg from "~/components/svg";
 import {
-  ClickToCopy,
   LinkButton,
   ManagePrivacySettingsButton,
-  Paper,
-  Title,
   BookPrivacyStatus,
 } from "~/components/_styled";
 
@@ -23,12 +19,20 @@ import { getTranslation } from "~/lib/util";
 import OnlineToggle from "~/components/publish/onlineToggle";
 import AccessListStatusButton from "~/components/accessList/accessListStatusButton";
 
-export default function LatestVersion({ version, handle, userId, bookOnline }) {
+export default function LatestVersion({
+  version,
+  handle,
+  userId,
+  bookOnline,
+  onlyVersion,
+}) {
   const shareUrl = `${process.env.REACT_APP_READER_VIEW_URL}/${handle}`;
   const isPublic = version.privacyStatus === "PUBLIC";
   return (
     <>
-      <div className="flex justify-center lg:justify-end">
+      <div
+        className={`flex justify-center ${!onlyVersion && "lg:justify-end"}`}
+      >
         <div className="bg-white rounded-lg shadow-xl border-l-8 border-r-8 border-t-4 border-b-4 border-white">
           <div className="w-full flex bg-white py-2 justify-between items-center rounded-t-lg">
             <div>

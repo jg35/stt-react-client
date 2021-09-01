@@ -39,7 +39,7 @@ export default function PublishNewVersion() {
   const { data } = useCustomQuery(FETCH_CREATE_BOOK_VIEW, { userId: true });
 
   useEffect(() => {
-    if (publishStep === 1 && data && data.stt_version) {
+    if (data && data.stt_version) {
       const version = VersionSchema(publishStep, token).cast({
         ...cloneDeep(data.stt_version[0]),
         publicHandle: (dbUser && dbUser.publicHandle) || "",

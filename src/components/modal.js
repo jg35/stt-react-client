@@ -62,7 +62,7 @@ export default function Modal({
       >
         <div
           ref={modal}
-          className={`${sizeStyles} overflow-scroll relative`}
+          className={`${sizeStyles} max-h-full overflow-scroll relative`}
           id="capture-form-wrapper"
           style={{ ...(size === "full" ? { maxWidth: "1400px" } : {}) }}
           onClick={(e) => e.stopPropagation()}
@@ -71,7 +71,7 @@ export default function Modal({
             {canClose && (
               <Button
                 size="compact"
-                css="fixed lg:absolute lg:shadow-none right-4 top-6 md:top-8 md:right-6 lg:top-4 w-auto font-medium rounded-2xl z-50 shadow bg-white"
+                css="fixed lg:absolute lg:shadow-none right-4 top-6 md:top-8 md:right-6 lg:top-4 w-auto font-medium rounded-2xl z-40 shadow bg-white"
                 variant="minimal"
                 onClick={() => {
                   if (formIsDirty) {

@@ -12,6 +12,7 @@ export const userFragment = gql`
     subscriptionMeta
     publicHandle
     bookOnline
+    publishedVersion
     deleteAt
     versions {
       id
@@ -60,6 +61,7 @@ export const versionFragment = gql`
     theme
     title
     userId
+    version
   }
 `;
 

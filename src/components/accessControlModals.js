@@ -4,7 +4,7 @@ import { DateTime } from "luxon";
 import UserDetailsForm from "~/components/onboarding/userDetailsForm";
 import Tutorial from "~/components/tutorial";
 import { AuthContext } from "~/components/authWrap";
-import DeleteModal from "~/components/deleteModal";
+import ProceedModal from "~/components/proceedModal";
 import { UIContext } from "~/app";
 import UserPaymentForm from "~/components/userPaymentForm";
 import UserVerifyForm from "~/components/userVerifyForm";
@@ -84,9 +84,9 @@ export default function AccessControlModals() {
 
   if (uiState.deleteModal.show) {
     return (
-      <DeleteModal
+      <ProceedModal
         title={uiState.deleteModal.title}
-        onDelete={() => {
+        onProceed={() => {
           updateUiState(
             {
               deleteModal: {
