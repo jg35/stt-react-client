@@ -51,6 +51,7 @@ export default function Header({ minimal = false, scrollable = false }) {
               </NavLink>
               <NavLink
                 className="nav-link"
+                id="nav-item-edit"
                 to="/edit"
                 activeClassName="nav-link-active"
               >
@@ -58,6 +59,7 @@ export default function Header({ minimal = false, scrollable = false }) {
               </NavLink>
               <NavLink
                 className="nav-link"
+                id="nav-item-publish"
                 to={`/publish${dbUser.versions.length === 1 ? "/new" : ""}`}
                 activeClassName="nav-link-active"
               >

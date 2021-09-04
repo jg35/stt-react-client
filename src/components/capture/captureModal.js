@@ -35,6 +35,7 @@ export default function CaptureModal({
   const [getQuestions, { data: questionData }] = useLazyQuery(FETCH_QUESTIONS);
   const { uiState, updateUiState } = useContext(UIContext);
   const { showModal, item, originatesFromQuestion } = uiState.capture;
+  const tutorialInProgress = uiState.tutorialStep !== -1;
 
   useEffect(() => {
     if (originatesFromQuestion) {
@@ -218,6 +219,7 @@ export default function CaptureModal({
       {(props) => {
         return (
           <Modal
+            canClose={!tutorialInProgress}
             formIsDirty={props.dirty}
             isOpen={true}
             close={closeModal}
@@ -231,7 +233,9 @@ export default function CaptureModal({
               <Title size="large" style={{ maxWidth: "calc(100% - 4rem)" }}>
                 {formTitle}
               </Title>
-              {item.type === "EVENT" && <EventForm {...props} />}
+              {item.type === "EVENT" && (
+                <EventForm {...props} tutorialInProgress={tutorialInProgress} />
+              )}
 
               {item.type === "TEXT" && (
                 <TextForm
@@ -239,10 +243,15 @@ export default function CaptureModal({
                   editContent={!editView}
                   originatesFromQuestion={originatesFromQuestion}
                   closeModal={closeModal}
+                  tutorialInProgress={tutorialInProgress}
                 />
               )}
               {item.type === "CHAPTER" && (
-                <ChapterForm {...props} editContent={!editView} />
+                <ChapterForm
+                  {...props}
+                  editContent={!editView}
+                  tutorialInProgress={tutorialInProgress}
+                />
               )}
               {item.type === "PHOTO" && (
                 <PhotoForm {...props} closeForm={closeModal} />

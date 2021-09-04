@@ -48,7 +48,7 @@ export default function DatePicker({
       dateFormat="dd/MM/yyyy"
       placeholderText={placeholder}
       popperPlacement={popperPlacement}
-      className={`${error && "border border-red rounded"}`}
+      className={`${error && "border border-red rounded z-50"}`}
       selected={jsDate}
       onChange={(newDate) => {
         if (newDate) {

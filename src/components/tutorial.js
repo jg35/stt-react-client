@@ -1,20 +1,17 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import { AuthContext } from "~/components/authWrap";
 import { Button, Text } from "~/components/_styled";
-import LoadingSpinner from "~/components/loadingSpinner";
+import { useHistory } from "react-router";
 
 import { FETCH_TIMELINE_VIEW, UPDATE_USER } from "~/lib/gql";
 import { UIContext } from "~/app";
-import {
-  steps,
-  getNextStep,
-  getWidgetStyle,
-  getArrowStyle,
-} from "~/lib/tutorial";
+import { steps, getNextStep } from "~/lib/tutorial";
 import useToastMessage from "~/hooks/useToastMessage";
 
 export default function Tutorial() {
+  const history = useHistory();
+  const tutorialWidgetRef = useRef(null);
   const { setError } = useToastMessage();
   const [updateUser, { loading: updateUserLoading }] = useMutation(UPDATE_USER);
   const {
@@ -27,74 +24,42 @@ export default function Tutorial() {
     },
   });
   const [currentStep, setCurrentStep] = useState(null);
-  const [arrowStyle, setArrowStyle] = useState({});
-  const [widgetStyle, setWidgetStyle] = useState({});
-
-  function stepStyleHandler(nextStep) {
-    let widgetStyle = {};
-    let arrowStyle = {};
-    if (nextStep.position) {
-      widgetStyle = {
-        left: nextStep.position.x,
-        transform: "translateX(-50%) translateY(-50%)",
-        top: nextStep.position.y,
-      };
-    } else {
-      // Find anchor / callout elements in the dom
-      const calloutEl =
-        nextStep.calloutEl || document.querySelector(nextStep.calloutSelector);
-      const anchorEl =
-        nextStep.anchorEl || document.querySelector(nextStep.anchorSelector);
-      if (calloutEl && anchorEl) {
-        widgetStyle = getWidgetStyle(anchorEl, nextStep.anchorPosition);
-        arrowStyle = getArrowStyle(
-          calloutEl,
-          nextStep.anchorPosition,
-          widgetStyle
-        );
-      }
-    }
-    setArrowStyle(arrowStyle);
-    setWidgetStyle(widgetStyle);
-  }
 
   useEffect(() => {
     getTimeline();
   }, []);
 
   useEffect(() => {
-    // Check
-    if (data && uiState) {
-      // Check whether to move to the next step
-      const nextStep = getNextStep(steps, data, uiState);
+    if (data) {
+      // Check whether to move to the next stesp
+      const nextStep = getNextStep(steps, data, uiState, history);
       if (
-        !currentStep ||
-        (!currentStep.last && nextStep.step !== currentStep.step)
+        (nextStep && !currentStep) ||
+        (nextStep && currentStep && nextStep.step !== currentStep.step)
       ) {
-        // Wait for DOM
+        // End the current step
         if (currentStep) {
           currentStep.end(data, uiState, updateUiState);
         }
-        nextStep.init(data, uiState, updateUiState);
         // Set the next step
         setCurrentStep(nextStep);
       }
     }
-  }, [data, uiState]);
+  }, [data, uiState, history]);
 
   useEffect(() => {
-    if (currentStep) {
-      setTimeout(() => {
-        stepStyleHandler(currentStep);
-      });
+    // Current step has changed and should be initialised
+    if (currentStep && tutorialWidgetRef.current) {
+      currentStep.init(data, uiState, updateUiState, tutorialWidgetRef.current);
     }
-  }, [currentStep]);
+  }, [currentStep, tutorialWidgetRef]);
 
-  function saveCurrentStep(step) {
-    if (step > steps.length) {
+  function proceed(nextStep) {
+    if (nextStep > steps.length) {
       endTutorial();
     } else {
-      updateUiState({ tutorialStep: step });
+      console.log("set step", nextStep);
+      updateUiState({ tutorialStep: nextStep });
     }
   }
 
@@ -120,90 +85,92 @@ export default function Tutorial() {
           tutorialStep: -1,
           activeCaptureIndex: null,
         });
+        setCurrentStep(null);
       },
     }).catch((e) => setError(e, { ref: "UPDATE", params: ["account"] }));
   }
 
-  if (loading) {
+  let tutorialStyles = "z-50 bg-white border-lightGray border animate-fade-in";
+
+  if (!currentStep) {
     return null;
   }
 
-  if (currentStep) {
-    return (
-      <>
+  if (currentStep.fixed) {
+    tutorialStyles += " min-w-full h-40 py-2 px-4";
+  } else {
+    if (currentStep.xl) {
+      tutorialStyles += " w-96 p-4";
+    } else {
+      tutorialStyles += " w-60 p-2";
+    }
+    tutorialStyles += " h-auto rounded-lg shadow-2xl";
+  }
+
+  return (
+    <div
+      id="tooltip"
+      ref={tutorialWidgetRef}
+      style={{ maxWidth: "80%" }}
+      className={tutorialStyles}
+    >
+      <div className="flex flex-col justify-between h-full">
         <div
-          className={`z-50 widget-callout hidden absolute animate-fade-in ${
-            currentStep.anchorPosition === "LEFT"
-              ? "widget-callout--before"
-              : "widget-callout--after"
-          }`}
-          style={arrowStyle}
-        ></div>
-        <div
-          style={widgetStyle}
-          className={`absolute z-50 rounded shadow-xl bg-white border-2 border-black h-auto flex flex-col justify-between animate-fade-in ${
-            currentStep.xl ? "w-96 p-4" : "w-60 p-2"
+          className={`flex justify-between font-medium ${
+            currentStep.xl ? "text-base" : "text-sm"
           }`}
         >
-          <div
-            className={`flex justify-between font-medium ${
-              currentStep.xl ? "text-base" : "text-sm"
-            }`}
-          >
-            <span>{currentStep.title}</span>
-            <span>
-              {currentStep.step}/{steps.length}
-            </span>
-          </div>
-          <div>
-            <Text
-              variant={currentStep.xl ? "large" : "default"}
-              css={`
-                ${currentStep.xl ? "mt-4" : "mt-2"}
-              `}
-            >
-              {typeof currentStep.body === "function"
-                ? currentStep.body(data, uiState)
-                : currentStep.body}
-            </Text>
-          </div>
-          <div className="flex justify-between">
-            <div>
-              {!currentStep.last && (
-                <Button size="compact" css="w-auto" onClick={endTutorial}>
-                  <LoadingSpinner
-                    loading={updateUserLoading}
-                    css="mr-2 h-4 w-4"
-                  />
-                  {updateUserLoading ? "Updating..." : "Skip tutorial"}
-                </Button>
-              )}
-            </div>
-
-            <Button
-              variant="secondary"
-              size="compact"
-              css="w-auto"
-              disabled={currentStep.async}
-              onClick={() => saveCurrentStep(currentStep.step + 1)}
-            >
-              {currentStep.async || updateUserLoading ? (
-                <span className="flex">
-                  <LoadingSpinner
-                    loading={true}
-                    color="white"
-                    css="mr-2 h-4 w-4"
-                  />{" "}
-                  {updateUserLoading ? "Saving..." : "Waiting..."}
-                </span>
-              ) : (
-                currentStep.nextText
-              )}
-            </Button>
-          </div>
+          <span>{currentStep.title}</span>
+          <span>
+            {currentStep.step}/{steps.length}
+          </span>
         </div>
-      </>
-    );
-  }
-  return null;
+        <div>
+          <Text
+            variant={currentStep.xl ? "large" : "default"}
+            css={`
+              ${currentStep.xl ? "mt-4" : "mt-2"}
+            `}
+          >
+            {typeof currentStep.body === "function"
+              ? currentStep.body(data, uiState)
+              : currentStep.body}
+          </Text>
+        </div>
+        <div className="flex justify-between">
+          <div>
+            {!currentStep.last && (
+              <Button
+                size="compact"
+                css="w-auto"
+                onClick={endTutorial}
+                inProgress={updateUserLoading}
+              >
+                {updateUserLoading ? "Updating..." : "Skip tutorial"}
+              </Button>
+            )}
+          </div>
+
+          <Button
+            variant="cta"
+            size="compact"
+            css="w-auto"
+            disabled={currentStep.async}
+            inProgress={currentStep.async || updateUserLoading}
+            onClick={() => proceed(currentStep.step + 1)}
+          >
+            {currentStep.async || updateUserLoading
+              ? updateUserLoading
+                ? "Saving..."
+                : "Waiting..."
+              : currentStep.nextText}
+          </Button>
+        </div>
+      </div>
+
+      {currentStep.referenceElSelector && (
+        <div id="arrow" data-popper-arrow></div>
+      )}
+    </div>
+  );
 }

@@ -39,6 +39,7 @@ export default function EditableFragment({ fragment, saveFragment }) {
       onMouseLeave={debounce(() => setShowInfo(false), 200)}
       className="relative"
       data-preview-fragment-id={fragment.id}
+      data-preview-fragment-type={fragment.type}
     >
       <div
         className={`${

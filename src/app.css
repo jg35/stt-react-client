@@ -19,11 +19,12 @@
     font-weight: 500;
     font-style: normal;
   }
-  .brand {
+  .brand,
+  .brand * {
     font-family: professor, sans-serif;
     font-weight: 400;
     font-style: normal;
-    line-height: 2;
+    line-height: 1;
   }
   button:active,
   button:focus {
@@ -208,9 +209,9 @@
 }
 
 #page.tutorial-step-1,
-#page.tutorial-step-24,
+#page.tutorial-step-23,
 #page.blur {
-  filter: blur(4px) grayscale(0.4);
+  filter: blur(1.5px) grayscale(0.4);
   transition: filter 200ms ease-out;
 }
 
@@ -232,65 +233,46 @@
   pointer-events: all !important;
 }
 
-#page.tutorial-step-7 #form-text-editor,
-#page.tutorial-step-7 #form-submit-btn,
-#page.tutorial-step-7 #form-datepicker,
-#page.tutorial-step-7 .react-datepicker__tab-loop * {
-  pointer-events: all !important;
-}
-
-#page.tutorial-step-10 #section-actions-event {
+#page.tutorial-step-9 .js-section-actions-event-btn {
   pointer-events: all !important;
 }
 
 /* Event form */
-#page.tutorial-step-11 #form-text-input,
-#page.tutorial-step-11 #form-submit-btn,
-#page.tutorial-step-11 #form-datepicker,
-#page.tutorial-step-11 .react-datepicker__tab-loop * {
+#page.tutorial-step-10 #form-text-input,
+#page.tutorial-step-10 #form-submit-btn,
+#page.tutorial-step-10 #form-datepicker,
+#page.tutorial-step-10 .react-datepicker__tab-loop * {
   pointer-events: all !important;
 }
 
-#page.tutorial-step-14 #section-actions-photo {
+#page.tutorial-step-13 .js-section-actions-photo-btn {
   pointer-events: all !important;
 }
 
-#page.tutorial-step-15 #uppy-dashboard,
-#page.tutorial-step-15 #form-text-input,
-#page.tutorial-step-15 #form-submit-btn,
-#page.tutorial-step-15 #form-datepicker,
-#page.tutorial-step-15 .react-datepicker__tab-loop * {
+#page.tutorial-step-14 #uppy-dashboard,
+#page.tutorial-step-14 #form-text-input,
+#page.tutorial-step-14 #form-submit-btn,
+#page.tutorial-step-14 #form-datepicker,
+#page.tutorial-step-14 .react-datepicker__tab-loop * {
   pointer-events: all !important;
 }
 
-#page.tutorial-step-16 #show-preview-btn {
+#page.tutorial-step-15 .js-section-actions-chapter-btn {
   pointer-events: all !important;
 }
 
-#page.tutorial-step-18 #section-actions-chapter {
+#page.tutorial-step-16 #form-text-input,
+#page.tutorial-step-16 #form-submit-btn,
+#page.tutorial-step-16 #form-datepicker,
+#page.tutorial-step-16 .react-datepicker__tab-loop * {
   pointer-events: all !important;
 }
 
-#page.tutorial-step-19 #form-text-input,
-#page.tutorial-step-19 #form-submit-btn,
-#page.tutorial-step-19 #form-datepicker,
-#page.tutorial-step-19 .react-datepicker__tab-loop * {
+#page.tutorial-step-17 #nav-item-edit {
   pointer-events: all !important;
 }
 
-#page.tutorial-step-20 #preview-container {
-  pointer-events: all !important;
-}
-
-#page.tutorial-step-21 #menu button * {
-  pointer-events: none !important;
-}
-
-#page.tutorial-step-22 #privacy-fragment-btn {
-  pointer-events: all !important;
-}
-
-#page.tutorial-step-23 #preview-container {
+#page.tutorial-step-20 div[data-preview-fragment-type="TEXT"] * {
   pointer-events: all !important;
 }
 
@@ -374,4 +356,42 @@ figcaption.preview-element {
 }
 .toggle-checkbox:checked + .toggle-label {
   @apply bg-green;
+}
+
+#arrow {
+  position: absolute;
+  height: 0;
+  width: 0;
+}
+
+#tooltip[data-popper-placement^="top"] > #arrow,
+#tooltip[data-popper-placement^="bottom"] > #arrow {
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+}
+
+#tooltip[data-popper-placement^="top"] > #arrow {
+  bottom: -11px;
+  border-top: 10px solid #cac7c7;
+}
+
+#tooltip[data-popper-placement^="bottom"] > #arrow {
+  top: -11px;
+  border-bottom: 10px solid #cac7c7;
+}
+
+#tooltip[data-popper-placement^="left"] > #arrow,
+#tooltip[data-popper-placement^="right"] > #arrow {
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+}
+
+#tooltip[data-popper-placement^="left"] > #arrow {
+  right: -11px;
+  border-left: 10px solid #cac7c7;
+}
+
+#tooltip[data-popper-placement^="right"] > #arrow {
+  left: -11px;
+  border-right: 10px solid #cac7c7;
 }

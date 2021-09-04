@@ -9,6 +9,7 @@ export default function TextEditor({
   value,
   onKeyUp,
   error,
+  autoFocus = true,
 }) {
   const [placeholder] = useState(
     placeholders[Math.floor(Math.random() * placeholders.length) + 1]
@@ -20,7 +21,7 @@ export default function TextEditor({
         id="form-text-editor"
         name={name}
         onKeyUp={onKeyUp}
-        autoFocus
+        autoFocus={autoFocus}
         onFocus={function (e) {
           var val = e.target.value;
           e.target.value = "";

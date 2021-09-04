@@ -42,7 +42,7 @@ export default function CaptureHeader({ init }) {
   const {
     authState: { user },
   } = useContext(AuthContext);
-  const { updateUiState } = useContext(UIContext);
+  const { updateUiState, uiState } = useContext(UIContext);
   const [getCaptureHeader, { loading, data }] = useLazyQuery(
     SECTION_FETCH_CAPTURE_HEADER,
     {
@@ -156,7 +156,7 @@ export default function CaptureHeader({ init }) {
           {questionVisible && (
             <div
               id="question-panel"
-              className="animate-fade-in bg-white rounded p-2 border-2 shadow pl-3"
+              className="animate-fade-in bg-white rounded px-2 pt-2 border-2 shadow pl-3"
             >
               <div className="flex justify-between items-center h-10">
                 <Title css="mb-0 w-4/5 truncate">{currentQuestion.title}</Title>

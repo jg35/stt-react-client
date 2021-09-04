@@ -10,7 +10,6 @@ import colors from "~/lib/colors";
 
 export default function SectionCaptureActions({ show, date, index }) {
   const { updateUiState, uiState } = useContext(UIContext);
-  // Until activeCaptureIndex has a value, captureActive is always null
   const [captureActive, setCaptureActive] = useState(null);
   const showActionToggle = window.innerWidth < 768;
 
@@ -22,13 +21,6 @@ export default function SectionCaptureActions({ show, date, index }) {
     : "animate-fade-out";
 
   useEffect(() => {
-    if (index === 0) {
-      console.log(captureActive);
-    }
-  }, [captureActive]);
-
-  useEffect(() => {
-    console.log(uiState.activeCaptureIndex);
     if (uiState.activeCaptureIndex !== null) {
       setCaptureActive(
         !isNaN(uiState.activeCaptureIndex)
@@ -38,6 +30,7 @@ export default function SectionCaptureActions({ show, date, index }) {
     }
   }, [uiState.activeCaptureIndex]);
 
+  const animate = uiState.tutorialStep === -1;
   let showActions = false;
   if (showActionToggle) {
     // On mobile, show actions based on capture active
@@ -47,12 +40,16 @@ export default function SectionCaptureActions({ show, date, index }) {
   }
 
   return (
-    <div id="section-actions" className="flex">
+    <div
+      id="section-actions"
+      data-section-actions-index={index}
+      className="flex"
+    >
       <div className={`flex-1 flex justify-end`}>
         <Button
-          id="section-actions-event"
-          css={`whitespace-nowrap rounded-lg mr-1 xs:mr-2 w-auto ${
-            showActions ? animateIn : animateOut
+          id={`section-actions-event-index-${index}`}
+          css={`js-section-actions-event-btn whitespace-nowrap rounded-lg mr-1 xs:mr-2 w-auto ${
+            animate && (showActions ? animateIn : animateOut)
           }`}
           size="compact"
           onClick={() =>
@@ -64,10 +61,9 @@ export default function SectionCaptureActions({ show, date, index }) {
         </Button>
 
         <Button
-          id="section-actions-memory"
           size="compact"
           css={`whitespace-nowrap rounded-lg mr-1 xs:mr-2 w-auto ${
-            showActions ? animateIn : animateOut
+            animate && (showActions ? animateIn : animateOut)
           }`}
           onClick={() =>
             updateUiState(
@@ -85,10 +81,10 @@ export default function SectionCaptureActions({ show, date, index }) {
         </Button>
 
         <Button
-          id="section-actions-photo"
+          id={`section-actions-photo-index-${index}`}
           size="compact"
-          css={`whitespace-nowrap rounded-lg mr-1 xs:mr-2 w-auto ${
-            showActions ? animateIn : animateOut
+          css={`js-section-actions-photo-btn whitespace-nowrap rounded-lg mr-1 xs:mr-2 w-auto ${
+            animate && (showActions ? animateIn : animateOut)
           }`}
           onClick={() =>
             updateUiState(
@@ -106,10 +102,10 @@ export default function SectionCaptureActions({ show, date, index }) {
         </Button>
 
         <Button
-          id="section-actions-chapter"
+          id={`section-actions-chapter-index-${index}`}
           size="compact"
-          css={`whitespace-nowrap rounded-lg mr-1 xs:mr-2 w-auto ${
-            showActions ? animateIn : animateOut
+          css={`js-section-actions-chapter-btn whitespace-nowrap rounded-lg mr-1 xs:mr-2 w-auto ${
+            animate && (showActions ? animateIn : animateOut)
           }`}
           onClick={() =>
             updateUiState(

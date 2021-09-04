@@ -84,7 +84,7 @@ export default function Login() {
           >
             {getTranslation("routes.login.app.name")}
           </Title>
-          <Text size="large" css="text-center">
+          <Text size="large" css="text-center mb-4">
             {getTranslation("routes.login.app.slogan")}
           </Text>
 

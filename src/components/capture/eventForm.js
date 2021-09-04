@@ -8,12 +8,13 @@ export default function EventForm({
   values,
   errors,
   setFieldValue,
+  tutorialInProgress,
 }) {
   return (
     <>
       <div className="form-control">
         <FormInput
-          autoFocus
+          autoFocus={!tutorialInProgress}
           name="title"
           placeholder="Enter event title"
           handleChange={handleChange}

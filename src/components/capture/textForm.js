@@ -10,6 +10,7 @@ export default function TextForm({
   errors,
   setFieldValue,
   originatesFromQuestion,
+
   editContent = true,
   closeModal,
 }) {
@@ -42,17 +43,6 @@ export default function TextForm({
       )}
 
       <Grid colSpan={[`col-span-12 ${!editContent && "col-span-6"}`]}>
-        <FormField label="Title" error={errors.title}>
-          <FormInput
-            name="title"
-            placeholder="Title your memory (for reference)"
-            handleChange={handleChange}
-            handleBlur={handleBlur}
-            value={values.title}
-            error={errors.title}
-          />
-        </FormField>
-
         <FormField label="Date" error={errors.date}>
           <DatePicker
             error={errors.date}
@@ -64,6 +54,17 @@ export default function TextForm({
               setFieldValue("date", date);
               setFieldValue("dateType", dateType);
             }}
+          />
+        </FormField>
+
+        <FormField label="Title" error={errors.title}>
+          <FormInput
+            name="title"
+            placeholder="Title your memory (for reference)"
+            handleChange={handleChange}
+            handleBlur={handleBlur}
+            value={values.title}
+            error={errors.title}
           />
         </FormField>
       </Grid>
