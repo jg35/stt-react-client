@@ -384,7 +384,7 @@ export const steps = [
     last: true,
     title: "Congratulations! 🎉",
     nextText: "Close tutorial",
-    body: `And there you have it. You're now ready to start creating your book, full of wonderful memories. If you ever extra help, look for the help icon in the main menu`,
+    body: `And there you have it. You're now ready to start creating your book, full of wonderful memories. If you ever need extra help, look for the help button in the main menu`,
     isComplete: (data, uiState) => uiState.tutorialStep > 23,
     async: false,
   }),
@@ -442,6 +442,7 @@ function registerStep({
     title,
     xl,
     init: function (data, uiState, updateUiState, popperEl) {
+      console.log("Init step: ", this.step);
       if (this.preInit) {
         this.preInit(data, uiState, updateUiState);
       }

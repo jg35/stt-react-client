@@ -53,6 +53,7 @@ export default function AccessControlModals() {
       }
 
       setShowTutorial(dbUser.onboarding === false);
+
       setShowUserForm(!dbUser.dob && !dbUser.location);
     }
   }, [dbUser]);

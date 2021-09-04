@@ -82,7 +82,7 @@ export default function Tutorial() {
             event: null,
           },
           showPreview: false,
-          tutorialStep: -1,
+          tutorialStep: 1000,
           activeCaptureIndex: null,
         });
         setCurrentStep(null);
