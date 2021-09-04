@@ -30,7 +30,7 @@ export default function SectionCaptureActions({ show, date, index }) {
     }
   }, [uiState.activeCaptureIndex]);
 
-  const animate = uiState.tutorialStep === -1;
+  const animate = uiState.tutorialStep === -1 || uiState.tutorialStep === 1000;
   let showActions = false;
   if (showActionToggle) {
     // On mobile, show actions based on capture active
