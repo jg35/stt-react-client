@@ -72,6 +72,11 @@ export default function UserPaymentForm({
         id="user-payment-form"
       >
         <input type="hidden" name="customerId" value={stripeCustomerId}></input>
+        <input
+          type="hidden"
+          name="appId"
+          value={process.env.REACT_APP_HASURA_APP_ID}
+        ></input>
         <input type="hidden" name="priceId" value={priceId}></input>
         <input
           type="hidden"

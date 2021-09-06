@@ -6,8 +6,8 @@ import {
   scrollToTimelineTop,
 } from "~/lib/timeline";
 
-export function getNextStep(steps, data, uiState, history) {
-  return steps.find((step) => !step.isComplete(data, uiState, history));
+export function getNextStep(steps, data, uiState, pathName) {
+  return steps.find((step) => !step.isComplete(data, uiState, pathName));
 }
 
 function setPopper(referenceEl, popperEl, options) {
@@ -37,6 +37,16 @@ function setPopper(referenceEl, popperEl, options) {
     };
   }
 
+  const showAfterChangeModifier = {
+    name: "showAfterChange",
+    enabled: true,
+    phase: "afterWrite",
+    fn({ state }) {
+      state.elements.popper.children[0].classList.remove("hidden");
+      state.elements.popper.children[0].classList.add("animate-fade-in");
+    },
+  };
+
   if (referenceEl || virtualEl) {
     createPopper(referenceEl || virtualEl, popperEl, {
       placement: options.placement,
@@ -44,15 +54,19 @@ function setPopper(referenceEl, popperEl, options) {
         ? [
             {
               name: "arrow",
+              options: {
+                padding: 8,
+              },
             },
             {
               name: "offset",
               options: {
-                offset: [12, 12],
+                offset: [0, 12],
               },
             },
+            showAfterChangeModifier,
           ]
-        : [],
+        : [showAfterChangeModifier],
     });
   }
 }
@@ -74,6 +88,7 @@ export const steps = [
     title: "Timeline",
     body: "Here we are in the timeline view. This is the place where you will add content to your book and where you will spend most of your time.",
     isComplete: (data, uiState) => uiState.tutorialStep > 2,
+    placement: "bottom-start",
     async: false,
     referenceElSelector: "#nav-item-timeline",
   }),
@@ -116,6 +131,8 @@ export const steps = [
     async: true,
     fixed: IS_MOBILE,
     saveProgress: false,
+    referenceElSelector: "#form-text-editor",
+    placement: "bottom-end",
     preInit: function () {
       if (IS_MOBILE) {
         const modalWrapper = document.querySelector("#capture-form-wrapper");
@@ -129,6 +146,7 @@ export const steps = [
     body: `Brilliant! You’ve now added your first memory.`,
     isComplete: (data, uiState) => uiState.tutorialStep > 7,
     async: false,
+    placement: "top-start",
     referenceElSelector: "div[data-fragment-id]",
     preInit: function (data) {
       scrollToFragment(data.stt_fragment[0].id, false);
@@ -140,7 +158,7 @@ export const steps = [
     body: `You’ll notice in each time period there are other actions you can perform, like adding events and photos.`,
     isComplete: (data, uiState) => uiState.tutorialStep > 8,
     async: false,
-    placement: "top",
+    placement: "top-start",
     preInit: function (data, uiState, updateUiState) {
       const activeCaptureIndex = findActiveSectionIndex(
         data.stt_fragment[0].id
@@ -151,7 +169,7 @@ export const steps = [
         },
         false
       );
-      this.referenceElSelector = `div[data-section-actions-index="${activeCaptureIndex}"]`;
+      this.referenceElSelector = `div[data-section-actions-index="${activeCaptureIndex}"] button`;
     },
   }),
   registerStep({
@@ -166,7 +184,7 @@ export const steps = [
       uiState.capture.showModal === true ||
       uiState.tutorialStep > 9,
     async: true,
-    placement: "top",
+    placement: "top-end",
     preInit: function (data, uiState, updateUiState) {
       const activeCaptureIndex = findActiveSectionIndex(
         data.stt_fragment[0].id
@@ -189,6 +207,8 @@ export const steps = [
       data.stt_userEvent.length > 0 || uiState.tutorialStep > 10,
     async: true,
     saveProgress: false,
+    referenceElSelector: "#capture-form-wrapper",
+    placement: "bottom-end",
     preInit: function (data) {
       if (IS_MOBILE) {
         const modalWrapper = document.querySelector("#capture-form-wrapper");
@@ -204,7 +224,7 @@ export const steps = [
       `Great, here's the event in your timeline. Next to your event you will also see "World events."`,
     isComplete: (data, uiState) => uiState.tutorialStep > 11,
     async: false,
-    placement: "top",
+    placement: "top-start",
     preInit: function (data) {
       const eventId = data.stt_userEvent[0].id;
       scrollToEvent(eventId, false);
@@ -218,7 +238,7 @@ export const steps = [
       `Like your own events, world events are visible across your timeline to help you date existing memories and remember new ones.`,
     isComplete: (data, uiState) => uiState.tutorialStep > 12,
     async: false,
-    placement: "top",
+    placement: "top-start",
     preInit: function (data) {
       const eventId = data.stt_userEvent[0].id;
       scrollToEvent(eventId, false);
@@ -242,7 +262,7 @@ export const steps = [
       uiState.tutorialStep > 13 ||
       uiState.capture.showModal === true,
     async: true,
-    placement: "top",
+    placement: "top-end",
     preInit: function (data, uiState, updateUiState) {
       const activeCaptureIndex = findActiveSectionIndex(
         data.stt_userEvent[0].id,
@@ -265,16 +285,15 @@ export const steps = [
     async: true,
     saveProgress: false,
     preInit: function () {
-      if (IS_MOBILE) {
-        const max = "calc(var(--vh, 1vh) * 100 - 180px)";
-        const uppyInnerMax = "calc(var(--vh, 1vh) * 100 - 250px)";
-        document.querySelector("#capture-form-wrapper").style["max-height"] =
-          max;
-        document.querySelector(".uppy-Dashboard-inner").style["max-height"] =
-          uppyInnerMax;
-      }
+      // if (IS_MOBILE) {
+      const max = "calc(var(--vh, 1vh) * 100 - 180px)";
+      const uppyInnerMax = "calc(var(--vh, 1vh) * 100 - 400px)";
+      document.querySelector("#capture-form-wrapper").style["max-height"] = max;
+      document.querySelector(".uppy-Dashboard-inner").style["max-height"] =
+        uppyInnerMax;
+      // }
     },
-    fixed: IS_MOBILE,
+    fixed: true,
   }),
 
   registerStep({
@@ -283,12 +302,13 @@ export const steps = [
     body: `Every book needs a chapter so let's create one. ${
       IS_MOBILE ? "Tap the bookmark icon" : 'Click "Add chapter"'
     } to continue`,
+    placement: "top-end",
     isComplete: (data, uiState) =>
       data.stt_fragment.find((f) => f.type === "CHAPTER") ||
       uiState.capture.showModal === true ||
       uiState.tutorialStep > 15,
     async: true,
-    placement: "top",
+    placement: "top-end",
     preInit: function (data, uiState, updateUiState) {
       const photoId = data.stt_fragment.find((f) => f.type === "PHOTO").id;
       const activeCaptureIndex = findActiveSectionIndex(photoId);
@@ -309,8 +329,9 @@ export const steps = [
       uiState.tutorialStep > 16,
     async: true,
     saveProgress: false,
+    referenceElSelector: "#capture-form-wrapper",
+    placement: "bottom-end",
     preInit: function () {
-      // TODO - on desktop need to set the referenceElSelector
       if (IS_MOBILE) {
         const max = "calc(var(--vh, 1vh) * 100 - 180px)";
         document.querySelector("#capture-form-wrapper").style["max-height"] =
@@ -321,35 +342,38 @@ export const steps = [
   }),
   registerStep({
     step: 17,
-    title: "Edit view",
+    title: "Editing",
     body: (data, uiState) =>
       `Fantastic, all of the different bits are there in our timeline now. Let’s head over to the edit view now`,
-    placement: "bottom",
-    isComplete: (data, uiState, history) =>
-      history.location.pathname.includes("edit") || uiState.tutorialStep > 17,
+    placement: "bottom-start",
+    isComplete: (data, uiState, pathName) =>
+      pathName.includes("edit") || uiState.tutorialStep > 17,
     async: true,
     referenceElSelector: "#nav-item-edit",
   }),
   registerStep({
     step: 18,
-    title: "Edit view",
+    title: "Editing",
+    saveProgress: false,
     body: (data, uiState) =>
       `The edit view shows you what your book will look like in it’s final form and makes it easy to make quick edits to your memories`,
     isComplete: (data, uiState) => uiState.tutorialStep > 18,
-    // referenceElSelector: ".js-preview-scroll-container",
+    placement: "top",
+    referenceElSelector: ".js-preview-scroll-container div",
   }),
   registerStep({
     step: 19,
-    title: "Edit view",
+    title: "Editing",
     body: (data, uiState) =>
       `The memories in your book are ordered chronologically. You can update the date to move something that isn't in the right place`,
     isComplete: (data, uiState) => uiState.tutorialStep > 19,
+    placement: "top",
     referenceElSelector: ".js-preview-scroll-container > div",
     nextText: "Okay",
   }),
   registerStep({
     step: 20,
-    title: "Edit view",
+    title: "Editing",
     body: (data, uiState) =>
       `To edit one of your memories, click into it and start typing. When you're done click or tab outside the entry to save your changes`,
     isComplete: (data, uiState) => uiState.tutorialStep > 20,
@@ -363,17 +387,18 @@ export const steps = [
   }),
   registerStep({
     step: 21,
-    title: "Edit view",
+    title: "Editing",
     body: (data, uiState) =>
       `In general think of the timeline view as where you capture content for your book, and the edit view as where you do most of your writing`,
     isComplete: (data, uiState) => uiState.tutorialStep > 21,
-    // referenceElSelector: "#nav-item-edit",
+    placement: "bottom-start",
+    referenceElSelector: `a[href="/"]`,
   }),
   registerStep({
     step: 22,
-    title: "Publish view",
+    title: "Publishing",
     body: (data, uiState) =>
-      `The only thing left to cover is the publish view, but let's talk about that later when you're ready to create your first version.`,
+      `The only thing left is publishing, but let's cover that later when you're ready to create your first book.`,
     isComplete: (data, uiState) => uiState.tutorialStep > 22,
     referenceElSelector: "#nav-item-publish",
     nextText: "Finish",
@@ -382,9 +407,9 @@ export const steps = [
     step: 23,
     xl: true,
     last: true,
-    title: "Congratulations! 🎉",
+    title: "The end",
     nextText: "Close tutorial",
-    body: `And there you have it. You're now ready to start creating your book, full of wonderful memories. If you ever need extra help, look for the help button in the main menu`,
+    body: `You're now ready to start filling out your timeline with all of your memories. If you need help with any of the topics covered, look for the help button in the main menu`,
     isComplete: (data, uiState) => uiState.tutorialStep > 23,
     async: false,
   }),

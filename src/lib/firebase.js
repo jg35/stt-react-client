@@ -34,16 +34,18 @@ export const refreshToken = () => {
   return Promise.reject();
 };
 
-export const onAuthStateChange = (syncUserMutation, authState) => {
+export const onAuthStateChange = (syncUserMutation) => {
   // console.log("set onAuthStateChangeListener");
   const onAuthStateChangeListener = firebase
     .auth()
     .onAuthStateChanged(async (user) => {
+      const emailForm = authStateVar().emailForm;
       if (user) {
+        console.log(user.toJSON());
         fbAuthUser = user;
-        if (authState.emailForm) {
+        if (emailForm) {
           await user.updateProfile({
-            displayName: `${authState.emailForm.firstName} ${authState.emailForm.lastName}`,
+            displayName: `${emailForm.firstName} ${emailForm.lastName}`,
           });
         }
         const { displayName, email, emailVerified, uid: id, photoURL } = user;

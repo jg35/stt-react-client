@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import { AuthContext } from "~/components/authWrap";
-import { Button, Text } from "~/components/_styled";
+import { Button, Text, Grid } from "~/components/_styled";
 import { useHistory } from "react-router";
 
 import { FETCH_TIMELINE_VIEW, UPDATE_USER } from "~/lib/gql";
@@ -12,6 +12,7 @@ import useToastMessage from "~/hooks/useToastMessage";
 export default function Tutorial() {
   const history = useHistory();
   const tutorialWidgetRef = useRef(null);
+  const tutorialWidgetRefInner = useRef(null);
   const { setError } = useToastMessage();
   const [updateUser, { loading: updateUserLoading }] = useMutation(UPDATE_USER);
   const {
@@ -30,9 +31,15 @@ export default function Tutorial() {
   }, []);
 
   useEffect(() => {
+    checkNextStep();
+    return history.listen((location) => {
+      checkNextStep(location.pathname);
+    });
+  }, [data, uiState, history]);
+
+  function checkNextStep(pathName = history.location.pathname) {
     if (data) {
-      // Check whether to move to the next stesp
-      const nextStep = getNextStep(steps, data, uiState, history);
+      const nextStep = getNextStep(steps, data, uiState, pathName);
       if (
         (nextStep && !currentStep) ||
         (nextStep && currentStep && nextStep.step !== currentStep.step)
@@ -41,11 +48,17 @@ export default function Tutorial() {
         if (currentStep) {
           currentStep.end(data, uiState, updateUiState);
         }
+
         // Set the next step
+        if (tutorialWidgetRefInner.current) {
+          tutorialWidgetRefInner.current.classList.add("hidden");
+          tutorialWidgetRefInner.current.classList.remove("animate-fade-in");
+        }
+
         setCurrentStep(nextStep);
       }
     }
-  }, [data, uiState, history]);
+  }
 
   useEffect(() => {
     // Current step has changed and should be initialised
@@ -90,7 +103,7 @@ export default function Tutorial() {
     }).catch((e) => setError(e, { ref: "UPDATE", params: ["account"] }));
   }
 
-  let tutorialStyles = "z-50 bg-white border-lightGray border animate-fade-in";
+  let tutorialStyles = "z-50 bg-white border-lightGray border";
 
   if (!currentStep) {
     return null;
@@ -114,7 +127,10 @@ export default function Tutorial() {
       style={{ maxWidth: "80%" }}
       className={tutorialStyles}
     >
-      <div className="flex flex-col justify-between h-full">
+      <div
+        ref={tutorialWidgetRefInner}
+        className="flex flex-col justify-between h-full hidden"
+      >
         <div
           className={`flex justify-between font-medium ${
             currentStep.xl ? "text-base" : "text-sm"
@@ -137,12 +153,11 @@ export default function Tutorial() {
               : currentStep.body}
           </Text>
         </div>
-        <div className="flex justify-between">
+        <Grid colSpan={["col-span-6"]}>
           <div>
             {!currentStep.last && (
               <Button
                 size="compact"
-                css="w-auto"
                 onClick={endTutorial}
                 inProgress={updateUserLoading}
               >
@@ -154,7 +169,6 @@ export default function Tutorial() {
           <Button
             variant="cta"
             size="compact"
-            css="w-auto"
             disabled={currentStep.async}
             inProgress={currentStep.async || updateUserLoading}
             onClick={() => proceed(currentStep.step + 1)}
@@ -165,10 +179,9 @@ export default function Tutorial() {
                 : "Waiting..."
               : currentStep.nextText}
           </Button>
-        </div>
+        </Grid>
       </div>
-
-      {currentStep.referenceElSelector && (
+      {!currentStep.fixed && currentStep.referenceElSelector && (
         <div id="arrow" data-popper-arrow></div>
       )}
     </div>

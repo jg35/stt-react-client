@@ -230,7 +230,11 @@ export default function CaptureModal({
               className="h-full overflow-scroll"
               onSubmit={props.handleSubmit}
             >
-              <Title size="large" style={{ maxWidth: "calc(100% - 4rem)" }}>
+              <Title
+                size="large"
+                css="inline-block"
+                style={{ maxWidth: "calc(100% - 4rem)" }}
+              >
                 {formTitle}
               </Title>
               {item.type === "EVENT" && (

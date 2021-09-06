@@ -46,6 +46,10 @@ export default function TrialStatus({
         {showExpiry &&
           getTranslation("components.trialStatus.status", [
             { key: "TRIAL_DAYS_REMAINING", value: trialDaysRemaining },
+            {
+              key: "TRIAL_DAYS_REMAINING_PLURAL",
+              value: trialDaysRemaining > 1 ? "s" : "",
+            },
           ])}
       </Button>
       {window.innerWidth < 768 && !isBillingView && (

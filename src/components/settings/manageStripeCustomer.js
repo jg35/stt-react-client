@@ -71,6 +71,11 @@ export default function ManageStripeCustomer({
           method="POST"
         >
           <input type="hidden" name="customerId" value={stripeCustomerId} />
+          <input
+            type="hidden"
+            name="appId"
+            value={process.env.REACT_APP_HASURA_APP_ID}
+          ></input>
           <Button type="submit" css="w-full md:w-auto">
             Manage my subscription
           </Button>

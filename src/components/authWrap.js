@@ -36,16 +36,15 @@ export default function AuthWrap({ children }) {
   const [syncUser] = useMutation(ACTION_SYNC_USER);
   const [updateUser] = useMutation(UPDATE_USER);
   const { setSuccess } = useToastMessage();
-
   const [authState, setAuthState] = useState(handleSetAuth(data.authState));
   let isLogin = useRouteMatch("/login");
 
   useEffect(() => {
-    let onAuthStateChangeListener = onAuthStateChange(syncUser, authState);
+    let onAuthStateChangeListener = onAuthStateChange(syncUser);
     return () => {
       onAuthStateChangeListener = undefined;
     };
-  }, [authState]);
+  }, []);
 
   useEffect(() => {
     if (hasuraUser) {

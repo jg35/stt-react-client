@@ -17,7 +17,7 @@
   "components.settings.manageStripeCustomer.plan.active": "You're on our <strong>{{PLAN_NAME}}</strong> plan. Your next payment of £{{NEXT_PAYMENT_AMOUNT}} will be taken on <strong>{{NEXT_PAYMENT_DATE}}</strong>.<br/><br/>To update payment information, manage or cancel your subscription, please click below.",
   "components.settings.manageStripeCustomer.plan.cancelAtPeriodEnd": "You're plan has been cancelled. You'll have access to Stories To Tell until <strong>{{NEXT_PAYMENT_DATE}}</strong>.<br/><br/>If you've changed your mind about cancelling, click below to manage your subscription.",
   "components.settings.manageStripeCustomer.plan.inTrial": "You're on our free trial. If you would like to continue using Stories To Tell, please subscribe below.",
-  "components.trialStatus.status": "{{TRIAL_DAYS_REMAINING}} days remaining - choose a subscription",
+  "components.trialStatus.status": "{{TRIAL_DAYS_REMAINING}} day{{TRIAL_DAYS_REMAINING_PLURAL}} left - choose a subscription",
   "components.userPaymentForm.cancelled": "Your subscription has ended. To restore access to Stories To Tell, please choose a subscription.",
   "components.userPaymentForm.inTrial": "Your trial has expired. If you have enjoyed Stories To Tell, please choose a subscription.",
   "components.userPaymentForm.openMessage": "We hope you've enjoyed Stories To Tell so far, and have the beginnings of a wonderful book to share with your loved ones.<br/><br/>If you'd like to stick around once your trial is up, become a permanent member today by choosing a subscription below.",

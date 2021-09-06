@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { authStateVar } from "~/lib/apollo";
 import {
   createAccountWithEmail,
   loginWithEmail,
@@ -21,7 +22,6 @@ export default function Login() {
   const history = useHistory();
   const {
     authState: { status },
-    updateAuthState,
   } = useContext(AuthContext);
 
   function getEmailSubmitHandler() {
@@ -36,7 +36,8 @@ export default function Login() {
         return (form) => {
           // Don't resolve promise, as we need to wait until status changes before redirect
           return new Promise((resolve, reject) => {
-            updateAuthState({ emailForm: form });
+            authStateVar({ status: "loading", emailForm: form });
+
             setTimeout(() =>
               createAccountWithEmail(form)
                 .then()
@@ -78,15 +79,18 @@ export default function Login() {
         css="mt-2"
       >
         <Card css="md:p-6">
-          <Title
-            size="headline"
-            css="my-4 text-center brand text-5xl md:text-6xl"
-          >
-            {getTranslation("routes.login.app.name")}
-          </Title>
-          <Text size="large" css="text-center mb-4">
-            {getTranslation("routes.login.app.slogan")}
-          </Text>
+          <a href={process.env.REACT_APP_HOME_URL} title="Go to homepage">
+            <Title
+              size="headline"
+              css="my-4 text-center brand text-5xl md:text-6xl"
+            >
+              {getTranslation("routes.login.app.name")}
+            </Title>
+
+            <Text size="large" css="text-center mb-4">
+              {getTranslation("routes.login.app.slogan")}
+            </Text>
+          </a>
 
           <EmailFormWrapper
             setAuthView={setAuthView}
