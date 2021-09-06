@@ -45,7 +45,6 @@ export const FragmentSchema = Yup.object().shape({
     .nullable(),
   questionId: Yup.number().default(null).nullable(),
   tag: Yup.string().default(null).nullable(),
-  title: Yup.string().ensure(),
   type: Yup.string().required(),
 });
 

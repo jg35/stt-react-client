@@ -37,7 +37,7 @@ export default function UppyDashboard({
         maxNumberOfFiles: 1,
       },
       meta: {
-        appRef: "stt",
+        appId: process.env.REACT_APP_HASURA_APP_ID,
         folder: imageFolder,
       },
       autoProceed: false,
