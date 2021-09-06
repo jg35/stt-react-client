@@ -78,11 +78,6 @@ export default function UserPaymentForm({
           value={process.env.REACT_APP_HASURA_APP_ID}
         ></input>
         <input type="hidden" name="priceId" value={priceId}></input>
-        <input
-          type="hidden"
-          name="appId"
-          value={process.env.REACT_APP_HASURA_APP_ID}
-        />
 
         <Button type="submit" variant="cta" css="mt-4" disabled={!priceId}>
           Continue
