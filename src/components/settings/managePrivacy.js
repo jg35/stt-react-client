@@ -10,18 +10,16 @@ import { useCustomQuery } from "~/hooks/useCustomApollo";
 import {
   SECTION_FETCH_PRIVACY_SETTINGS,
   SECTION_UPDATE_PRIVACY_SETTINGS,
-  ACTION_REGENERATE_TOKEN,
 } from "~/lib/gql";
 import { PrivacySettingsForm, AccessTokenPrivateSchema } from "~/lib/yup";
 import { omit } from "lodash";
 
 export default function ManagePrivacy({ dbUser }) {
-  const { setError, setSuccess } = useToastMessage();
+  const { setError } = useToastMessage();
   const { data, loading } = useCustomQuery(SECTION_FETCH_PRIVACY_SETTINGS, {
     userId: true,
   });
   const [updatePrivacySettings] = useMutation(SECTION_UPDATE_PRIVACY_SETTINGS);
-  const [regeneratePublicToken] = useMutation(ACTION_REGENERATE_TOKEN);
 
   if (loading || !data) {
     return (
@@ -29,31 +27,6 @@ export default function ManagePrivacy({ dbUser }) {
         <Skeleton height="h-12" spacing="my-2" wrapSpacing="my-0" repeat={10} />
       </div>
     );
-  }
-
-  function regeneratePublicTokenHandler(accessToken) {
-    return regeneratePublicToken({
-      variables: {
-        id: accessToken.id,
-      },
-      update(cache, { data }) {
-        const regenerateToken = data.action_stt_regenerate_token.token;
-        cache.writeFragment({
-          id: cache.identify(accessToken),
-          data: {
-            token: regenerateToken,
-          },
-          fragment: gql`
-            fragment token on stt_accessToken {
-              token
-            }
-          `,
-        });
-        setSuccess({ ref: "UPDATE", params: ["public share link"] });
-      },
-    }).catch((e) => {
-      setError(e, { ref: "UPDATE", params: ["public share link"] });
-    });
   }
 
   return (

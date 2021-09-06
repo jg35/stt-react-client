@@ -1,6 +1,4 @@
 import { gql } from "@apollo/client";
-import { versionFragment } from "./_fragments";
-
 export const ACTION_DELETE_USER = gql`
   mutation {
     action_stt_delete_user {
@@ -27,11 +25,16 @@ export const ACTION_CHECK_HANDLE_AVAILABILITY = gql`
   }
 `;
 
-export const ACTION_REGENERATE_TOKEN = gql`
-  mutation ($id: Int!) {
-    action_stt_regenerate_token(id: $id) {
+export const ACTION_GENERATE_TOKEN = gql`
+  mutation ($email: String!) {
+    action_stt_generate_token(email: $email) {
       id
       token
+      email
+      userId
+      createdAt
+      updatedAt
+      type
     }
   }
 `;

@@ -12,15 +12,6 @@ export const FETCH_PRIVATE_ACCESS_TOKENS = gql`
   }
 `;
 
-export const INSERT_ACCESS_TOKEN = gql`
-  ${accessTokenFragment}
-  mutation ($data: stt_accessToken_insert_input!) {
-    insert_stt_accessToken_one(object: $data) {
-      ...accessTokenFragment
-    }
-  }
-`;
-
 export const DELETE_ACCESS_TOKEN = gql`
   mutation ($id: Int!) {
     delete_stt_accessToken_by_pk(id: $id) {
