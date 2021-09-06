@@ -19,12 +19,6 @@ export default function Fragment({ fragment }) {
       {fragment.type === "TEXT" && <MemoryFragment fragment={fragment} />}
 
       {fragment.type === "PHOTO" && <PhotoFragment fragment={fragment} />}
-
-      {fragment.type === "TEXT" && fragment.title && (
-        <div className="bg-lightestGray text-black font-medium rounded-b py-1 px-2">
-          {fragment.title}
-        </div>
-      )}
     </div>
   );
 }

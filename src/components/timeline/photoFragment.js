@@ -3,7 +3,7 @@ import { useGetSignedImageUrl } from "~/hooks/useSignedUrl";
 
 export default function PhotoFragment({ fragment }) {
   const url = useGetSignedImageUrl(fragment.mediaUrl + imageSizes["1400px"]);
-  const caption = fragment.title || fragment.mediaCaption;
+  const caption = fragment.mediaCaption;
   return (
     <div
       className="flex-1 relative rounded-b"

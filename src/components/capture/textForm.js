@@ -56,17 +56,6 @@ export default function TextForm({
             }}
           />
         </FormField>
-
-        <FormField label="Title" error={errors.title}>
-          <FormInput
-            name="title"
-            placeholder="Title your memory (for reference)"
-            handleChange={handleChange}
-            handleBlur={handleBlur}
-            value={values.title}
-            error={errors.title}
-          />
-        </FormField>
       </Grid>
     </>
   );

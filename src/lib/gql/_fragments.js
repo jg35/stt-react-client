@@ -34,7 +34,6 @@ export const eventFragment = gql`
 export const fragmentFragment = gql`
   fragment fragmentFragment on stt_fragment {
     id
-    title
     content
     date
     dateType
