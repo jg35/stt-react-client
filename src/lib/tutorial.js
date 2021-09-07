@@ -48,7 +48,7 @@ function setPopper(referenceEl, popperEl, options) {
   };
 
   if (referenceEl || virtualEl) {
-    createPopper(referenceEl || virtualEl, popperEl, {
+    createPopper(virtualEl || referenceEl, popperEl, {
       placement: options.placement,
       modifiers: referenceEl
         ? [
@@ -86,7 +86,7 @@ export const steps = [
   registerStep({
     step: 2,
     title: "Timeline",
-    body: "Here we are in the timeline view. This is the place where you will add content to your book and where you will spend most of your time.",
+    body: "Here we are in the timeline view. This is the place where you will add content to your book and spend most of your time.",
     isComplete: (data, uiState) => uiState.tutorialStep > 2,
     placement: "bottom-start",
     async: false,
@@ -95,7 +95,7 @@ export const steps = [
   registerStep({
     step: 3,
     title: "Questions",
-    body: "This is the questions panel. When you’re not sure where to begin, answering questions is a great way to start uncovering old memories",
+    body: "This is the questions panel. When you’re not sure where to begin, answering questions is a great way to start uncovering old memories.",
     isComplete: (data, uiState) => uiState.tutorialStep > 3,
     async: false,
     referenceElSelector: "#question-panel",
@@ -146,7 +146,7 @@ export const steps = [
     body: `Brilliant! You’ve now added your first memory.`,
     isComplete: (data, uiState) => uiState.tutorialStep > 7,
     async: false,
-    placement: "top-start",
+    placement: "top",
     referenceElSelector: "div[data-fragment-id]",
     preInit: function (data) {
       scrollToFragment(data.stt_fragment[0].id, false);
@@ -155,11 +155,21 @@ export const steps = [
   registerStep({
     step: 8,
     title: "Timeline",
-    body: `You’ll notice in each time period there are other actions you can perform, like adding events and photos.`,
+    body: `By default your timeline is divided into years, but you can also view in seasons and months`,
     isComplete: (data, uiState) => uiState.tutorialStep > 8,
+    async: false,
+    referenceElSelector: "#time-period-selector button",
+    placement: "top-start",
+  }),
+  registerStep({
+    step: 9,
+    title: "Timeline",
+    body: `You’ll notice in each time period there are other actions you can perform, like adding events and photos`,
+    isComplete: (data, uiState) => uiState.tutorialStep > 9,
     async: false,
     placement: "top-start",
     preInit: function (data, uiState, updateUiState) {
+      scrollToFragment(data.stt_fragment[0].id, false);
       const activeCaptureIndex = findActiveSectionIndex(
         data.stt_fragment[0].id
       );
@@ -173,16 +183,16 @@ export const steps = [
     },
   }),
   registerStep({
-    step: 9,
+    step: 10,
     title: "Event",
     body: (data, uiState) =>
       `Let's add an event now. Events are any big moments in your life - perhaps when you moved house or changed job. Click ${
         IS_MOBILE ? "on the calendar icon" : "'Add event'"
-      } to continue`,
+      } to continue.`,
     isComplete: (data, uiState) =>
       data.stt_userEvent.length > 0 ||
       uiState.capture.showModal === true ||
-      uiState.tutorialStep > 9,
+      uiState.tutorialStep > 10,
     async: true,
     placement: "top-end",
     preInit: function (data, uiState, updateUiState) {
@@ -199,12 +209,12 @@ export const steps = [
     },
   }),
   registerStep({
-    step: 10,
+    step: 11,
     title: "Your first event",
     body: (data, uiState) =>
-      `Think of something memorable that has hapepend in your life. Enter a title, set the date and click “Add” to create your event`,
+      `Think of something memorable that has hapepend in your life. Enter a title, set the date and click “Add” to create your event.`,
     isComplete: (data, uiState) =>
-      data.stt_userEvent.length > 0 || uiState.tutorialStep > 10,
+      data.stt_userEvent.length > 0 || uiState.tutorialStep > 11,
     async: true,
     saveProgress: false,
     referenceElSelector: "#capture-form-wrapper",
@@ -218,11 +228,11 @@ export const steps = [
     fixed: IS_MOBILE,
   }),
   registerStep({
-    step: 11,
+    step: 12,
     title: "Timeline",
     body: (data, uiState) =>
       `Great, here's the event in your timeline. Next to your event you will also see "World events."`,
-    isComplete: (data, uiState) => uiState.tutorialStep > 11,
+    isComplete: (data, uiState) => uiState.tutorialStep > 12,
     async: false,
     placement: "top-start",
     preInit: function (data) {
@@ -232,11 +242,11 @@ export const steps = [
     },
   }),
   registerStep({
-    step: 12,
+    step: 13,
     title: "Timeline",
     body: (data, uiState) =>
       `Like your own events, world events are visible across your timeline to help you date existing memories and remember new ones.`,
-    isComplete: (data, uiState) => uiState.tutorialStep > 12,
+    isComplete: (data, uiState) => uiState.tutorialStep > 13,
     async: false,
     placement: "top-start",
     preInit: function (data) {
@@ -251,15 +261,15 @@ export const steps = [
     },
   }),
   registerStep({
-    step: 13,
+    step: 14,
     title: "Timeline",
     body: (data, uiState) =>
       `Let’s try adding a photo now. ${
         IS_MOBILE ? "Tap the camera icon" : 'Click "Add photo"'
-      } to continue`,
+      } to continue.`,
     isComplete: (data, uiState) =>
       data.stt_fragment.find((f) => f.type === "PHOTO") ||
-      uiState.tutorialStep > 13 ||
+      uiState.tutorialStep > 14 ||
       uiState.capture.showModal === true,
     async: true,
     placement: "top-end",
@@ -275,13 +285,13 @@ export const steps = [
     },
   }),
   registerStep({
-    step: 14,
+    step: 15,
     title: "Capture - Photo",
     body: (data, uiState) =>
       `Upload your image, enter a caption (if you like) and date your photo. Click “Add” to save your photo.`,
     isComplete: (data, uiState) =>
       data.stt_fragment.find((f) => f.type === "PHOTO") ||
-      uiState.tutorialStep > 14,
+      uiState.tutorialStep > 15,
     async: true,
     saveProgress: false,
     preInit: function () {
@@ -297,16 +307,16 @@ export const steps = [
   }),
 
   registerStep({
-    step: 15,
+    step: 16,
     title: "Chapters",
     body: `Every book needs a chapter so let's create one. ${
       IS_MOBILE ? "Tap the bookmark icon" : 'Click "Add chapter"'
-    } to continue`,
+    } to continue.`,
     placement: "top-end",
     isComplete: (data, uiState) =>
       data.stt_fragment.find((f) => f.type === "CHAPTER") ||
       uiState.capture.showModal === true ||
-      uiState.tutorialStep > 15,
+      uiState.tutorialStep > 16,
     async: true,
     placement: "top-end",
     preInit: function (data, uiState, updateUiState) {
@@ -320,13 +330,13 @@ export const steps = [
     },
   }),
   registerStep({
-    step: 16,
+    step: 17,
     title: "Your first chapter",
     body: (data, uiState) =>
       `Enter a name and click "Add" to save your chapter`,
     isComplete: (data, uiState) =>
       data.stt_fragment.find((f) => f.type === "CHAPTER") ||
-      uiState.tutorialStep > 16,
+      uiState.tutorialStep > 17,
     async: true,
     saveProgress: false,
     referenceElSelector: "#capture-form-wrapper",
@@ -341,42 +351,42 @@ export const steps = [
     fixed: IS_MOBILE,
   }),
   registerStep({
-    step: 17,
+    step: 18,
     title: "Editing",
     body: (data, uiState) =>
-      `Fantastic, all of the different bits are there in our timeline now. Let’s head over to the edit view now`,
+      `Fantastic, all of the different bits are there in our timeline now. Let’s head over to the edit view now.`,
     placement: "bottom-start",
     isComplete: (data, uiState, pathName) =>
-      pathName.includes("edit") || uiState.tutorialStep > 17,
+      pathName.includes("edit") || uiState.tutorialStep > 18,
     async: true,
     referenceElSelector: "#nav-item-edit",
   }),
   registerStep({
-    step: 18,
+    step: 19,
     title: "Editing",
     saveProgress: false,
     body: (data, uiState) =>
       `The edit view shows you what your book will look like in it’s final form and makes it easy to make quick edits to your memories`,
-    isComplete: (data, uiState) => uiState.tutorialStep > 18,
-    placement: "top",
-    referenceElSelector: ".js-preview-scroll-container div",
-  }),
-  registerStep({
-    step: 19,
-    title: "Editing",
-    body: (data, uiState) =>
-      `The memories in your book are ordered chronologically. You can update the date to move something that isn't in the right place`,
     isComplete: (data, uiState) => uiState.tutorialStep > 19,
     placement: "top",
-    referenceElSelector: ".js-preview-scroll-container > div",
-    nextText: "Okay",
+    referenceElSelector: ".js-preview-scroll-container div",
   }),
   registerStep({
     step: 20,
     title: "Editing",
     body: (data, uiState) =>
-      `To edit one of your memories, click into it and start typing. When you're done click or tab outside the entry to save your changes`,
+      `Memories in your book are ordered chronologically. If something isn't in the right place, just update the date accordingly.`,
     isComplete: (data, uiState) => uiState.tutorialStep > 20,
+    placement: "top",
+    referenceElSelector: ".js-preview-scroll-container > div",
+    nextText: "Okay",
+  }),
+  registerStep({
+    step: 21,
+    title: "Editing",
+    body: (data, uiState) =>
+      `To edit one of your memories, click into it and start typing. When you're done click or tab outside the entry to save your changes.`,
+    isComplete: (data, uiState) => uiState.tutorialStep > 21,
     nextText: "Okay",
     placement: "bottom",
     preInit: function (data) {
@@ -386,31 +396,33 @@ export const steps = [
     },
   }),
   registerStep({
-    step: 21,
-    title: "Editing",
+    step: 22,
+    title: "🧠",
     body: (data, uiState) =>
-      `In general think of the timeline view as where you capture content for your book, and the edit view as where you do most of your writing`,
-    isComplete: (data, uiState) => uiState.tutorialStep > 21,
-    placement: "bottom-start",
-    referenceElSelector: `a[href="/"]`,
+      `In general think of the timeline view as where you capture content for your book, and the edit view as where you do most of your writing.`,
+    isComplete: (data, uiState) => uiState.tutorialStep > 22,
+    xl: true,
+    nextText: "Got it",
+    // placement: "bottom-start",
+    // referenceElSelector: `a[href="/"]`,
   }),
   registerStep({
-    step: 22,
+    step: 23,
     title: "Publishing",
     body: (data, uiState) =>
-      `The only thing left is publishing, but let's cover that later when you're ready to create your first book.`,
-    isComplete: (data, uiState) => uiState.tutorialStep > 22,
+      `The only thing left is to publish your book, but let's cross that bridge a bit later!`,
+    isComplete: (data, uiState) => uiState.tutorialStep > 23,
     referenceElSelector: "#nav-item-publish",
     nextText: "Finish",
   }),
   registerStep({
-    step: 23,
+    step: 24,
     xl: true,
     last: true,
     title: "The end",
     nextText: "Close tutorial",
-    body: `You're now ready to start filling out your timeline with all of your memories. If you need help with any of the topics covered, look for the help button in the main menu`,
-    isComplete: (data, uiState) => uiState.tutorialStep > 23,
+    body: `You're now ready to start filling out your timeline with all of your memories. If you need help with any of the topics covered, look for the help button in the main menu.`,
+    isComplete: (data, uiState) => uiState.tutorialStep > 24,
     async: false,
   }),
 ];

@@ -1,4 +1,4 @@
-import { Button, FormInput } from "~/components/_styled";
+import { Button, FormInput, Grid } from "~/components/_styled";
 import FormError from "~/components/formError";
 
 export default function EmailForm({
@@ -37,8 +37,8 @@ export default function EmailForm({
     <>
       <form onSubmit={handleSubmit} id="email-form">
         {authView === "CREATE_ACCOUNT" && (
-          <div className="flex">
-            <div className="pr-2">
+          <Grid colSpan={["col-span-12 md:col-span-6"]} gap="gap-y-1 gap-x-2">
+            <div>
               <FormInput
                 name="firstName"
                 placeholder="Your first name"
@@ -49,7 +49,7 @@ export default function EmailForm({
               />
               <FormError error={errors.firstName} />
             </div>
-            <div className="pl-2">
+            <div>
               <FormInput
                 name="lastName"
                 placeholder="Your last name"
@@ -60,7 +60,7 @@ export default function EmailForm({
               />
               <FormError error={errors.lastName} />
             </div>
-          </div>
+          </Grid>
         )}
         <FormInput
           name="email"

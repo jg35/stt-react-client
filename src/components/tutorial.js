@@ -113,11 +113,11 @@ export default function Tutorial() {
     tutorialStyles += " min-w-full h-40 py-2 px-4";
   } else {
     if (currentStep.xl) {
-      tutorialStyles += " w-96 p-4";
+      tutorialStyles += " w-96 p-4 h-52";
     } else {
-      tutorialStyles += " w-60 p-2";
+      tutorialStyles += " w-60 p-2 h-auto";
     }
-    tutorialStyles += " h-auto rounded-lg shadow-2xl";
+    tutorialStyles += " rounded-lg shadow-2xl";
   }
 
   return (

@@ -1,14 +1,25 @@
 import * as Yup from "yup";
+import { capitalize, startCase } from "lodash";
 import { v4 as uuid } from "uuid";
+
+import { setLocale } from "yup";
+
+setLocale({
+  mixed: {
+    required: ({ path, label }) => {
+      return capitalize(`${label || startCase(path)} is required`);
+    },
+  },
+});
 
 export const AccessTokenPrivateSchema = Yup.object().shape({
   id: Yup.number(),
-  email: Yup.string().ensure().email(),
-  type: Yup.string().default("PRIVATE"),
+  email: Yup.string().ensure().email().required(),
+  type: Yup.string().ensure().default("PRIVATE"),
 });
 
 export const PrivacySettingsForm = Yup.object().shape({
-  publicHandle: Yup.string(),
+  publicHandle: Yup.string().ensure(),
   privacyStatus: Yup.string().default("PRIVATE"),
   tokens: Yup.array().of(AccessTokenPrivateSchema).default([]),
   newToken: AccessTokenPrivateSchema,
@@ -16,15 +27,15 @@ export const PrivacySettingsForm = Yup.object().shape({
 
 export const EventSchema = Yup.object().shape({
   id: Yup.number(),
-  title: Yup.string().required("Give your event a name").default(""),
-  date: Yup.string().required("Add a date"),
+  title: Yup.string().ensure().required("Give your event a name"),
+  date: Yup.string().ensure().required("Add a date"),
   type: Yup.string().default("EVENT"),
 });
 
 export const FragmentSchema = Yup.object().shape({
   id: Yup.number(),
   content: Yup.string()
-    .default("")
+    .ensure()
     .test("content", "Add your memory", function (value) {
       if (this.parent.type !== "PHOTO") {
         return !!value;
@@ -45,12 +56,12 @@ export const FragmentSchema = Yup.object().shape({
     .nullable(),
   questionId: Yup.number().default(null).nullable(),
   tag: Yup.string().default(null).nullable(),
-  type: Yup.string().required(),
+  type: Yup.string().ensure().required(),
 });
 
 export const OnboardingSchema = Yup.object().shape({
-  location: Yup.string().default("").required("Location is required"),
-  dob: Yup.string().default("").required("Date of birth is required"),
+  location: Yup.string().ensure().required(),
+  dob: Yup.string().label("Date of birth").ensure().required(),
 });
 
 const Position = Yup.object().shape({
@@ -71,7 +82,7 @@ export const CoverElementSchema = Yup.object().shape({
 });
 
 export const CoverSchema = Yup.object().shape({
-  image: Yup.string().default(""),
+  image: Yup.string().ensure(),
   imagePosition: Position,
   imageRelativePosition: Position,
   imagePlacement: Yup.string().default("cover"),
@@ -90,22 +101,20 @@ export const VersionSchema = (publishStep, token = "") =>
     theme: ThemeSchema,
     title: Yup.string().ensure().required(),
     author: Yup.string().ensure().required(),
-    publishedAt: Yup.string().ensure().required("Publication date is required"),
+    publishedAt: Yup.string().label("Publication date").ensure().required(),
     privacyStatus: Yup.string().default("PRIVATE"),
     // Saved on user, but within version flow
-    publicHandle: Yup.string().test(
-      "handle-required",
-      "The handle is required",
-      function (value) {
+    publicHandle: Yup.string()
+      .ensure()
+      .test("handle-required", "The handle is required", function (value) {
         return publishStep !== 3 || !!value;
-      }
-    ),
+      }),
   });
 
 export const UserSettingsSchema = Yup.object()
   .shape({
-    dob: Yup.string().required("Set your date of birth").default(""),
-    location: Yup.string().required("Set your location"),
+    dob: Yup.string().required("Set your date of birth").ensure(),
+    location: Yup.string().ensure().required("Set your location"),
   })
   .noUnknown();
 
@@ -116,17 +125,20 @@ export const EmailForgotSchema = Yup.object().shape({
 export const EmailLoginSchema = Yup.object().shape({
   email: Yup.string().email().ensure().required(),
   password: Yup.string().ensure().required(),
-  // .matches(
-  //   "^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$",
-  //   "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
-  // ),
 });
 
 export const EmailCreateSchema = Yup.object().shape({
   firstName: Yup.string().ensure().required(),
   lastName: Yup.string().ensure().required(),
   email: Yup.string().email().ensure().required(),
-  password: Yup.string().ensure().required(),
+  password: Yup.string()
+    .ensure()
+    .min(8)
+    .matches(
+      "^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$",
+      "Include number, letter and special case character"
+    )
+    .required(),
 });
 
 export const DeleteAccountSchema = Yup.object().shape({

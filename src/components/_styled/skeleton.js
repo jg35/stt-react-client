@@ -11,7 +11,7 @@ export default function Skeleton({
   const baseCss = `mb-3 h-4 bg-lightestGray rounded animate-pulse ${height} ${width} ${spacing}`;
   return (
     <div className={wrapSpacing}>
-      {[...new Array(repeat)].map((i) => (
+      {[...new Array(repeat)].map((x, i) => (
         <div key={i} className={joinTailwindClasses([baseCss, css])}></div>
       ))}
     </div>
