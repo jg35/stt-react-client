@@ -5,25 +5,30 @@ import { scrollToYear } from "~/lib/timeline";
 export default function ScrollNavigator({ years, dob }) {
   const [hoverYear, setHoverYear] = useState(null);
   const [visibleYears, setVisibleYears] = useState([]);
-  const [hightlightN, setHightlightN] = useState(5);
 
   useEffect(() => {
-    const minYearHeight = 44;
-    const containerHeight = window.innerHeight - 208;
-    // // accomadate for showing first and last year (2)
-    const displayYears = Math.floor(containerHeight / minYearHeight) - 2;
+    // Minimum of height of each year element
+    const minYearHeight = 36;
+    // Height of the parent
+    const containerHeight = document.querySelector(
+      ".js-timeline-scroll-container"
+    ).clientHeight;
+    // The maximum number of years we can show between first and last
+    const displayYears = Math.floor(containerHeight / minYearHeight);
     const age = new Date().getFullYear() - DateTime.fromISO(dob).year;
-    setHightlightN(4);
-    const nYears = Math.floor(age / displayYears);
-    const sliceYears = [...years];
-    const firstYear = sliceYears.shift();
-    const lastYear = sliceYears.pop();
-
-    setVisibleYears([
-      firstYear,
-      ...sliceYears.filter((year, i) => i % nYears === 0),
-      lastYear,
-    ]);
+    const displayYearInterval = age / displayYears;
+    const firstYear = years[0];
+    const lastYear = years[years.length - 1];
+    let currentYear = firstYear.year + displayYearInterval;
+    const filteredYears = years.filter((year) => {
+      if (Math.round(currentYear) === year.year && year.year < lastYear.year) {
+        currentYear = currentYear + displayYearInterval;
+        return true;
+      }
+      return false;
+    });
+    console.log("filteredYears:", filteredYears.length);
+    setVisibleYears([firstYear, ...filteredYears, lastYear]);
   }, [years]);
 
   function YearWrap({ year, children }) {
@@ -64,10 +69,10 @@ export default function ScrollNavigator({ years, dob }) {
             </YearWrap>
           );
         } else if (
-          // First, last, divisible by 5 or containing fragments
+          // First, last, or every 3rd
           index === 0 ||
           index === visibleYears.length - 1 ||
-          year.year % hightlightN === 0
+          index % 3 === 0
         ) {
           return (
             <YearWrap year={year.year} key={index}>
