@@ -28,7 +28,7 @@
   "components.userVerifyForm.title": "Please check your email to verify your account",
   "routes.edit.preview.empty": "Add some things to your timeline to begin editing your book",
   "routes.login.app.name": "Stories To Tell",
-  "routes.login.app.slogan": "The easy way to create your life story",
+  "routes.login.app.slogan": "The easy way to write your life story",
   "share.email.body": "Read my newly published autobiography - \"{{BOOK_NAME}} by {{BOOK_AUTHOR}}\"",
   "share.email.subject": "Check out the book I made with Stories To Tell",
   "share.facebook.quote": "I made a book all about my life with Stories To Tell!",
