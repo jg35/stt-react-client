@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useCustomQuery } from "~/hooks/useCustomApollo";
 import { ACTION_STRIPE_FETCH_PRICES } from "~/lib/gql";
 import Modal from "~/components/modal";
-import { Title, Button, Text } from "~/components/_styled";
+import { Title, Button, Text, Grid } from "~/components/_styled";
 import SubscriptionOptionCard from "~/components/settings/subscriptionOptionCard";
 import { getTranslation } from "~/lib/util";
 
@@ -22,7 +22,11 @@ export default function UserPaymentForm({
 
   useEffect(async () => {
     if (data) {
-      setSubscriptionOptions(data.action_subscriptions_get_prices);
+      setSubscriptionOptions(
+        [...data.action_subscriptions_get_prices].sort((a, b) =>
+          a.amount > b.amount ? 1 : -1
+        )
+      );
     }
   }, [data]);
 
@@ -43,7 +47,7 @@ export default function UserPaymentForm({
     }
   }
 
-  const inner = (
+  const inner = data ? (
     <>
       <div>
         <Title className="text-xl">
@@ -52,7 +56,7 @@ export default function UserPaymentForm({
         <Text>{getPaymentMessage()}</Text>
       </div>
       {subscriptionStatus !== "PAYMENT_FAILED" && (
-        <div className="mt-6 flex flex-wrap">
+        <Grid css="mt-4" colSpan={["col-span-12 sm:col-span-6"]}>
           {subscriptionOptions.map((option, index) => {
             return (
               <SubscriptionOptionCard
@@ -64,7 +68,7 @@ export default function UserPaymentForm({
               />
             );
           })}
-        </div>
+        </Grid>
       )}
       <form
         action={`${process.env.REACT_APP_FUNCTIONS_SERVER_URL}/actions/public/stripe/checkout`}
@@ -84,7 +88,7 @@ export default function UserPaymentForm({
         </Button>
       </form>
     </>
-  );
+  ) : null;
 
   if (!asModal) {
     return inner;

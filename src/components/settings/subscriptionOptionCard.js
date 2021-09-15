@@ -33,17 +33,17 @@ function getDesc(interval) {
     case "month":
       return (
         <>
-          <Benefit text="Unlimited access and uploads" />
-          <Benefit text="Share your book" />
+          {/* <Benefit text="Unlimited access and uploads" /> */}
+          {/* <Benefit text="Share your book" /> */}
           <Benefit text="Cancel anytime" />
-          <Benefit text="Save 20%" included={false} />
+          {/* <Benefit text="Save 20%" included={false} /> */}
         </>
       );
     case "year":
       return (
         <>
-          <Benefit text="Unlimited access and uploads" />
-          <Benefit text="Share your book" />
+          {/* <Benefit text="Unlimited access and uploads" /> */}
+          {/* <Benefit text="Share your book" /> */}
           <Benefit text="Cancel anytime" />
           <Benefit text="Save 20% over our monthly plan" />
         </>
@@ -64,7 +64,7 @@ export default function SubscriptionOptionCard({
   index,
 }) {
   let cardCss =
-    "cursor-pointer mb-4 w-full md:flex-1 shadow-lg bg-white border-2 p-4 h-full flex flex-col justify-between rounded ";
+    "cursor-pointer h-full w-full shadow-lg bg-white border-2 border-lightGray p-4 flex flex-col justify-between rounded ";
   cardCss += index === 0 ? "md:mr-2 " : "md:ml-2 ";
   cardCss += selected ? "border-green " : "border-black ";
 
@@ -78,7 +78,9 @@ export default function SubscriptionOptionCard({
   return (
     <div onClick={() => selectPlan()} className={cardCss}>
       <div>
-        <Title css={`mb-0`}>{planName}</Title>
+        <Title size="large" css={`mb-0`}>
+          {planName}
+        </Title>
         <Text size="large">{formatPrice(option.amount)}</Text>
         <Text>{getDesc(option.interval)}</Text>
       </div>
