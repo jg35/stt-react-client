@@ -49,7 +49,6 @@ export default function CaptureHeader({ init }) {
       variables: { userId: user.id },
     }
   );
-  const [questionVisible, setQuestionVisible] = useState(true);
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [tagOptions, setTagOptions] = useState([]);
   const [questionOptions, setQuestionOptions] = useState([]);
@@ -153,7 +152,7 @@ export default function CaptureHeader({ init }) {
             "col-span-12 md:col-span-5 lg:col-span-4 xl:col-span-3",
           ]}
         >
-          {questionVisible && (
+          {uiState.questionVisible && (
             <div
               id="question-panel"
               className="animate-fade-in bg-white rounded px-2 pt-2 border-2 shadow pl-3"
@@ -220,15 +219,20 @@ export default function CaptureHeader({ init }) {
             {window.innerWidth < 768 && (
               <Button
                 css={`font-medium px-4 h-14 justify-around flex-col ${
-                  questionVisible &&
+                  uiState.questionVisible &&
                   "shadow bg-darkGray hover:bg-darkGray hover:border-darkGray border-darkGray text-white"
                 } `}
-                onClick={() => setQuestionVisible(!questionVisible)}
+                onClick={() =>
+                  updateUiState(
+                    { questionVisible: !uiState.questionVisible },
+                    false
+                  )
+                }
               >
                 <Svg
                   name="question"
                   css="md:hidden"
-                  color={questionVisible && "#ffffff"}
+                  color={uiState.questionVisible && "#ffffff"}
                   width={18}
                   height={18}
                 />

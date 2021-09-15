@@ -219,6 +219,7 @@ export default function CaptureModal({
       {(props) => {
         return (
           <Modal
+            stickyTop={tutorialInProgress}
             canClose={!tutorialInProgress}
             formIsDirty={props.dirty}
             isOpen={true}

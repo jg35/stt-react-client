@@ -36,6 +36,7 @@ export default {
       messages: [],
       editPreviewScrollPosition: null,
       previewScrollPosition: null,
+      questionVisible: true,
       googleFontStyles: [{ family: "Roboto", weight: 400 }],
       signedUrlsInit: false,
       signedUrls: {},

@@ -135,8 +135,8 @@ export const EmailCreateSchema = Yup.object().shape({
     .ensure()
     .min(8)
     .matches(
-      "^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$",
-      "Include number, letter and special case character"
+      "^(?=.*[A-Z])(?=.*[a-z])(?=.*[\\d])([A-Za-z\\d]{8,})$",
+      "You should have a mix of upper and lowercase numbers & letters"
     )
     .required(),
 });

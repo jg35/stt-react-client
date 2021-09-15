@@ -5,6 +5,7 @@ import Svg from "~/components/svg";
 import ModalCloseWarning from "~/components/modalCloseWarning";
 
 export default function Modal({
+  stickyTop = false,
   size,
   isOpen,
   children,
@@ -53,6 +54,8 @@ export default function Modal({
   let position = "md:items-baseline lg:items-center";
   if (size === "sm") {
     position = "items-center";
+  } else if (stickyTop) {
+    position = "md:items-baseline";
   }
 
   if (isOpen) {

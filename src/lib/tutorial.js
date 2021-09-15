@@ -129,15 +129,19 @@ export const steps = [
       (uiState.capture.item && uiState.capture.item.date) ||
       uiState.tutorialStep > 6,
     async: true,
-    fixed: IS_MOBILE,
+    fixed: true,
     saveProgress: false,
     referenceElSelector: "#form-text-editor",
     placement: "bottom-end",
-    preInit: function () {
-      if (IS_MOBILE) {
-        const modalWrapper = document.querySelector("#capture-form-wrapper");
-        modalWrapper.style["max-height"] = "calc(var(--vh, 1vh) * 100 - 180px)";
-      }
+    preInit: function (data, uiState, updateUiState) {
+      updateUiState(
+        {
+          questionVisible: false,
+        },
+        false
+      );
+      const modalWrapper = document.querySelector("#capture-form-wrapper");
+      modalWrapper.style["max-height"] = "calc(var(--vh, 1vh) * 100 - 180px)";
     },
   }),
   registerStep({
@@ -148,7 +152,7 @@ export const steps = [
     async: false,
     placement: "top",
     referenceElSelector: "div[data-fragment-id]",
-    preInit: function (data) {
+    preInit: function (data, uiState, updateUiState) {
       scrollToFragment(data.stt_fragment[0].id, false);
     },
   }),
@@ -220,12 +224,10 @@ export const steps = [
     referenceElSelector: "#capture-form-wrapper",
     placement: "bottom-end",
     preInit: function (data) {
-      if (IS_MOBILE) {
-        const modalWrapper = document.querySelector("#capture-form-wrapper");
-        modalWrapper.style["max-height"] = "calc(var(--vh, 1vh) * 100 - 180px)";
-      }
+      const modalWrapper = document.querySelector("#capture-form-wrapper");
+      modalWrapper.style["max-height"] = "calc(var(--vh, 1vh) * 100 - 180px)";
     },
-    fixed: IS_MOBILE,
+    fixed: true,
   }),
   registerStep({
     step: 12,
@@ -295,13 +297,15 @@ export const steps = [
     async: true,
     saveProgress: false,
     preInit: function () {
-      // if (IS_MOBILE) {
       const max = "calc(var(--vh, 1vh) * 100 - 180px)";
-      const uppyInnerMax = "calc(var(--vh, 1vh) * 100 - 400px)";
+      const uppyInnerMax = "calc(var(--vh, 1vh) * 100 - 220px)";
+      const uppyInner = document.querySelector(".uppy-Dashboard-inner");
       document.querySelector("#capture-form-wrapper").style["max-height"] = max;
-      document.querySelector(".uppy-Dashboard-inner").style["max-height"] =
-        uppyInnerMax;
-      // }
+      uppyInner.style["max-height"] = uppyInnerMax;
+      uppyInner.style["top"] = "35px";
+      if (window.innerWidth >= 820) {
+        uppyInner.style["transform"] = "translateX(-50%)";
+      }
     },
     fixed: true,
   }),
@@ -342,13 +346,10 @@ export const steps = [
     referenceElSelector: "#capture-form-wrapper",
     placement: "bottom-end",
     preInit: function () {
-      if (IS_MOBILE) {
-        const max = "calc(var(--vh, 1vh) * 100 - 180px)";
-        document.querySelector("#capture-form-wrapper").style["max-height"] =
-          max;
-      }
+      const max = "calc(var(--vh, 1vh) * 100 - 180px)";
+      document.querySelector("#capture-form-wrapper").style["max-height"] = max;
     },
-    fixed: IS_MOBILE,
+    fixed: true,
   }),
   registerStep({
     step: 18,

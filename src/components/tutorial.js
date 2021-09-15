@@ -129,10 +129,12 @@ export default function Tutorial() {
     >
       <div
         ref={tutorialWidgetRefInner}
-        className="flex flex-col justify-between h-full hidden"
+        className="flex flex-col justify-between h-full hidden max-w-5xl mx-auto"
       >
         <div
-          className={`flex justify-between font-medium ${
+          className={`${
+            currentStep.fixed && "md:py-2"
+          } flex justify-between font-medium ${
             currentStep.xl ? "text-base" : "text-sm"
           }`}
         >
@@ -153,33 +155,37 @@ export default function Tutorial() {
               : currentStep.body}
           </Text>
         </div>
-        <Grid colSpan={["col-span-6"]}>
-          <div>
-            {!currentStep.last && (
-              <Button
-                size="compact"
-                onClick={endTutorial}
-                inProgress={updateUserLoading}
-              >
-                {updateUserLoading ? "Updating..." : "Skip tutorial"}
-              </Button>
-            )}
-          </div>
+        <div className="flex justify-end">
+          <div className="w-full md:max-w-lg">
+            <Grid colSpan={["col-span-6"]}>
+              <div>
+                {!currentStep.last && (
+                  <Button
+                    size="compact"
+                    onClick={endTutorial}
+                    inProgress={updateUserLoading}
+                  >
+                    {updateUserLoading ? "Updating..." : "Skip tutorial"}
+                  </Button>
+                )}
+              </div>
 
-          <Button
-            variant="cta"
-            size="compact"
-            disabled={currentStep.async}
-            inProgress={currentStep.async || updateUserLoading}
-            onClick={() => proceed(currentStep.step + 1)}
-          >
-            {currentStep.async || updateUserLoading
-              ? updateUserLoading
-                ? "Saving..."
-                : "Waiting..."
-              : currentStep.nextText}
-          </Button>
-        </Grid>
+              <Button
+                variant="cta"
+                size="compact"
+                disabled={currentStep.async}
+                inProgress={currentStep.async || updateUserLoading}
+                onClick={() => proceed(currentStep.step + 1)}
+              >
+                {currentStep.async || updateUserLoading
+                  ? updateUserLoading
+                    ? "Saving..."
+                    : "Waiting..."
+                  : currentStep.nextText}
+              </Button>
+            </Grid>
+          </div>
+        </div>
       </div>
       {!currentStep.fixed && currentStep.referenceElSelector && (
         <div id="arrow" data-popper-arrow></div>
