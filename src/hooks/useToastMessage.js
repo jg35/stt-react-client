@@ -2,10 +2,12 @@ import { useContext } from "react";
 import { UIContext } from "~/app";
 import { createToastMessage } from "~/lib/toast";
 import { refreshToken } from "~/lib/firebase";
+import { useHistory } from "react-router";
 
 const MESSAGE_TIMEOUT = 5000;
 
 export default function useToastMessage() {
+  const history = useHistory();
   const { uiState, updateUiState } = useContext(UIContext);
 
   function setToastMessage(type, message, closeManually) {
