@@ -52,7 +52,7 @@ export default function MainMenu() {
           className="fill text-right flex items-center justify-end p-2"
           to="/settings"
         >
-          Settings <Svg name="settings" css="ml-2" />
+          Settings <Svg name="settings" css="ml-2 w-5 h-5" />
         </NavLink>
       ),
     },
@@ -69,14 +69,19 @@ export default function MainMenu() {
             }
           }}
         >
-          Help <Svg name="question" css="ml-2 w-6 h-6" />
+          Help <Svg name="question" css="ml-2 w-5 h-5" />
         </span>
       ),
     },
     {
-      onClick: logout,
-      buttonCss: "justify-end p-2",
-      component: "Logout",
+      component: (
+        <span
+          className="fill text-right flex items-center justify-end p-2"
+          onClick={logout}
+        >
+          Logout
+        </span>
+      ),
     },
   ];
   if (process.env.NODE_ENV === "development") {
