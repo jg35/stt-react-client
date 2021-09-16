@@ -10,7 +10,7 @@ import Menu from "~/components/menu";
 export default function MainMenu() {
   const logout = useLogout();
   const {
-    authState: { user },
+    authState: { user, dbUser },
   } = useContext(AuthContext);
 
   const items = [
@@ -54,6 +54,23 @@ export default function MainMenu() {
         >
           Settings <Svg name="settings" css="ml-2" />
         </NavLink>
+      ),
+    },
+    {
+      component: (
+        <span
+          className="fill text-right flex items-center justify-end p-2"
+          onClick={() => {
+            if (window.Tawk_API) {
+              window.Tawk_API.setAttributes({
+                id: dbUser.id,
+              });
+              window.Tawk_API.maximize();
+            }
+          }}
+        >
+          Help <Svg name="question" css="ml-2 w-6 h-6" />
+        </span>
       ),
     },
     {
