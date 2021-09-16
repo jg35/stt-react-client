@@ -369,7 +369,7 @@ export const steps = [
     body: (data, uiState) =>
       `The edit view shows you what your book will look like in it’s final form and makes it easy to make quick edits to your memories`,
     isComplete: (data, uiState) => uiState.tutorialStep > 19,
-    placement: "top",
+    placement: "bottom",
     referenceElSelector: ".js-preview-scroll-container div",
   }),
   registerStep({
@@ -378,7 +378,7 @@ export const steps = [
     body: (data, uiState) =>
       `Memories in your book are ordered chronologically. If something isn't in the right place, just update the date accordingly.`,
     isComplete: (data, uiState) => uiState.tutorialStep > 20,
-    placement: "top",
+    placement: "bottom",
     referenceElSelector: ".js-preview-scroll-container > div",
     nextText: "Okay",
   }),

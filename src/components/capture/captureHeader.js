@@ -152,7 +152,7 @@ export default function CaptureHeader({ init }) {
             "col-span-12 md:col-span-5 lg:col-span-4 xl:col-span-3",
           ]}
         >
-          {uiState.questionVisible && (
+          {(uiState.questionVisible || window.innerWidth >= 768) && (
             <div
               id="question-panel"
               className="animate-fade-in bg-white rounded px-2 pt-2 border-2 shadow pl-3"
