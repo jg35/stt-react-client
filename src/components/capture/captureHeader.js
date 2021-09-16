@@ -157,8 +157,9 @@ export default function CaptureHeader({ init }) {
               id="question-panel"
               className="animate-fade-in bg-white rounded px-2 pt-2 border-2 shadow pl-3"
             >
-              <div className="flex justify-between items-center h-10">
-                <Title css="mb-0 w-4/5 truncate">{currentQuestion.title}</Title>
+              <div className="flex justify-between items-center">
+                <Title css="mb-0 w-4/5 ">{currentQuestion.title}</Title>
+
                 {questionOptions.length > 1 && (
                   <div id="shuffle-button-wrapper">
                     <Button
