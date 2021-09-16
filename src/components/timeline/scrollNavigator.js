@@ -27,7 +27,6 @@ export default function ScrollNavigator({ years, dob }) {
       }
       return false;
     });
-    console.log("filteredYears:", filteredYears.length);
     setVisibleYears([firstYear, ...filteredYears, lastYear]);
   }, [years]);
 

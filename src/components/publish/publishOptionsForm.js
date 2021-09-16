@@ -1,7 +1,7 @@
 import { FormInput, FormLabel, Title } from "~/components/_styled";
 import DatePicker from "~/components/capture/datepicker";
 import FormError from "~/components/formError";
-import { getTranslation } from "~/lib/util";
+import { getHTMLTranslation } from "~/lib/util";
 
 export default function PublishOptionsForm({
   values,
@@ -16,7 +16,7 @@ export default function PublishOptionsForm({
       style={{ maxWidth: "768px" }}
     >
       <Title>
-        {getTranslation("components.publish.publishOptionsForm.details")}
+        {getHTMLTranslation("components.publish.publishOptionsForm.details")}
       </Title>
 
       <div className="form-control w-full">

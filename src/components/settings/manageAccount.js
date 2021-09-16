@@ -14,7 +14,7 @@ import Modal from "~/components/modal";
 import { Formik } from "formik";
 import { DeleteAccountSchema } from "~/lib/yup";
 import FormError from "~/components/formError";
-import { getTranslation } from "~/lib/util";
+import { getHTMLTranslation } from "~/lib/util";
 
 export default function ManageAccount({ dbUser }) {
   const logout = useLogout();
@@ -35,10 +35,14 @@ export default function ManageAccount({ dbUser }) {
       <Title size="compact">Delete my account</Title>
 
       <Text>
-        {getTranslation("components.settings.manageAccount.delete.description")}
+        {getHTMLTranslation(
+          "components.settings.manageAccount.delete.description"
+        )}
       </Text>
       <Text>
-        {getTranslation("components.settings.manageAccount.delete.continue")}
+        {getHTMLTranslation(
+          "components.settings.manageAccount.delete.continue"
+        )}
       </Text>
       <Button css="w-auto" onClick={() => setShowDeleteAccountModal(true)}>
         Delete my account
@@ -50,7 +54,7 @@ export default function ManageAccount({ dbUser }) {
         <Title>Delete your account</Title>
 
         <Text>
-          {getTranslation("components.settings.manageAccount.delete.plea")}
+          {getHTMLTranslation("components.settings.manageAccount.delete.plea")}
         </Text>
         <Formik
           initialValues={DeleteAccountSchema.cast()}

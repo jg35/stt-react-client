@@ -1,5 +1,5 @@
 import { Button, FormLabel, Title, Text } from "~/components/_styled";
-import { getTranslation } from "~/lib/util";
+import { getHTMLTranslation } from "~/lib/util";
 
 function PrivacyOption({ title, description, active, onClick }) {
   return (
@@ -29,13 +29,13 @@ export default function ManagePrivacyStatus({
     <>
       {showLabel && <FormLabel>Choose privacy status</FormLabel>}
 
-      <div className="flex flex-wrap">
+      <div className="flex flex-wrap max-w-2xl">
         <div className="w-full sm:w-1/2 sm:pr-2 mt-2">
           <PrivacyOption
             onClick={() => setPrivacyStatus("PUBLIC")}
             active={privacyStatus === "PUBLIC"}
             title="Public 🌎 "
-            description={getTranslation(
+            description={getHTMLTranslation(
               "components.accessList.managePrivacyStatus.description.public"
             )}
           />
@@ -46,7 +46,7 @@ export default function ManagePrivacyStatus({
             onClick={() => setPrivacyStatus("PRIVATE")}
             active={privacyStatus === "PRIVATE"}
             title="Private 🔒"
-            description={getTranslation(
+            description={getHTMLTranslation(
               "components.accessList.managePrivacyStatus.description.private"
             )}
           />

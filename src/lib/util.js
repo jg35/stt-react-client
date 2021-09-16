@@ -61,7 +61,21 @@ export const joinTailwindClasses = (classes) => {
   });
 };
 
-export const getTranslation = (key, params = []) => {
+export const getTranslationString = (key, params = []) => {
+  const translationRaw = translations[key];
+  if (!key) {
+    console.error(`No translation key found for key: ${key}`);
+    return "";
+  } else {
+    let translation = translationRaw;
+    params.forEach(({ key, value }) => {
+      translation = translation.replace(`{{${key}}}`, value);
+    });
+    return translation;
+  }
+};
+
+export const getHTMLTranslation = (key, params = []) => {
   const translationRaw = translations[key];
   if (!key) {
     console.error(`No translation key found for key: ${key}`);

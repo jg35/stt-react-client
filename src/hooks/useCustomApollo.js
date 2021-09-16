@@ -39,11 +39,9 @@ export function useCustomQuery(
     if (error) {
       const graphErr = error.graphQLErrors[0];
       // TODO - log any of these errors in Sentry
-      console.log("Hasura error code: ", graphErr.extensions.code);
       switch (graphErr.extensions.code) {
         case "postgres-max-connections-error":
         case "busy":
-          console.log("Redirect - show a busy banner?");
           break;
         case "jwt-missing-role-claims":
         case "jwt-invalid-claims":

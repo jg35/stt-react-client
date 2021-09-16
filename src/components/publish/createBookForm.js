@@ -2,7 +2,7 @@ import { Button, Title } from "~/components/_styled";
 import ManagePrivacyStatus from "~/components/accessList/managePrivacyStatus";
 import FormHandleAvailabilityInput from "~/components/formHandleAvailabilityInput";
 import AccessListStatusButton from "~/components/accessList/accessListStatusButton";
-import { getTranslation } from "~/lib/util";
+import { getHTMLTranslation } from "~/lib/util";
 
 export default function PublishOptionsForm({
   values,
@@ -23,7 +23,7 @@ export default function PublishOptionsForm({
       {!savedHandle && (
         <div className="mb-6">
           <Title tag="h2">
-            {getTranslation("components.publish.createBookForm.setHandle")}
+            {getHTMLTranslation("components.publish.createBookForm.setHandle")}
           </Title>
           <FormHandleAvailabilityInput
             value={values.publicHandle}
@@ -39,7 +39,9 @@ export default function PublishOptionsForm({
 
       <div className="mb-6">
         <Title tag="h2">
-          {getTranslation("components.publish.createBookForm.shareSettings")}
+          {getHTMLTranslation(
+            "components.publish.createBookForm.shareSettings"
+          )}
         </Title>
         <ManagePrivacyStatus
           showLabel={false}

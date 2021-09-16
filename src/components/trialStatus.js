@@ -3,7 +3,7 @@ import { UIContext } from "~/app";
 import { Button } from "~/components/_styled";
 import Svg from "~/components/svg";
 import { getTrialDaysRemaining, getNumAsWord } from "~/lib/util";
-import { getTranslation } from "../lib/util";
+import { getHTMLTranslation } from "../lib/util";
 
 export default function TrialStatus({
   expiry,
@@ -27,7 +27,7 @@ export default function TrialStatus({
     <div className="flex">
       <Button
         size="compact"
-        css={`font-medium ${css}`}
+        css={`mx-auto w-full md:w-auto font-medium ${css}`}
         onClick={() =>
           updateUiState(
             {
@@ -44,7 +44,7 @@ export default function TrialStatus({
         }
       >
         {showExpiry &&
-          getTranslation("components.trialStatus.status", [
+          getHTMLTranslation("components.trialStatus.status", [
             { key: "TRIAL_DAYS_REMAINING", value: trialDaysRemaining },
             {
               key: "TRIAL_DAYS_REMAINING_PLURAL",

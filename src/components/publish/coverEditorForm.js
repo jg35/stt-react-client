@@ -25,9 +25,6 @@ export default function CoverEditorForm({ values, setFieldValue, setValues }) {
     let sizeStyle = {};
 
     if (width && height) {
-      console.log("width more than height", width > height);
-      console.log("width", width);
-      console.log("height", height);
       const xAsBasis = width < height;
       // Cover should render as 4:3
       const ratioWidth = xAsBasis ? width : (height / 4) * 3;

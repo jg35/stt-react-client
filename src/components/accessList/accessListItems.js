@@ -1,6 +1,6 @@
 import { Button, ClickToCopy, Text, Title, Grid } from "~/components/_styled";
 import Svg from "~/components/svg";
-import { getTranslation } from "~/lib/util";
+import { getHTMLTranslation } from "~/lib/util";
 
 export default function AccessListItems({ items, removeAccessToken }) {
   return (
@@ -9,7 +9,9 @@ export default function AccessListItems({ items, removeAccessToken }) {
         Readers
       </Title>
       <Text css="mb-6">
-        {getTranslation("components.accessList.accessListItems.description")}
+        {getHTMLTranslation(
+          "components.accessList.accessListItems.description"
+        )}
       </Text>
       {items.length > 0 && (
         <ul className="my-6">

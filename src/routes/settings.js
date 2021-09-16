@@ -46,7 +46,7 @@ export default function Settings() {
 
   return (
     dbUser && (
-      <Page minimal scrollable>
+      <Page scrollable>
         <Grid
           height="h-full"
           gap="gap-y-2 lg:gap-4"

@@ -57,11 +57,6 @@ export default function App() {
   const [uiState, setUiState] = useState(uiManager.init());
 
   function update(newUi, persist = true) {
-    if (persist && newUi.timelineScrollYear) {
-      //   console.log("------ PERSIST TO STORAGE ------");
-      //   console.table(newUi);
-      //   console.log("------ END PERSIST TO STORAGE ------");
-    }
     setUiState((uiState) => ({ ...uiState, ...newUi }));
     if (persist) {
       localStorage.setItem(

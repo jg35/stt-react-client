@@ -14,7 +14,7 @@ import {
   WhatsappShareButton,
   TwitterShareButton,
 } from "react-share";
-import { getTranslation } from "~/lib/util";
+import { getTranslationString } from "~/lib/util";
 
 import OnlineToggle from "~/components/publish/onlineToggle";
 import AccessListStatusButton from "~/components/accessList/accessListStatusButton";
@@ -39,8 +39,8 @@ export default function LatestVersion({
               <span className="flex mr-2">
                 <EmailShareButton
                   url={shareUrl}
-                  subject={getTranslation("share.email.subject")}
-                  body={getTranslation("share.email.body", [
+                  subject={getTranslationString("share.email.subject")}
+                  body={getTranslationString("share.email.body", [
                     { key: "BOOK_NAME", value: version.title },
                     { key: "BOOK_AUTHOR", value: version.author },
                   ])}
@@ -50,7 +50,7 @@ export default function LatestVersion({
                 </EmailShareButton>
                 <WhatsappShareButton
                   url={shareUrl}
-                  title={getTranslation("share.whatsapp.title", [
+                  title={getTranslationString("share.whatsapp.title", [
                     { key: "BOOK_NAME", value: version.title },
                     { key: "BOOK_AUTHOR", value: version.author },
                   ])}
@@ -68,7 +68,7 @@ export default function LatestVersion({
                   <>
                     <FacebookShareButton
                       url={shareUrl}
-                      quote={getTranslation("share.facebook.quote")}
+                      quote={getTranslationString("share.facebook.quote")}
                     >
                       <Svg name="facebook" css="md:mr-2 " />
                     </FacebookShareButton>
@@ -76,7 +76,7 @@ export default function LatestVersion({
                     <TwitterShareButton
                       url={shareUrl}
                       hashtags={["storiestotell", "memoir", "autobiography"]}
-                      title={getTranslation("share.twitter.title", [
+                      title={getTranslationString("share.twitter.title", [
                         { key: "BOOK_NAME", value: version.title },
                         { key: "BOOK_AUTHOR", value: version.author },
                       ])}
@@ -116,7 +116,7 @@ export default function LatestVersion({
             style={{ minWidth: "150px", maxHeight: "60vh" }}
           />
           <div className="flex justify-between items-center pl-2">
-            <BookPrivacyStatus prefix="Your book is" isPublic={isPublic} />
+            <BookPrivacyStatus isPublic={isPublic} />
             <div className="flex">
               <ManagePrivacySettingsButton
                 css={`

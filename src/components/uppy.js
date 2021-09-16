@@ -70,7 +70,6 @@ export default function UppyDashboard({
       })
       .on("upload-success", (file, response) => {
         const { path } = response.body;
-        console.log("upload-success");
         getSignedUrls({
           variables: {
             paths: photoSizes.map((size) => `${path}-${size}`).join(","),

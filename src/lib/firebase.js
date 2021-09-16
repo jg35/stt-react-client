@@ -16,32 +16,27 @@ export const resendEmailVerification = () => {
 };
 
 export const refreshToken = () => {
-  console.log("JWT EXPIRED - Attempting to refresh...");
   if (fbAuthUser) {
     return fbAuthUser
       .getIdToken(true)
       .then((token) => {
-        console.log("JWT EXPIRED - JWT now refreshed, update token");
         authStateVar({ ...authStateVar, token });
       })
       .catch((e) => {
-        console.log("JWT EXPIRED - Could not refresh, remove auth");
         authStateVar({ status: "out" });
       });
   }
-  console.log("JWT EXPIRED - No firebase user, remove auth");
+
   authStateVar({ status: "out" });
   return Promise.reject();
 };
 
 export const onAuthStateChange = (syncUserMutation) => {
-  // console.log("set onAuthStateChangeListener");
   const onAuthStateChangeListener = firebase
     .auth()
     .onAuthStateChanged(async (user) => {
       const emailForm = authStateVar().emailForm;
       if (user) {
-        console.log(user.toJSON());
         fbAuthUser = user;
         if (emailForm) {
           await user.updateProfile({

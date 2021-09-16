@@ -13,7 +13,7 @@ import DatePicker from "~/components/capture/datepicker";
 import { Button, FormLabel, Title, Text } from "~/components/_styled";
 import { AuthContext } from "~/components/authWrap";
 import { useEffect } from "react";
-import { getTranslation } from "~/lib/util";
+import { getHTMLTranslation } from "~/lib/util";
 
 export default function UserDeailsForm() {
   const { setError } = useToastMessage();
@@ -49,12 +49,14 @@ export default function UserDeailsForm() {
     <Modal isOpen size="md" canClose={false}>
       <div className="h-full flex flex-col">
         <Title css="text-center">
-          {getTranslation("components.onboarding.userDetailsForm.welcome", [
+          {getHTMLTranslation("components.onboarding.userDetailsForm.welcome", [
             { key: "FIRST_NAME", value: user.displayName.split(" ")[0] },
           ])}
         </Title>
         <Text size="large">
-          {getTranslation("components.onboarding.userDetailsForm.description")}
+          {getHTMLTranslation(
+            "components.onboarding.userDetailsForm.description"
+          )}
         </Text>
 
         <Formik

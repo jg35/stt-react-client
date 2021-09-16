@@ -1,5 +1,6 @@
 import { Text } from "~/components/_styled";
-import { getTranslation } from "~/lib/util";
+import { getHTMLTranslation } from "~/lib/util";
+import { capitalize } from "lodash";
 
 export default function BookPrivacyStatus({
   isPublic,
@@ -8,18 +9,18 @@ export default function BookPrivacyStatus({
 }) {
   const emojo = isPublic ? "🌎" : "🔒";
 
-  const smText = isPublic ? `Public` : `Private`;
-  const mdText = `${prefix} ${isPublic ? "public" : "private"}`;
+  const text = capitalize(
+    `${prefix ? prefix + " " : ""}${isPublic ? "public" : "private"}`
+  );
   const describeText = isPublic
-    ? getTranslation("components.bookPrivacyStatus.description.public")
-    : getTranslation("components.bookPrivacyStatus.description.private");
+    ? getHTMLTranslation("components.bookPrivacyStatus.description.public")
+    : getHTMLTranslation("components.bookPrivacyStatus.description.private");
 
   return (
     <>
       <Text css="font-medium text-lg mb-0 flex">
         <span>{emojo}&nbsp;</span>
-        <span className="md:hidden">{smText}</span>
-        <span className="hidden md:block">{mdText}</span>&nbsp;
+        <span>{text}</span>
       </Text>
 
       {describe && <Text css="mt-2">{describeText}</Text>}

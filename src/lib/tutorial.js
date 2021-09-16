@@ -480,7 +480,6 @@ function registerStep({
     title,
     xl,
     init: function (data, uiState, updateUiState, popperEl) {
-      console.log("Init step: ", this.step);
       if (this.preInit) {
         this.preInit(data, uiState, updateUiState);
       }

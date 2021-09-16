@@ -1,7 +1,7 @@
 import { Button, Title, Text } from "~/components/_styled";
 import { DateTime } from "luxon";
 import TrialStatus from "~/components/trialStatus";
-import { getTranslation } from "~/lib/util";
+import { getHTMLTranslation } from "~/lib/util";
 
 function buildSummary(subscriptionStatus, subscriptionMeta) {
   let planMessage;
@@ -17,7 +17,7 @@ function buildSummary(subscriptionStatus, subscriptionMeta) {
     case "ACTIVE":
       const planName = subscriptionMeta.interval + "ly";
 
-      planMessage = getTranslation(
+      planMessage = getHTMLTranslation(
         "components.settings.manageStripeCustomer.plan.active",
         [
           { key: "NEXT_PAYMENT_DATE", value: nextPaymentDate },
@@ -28,13 +28,13 @@ function buildSummary(subscriptionStatus, subscriptionMeta) {
       break;
     // TODO - should become cancelled when user cancels plan. Becomes CANCELLED_EXPIRED when plan has actually been cancelled
     case "CANCEL_AT_PERIOD_END":
-      planMessage = getTranslation(
+      planMessage = getHTMLTranslation(
         "components.settings.manageStripeCustomer.plan.cancelAtPeriodEnd",
         [{ key: "NEXT_PAYMENT_DATE", value: nextPaymentDate }]
       );
       break;
     case "IN_TRIAL":
-      planMessage = getTranslation(
+      planMessage = getHTMLTranslation(
         "components.settings.manageStripeCustomer.plan.inTrial"
       );
   }

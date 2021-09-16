@@ -4,7 +4,7 @@ import Modal from "~/components/modal";
 import { Button, Title, Text } from "~/components/_styled";
 import useToastMessage from "~/hooks/useToastMessage";
 import { resendEmailVerification } from "~/lib/firebase";
-import { getTranslation } from "~/lib/util";
+import { getHTMLTranslation } from "~/lib/util";
 
 export default function UserVerifyForm() {
   const [sending, setSending] = useState(false);
@@ -12,11 +12,11 @@ export default function UserVerifyForm() {
   const history = useHistory();
   return (
     <Modal size="sm" isOpen={true} canClose={false}>
-      <Title>{getTranslation("components.userVerifyForm.title")}</Title>
-      <Text>{getTranslation("components.userVerifyForm.description")}</Text>
+      <Title>{getHTMLTranslation("components.userVerifyForm.title")}</Title>
+      <Text>{getHTMLTranslation("components.userVerifyForm.description")}</Text>
 
       <Button variant="secondary" css="my-1" onClick={() => history.go()}>
-        {getTranslation("components.userVerifyForm.confirm")}
+        {getHTMLTranslation("components.userVerifyForm.confirm")}
       </Button>
 
       <Button
@@ -30,7 +30,7 @@ export default function UserVerifyForm() {
           });
         }}
       >
-        {getTranslation("components.userVerifyForm.resend")}
+        {getHTMLTranslation("components.userVerifyForm.resend")}
       </Button>
     </Modal>
   );

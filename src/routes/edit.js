@@ -12,7 +12,7 @@ import EditPreviewContainer from "~/components/edit/editPreviewContainer";
 import useToastMessage from "~/hooks/useToastMessage";
 import { Empty } from "~/components/_styled";
 import usePageTitle from "~/hooks/usePageTitle";
-import { getTranslation } from "~/lib/util";
+import { getHTMLTranslation } from "~/lib/util";
 
 export default function Edit() {
   usePageTitle("Edit");
@@ -51,7 +51,7 @@ export default function Edit() {
             data.stt_fragment.length > 0 ? (
               <EditPreview fragments={fragments} saveFragment={saveFragment} />
             ) : (
-              <Empty info={getTranslation("routes.edit.preview.empty")} />
+              <Empty info={getHTMLTranslation("routes.edit.preview.empty")} />
             )
           ) : (
             <PreviewSkeleton />

@@ -71,7 +71,6 @@ export default function Tutorial() {
     if (nextStep > steps.length) {
       endTutorial();
     } else {
-      console.log("set step", nextStep);
       updateUiState({ tutorialStep: nextStep });
     }
   }

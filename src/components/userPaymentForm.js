@@ -4,7 +4,7 @@ import { ACTION_STRIPE_FETCH_PRICES } from "~/lib/gql";
 import Modal from "~/components/modal";
 import { Title, Button, Text, Grid } from "~/components/_styled";
 import SubscriptionOptionCard from "~/components/settings/subscriptionOptionCard";
-import { getTranslation } from "~/lib/util";
+import { getHTMLTranslation } from "~/lib/util";
 
 export default function UserPaymentForm({
   type,
@@ -32,18 +32,18 @@ export default function UserPaymentForm({
 
   function getPaymentMessage() {
     if (intent === "MANUAL") {
-      return getTranslation("components.userPaymentForm.openMessage");
+      return getHTMLTranslation("components.userPaymentForm.openMessage");
     }
     switch (subscriptionStatus) {
       case "CANCELLED":
       case "CANCEL_AT_PERIOD_END":
-        return getTranslation("components.userPaymentForm.cancelled");
+        return getHTMLTranslation("components.userPaymentForm.cancelled");
 
       case "PAYMENT_FAILED":
-        return getTranslation("components.userPaymentForm.paymentFailed");
+        return getHTMLTranslation("components.userPaymentForm.paymentFailed");
 
       case "IN_TRIAL":
-        return getTranslation("components.userPaymentForm.inTrial");
+        return getHTMLTranslation("components.userPaymentForm.inTrial");
     }
   }
 
@@ -51,7 +51,9 @@ export default function UserPaymentForm({
     <>
       <div>
         <Title className="text-xl">
-          {type === "CHOOSE_PLAN" ? "Pick a plan" : "Manage your subscription"}
+          {type === "CHOOSE_PLAN"
+            ? "Choose a subscription"
+            : "Manage your subscription"}
         </Title>
         <Text>{getPaymentMessage()}</Text>
       </div>

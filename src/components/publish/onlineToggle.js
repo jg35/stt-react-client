@@ -9,7 +9,7 @@ import {
 import Modal from "~/components/modal";
 import { UPDATE_USER } from "~/lib/gql";
 import { useMutation } from "@apollo/client";
-import { getTranslation } from "~/lib/util";
+import { getHTMLTranslation } from "~/lib/util";
 
 export default function OnlineToggle({ isOnline, userId, isPublic }) {
   const [updateUser, { data, loading }] = useMutation(UPDATE_USER);
@@ -51,13 +51,10 @@ export default function OnlineToggle({ isOnline, userId, isPublic }) {
         </div>
       </div>
       <Modal size="sm" isOpen={showModal} close={() => setShowModal(false)}>
-        <Title css="mb-6 text-center" size="large">
-          {isOnline ? "Take book offline..." : "Put book online..."}
-        </Title>
-        <div className="py-6 px-3 h-auto bg-white flex flex-col  mb-12">
+        <div className="h-auto bg-white flex flex-col mb-12">
           {isOnline ? (
             <Text css="mb-0 text-center">
-              {getTranslation(
+              {getHTMLTranslation(
                 "components.publish.onlineToggle.offline.description"
               )}
             </Text>
@@ -78,7 +75,7 @@ export default function OnlineToggle({ isOnline, userId, isPublic }) {
             Cancel
           </Button>
           <Button
-            variant="secondary"
+            variant="cta"
             css="w-full"
             onClick={proceed}
             inProgress={loading}
