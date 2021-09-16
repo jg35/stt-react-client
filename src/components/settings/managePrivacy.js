@@ -5,14 +5,13 @@ import AccessListStatusButton from "~/components/accessList/accessListStatusButt
 import FormHandleAvailabilityInput from "~/components/formHandleAvailabilityInput";
 
 import { Formik } from "formik";
-import { useMutation, gql } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { useCustomQuery } from "~/hooks/useCustomApollo";
 import {
   SECTION_FETCH_PRIVACY_SETTINGS,
   SECTION_UPDATE_PRIVACY_SETTINGS,
 } from "~/lib/gql";
-import { PrivacySettingsForm, AccessTokenPrivateSchema } from "~/lib/yup";
-import { omit } from "lodash";
+import { PrivacySettingsForm } from "~/lib/yup";
 
 export default function ManagePrivacy({ dbUser }) {
   const { setError } = useToastMessage();
@@ -36,8 +35,6 @@ export default function ManagePrivacy({ dbUser }) {
         initialValues={PrivacySettingsForm.cast({
           privacyStatus: data.stt_version[0].privacyStatus,
           publicHandle: data.stt_user[0].publicHandle,
-          tokens: data.stt_accessToken,
-          newToken: AccessTokenPrivateSchema.cast(),
         })}
         enableReinitialize
         onSubmit={({ privacyStatus, tokens, publicHandle }, formBag) => {
@@ -45,43 +42,7 @@ export default function ManagePrivacy({ dbUser }) {
             variables: {
               publicHandle: publicHandle || null,
               privacyStatus,
-              newTokens: tokens
-                .filter((t) => !t.id)
-                .map((t) => omit(t, ["type"])),
-              savedTokenIds: tokens
-                .filter((t) => t.id && t.type !== "PUBLIC")
-                .map((t) => t.id),
               userId: dbUser.id,
-            },
-            update: (cache, { data }) => {
-              data.delete_stt_accessToken.returning.forEach((t) => {
-                cache.evict({
-                  id: cache.identify({
-                    id: t.id,
-                    __typename: "stt_accessToken",
-                  }),
-                });
-              });
-              cache.gc();
-              cache.modify({
-                fields: {
-                  stt_accessToken(tokens = []) {
-                    const newRefs = data.insert_stt_accessToken.returning.map(
-                      (t) => {
-                        return cache.writeFragment({
-                          data: t,
-                          fragment: gql`
-                            fragment token on stt_accessToken {
-                              id
-                            }
-                          `,
-                        });
-                      }
-                    );
-                    return [...tokens, ...newRefs];
-                  },
-                },
-              });
             },
           }).catch((e) =>
             setError(e, { ref: "UPDATE", params: ["share list"] })

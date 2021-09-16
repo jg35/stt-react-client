@@ -94,7 +94,7 @@ export function useSignedImageUrls() {
         )
         .concat([
           "resources/fonts/available.json",
-          "resources/fonts/sprite20Px.png",
+          "resources/fonts/sprite50Px.png",
         ]);
 
       let requestPaths = [];

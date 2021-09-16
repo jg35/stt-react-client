@@ -45,13 +45,10 @@ export const SECTION_FETCH_PRIVACY_SETTINGS = gql`
 
 export const SECTION_UPDATE_PRIVACY_SETTINGS = gql`
   ${userFragment}
-  ${accessTokenFragment}
   mutation SectionUpdatePrivacySettings(
     $userId: String!
     $privacyStatus: String!
     $publicHandle: String
-    $savedTokenIds: [Int!]
-    $newTokens: [stt_accessToken_insert_input!]!
   ) {
     update_stt_user_by_pk(
       pk_columns: { id: $userId }
@@ -66,21 +63,6 @@ export const SECTION_UPDATE_PRIVACY_SETTINGS = gql`
       returning {
         id
         privacyStatus
-      }
-    }
-    delete_stt_accessToken(
-      where: {
-        id: { _nin: $savedTokenIds }
-        _and: { type: { _eq: "PRIVATE" } }
-      }
-    ) {
-      returning {
-        ...accessTokenFragment
-      }
-    }
-    insert_stt_accessToken(objects: $newTokens) {
-      returning {
-        ...accessTokenFragment
       }
     }
   }
