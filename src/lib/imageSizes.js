@@ -12,4 +12,5 @@ export default {
   thumbnail: "-thumb",
   "400px": "-w400",
   "1400px": "-w1400",
+  "2000px": "-w2000",
 };

@@ -13,6 +13,7 @@ export default function GlobalCoverControls({
   setImagePlacement,
 }) {
   const [uppyOpen, setUppyOpen] = useState(false);
+  const [uppyReady, setUppyReady] = useState(false);
   return (
     <>
       <CollapseControlWrapper isCollapsed={!show}>
@@ -21,13 +22,16 @@ export default function GlobalCoverControls({
             size="compact"
             css="w-auto whitespace-nowrap mr-2"
             onClick={() => setUppyOpen(true)}
+            inProgress={uppyOpen && !uppyReady}
           >
             <span className="hidden xs:block">
               {!imageUrl ? "Add" : "Change"} photo
             </span>
-            <span className="xs:hidden">
-              <Svg name="photo" css="h-8 w-8" />
-            </span>
+            {(!uppyOpen || uppyReady) && (
+              <span className="xs:hidden">
+                <Svg name="photo" css="h-8 w-8" />
+              </span>
+            )}
           </Button>
         </div>
 
@@ -77,7 +81,11 @@ export default function GlobalCoverControls({
         open={uppyOpen}
         imageFolder="coverImages"
         mediaUrl={imageUrl}
-        onClose={() => setUppyOpen(false)}
+        onClose={() => {
+          setUppyOpen(false);
+          setUppyReady(false);
+        }}
+        onReady={() => setUppyReady(true)}
         onChange={(url) => {
           update("image", url);
           setUppyOpen(false);

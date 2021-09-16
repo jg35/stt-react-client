@@ -20,8 +20,10 @@ export default function UppyDashboard({
   mediaUrl,
   onChange,
   onClose = null,
+  onReady,
   open = false,
 }) {
+  const [ready, setReady] = useState(false);
   const {
     authState: { token },
   } = useContext(AuthContext);
@@ -97,13 +99,28 @@ export default function UppyDashboard({
           type: blob.type,
           data: blob,
         });
+
+        setReady(true);
       });
   }
 
   useEffect(() => {
-    const files = uppy.getFiles();
-    if (files.length === 0 && signedUrl && open) {
-      addRemoteImage(signedUrl);
+    if (ready) {
+      onReady();
+    }
+  }, [ready]);
+
+  useEffect(() => {
+    if (!open) {
+      setReady(false);
+    } else {
+      const files = uppy.getFiles();
+      if (files.length === 0 && signedUrl && open) {
+        setReady(false);
+        addRemoteImage(signedUrl);
+      } else {
+        setReady(true);
+      }
     }
   }, [open]);
 
@@ -115,7 +132,7 @@ export default function UppyDashboard({
 
   return (
     <DashboardModal
-      open={open}
+      open={ready}
       uppy={uppy}
       hideProgressAfterFinish
       closeModalOnClickOutside

@@ -13,6 +13,7 @@ import GlobalCoverControls from "~/components/publish/globalCoverControls";
 import GlobalCoverControlsCollapse from "~/components/publish/globalCoverControlsCollapse";
 import TextElementControlListCollapse from "~/components/publish/textElementControlListCollapse";
 import { Button, Grid } from "~/components/_styled";
+import imageSizes from "~/lib/imageSizes";
 
 export default function CoverEditorForm({ values, setFieldValue, setValues }) {
   const [showLayoutControls, setShowLayoutControls] = useState(false);
@@ -67,7 +68,7 @@ export default function CoverEditorForm({ values, setFieldValue, setValues }) {
 
   const cover = values.theme.cover;
   const signedImageUrl = useGetSignedImageUrl(
-    cover.image ? cover.image + "-master" : null
+    cover.image ? cover.image + imageSizes["2000px"] : null
   );
   const { uiState, updateUiState } = useContext(UIContext);
   const coverContainerRef = useRef(null);
@@ -379,7 +380,7 @@ export default function CoverEditorForm({ values, setFieldValue, setValues }) {
                   }}
                 >
                   <Image
-                    src={cover.image + "-master"}
+                    src={cover.image + imageSizes["2000px"]}
                     className="object-cover h-full w-full absolute"
                   />
                 </SnapElement>

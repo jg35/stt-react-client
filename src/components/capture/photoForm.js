@@ -1,9 +1,10 @@
 import { useState } from "react";
 import DatePicker from "~/components/capture/datepicker";
-import { FormInput, Grid } from "~/components/_styled";
+import { InProgress, FormInput, Grid } from "~/components/_styled";
 import FormField from "~/components/formField";
 import Image from "~/components/image";
 import Uppy from "~/components/uppy";
+import imageSizes from "~/lib/imageSizes";
 
 export default function PhotoForm({
   handleChange,
@@ -14,6 +15,7 @@ export default function PhotoForm({
   isSubmitting,
 }) {
   const [uppyOpen, setUppyOpen] = useState(!values.mediaUrl);
+  const [uppyReady, setUppyReady] = useState(false);
   return (
     <Grid
       colSpan={[
@@ -30,13 +32,20 @@ export default function PhotoForm({
           >
             <div className="rounded cursor-pointer">
               <Image
-                src={values.mediaUrl + "-master"}
+                src={values.mediaUrl + imageSizes["1400px"]}
                 className="object-cover rounded"
                 style={{ maxHeight: "50vh" }}
               />
             </div>
-            <span className="absolute bottom-0 block bg-black text-white text-center rounded-b py-2 font-medium opacity-70 w-full">
-              Click to edit
+            <span className="absolute bottom-0 block bg-black text-white text-center rounded-b py-2 font-medium opacity-70 w-full cursor-pointer">
+              {uppyOpen && !uppyReady ? (
+                <span className="flex justify-center items-center">
+                  <InProgress inProgress={true} />
+                  Getting master image...
+                </span>
+              ) : (
+                "Click to edit"
+              )}
             </span>
           </div>
         )}
@@ -46,7 +55,9 @@ export default function PhotoForm({
           open={uppyOpen}
           onClose={() => {
             setUppyOpen(false);
+            setUppyReady(false);
           }}
+          onReady={() => setUppyReady(true)}
           onChange={(url) => {
             setFieldValue("mediaUrl", url);
             setUppyOpen(false);
