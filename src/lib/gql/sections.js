@@ -12,7 +12,7 @@ import {
 export const SECTION_FETCH_CAPTURE_HEADER = gql`
   ${fragmentFragment}
   ${questionFragment}
-  query ($userId: String!) {
+  query SectionFetchCaptureHeader($userId: String!) {
     stt_question {
       ...questionFragment
     }
@@ -26,7 +26,7 @@ export const SECTION_FETCH_PRIVACY_SETTINGS = gql`
   ${userFragment}
   ${accessTokenFragment}
   ${versionFragment}
-  query ($userId: String!) {
+  query SectionFetchPrivacySettings($userId: String!) {
     stt_version(
       where: { userId: { _eq: $userId }, _and: { generated: { _eq: true } } }
       order_by: { id: desc }
@@ -46,7 +46,7 @@ export const SECTION_FETCH_PRIVACY_SETTINGS = gql`
 export const SECTION_UPDATE_PRIVACY_SETTINGS = gql`
   ${userFragment}
   ${accessTokenFragment}
-  mutation (
+  mutation SectionUpdatePrivacySettings(
     $userId: String!
     $privacyStatus: String!
     $publicHandle: String

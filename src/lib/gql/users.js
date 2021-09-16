@@ -3,7 +3,7 @@ import { userFragment } from "~/lib/gql/_fragments";
 
 export const FETCH_USER = gql`
   ${userFragment}
-  query ($userId: String!) {
+  query FetchUser($userId: String!) {
     stt_user_by_pk(id: $userId) {
       ...userFragment
     }
@@ -12,7 +12,7 @@ export const FETCH_USER = gql`
 
 export const UPDATE_USER = gql`
   ${userFragment}
-  mutation ($userId: String!, $data: stt_user_set_input) {
+  mutation UpdateUser($userId: String!, $data: stt_user_set_input) {
     update_stt_user_by_pk(pk_columns: { id: $userId }, _set: $data) {
       ...userFragment
     }

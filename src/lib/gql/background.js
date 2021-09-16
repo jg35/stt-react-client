@@ -3,7 +3,7 @@ import { gql } from "@apollo/client";
 // All background requests (i.e. in hooks etc)
 
 export const FETCH_IMAGES = gql`
-  query ($userId: String!) {
+  query FetchImages($userId: String!) {
     stt_fragment(where: { userId: { _eq: $userId } }) {
       mediaUrl
       type

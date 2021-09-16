@@ -3,7 +3,7 @@ import { fragmentFragment } from "~/lib/gql/_fragments";
 
 export const INSERT_FRAGMENT = gql`
   ${fragmentFragment}
-  mutation ($data: stt_fragment_insert_input!) {
+  mutation InsertFragment($data: stt_fragment_insert_input!) {
     insert_stt_fragment_one(object: $data) {
       ...fragmentFragment
     }
@@ -12,7 +12,7 @@ export const INSERT_FRAGMENT = gql`
 
 export const UPDATE_FRAGMENT = gql`
   ${fragmentFragment}
-  mutation ($id: Int!, $data: stt_fragment_set_input) {
+  mutation UpdateFragment($id: Int!, $data: stt_fragment_set_input) {
     update_stt_fragment_by_pk(pk_columns: { id: $id }, _set: $data) {
       ...fragmentFragment
     }
@@ -20,7 +20,7 @@ export const UPDATE_FRAGMENT = gql`
 `;
 
 export const DELETE_FRAGMENT = gql`
-  mutation ($id: Int!) {
+  mutation DeleteFragment($id: Int!) {
     delete_stt_fragment_by_pk(id: $id) {
       id
     }

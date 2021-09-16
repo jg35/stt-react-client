@@ -3,7 +3,7 @@ import { accessTokenFragment } from "~/lib/gql/_fragments";
 
 export const FETCH_PRIVATE_ACCESS_TOKENS = gql`
   ${accessTokenFragment}
-  query ($userId: String!) {
+  query FetchPrivateAccessTokens($userId: String!) {
     stt_accessToken(
       where: { userId: { _eq: $userId }, _and: { email: { _is_null: false } } }
     ) {
@@ -13,7 +13,7 @@ export const FETCH_PRIVATE_ACCESS_TOKENS = gql`
 `;
 
 export const DELETE_ACCESS_TOKEN = gql`
-  mutation ($id: Int!) {
+  mutation DeleteAccessToken($id: Int!) {
     delete_stt_accessToken_by_pk(id: $id) {
       id
     }

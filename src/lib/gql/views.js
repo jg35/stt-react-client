@@ -13,7 +13,7 @@ export const FETCH_TIMELINE_VIEW = gql`
   ${fragmentFragment}
   ${questionFragment}
   ${versionFragment}
-  query ($userId: String!) {
+  query FetchTimelineView($userId: String!) {
     stt_worldEvent(order_by: { date: asc, id: asc }) {
       id
       title
@@ -47,7 +47,7 @@ export const FETCH_TIMELINE_VIEW = gql`
 export const FETCH_EDIT_VIEW = gql`
   ${fragmentFragment}
   ${versionFragment}
-  query ($userId: String!) {
+  query FetchEditView($userId: String!) {
     stt_fragment(where: { userId: { _eq: $userId } }) {
       ...fragmentFragment
     }
@@ -61,7 +61,7 @@ export const FETCH_EDIT_VIEW = gql`
 
 export const FETCH_SHARE_VIEW = gql`
   ${versionFragment}
-  query ($userId: String!) {
+  query FetchShareView($userId: String!) {
     stt_version(where: { userId: { _eq: $userId } }) {
       ...versionFragment
     }
@@ -70,7 +70,7 @@ export const FETCH_SHARE_VIEW = gql`
 
 export const FETCH_PUBLISH_VIEW = gql`
   ${versionFragment}
-  query ($userId: String!) {
+  query FetchPublishView($userId: String!) {
     stt_version(where: { userId: { _eq: $userId } }, order_by: { id: desc }) {
       ...versionFragment
     }
@@ -79,7 +79,7 @@ export const FETCH_PUBLISH_VIEW = gql`
 
 export const FETCH_CREATE_BOOK_VIEW = gql`
   ${versionFragment}
-  query ($userId: String!) {
+  query FetchCreateBookView($userId: String!) {
     stt_version(
       where: { generated: { _eq: false }, userId: { _eq: $userId } }
       order_by: { id: desc }
