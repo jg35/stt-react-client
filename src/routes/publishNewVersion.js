@@ -2,7 +2,7 @@ import { useEffect, useContext, useState } from "react";
 import { useHistory } from "react-router";
 import { Formik } from "formik";
 import { useMutation } from "@apollo/client";
-import { pick, cloneDeep, omit } from "lodash";
+import { pick, cloneDeep } from "lodash";
 
 import { useCustomQuery } from "~/hooks/useCustomApollo";
 import { AuthContext } from "~/components/authWrap";
@@ -35,11 +35,13 @@ export default function PublishNewVersion() {
   const [currentVersion, setCurrentVersion] = useState(null);
   const [updateVersion] = useMutation(UPDATE_VERSION);
   const [publishVersion] = useMutation(ACTION_PUBLISH_VERSION);
-  const [updateUser] = useMutation(UPDATE_USER);
-  const { data } = useCustomQuery(FETCH_CREATE_BOOK_VIEW, { userId: true });
+  const { data } = useCustomQuery(FETCH_CREATE_BOOK_VIEW, {
+    userId: true,
+    fetchPolicy: "network-only",
+  });
 
   useEffect(() => {
-    if (data && data.stt_version) {
+    if (data && data.stt_version && dbUser) {
       const version = VersionSchema(publishStep, token).cast({
         ...cloneDeep(data.stt_version[0]),
         publicHandle: (dbUser && dbUser.publicHandle) || "",

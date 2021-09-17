@@ -84,7 +84,7 @@ export const CoverSchema = Yup.object().shape({
   imagePosition: Position,
   imageRelativePosition: Position,
   imagePlacement: Yup.string().default("cover"),
-  bgColor: Yup.string().default("#f8f8f8"),
+  bgColor: Yup.string().default("#c1c1c1"),
   elements: Yup.array().of(CoverElementSchema).default([]),
   init: Yup.boolean().default(false),
 });
