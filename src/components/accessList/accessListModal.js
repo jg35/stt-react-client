@@ -102,7 +102,7 @@ export default function AccessListModal({ closeModal, show }) {
                   css="items-center"
                 >
                   <FormField
-                    label="Add reader"
+                    label="Add reader email"
                     error={props.errors.email}
                     css="lg:w-full"
                   >

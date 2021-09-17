@@ -86,7 +86,7 @@ export const steps = [
   registerStep({
     step: 2,
     title: "Timeline",
-    body: "Here we are in the timeline view. This is the place where you will add content to your book and spend most of your time.",
+    body: "Here we are in the timeline view, where you will add content to your book and spend most of your time.",
     isComplete: (data, uiState) => uiState.tutorialStep > 2,
     placement: "bottom-start",
     async: false,
@@ -95,7 +95,7 @@ export const steps = [
   registerStep({
     step: 3,
     title: "Questions",
-    body: "This is the questions panel. When you’re not sure where to begin, answering questions is a great way to start uncovering old memories.",
+    body: "This is the questions panel. When you’re not sure where to start, answering questions is a great way to start uncovering old memories.",
     isComplete: (data, uiState) => uiState.tutorialStep > 3,
     async: false,
     referenceElSelector: "#question-panel",
@@ -106,12 +106,13 @@ export const steps = [
     body: "Try changing the question by tapping the shuffle button",
     isComplete: (data, uiState) => uiState.tutorialStep > 4,
     async: false,
-    referenceElSelector: "#question-panel",
+    placement: "bottom-end",
+    referenceElSelector: "#shuffle-button-wrapper",
   }),
   registerStep({
     step: 5,
     title: "Questions",
-    body: "Find a question that resonates with you and start typing your answer",
+    body: "Find a question you like and start typing your answer",
     nextText: "Okay",
     isComplete: (data, uiState) =>
       data.stt_fragment.length > 0 ||
@@ -123,7 +124,7 @@ export const steps = [
   registerStep({
     step: 6,
     title: "Your first memory",
-    body: `Answering a question opens up this capture window. Write another sentence or two and when your happy, date your memory and click "Add" to save your memory.`,
+    body: `Write another sentence or two and when your happy, date your memory and click "Add" to save your memory.`,
     isComplete: (data, uiState) =>
       data.stt_fragment.length > 0 ||
       (uiState.capture.item && uiState.capture.item.date) ||
@@ -159,7 +160,7 @@ export const steps = [
   registerStep({
     step: 8,
     title: "Timeline",
-    body: `By default your timeline is divided into years, but you can also view in seasons and months`,
+    body: `Right now your timeline is divided into years, but you can also see it in seasons and months`,
     isComplete: (data, uiState) => uiState.tutorialStep > 8,
     async: false,
     referenceElSelector: "#time-period-selector button",
@@ -190,9 +191,7 @@ export const steps = [
     step: 10,
     title: "Event",
     body: (data, uiState) =>
-      `Let's add an event now. Events are any big moments in your life - perhaps when you moved house or changed job. Click ${
-        IS_MOBILE ? "on the calendar icon" : "'Add event'"
-      } to continue.`,
+      `Let's add an event now. Events are visual markers to help trigger other memories. Click here to continue.`,
     isComplete: (data, uiState) =>
       data.stt_userEvent.length > 0 ||
       uiState.capture.showModal === true ||
@@ -216,7 +215,7 @@ export const steps = [
     step: 11,
     title: "Your first event",
     body: (data, uiState) =>
-      `Think of something memorable that has hapepend in your life. Enter a title, set the date and click “Add” to create your event.`,
+      `Think of something that has hapepend in your life. Enter a title, set the date and click “Add” to create your event.`,
     isComplete: (data, uiState) =>
       data.stt_userEvent.length > 0 || uiState.tutorialStep > 11,
     async: true,
@@ -233,7 +232,7 @@ export const steps = [
     step: 12,
     title: "Timeline",
     body: (data, uiState) =>
-      `Great, here's the event in your timeline. Next to your event you will also see "World events."`,
+      `Great, here's the event in your timeline. Next to your event you'll also see "World events."`,
     isComplete: (data, uiState) => uiState.tutorialStep > 12,
     async: false,
     placement: "top-start",
@@ -266,9 +265,7 @@ export const steps = [
     step: 14,
     title: "Timeline",
     body: (data, uiState) =>
-      `Let’s try adding a photo now. ${
-        IS_MOBILE ? "Tap the camera icon" : 'Click "Add photo"'
-      } to continue.`,
+      `Let’s try adding a photo now. Click here to continue.`,
     isComplete: (data, uiState) =>
       data.stt_fragment.find((f) => f.type === "PHOTO") ||
       uiState.tutorialStep > 14 ||
@@ -313,9 +310,7 @@ export const steps = [
   registerStep({
     step: 16,
     title: "Chapters",
-    body: `Every book needs a chapter so let's create one. ${
-      IS_MOBILE ? "Tap the bookmark icon" : 'Click "Add chapter"'
-    } to continue.`,
+    body: `Every book needs a chapter so let's create one. Click here to continue.`,
     placement: "top-end",
     isComplete: (data, uiState) =>
       data.stt_fragment.find((f) => f.type === "CHAPTER") ||
@@ -376,7 +371,7 @@ export const steps = [
     step: 20,
     title: "Editing",
     body: (data, uiState) =>
-      `Memories in your book are ordered chronologically. If something isn't in the right place, just update the date accordingly.`,
+      `Memories in your book are in date order. If something isn't in the right place, just update the date.`,
     isComplete: (data, uiState) => uiState.tutorialStep > 20,
     placement: "bottom",
     referenceElSelector: ".js-preview-scroll-container > div",
@@ -386,7 +381,7 @@ export const steps = [
     step: 21,
     title: "Editing",
     body: (data, uiState) =>
-      `To edit one of your memories, click into it and start typing. When you're done click or tab outside the entry to save your changes.`,
+      `To edit one of your memories, click into it and start typing. Click outside or press tab to save your changes.`,
     isComplete: (data, uiState) => uiState.tutorialStep > 21,
     nextText: "Okay",
     placement: "bottom",
@@ -422,7 +417,7 @@ export const steps = [
     last: true,
     title: "The end",
     nextText: "Close tutorial",
-    body: `You're now ready to start filling out your timeline with all of your memories. If you need help with any of the topics covered, look for the help button in the main menu.`,
+    body: `You're now ready to start filling out your timeline with your memories. If you need help with any of the topics covered, look for the help button in the main menu.`,
     isComplete: (data, uiState) => uiState.tutorialStep > 24,
     async: false,
   }),
