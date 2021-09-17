@@ -1,7 +1,7 @@
 import { useEffect, useContext, useState } from "react";
 import { useHistory } from "react-router";
 import { Formik } from "formik";
-import { useMutation } from "@apollo/client";
+import { useMutation, gql } from "@apollo/client";
 import { pick, cloneDeep } from "lodash";
 
 import { useCustomQuery } from "~/hooks/useCustomApollo";
@@ -82,9 +82,27 @@ export default function PublishNewVersion() {
             cache.modify({
               id: cache.identify(dbUser),
               fields: {
-                publishedVersion: () => publishData.id,
+                publishedVersion: () =>
+                  data.action_stt_publish_version.version.id,
                 versions: () =>
-                  dbUser.versions.concat({ id: data.nextVersionId }),
+                  dbUser.versions.concat({
+                    id: data.action_stt_publish_version.nextVersion.id,
+                  }),
+              },
+            });
+            cache.modify({
+              fields: {
+                stt_version(versions = []) {
+                  const newFragmentRef = cache.writeFragment({
+                    data: data.action_stt_publish_version.nextVersion,
+                    fragment: gql`
+                      fragment version on stt_version {
+                        id
+                      }
+                    `,
+                  });
+                  return [...versions, newFragmentRef];
+                },
               },
             });
           },

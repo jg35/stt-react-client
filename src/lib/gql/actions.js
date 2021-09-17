@@ -1,4 +1,5 @@
 import { gql } from "@apollo/client";
+import { versionFragment } from "./_fragments";
 export const ACTION_DELETE_USER = gql`
   mutation ActionDeleteUser {
     action_stt_delete_user {
@@ -40,21 +41,15 @@ export const ACTION_GENERATE_TOKEN = gql`
 `;
 
 export const ACTION_PUBLISH_VERSION = gql`
+  ${versionFragment}
   mutation ActionPublishVersion($data: PublishVersionInput!) {
     action_stt_publish_version(data: $data) {
       nextVersionId
       version {
-        id
-        theme
-        title
-        author
-        coverUrl
-        publishedAt
-        publishedPath
-        publishedFormats
-        privacyStatus
-        generated
-        userId
+        ...versionFragment
+      }
+      nextVersion {
+        ...versionFragment
       }
     }
   }
