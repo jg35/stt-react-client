@@ -40,8 +40,8 @@ export const ACTION_GENERATE_TOKEN = gql`
 `;
 
 export const ACTION_PUBLISH_VERSION = gql`
-  mutation ActionPublishVersion($userId: String!) {
-    action_stt_publish_version(userId: $userId) {
+  mutation ActionPublishVersion($data: PublishVersionInput!) {
+    action_stt_publish_version(data: $data) {
       nextVersionId
       version {
         id

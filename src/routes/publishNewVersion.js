@@ -58,28 +58,36 @@ export default function PublishNewVersion() {
   function publishVersionHandler(values) {
     return new Promise(async (resolve, reject) => {
       try {
-        const createUserHandle = !dbUser.publicHandle && values.publicHandle;
-        if (createUserHandle) {
-          await updateUser({
-            variables: {
-              data: { publicHandle: createUserHandle },
-              userId: user.id,
-            },
-          });
-        }
-        await saveVersionHandler(omit(values, ["publicHandle"]), true);
+        const publishData = {
+          publicHandle: dbUser.publicHandle || values.publicHandle,
+          ...pick(values, [
+            "id",
+            "theme",
+            "publishedAt",
+            "userId",
+            "author",
+            "title",
+            "privacyStatus",
+            "version",
+          ]),
+        };
+        publishData.theme = JSON.stringify(publishData.theme);
         await publishVersion({
-          variables: { userId: user.id },
+          variables: {
+            data: publishData,
+          },
           update(cache, { data }) {
             cache.modify({
               id: cache.identify(dbUser),
               fields: {
+                publishedVersion: () => data.nextVersionId,
                 versions: () =>
                   dbUser.versions.concat({ id: data.nextVersionId }),
               },
             });
           },
         });
+
         // Redirect to publish view
         history.push("/publish");
         setSuccess({ ref: "PUBLISHED_VERSION" });
