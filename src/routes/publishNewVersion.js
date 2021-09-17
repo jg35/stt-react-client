@@ -80,7 +80,7 @@ export default function PublishNewVersion() {
             cache.modify({
               id: cache.identify(dbUser),
               fields: {
-                publishedVersion: () => data.nextVersionId,
+                publishedVersion: () => publishData.id,
                 versions: () =>
                   dbUser.versions.concat({ id: data.nextVersionId }),
               },
