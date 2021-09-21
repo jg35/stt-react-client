@@ -109,7 +109,7 @@ export default function Publish() {
               <div className="flex mb-6">
                 <a
                   href={websiteUrl}
-                  className="inline-flex items-center text-sm uppercase text-offBlack font-bold underline"
+                  className="inline-flex items-center text-offBlack font-bold underline hover:text-blue"
                   target="_blank"
                 >
                   <Svg name="internet" size={16} css="mr-2" />
