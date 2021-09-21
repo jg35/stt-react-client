@@ -149,15 +149,17 @@ export default function Publish() {
                 {!isPublic && <AccessListStatusButton userId={user.id} />}
               </Grid>
             </Card>
-            <Card css="w-full md:h-full lg:h-fit-content">
-              <Title>Older versions</Title>
-              <VersionList
-                publishedVersions={versions.filter(
-                  (v) => v.id !== dbUser.publishedVersion
-                )}
-                deleteVersion={deleteVersionHandler}
-              />
-            </Card>
+            {versions.length > 1 && (
+              <Card css="w-full md:h-full lg:h-fit-content">
+                <Title>Older versions</Title>
+                <VersionList
+                  publishedVersions={versions.filter(
+                    (v) => v.id !== dbUser.publishedVersion
+                  )}
+                  deleteVersion={deleteVersionHandler}
+                />
+              </Card>
+            )}
           </Grid>
         </Grid>
       ) : (
