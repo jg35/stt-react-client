@@ -106,10 +106,10 @@ export default function Publish() {
             <Card css="w-full md:h-full lg:h-fit-content">
               <Title>Your website</Title>
 
-              <div className="flex mb-6">
+              <div className="flex items-center flex-wrap mb-3">
                 <a
                   href={websiteUrl}
-                  className="inline-flex items-center text-offBlack font-bold underline hover:text-blue"
+                  className="inline-flex items-center text-offBlack font-bold underline hover:text-blue mr-4 mb-3"
                   target="_blank"
                 >
                   <Svg name="internet" size={16} css="mr-2" />
@@ -117,7 +117,7 @@ export default function Publish() {
                 </a>
                 <ClickToCopy
                   copyText="Copy url"
-                  css="ml-4 w-24"
+                  css="w-24 mb-3"
                   value={websiteUrl}
                 />
               </div>
