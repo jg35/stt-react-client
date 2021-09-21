@@ -6,7 +6,7 @@ import { Button, Text } from "~/components/_styled";
 import { getHTMLTranslation } from "~/lib/util";
 
 export default function AccessListStatusButton({
-  text = "Manage share list",
+  text = "Manage your share list",
   size = "compact",
   showEmptyCta = true,
 }) {
@@ -22,7 +22,7 @@ export default function AccessListStatusButton({
   const isEmpty = !data.stt_accessToken.length;
 
   return (
-    <div className="my-2">
+    <div>
       {isEmpty && showEmptyCta && (
         <Text css="text-red">
           {getHTMLTranslation(
@@ -32,7 +32,7 @@ export default function AccessListStatusButton({
       )}
       <Button
         size={size}
-        css="md:w-auto"
+        css="max-w-sm"
         onClick={() => updateUiState({ showAccessListModal: true }, false)}
       >
         {text}

@@ -36,10 +36,9 @@ export default function QuestionCategorySelect({
           <Svg
             name="chevronDown"
             rotate={90}
-            width="12"
-            height="12"
+            size={12}
             css="ml-2"
-            color={colors.gray}
+            color="gray"
           />
         </div>
       }

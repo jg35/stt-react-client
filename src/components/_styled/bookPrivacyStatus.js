@@ -18,7 +18,7 @@ export default function BookPrivacyStatus({
 
   return (
     <>
-      <Text css="font-medium text-lg mb-0 flex">
+      <Text css="mb-0 flex">
         <span>{emojo}&nbsp;</span>
         <span>{text}</span>
       </Text>

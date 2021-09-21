@@ -79,7 +79,7 @@ export default function Question({
               size="compact"
               onClick={() => shuffleQuestion()}
             >
-              <Svg name="shuffle" width="20" height="20"></Svg>
+              <Svg name="shuffle" size={20}></Svg>
             </Button>
           </div>
           <QuestionMenu hideQuestion={hideQuestionHandler} />

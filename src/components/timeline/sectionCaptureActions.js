@@ -63,7 +63,7 @@ export default function SectionCaptureActions({
             updateUiState(makeCreateUserEventForm({ date: startDate }), false)
           }
         >
-          <Svg name="calendar" css="md:hidden " width={18} height={18} />
+          <Svg name="calendar" css="md:hidden " size={18} />
           <span className="hidden md:block">Add event</span>
         </Button>
 
@@ -83,7 +83,7 @@ export default function SectionCaptureActions({
             )
           }
         >
-          <Svg name="writing" css="md:hidden " width={18} height={18} />
+          <Svg name="writing" css="md:hidden " size={18} />
           <span className="hidden md:block">Add memory</span>
         </Button>
 
@@ -104,7 +104,7 @@ export default function SectionCaptureActions({
             )
           }
         >
-          <Svg name="photo" css="md:hidden " width={18} height={18} />
+          <Svg name="photo" css="md:hidden " size={18} />
           <span className="hidden md:block">Add photo</span>
         </Button>
 
@@ -125,7 +125,7 @@ export default function SectionCaptureActions({
             )
           }
         >
-          <Svg name="chapter" css="md:hidden " width={18} height={18} />
+          <Svg name="chapter" css="md:hidden " size={18} />
           <span className="hidden md:block">Add chapter</span>
         </Button>
       </div>
@@ -146,21 +146,9 @@ export default function SectionCaptureActions({
           }}
         >
           {captureActive ? (
-            <Svg
-              name="minus"
-              color={colors.gray}
-              css="animate-fade-in"
-              width={18}
-              height={18}
-            />
+            <Svg name="minus" color="gray" css="animate-fade-in" size={18} />
           ) : (
-            <Svg
-              name="plus"
-              color={colors.gray}
-              css="animate-fade-in"
-              width={18}
-              height={18}
-            />
+            <Svg name="plus" color="gray" css="animate-fade-in" size={18} />
           )}
         </Button>
       )}

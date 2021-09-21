@@ -12,7 +12,7 @@ import useToastMessage from "~/hooks/useToastMessage";
 export default function FragmentHeaderMenu({
   fragment,
   excludeActions = [],
-  menuColor = colors.black,
+  menuColor = "black",
 }) {
   const { setError } = useToastMessage();
   const { updateUiState, showDeleteWarning } = useContext(UIContext);
@@ -62,13 +62,7 @@ export default function FragmentHeaderMenu({
           id="edit-fragment-btn"
         >
           Edit
-          <Svg
-            name="edit"
-            css="ml-2"
-            width="18"
-            height="18"
-            color={colors.darkGray}
-          />
+          <Svg name="edit" css="ml-2" size={18} color="darkGray" />
         </span>
       ),
       onClick: () => updateUiState(makeEditFragmentForm(fragment), false),
@@ -81,7 +75,7 @@ export default function FragmentHeaderMenu({
       component: (
         <span className="w-full flex justify-between">
           Delete
-          <Svg name="delete" width="18" height="18" color={colors.darkGray} />
+          <Svg name="delete" size={18} color="darkGray" />
         </span>
       ),
       onClick: (close) => {
@@ -128,9 +122,8 @@ export default function FragmentHeaderMenu({
               <Svg
                 name={fragment.hidden ? "public" : "private"}
                 css="ml-2"
-                width="16"
-                height="16"
-                color={colors.darkGray}
+                size={16}
+                color="darkGray"
               />
             )}
           </div>
@@ -146,7 +139,7 @@ export default function FragmentHeaderMenu({
     <Menu
       autoClose={false}
       compact
-      toggle={<Svg name="overflow" color={menuColor} width="24" height="24" />}
+      toggle={<Svg name="overflow" color={menuColor} size={24} />}
       items={items}
     />
   );

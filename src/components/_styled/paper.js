@@ -11,7 +11,7 @@ export default function Paper({
         style={{ width: `calc(100% - ${gap}rem)` }}
       >
         <div
-          className="w-full h-full relative top-0 left-0 shadow-xl rounded-lg bg-white"
+          className="w-full h-full relative top-0 left-0 shadow-xl rounded-lg bg-white overflow-hidden"
           style={{ zIndex: "30" }}
         >
           {frontContent}

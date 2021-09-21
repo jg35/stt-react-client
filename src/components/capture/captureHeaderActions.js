@@ -13,7 +13,7 @@ function CaptureHeaderActionButton({ action, icon, type }) {
       css="px-4 font-medium md:h-full flex-col justify-around md:justify-center h-14 md:flex-row"
       onClick={action}
     >
-      <Svg name={icon} css="md:hidden " width={18} height={18} />
+      <Svg name={icon} css="md:hidden " size={18} />
       <span className="text-sm md:text-base ">
         <span className="hidden md:block">
           Add
@@ -46,9 +46,8 @@ export default function CaptureHeaderActions({}) {
           <Svg
             name="question"
             css="md:hidden"
-            color={uiState.questionVisible && "#ffffff"}
-            width={18}
-            height={18}
+            color={uiState.questionVisible && "white"}
+            size={18}
           />
           <span className="text-sm md:text-base">Questions</span>
         </Button>

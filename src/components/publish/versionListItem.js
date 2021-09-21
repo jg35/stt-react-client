@@ -26,7 +26,10 @@ export default function VersionListItem({ last, version, deleteVersion }) {
       >
         <div className="flex justify-between px-1">
           <div className="flex flex-col justify-around">
-            <Title css="text-base whitespace-nowrap truncate mr-2 mb-0">
+            <Title
+              size="compact"
+              css="text-base whitespace-nowrap truncate mr-2 mb-0"
+            >
               {version.title}
             </Title>
 
@@ -46,7 +49,7 @@ export default function VersionListItem({ last, version, deleteVersion }) {
           <div>
             <Button
               size="compact"
-              type="minimal"
+              variant="minimal"
               onClick={() => {
                 showDeleteWarning({
                   title: "Are you sure you want to delete this version?",
@@ -57,7 +60,7 @@ export default function VersionListItem({ last, version, deleteVersion }) {
                 });
               }}
             >
-              <Svg name="delete" height={16} width={16} />
+              <Svg name="delete" size={16} />
             </Button>
           </div>
         </div>

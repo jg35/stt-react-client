@@ -98,7 +98,7 @@ export default function ScrollNavigator({ fragments, editView = false }) {
           } else {
             return (
               <ChapterWrap chapterId={chapter.id} key={chapter.id}>
-                <Svg name="chapter" height="20" width="20" />
+                <Svg name="chapter" size={20} />
               </ChapterWrap>
             );
           }

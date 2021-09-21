@@ -19,9 +19,8 @@ function Benefit({ text, included = true }) {
       <Svg
         name={included ? "check" : "cross"}
         css="mr-1"
-        height={16}
-        color={included ? colors.green : colors.red}
-        width={16}
+        color={included ? "green" : "red"}
+        size={16}
       />
       {text}
     </span>

@@ -10,7 +10,7 @@ export default function ClickToCopy({
 }) {
   const [showCopied, setShowCopied] = useState(false);
 
-  const baseCss = `ml-0 w-32 max-w-full justify-center font-medium ${
+  const baseCss = `ml-0 w-32 max-w-full justify-center rounded-full ${
     showCopied
       ? "bg-green border-green hover:bg-green active:bg-green hover:border-green active:border-green"
       : ""

@@ -8,7 +8,7 @@ export default function QuestionMenu({ hideQuestion }) {
       component: (
         <span className="flex justify-end w-full whitespace-nowrap px-1">
           Don't ask this question again
-          <Svg name="cancel" css="ml-2" width="18" height="18" />
+          <Svg name="cancel" css="ml-2" size={18} />
         </span>
       ),
       onClick: hideQuestion,
@@ -18,9 +18,7 @@ export default function QuestionMenu({ hideQuestion }) {
   return (
     <Menu
       autoClose={false}
-      toggle={
-        <Svg name="overflow" color={colors.gray} width="24" height="24" />
-      }
+      toggle={<Svg name="overflow" color="gray" size={24} />}
       items={items}
     />
   );

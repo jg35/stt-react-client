@@ -90,7 +90,7 @@ export default function Modal({
           open: {
             opacity: [0, 1],
             scale: [0.5, 1],
-            rotate: [5, 0],
+            rotate: [-5, 0],
             y: ["-12.5%", "0%"],
             transition: {
               duration: 0.2,
@@ -127,7 +127,7 @@ export default function Modal({
                 }
               }}
             >
-              Close <Svg name="cancel" width={18} height={18} css="ml-1" />
+              Close <Svg name="cancel" size={18} css="ml-1" />
             </Button>
           )}
           {children}

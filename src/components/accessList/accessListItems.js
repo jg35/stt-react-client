@@ -49,12 +49,7 @@ export default function AccessListItems({ items, removeAccessToken }) {
                         onClick={() => removeAccessToken(item)}
                       >
                         <span className="hidden sm:block">Remove</span>
-                        <Svg
-                          name="cancel"
-                          css="sm:hidden"
-                          height={16}
-                          width={16}
-                        ></Svg>
+                        <Svg name="cancel" css="sm:hidden" size={16}></Svg>
                       </Button>
                     </div>
                   </Grid>

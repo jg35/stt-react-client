@@ -39,9 +39,9 @@ export default function OnlineToggle({ isOnline, userId, isPublic }) {
 
   return (
     <>
-      <div className="flex justify-end w-24">
-        <span className="font-medium mr-2">
-          {isOnline ? "Online" : "Offline"}
+      <div className="flex w-auto">
+        <span className="mr-2">
+          {isOnline ? "Your book is online" : "Your book is offline"}
         </span>
         <div class="relative inline-block w-10 mr-2 align-middle select-none ">
           <input
@@ -64,9 +64,13 @@ export default function OnlineToggle({ isOnline, userId, isPublic }) {
       </div>
       {initModal && (
         <Modal size="sm" isOpen={isOpen} close={closeHandler}>
+          <Title>
+            Are you sure you want to{" "}
+            {isOnline ? "take your book offline?" : "put your book online?"}
+          </Title>
           <div className="h-auto bg-white flex flex-col mb-12">
             {isOnline ? (
-              <Text css="mb-0 text-center">
+              <Text css="mb-0">
                 {getHTMLTranslation(
                   "components.publish.onlineToggle.offline.description"
                 )}

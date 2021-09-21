@@ -54,7 +54,7 @@ export default function MainMenu() {
           className="fill text-right flex items-center justify-end p-2"
           to="/settings"
         >
-          Settings <Svg name="settings" css="ml-2 w-5 h-5" />
+          Settings <Svg name="settings" css="ml-2" />
         </NavLink>
       ),
     },
@@ -71,7 +71,7 @@ export default function MainMenu() {
             }
           }}
         >
-          Help <Svg name="question" css="ml-2 w-5 h-5" />
+          Help <Svg name="question" css="ml-2" />
         </span>
       ),
     },

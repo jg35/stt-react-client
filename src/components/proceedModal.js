@@ -22,11 +22,11 @@ export default function ProceedModal({
 
   return (
     <Modal isOpen={isOpen} size="sm" close={cancelHandler} canClose={false}>
-      <Title css="text-center">{title}</Title>
+      <Title>{title}</Title>
       <Grid colSpan={["col-span-6"]}>
         <Button onClick={cancelHandler}>Cancel</Button>
         <Button
-          variant="secondary"
+          variant="cta"
           inProgress={inProgress}
           onClick={() => {
             setInProgress(true);

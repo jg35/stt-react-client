@@ -36,8 +36,7 @@ export default function FragmentHeader({
               >
                 <Svg
                   name="chevronLeft"
-                  height={12}
-                  width={12}
+                  size={12}
                   title="Entries with the same date can be reordered"
                 />
               </Button>
@@ -52,8 +51,7 @@ export default function FragmentHeader({
               >
                 <Svg
                   name="chevronRight"
-                  height={12}
-                  width={12}
+                  size={12}
                   title="Entries with the same date can be reordered"
                 />
               </Button>
@@ -65,13 +63,7 @@ export default function FragmentHeader({
             className="px-2 py-1 cursor-default"
             title="This memory won't be included in your book"
           >
-            <Svg
-              css="cursor-default"
-              name="private"
-              color={colors.gray}
-              width="18"
-              height="18"
-            />
+            <Svg css="cursor-default" name="private" color="gray" size={18} />
           </div>
         )}
         <FragmentHeaderMenu fragment={fragment} />

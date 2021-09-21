@@ -116,12 +116,8 @@ export default function FormHandleAvailabilityInput({
 
         {loading && (
           <div className="animate-fade-in flex items-center text-gray">
-            <LoadingSpinner
-              loading={true}
-              css="w-4 h-4 mr-2"
-              colors={colors.gray}
-            />{" "}
-            Checking availability...
+            <LoadingSpinner loading={true} color="gray" />{" "}
+            <span className="ml-2"> Checking availability...</span>
           </div>
         )}
       </div>

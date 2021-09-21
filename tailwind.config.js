@@ -82,6 +82,9 @@ module.exports = {
         "f1/4": "26.5",
         full: "100%",
       },
+      height: {
+        "fit-content": "fit-content",
+      },
     },
     colors: {
       offBlack: "#1e1e1e",
@@ -102,6 +105,10 @@ module.exports = {
       green: "#9fe682",
       successGreen: "#76c73c",
       facebook: "#3b5998",
+      facebookMessenger: "#0076fb",
+      whatsapp: "#25D366",
+      gmail: "#EA4335",
+      twitter: "#1DA1F2",
     },
   },
   variants: {

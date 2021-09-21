@@ -44,10 +44,10 @@ export default function TextElementControls({
               css="py-2"
               onClick={() => remove(element.id)}
             >
-              <Svg name="cancel" height={16} width={16}></Svg>
+              <Svg name="cancel" size={16}></Svg>
             </Button>
           )}
-          <Svg css="ml-2" width={12} height={12} name="chevronDown" />
+          <Svg css="ml-2" size={12} name="chevronDown" />
         </div>
       </div>
 
@@ -102,21 +102,21 @@ export default function TextElementControls({
                 css={element.textAlign === "left" && "border-black"}
                 onClick={() => update(element.id, "textAlign", "left")}
               >
-                <Svg name="alignLeft" width={16} height={16} />
+                <Svg name="alignLeft" size={16} />
               </Button>
               <Button
                 variant="minimal"
                 css={element.textAlign === "center" && "border-black"}
                 onClick={() => update(element.id, "textAlign", "center")}
               >
-                <Svg name="alignCenter" width={16} height={16} />
+                <Svg name="alignCenter" size={16} />
               </Button>
               <Button
                 variant="minimal"
                 css={element.textAlign === "right" && "border-black"}
                 onClick={() => update(element.id, "textAlign", "right")}
               >
-                <Svg name="alignRight" width={16} height={16} />
+                <Svg name="alignRight" size={16} />
               </Button>
             </ButtonGroup>
           </div>
