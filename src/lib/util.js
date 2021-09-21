@@ -184,7 +184,7 @@ export const getSmartDate = (
       userDob,
       startAge + Math.floor((endAge - startAge) / 2)
     );
-    console.log(startDate, endDate);
+
     reason = isQuestion
       ? "QUESTION_SPECIFIC_AGE_RANGE"
       : "FRAGMENT_SPECIFIC_AGE_RANGE";
@@ -193,10 +193,6 @@ export const getSmartDate = (
     date = "";
     confidence = 0;
   }
-
-  console.log("date: ", date);
-  console.log("smartDateReason: ", reason);
-  console.log("smartDateConfidence: ", confidence);
 
   return {
     date,
