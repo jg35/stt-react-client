@@ -1,43 +1,16 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useLazyQuery } from "@apollo/client";
-import { uniq } from "lodash";
-import { SECTION_FETCH_CAPTURE_HEADER } from "~/lib/gql";
-import {
-  Button,
-  ButtonGroup,
-  Card,
-  Title,
-  FormInput,
-  Grid,
-} from "~/components/_styled";
-import Svg from "~/components/svg";
-import TagSelect from "~/components/capture/tagSelect";
+import { useLazyQuery, useMutation } from "@apollo/client";
+import { uniq, shuffle } from "lodash";
+import { SECTION_FETCH_CAPTURE_HEADER, UPDATE_USER } from "~/lib/gql";
+import { Card, Grid } from "~/components/_styled";
+import { getAge, getAgeFromDate, getSmartDate } from "~/lib/util";
+
 import CaptureHeaderSkeleton from "~/components/capture/captureHeaderSkeleton";
 import { AuthContext } from "~/components/authWrap";
 import { UIContext } from "~/app";
-import {
-  makeCreateFragmentForm,
-  makeCreateUserEventForm,
-} from "~/lib/uiManager";
-
-function CaptureHeaderActionButton({ action, icon, type }) {
-  return (
-    <Button
-      css="px-4 font-medium md:h-full flex-col justify-around md:justify-center h-14 md:flex-row"
-      onClick={action}
-    >
-      <Svg name={icon} css="md:hidden " width={18} height={18} />
-      <span className="text-sm md:text-base ">
-        <span className="hidden md:block">
-          Add
-          <br />
-        </span>
-        {type}
-      </span>
-    </Button>
-  );
-}
-
+import { makeCreateFragmentForm } from "~/lib/uiManager";
+import Question from "~/components/capture/question";
+import CaptureHeaderActions from "~/components/capture/captureHeaderActions";
 export default function CaptureHeader({ init }) {
   const {
     authState: { user },
@@ -49,12 +22,24 @@ export default function CaptureHeader({ init }) {
       variables: { userId: user.id },
     }
   );
-  const [currentQuestion, setCurrentQuestion] = useState(null);
-  const [tagOptions, setTagOptions] = useState([]);
-  const [questionOptions, setQuestionOptions] = useState([]);
-  const [questionTagCategory, setQuestionTagCategory] = useState("all");
-  const [questionAnswer, setQuestionAnswer] = useState("");
-  const [questionsAnswered, setQuestionsAnswered] = useState();
+
+  const [updateUser] = useMutation(UPDATE_USER);
+  const [questionOptions, setQuestionOptions] = useState(null);
+
+  function calcQuestionStartAge({ startAge, startDate, endDate }) {
+    // We get the age of user on a given set of dates to get
+    // the question into the right category
+    if (startDate || endDate) {
+      const ageOnDate = getAgeFromDate(
+        data.stt_user_by_pk.dob,
+        startDate,
+        endDate
+      );
+      // If user was not born when event happened, set startAge so it is hidden
+      return ageOnDate >= 0 ? ageOnDate : 9999;
+    }
+    return startAge;
+  }
 
   useEffect(() => {
     if (init && !data) {
@@ -62,87 +47,85 @@ export default function CaptureHeader({ init }) {
     }
   }, [init]);
 
+  const questionCategories = [
+    {
+      name: "Early memories",
+      startAge: 0,
+    },
+    {
+      name: "Childhood",
+      startAge: 5,
+    },
+    {
+      name: "Teenage years",
+      startAge: 13,
+    },
+    {
+      name: "Twenties",
+      startAge: 20,
+    },
+    {
+      name: "Thirties",
+      startAge: 30,
+    },
+    {
+      name: "Middle years",
+      startAge: 40,
+    },
+    {
+      name: "Older years",
+      startAge: 65,
+    },
+  ];
+
   useEffect(() => {
     if (data) {
+      const userAge = getAge(data.stt_user_by_pk.dob);
       const questionsAnswered = uniq(
         data.stt_fragment.filter((f) => !!f.questionId).map((f) => f.questionId)
       );
-      const options = data.stt_question.filter(
-        (q) =>
-          // Has already answered question
-          !questionsAnswered.includes(q.id) &&
-          // Matches current tag category
-          (questionTagCategory === "all" || q.tag === questionTagCategory)
-      );
-      setQuestionsAnswered(questionsAnswered);
-      setQuestionOptions(options);
-    }
-  }, [questionTagCategory, data]);
-
-  useEffect(() => {
-    if (
-      currentQuestion &&
-      !questionOptions.find((q) => q.id === currentQuestion.id)
-    ) {
-      shuffleQuestion();
-    } else if (!currentQuestion) {
-      shuffleQuestion();
-    }
-  }, [questionOptions]);
-
-  function shuffleQuestion() {
-    let newQuestion =
-      questionOptions[Math.floor(Math.random() * questionOptions.length)];
-    if (questionOptions.length > 1 && currentQuestion) {
-      while (currentQuestion.id === newQuestion.id) {
-        newQuestion =
-          questionOptions[Math.floor(Math.random() * questionOptions.length)];
-      }
-    }
-
-    setCurrentQuestion(newQuestion);
-  }
-
-  useEffect(() => {
-    if (currentQuestion) {
-      const tagOptions = [
-        {
-          tag: "all",
-          questionCount: data.stt_question.length,
-          answeredCount: questionsAnswered.length,
-        },
-      ];
-      // if (questionTagCategory !== "all") {
-      //   tagOptions.push({
-      //     tag: "all",
-      //     questionCount: data.stt_question.length,
-      //     answeredCount: questionsAnswered.length,
-      //   });
-      // }
-      setTagOptions(
-        data.stt_question
-          .filter((q) => !questionsAnswered.includes(q.id))
-          .reduce((tags, q) => {
-            if (!tags.find((option) => option.tag === q.tag)) {
-              const tagQuestions = data.stt_question.filter(
-                (x) => x.tag === q.tag
-              );
-              tags.push({
-                tag: q.tag,
-                questionCount: tagQuestions.length,
-                answeredCount: tagQuestions.filter((q) =>
-                  questionsAnswered.includes(q.id)
-                ).length,
-              });
+      const questions = data.stt_question
+        .map((q) => ({ ...q, startAge: calcQuestionStartAge(q) }))
+        .filter(
+          (q) =>
+            !data.stt_user_by_pk.hiddenQuestions.includes(q.id) &&
+            userAge >= q.startAge &&
+            !questionsAnswered.includes(q.id)
+        );
+      setQuestionOptions(
+        questionCategories.reduce(
+          (categories, category, i) => {
+            const categoryQuestions = questions.filter(
+              (q) =>
+                q.startAge >= category.startAge &&
+                (i + 1 === questionCategories.length ||
+                  q.startAge < questionCategories[i + 1].startAge)
+            );
+            const renderCategory = {
+              name: category.name,
+              count: categoryQuestions.length,
+              questions: categoryQuestions,
+              shuffleOrder: shuffle(categoryQuestions.map((q) => q.id)),
+            };
+            if (renderCategory.questions.length) {
+              categories[category.name] = renderCategory;
             }
-            return tags;
-          }, tagOptions)
-          .filter((x) => x !== null)
+            return categories;
+          },
+          {
+            All: {
+              name: "All",
+              count: questions.length,
+              questions: [...questions],
+              shuffleOrder: shuffle(questions.map((q) => q.id)),
+            },
+          }
+        )
       );
     }
-  }, [currentQuestion]);
+  }, [data]);
 
-  if (data && currentQuestion) {
+  if (data) {
     return (
       <Card css="p-2 md:p-4">
         <Grid
@@ -152,143 +135,50 @@ export default function CaptureHeader({ init }) {
             "col-span-12 md:col-span-5 lg:col-span-4 xl:col-span-3",
           ]}
         >
-          {(uiState.questionVisible || window.innerWidth >= 768) && (
-            <div
-              id="question-panel"
-              className="animate-fade-in bg-white rounded px-2 pt-2 border-2 shadow pl-3"
-            >
-              <div className="flex justify-between items-center">
-                <Title css="mb-0 w-4/5 ">{currentQuestion.title}</Title>
-
-                {questionOptions.length > 1 && (
-                  <div id="shuffle-button-wrapper">
-                    <Button
-                      variant="minimal"
-                      size="compact"
-                      onClick={() => shuffleQuestion()}
-                    >
-                      <Svg name="shuffle" width="20" height="20"></Svg>
-                    </Button>
-                  </div>
-                )}
-              </div>
-              <div className="flex justify-between items-center">
-                <FormInput
-                  id="form-question-text-input"
-                  style={{ paddingLeft: 0 }}
-                  value={questionAnswer}
-                  handleChange={(e) => {
-                    setQuestionAnswer(e.target.value);
-                    if (e.target.value.length > 15) {
-                      updateUiState(
-                        makeCreateFragmentForm(
-                          {
-                            type: "TEXT",
-                            content: e.target.value,
-                            questionId: currentQuestion.id,
-                          },
-                          { revealAfterCreate: true }
-                        ),
-                        false
-                      );
-                      setTimeout(() => {
-                        setQuestionAnswer("");
-                      }, 500);
-                    }
-                  }}
-                  css="bg-white w-3/4 p-0 truncate js-question-text-input"
-                  placeholder="Start writing here..."
-                />
-                <TagSelect
-                  currentQuestionTag={currentQuestion.tag}
-                  currentTag={tagOptions.find(
-                    (t) => t.tag === questionTagCategory
-                  )}
-                  tagOptions={tagOptions}
-                  selectTag={setQuestionTagCategory}
-                  minimal
-                />
-              </div>
-            </div>
-          )}
-
-          <Grid
-            colSpan={["col-span-3 md:col-span-4"]}
-            height="h-full"
-            gap="gap-x-2 md:gap-x-4"
-          >
-            {window.innerWidth < 768 && (
-              <Button
-                css={`font-medium px-4 h-14 justify-around flex-col ${
-                  uiState.questionVisible &&
-                  "shadow bg-darkGray hover:bg-darkGray hover:border-darkGray border-darkGray text-white"
-                } `}
-                onClick={() =>
-                  updateUiState(
-                    { questionVisible: !uiState.questionVisible },
-                    false
-                  )
+          {(uiState.questionVisible || window.innerWidth >= 768) &&
+            questionOptions && (
+              <Question
+                questionOptions={questionOptions}
+                hideQuestion={(questionId) =>
+                  updateUser({
+                    variables: {
+                      data: {
+                        hiddenQuestions:
+                          data.stt_user_by_pk.hiddenQuestions.concat(
+                            questionId
+                          ),
+                      },
+                      userId: user.id,
+                    },
+                  })
                 }
-              >
-                <Svg
-                  name="question"
-                  css="md:hidden"
-                  color={uiState.questionVisible && "#ffffff"}
-                  width={18}
-                  height={18}
-                />
-                <span className="text-sm md:text-base">Questions</span>
-              </Button>
+                openQuestionModal={(answerValue, question) => {
+                  updateUiState(
+                    makeCreateFragmentForm(
+                      {
+                        type: "TEXT",
+                        content: answerValue,
+                        questionId: question.id,
+                        ...getSmartDate(
+                          question,
+                          data.stt_user_by_pk.dob,
+                          true
+                        ),
+                      },
+                      { revealAfterCreate: true }
+                    ),
+                    false
+                  );
+                }}
+              />
             )}
-            <CaptureHeaderActionButton
-              icon="calendar"
-              type="Event"
-              action={() =>
-                updateUiState(
-                  makeCreateUserEventForm({}, { revealAfterCreate: true }),
-                  false
-                )
-              }
-            />
-
-            <CaptureHeaderActionButton
-              icon="writing"
-              type="Memory"
-              action={() =>
-                updateUiState(
-                  makeCreateFragmentForm(
-                    {
-                      type: "TEXT",
-                    },
-                    { revealAfterCreate: true }
-                  ),
-                  false
-                )
-              }
-            />
-
-            <CaptureHeaderActionButton
-              icon="photo"
-              type="Photo"
-              action={() =>
-                updateUiState(
-                  makeCreateFragmentForm(
-                    {
-                      type: "PHOTO",
-                    },
-                    { revealAfterCreate: true }
-                  ),
-                  false
-                )
-              }
-            />
-          </Grid>
+          <CaptureHeaderActions />
         </Grid>
       </Card>
     );
   }
   return (
-    <div className="animate-fade-in bg-white rounded pt-4 pb-2 px-4 shadow">
+    <div className="bg-white rounded pt-4 pb-2 px-4 shadow">
       <CaptureHeaderSkeleton />
     </div>
   );

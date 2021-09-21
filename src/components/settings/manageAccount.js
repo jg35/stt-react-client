@@ -19,7 +19,16 @@ import { getHTMLTranslation } from "~/lib/util";
 export default function ManageAccount({ dbUser }) {
   const logout = useLogout();
   const [deleteAccount] = useMutation(ACTION_DELETE_USER);
-  const [showDeleteAccountModal, setShowDeleteAccountModal] = useState(false);
+  const [initDeleteModal, setInitDeleteModal] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  function closeHandler() {
+    const ANIMATE_CLOSE_TIME = 200;
+    setIsOpen(false);
+    setTimeout(() => {
+      setInitDeleteModal(false);
+    }, ANIMATE_CLOSE_TIME);
+  }
 
   return (
     <div className="animate-fade-in">
@@ -44,80 +53,87 @@ export default function ManageAccount({ dbUser }) {
           "components.settings.manageAccount.delete.continue"
         )}
       </Text>
-      <Button css="w-auto" onClick={() => setShowDeleteAccountModal(true)}>
+      <Button
+        css="w-auto"
+        onClick={() => {
+          setInitDeleteModal(true);
+          setIsOpen(true);
+        }}
+      >
         Delete my account
       </Button>
-      <Modal
-        isOpen={showDeleteAccountModal}
-        close={() => setShowDeleteAccountModal(false)}
-      >
-        <Title>Delete your account</Title>
+      {initDeleteModal && (
+        <Modal isOpen={isOpen} close={closeHandler}>
+          <Title>Delete your account</Title>
 
-        <Text>
-          {getHTMLTranslation("components.settings.manageAccount.delete.plea")}
-        </Text>
-        <Formik
-          initialValues={DeleteAccountSchema.cast()}
-          validationSchema={DeleteAccountSchema}
-          onSubmit={() => {
-            return deleteAccount().then(() => {
-              logout();
-              localStorage.removeItem("uiState");
-            });
-          }}
-        >
-          {({
-            handleSubmit,
-            values,
-            errors,
-            handleChange,
-            handleBlur,
-            isSubmitting,
-            dirty,
-          }) => {
-            return (
-              <form
-                onSubmit={handleSubmit}
-                id="delete-account-modal-form"
-                className=""
-              >
-                <div className="form-control">
-                  <FormLabel className="label">
-                    Enter "Delete my account and all of my data" to continue
-                  </FormLabel>
-                  <FormInput
-                    value={values.confirm}
-                    handleBlur={handleBlur}
-                    handleChange={handleChange}
-                    name="confirm"
-                    placeholder="Delete my account and all of my data"
-                    error={errors.confirm}
-                  />
-                  <FormError error={errors.confirm} />
-                </div>
-                <div className="flex justify-end">
-                  <Button
-                    onClick={() => setShowDeleteAccountModal(false)}
-                    variant="cta"
-                    css="mr-1 md:w-40"
-                    type="button"
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    inProgress={isSubmitting}
-                    disabled={!dirty || errors.confirm}
-                    css="ml-1 md:w-40"
-                    type="submit"
-                  >
-                    {isSubmitting ? "Deleting..." : "Delete account"} ⚠️
-                  </Button>
-                </div>
-              </form>
-            );
-          }}
-        </Formik>
-      </Modal>
+          <Text>
+            {getHTMLTranslation(
+              "components.settings.manageAccount.delete.plea"
+            )}
+          </Text>
+          <Formik
+            initialValues={DeleteAccountSchema.cast()}
+            validationSchema={DeleteAccountSchema}
+            onSubmit={() => {
+              return deleteAccount().then(() => {
+                logout();
+                localStorage.removeItem("uiState");
+              });
+            }}
+          >
+            {({
+              handleSubmit,
+              values,
+              errors,
+              handleChange,
+              handleBlur,
+              isSubmitting,
+              dirty,
+            }) => {
+              return (
+                <form
+                  onSubmit={handleSubmit}
+                  id="delete-account-modal-form"
+                  className=""
+                >
+                  <div className="form-control">
+                    <FormLabel className="label">
+                      Enter "Delete my account and all of my data" to continue
+                    </FormLabel>
+                    <FormInput
+                      value={values.confirm}
+                      handleBlur={handleBlur}
+                      handleChange={handleChange}
+                      name="confirm"
+                      placeholder="Delete my account and all of my data"
+                      error={errors.confirm}
+                    />
+                    <FormError error={errors.confirm} />
+                  </div>
+                  <div className="flex justify-end">
+                    <Button
+                      onClick={closeHandler}
+                      variant="cta"
+                      css="mr-1 md:w-40"
+                      type="button"
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      inProgress={isSubmitting}
+                      disabled={!dirty || errors.confirm}
+                      css="ml-1 md:w-40"
+                      type="submit"
+                    >
+                      {isSubmitting ? "Deleting..." : "Delete account"} ⚠️
+                    </Button>
+                  </div>
+                </form>
+              );
+            }}
+          </Formik>
+        </Modal>
+      )}
     </div>
   );
 }

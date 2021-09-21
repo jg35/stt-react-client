@@ -27,7 +27,7 @@ export default function Edit() {
   useEffect(() => {
     if (data) {
       if (data.stt_fragment.length) {
-        setFragments(sortBy(data.stt_fragment, "date"));
+        setFragments(sortBy(data.stt_fragment, ["date", "order", "id"]));
       }
     }
   }, [data]);

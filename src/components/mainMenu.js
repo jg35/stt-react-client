@@ -27,21 +27,23 @@ export default function MainMenu() {
               </Text>
             </div>
 
-            {user.photoURL ? (
-              <img
-                src={user.photoURL}
-                alt={user.displayName}
-                className="w-12 h-12 rounded-full shadow"
-              />
-            ) : (
-              <div className="w-12 h-12 rounded-full uppercase text-xl bg-lightGray flex items-center justify-center font-bold shadow">
-                {user.displayName &&
-                  user.displayName
-                    .split(" ")
-                    .map((w) => w[0])
-                    .join("")}
-              </div>
-            )}
+            <div className="w-12 overflow-hidden">
+              {user.photoURL ? (
+                <img
+                  src={user.photoURL}
+                  alt={user.displayName}
+                  className="w-12 h-12 rounded-full shadow"
+                />
+              ) : (
+                <div className="w-12 h-12 rounded-full uppercase text-xl bg-lightGray flex items-center justify-center font-bold shadow">
+                  {user.displayName &&
+                    user.displayName
+                      .split(" ")
+                      .map((w) => w[0])
+                      .join("")}
+                </div>
+              )}
+            </div>
           </div>
         </NavLink>
       ),

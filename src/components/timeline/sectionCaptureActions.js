@@ -7,8 +7,15 @@ import {
   makeCreateUserEventForm,
 } from "~/lib/uiManager";
 import colors from "~/lib/colors";
+import { getSmartDate } from "~/lib/util";
 
-export default function SectionCaptureActions({ show, date, index }) {
+export default function SectionCaptureActions({
+  show,
+  startDate,
+  endDate,
+  userDob,
+  index,
+}) {
   const { updateUiState, uiState } = useContext(UIContext);
   const [captureActive, setCaptureActive] = useState(null);
   const showActionToggle = window.innerWidth < 768;
@@ -53,7 +60,7 @@ export default function SectionCaptureActions({ show, date, index }) {
           }`}
           size="compact"
           onClick={() =>
-            updateUiState(makeCreateUserEventForm({ date }), false)
+            updateUiState(makeCreateUserEventForm({ date: startDate }), false)
           }
         >
           <Svg name="calendar" css="md:hidden " width={18} height={18} />
@@ -69,8 +76,8 @@ export default function SectionCaptureActions({ show, date, index }) {
             updateUiState(
               makeCreateFragmentForm({
                 type: "TEXT",
-                date,
-                dateType: "AUTO",
+                date: startDate,
+                ...getSmartDate({ startDate, endDate }, userDob),
               }),
               false
             )
@@ -90,8 +97,8 @@ export default function SectionCaptureActions({ show, date, index }) {
             updateUiState(
               makeCreateFragmentForm({
                 type: "PHOTO",
-                date,
-                dateType: "AUTO",
+                date: startDate,
+                ...getSmartDate({ startDate, endDate }, userDob),
               }),
               false
             )
@@ -111,8 +118,8 @@ export default function SectionCaptureActions({ show, date, index }) {
             updateUiState(
               makeCreateFragmentForm({
                 type: "CHAPTER",
-                date,
-                dateType: "AUTO",
+                date: startDate,
+                ...getSmartDate({ startDate, endDate }, userDob),
               }),
               false
             )

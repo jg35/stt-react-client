@@ -14,6 +14,7 @@ export default function EmailForm({
   resetForm,
   formSchema,
   setAuthView,
+  syncing,
 }) {
   function setAuthViewHandler(newView) {
     resetForm({
@@ -22,7 +23,10 @@ export default function EmailForm({
     setAuthView(newView);
   }
 
-  function getSubmitText(isSubmitting) {
+  function getSubmitText() {
+    if (syncing) {
+      return "Syncing user...";
+    }
     switch (authView) {
       case "LOGIN":
         return isSubmitting ? "Logging in..." : "Login";
@@ -90,10 +94,10 @@ export default function EmailForm({
           <Button
             type="submit"
             variant="cta"
-            inProgress={isSubmitting}
+            inProgress={syncing || isSubmitting}
             disabled={!dirty}
           >
-            {getSubmitText(isSubmitting)}
+            {getSubmitText()}
           </Button>
         </div>
       </form>

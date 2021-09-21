@@ -18,7 +18,6 @@ export const FETCH_TIMELINE_VIEW = gql`
       id
       title
       date
-      country
     }
     stt_userEvent(
       order_by: { date: asc }

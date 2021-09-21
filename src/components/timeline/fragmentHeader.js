@@ -1,23 +1,65 @@
 import React from "react";
 import colors from "~/lib/colors";
+import { Button } from "~/components/_styled";
 import Svg from "~/components/svg";
 import { renderFragmentDate } from "~/lib/util";
 import FragmentHeaderMenu from "~/components/timeline/fragmentHeaderMenu";
 
-export default function FragmentHeader({ fragment }) {
+export default function FragmentHeader({
+  fragment,
+  grouped,
+  isFirst,
+  isLast,
+  moveFragment,
+}) {
   const renderDate = fragment.date ? renderFragmentDate(fragment.date) : null;
 
   return (
     <div className="py-1 pl-3 pr-1 flex justify-between items-center border-b border-lightGray">
       <div className="text-center text-gray text-sm font-medium flex cursor-default">
         {renderDate
-          ? `${renderDate}${fragment.dateType === "AUTO" ? " (auto)" : ""}`
+          ? `${renderDate}${fragment.isSmartDate ? " (smart)" : ""}`
           : "No date"}
       </div>
+
       <div
         className="flex items-center justify-end"
         style={{ minWidth: "4rem" }}
       >
+        {grouped && (
+          <div className="flex items-center">
+            {!isFirst && (
+              <Button
+                variant="minimal"
+                size="compact"
+                onClick={() => moveFragment(fragment.id, fragment.date, "BACK")}
+              >
+                <Svg
+                  name="chevronLeft"
+                  height={12}
+                  width={12}
+                  title="Entries with the same date can be reordered"
+                />
+              </Button>
+            )}
+            {!isLast && (
+              <Button
+                variant="minimal"
+                size="compact"
+                onClick={() =>
+                  moveFragment(fragment.id, fragment.date, "FORWARD")
+                }
+              >
+                <Svg
+                  name="chevronRight"
+                  height={12}
+                  width={12}
+                  title="Entries with the same date can be reordered"
+                />
+              </Button>
+            )}
+          </div>
+        )}
         {fragment.hidden && (
           <div
             className="px-2 py-1 cursor-default"

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useCustomQuery } from "~/hooks/useCustomApollo";
 import { ACTION_STRIPE_FETCH_PRICES } from "~/lib/gql";
 import Modal from "~/components/modal";
-import { Title, Button, Text, Grid } from "~/components/_styled";
+import { Title, Button, Text, Grid, Skeleton } from "~/components/_styled";
 import SubscriptionOptionCard from "~/components/settings/subscriptionOptionCard";
 import { getHTMLTranslation } from "~/lib/util";
 
@@ -15,10 +15,19 @@ export default function UserPaymentForm({
   asModal = true,
 }) {
   const [subscriptionOptions, setSubscriptionOptions] = useState([]);
+  const [isOpen, setIsOpen] = useState(true);
   const [priceId, setPriceId] = useState(null);
   const { data } = useCustomQuery(ACTION_STRIPE_FETCH_PRICES, {
     variables: { appId: process.env.REACT_APP_HASURA_APP_ID },
   });
+
+  function closeHandler() {
+    const ANIMATE_CLOSE_TIME = 200;
+    setIsOpen(false);
+    setTimeout(() => {
+      closeModal();
+    }, ANIMATE_CLOSE_TIME);
+  }
 
   useEffect(async () => {
     if (data) {
@@ -90,7 +99,9 @@ export default function UserPaymentForm({
         </Button>
       </form>
     </>
-  ) : null;
+  ) : (
+    <Skeleton height="h-36" repeat={3} spacing="my-3" />
+  );
 
   if (!asModal) {
     return inner;
@@ -99,9 +110,9 @@ export default function UserPaymentForm({
   return (
     <Modal
       size="md"
-      isOpen={true}
+      isOpen={isOpen}
       canClose={intent === "MANUAL"}
-      close={closeModal}
+      close={closeHandler}
     >
       {inner}
     </Modal>

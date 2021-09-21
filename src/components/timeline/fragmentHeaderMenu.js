@@ -95,6 +95,10 @@ export default function FragmentHeaderMenu({
               updateUiState({ deleteModal: { show: false } });
             });
           })
+          .catch(() => {
+            updateUiState({ deleteModal: { show: false } });
+            // console.log("yoohoo");
+          })
           .finally(() => close());
       },
     });

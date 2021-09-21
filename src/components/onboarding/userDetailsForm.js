@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 import { useMutation } from "@apollo/client";
-import { useHistory } from "react-router";
+
 import { Formik } from "formik";
 import Modal from "~/components/modal";
 
 import useToastMessage from "~/hooks/useToastMessage";
 import { OnboardingSchema } from "~/lib/yup";
-import { UPDATE_USER } from "~/lib/gql";
+import { ACTION_UPDATE_USER_DETAILS } from "~/lib/gql";
 import FormError from "~/components/formError";
 import CountrySelect from "~/components/countrySelect";
 import DatePicker from "~/components/capture/datepicker";
@@ -14,13 +14,14 @@ import { Button, FormLabel, Title, Text } from "~/components/_styled";
 import { AuthContext } from "~/components/authWrap";
 import { useEffect } from "react";
 import { getHTMLTranslation } from "~/lib/util";
+import { refreshToken } from "~/lib/firebase";
 
 export default function UserDeailsForm() {
   const { setError } = useToastMessage();
   const {
-    authState: { dbUser, user },
+    authState: { user },
   } = useContext(AuthContext);
-  const [updateUser] = useMutation(UPDATE_USER);
+  const [updateUser] = useMutation(ACTION_UPDATE_USER_DETAILS);
 
   useEffect(() => {
     document.querySelector("#page").classList.add("blur");
@@ -31,22 +32,20 @@ export default function UserDeailsForm() {
 
   function submitForm(values) {
     return updateUser({
-      variables: { userId: dbUser.id, data: values },
-      update(cache, { data }) {
-        const updateUser = data.update_stt_user_by_pk;
-        cache.modify({
-          id: cache.identify(dbUser),
-          fields: {
-            dob: () => updateUser.dob,
-            location: () => updateUser.location,
-          },
-        });
+      variables: { data: values },
+      update: async (cache, { data }) => {
+        const { updated } = data.action_update_user_details;
+        if (updated) {
+          await refreshToken();
+          // Reset cache as session variable has changed
+          cache.reset();
+        }
       },
     });
   }
 
   return (
-    <Modal isOpen size="md" canClose={false}>
+    <Modal isOpen size="md" canClose={false} noScroll>
       <div className="h-full flex flex-col">
         <Title css="text-center">
           {getHTMLTranslation("components.onboarding.userDetailsForm.welcome", [
@@ -93,27 +92,6 @@ export default function UserDeailsForm() {
                   className="flex-1 form-control"
                   style={{ marginBottom: "10px" }}
                 >
-                  <FormLabel>Date of birth</FormLabel>
-                  <DatePicker
-                    popperPlacement="top-start"
-                    minDate={new Date().setYear(new Date().getFullYear() - 100)}
-                    maxDate={new Date().setYear(new Date().getFullYear() - 18)}
-                    placeholder="DD/MM/YYYY"
-                    error={errors.dob}
-                    date={values.dob}
-                    handleChange={(newDate) => {
-                      setFieldValue(
-                        "dob",
-                        newDate.toISOString().replace(/T.*/, "")
-                      );
-                    }}
-                  />
-                  <FormError error={errors.dob} />
-                </div>
-                <div
-                  className="flex-1 form-control"
-                  style={{ marginBottom: "10px" }}
-                >
                   <FormLabel>Your country</FormLabel>
                   <CountrySelect
                     name="location"
@@ -124,6 +102,28 @@ export default function UserDeailsForm() {
                   />
                   <FormError error={errors.location} />
                 </div>
+              </div>
+
+              <div
+                className="flex-1 form-control"
+                style={{ marginBottom: "10px" }}
+              >
+                <FormLabel>Date of birth</FormLabel>
+                <DatePicker
+                  popperPlacement="top-start"
+                  minDate={new Date().setYear(new Date().getFullYear() - 100)}
+                  maxDate={new Date().setYear(new Date().getFullYear() - 18)}
+                  placeholder="DD/MM/YYYY"
+                  error={errors.dob}
+                  date={values.dob}
+                  handleChange={(newDate) => {
+                    setFieldValue(
+                      "dob",
+                      newDate.toISOString().replace(/T.*/, "")
+                    );
+                  }}
+                />
+                <FormError error={errors.dob} />
               </div>
 
               <Button

@@ -82,3 +82,11 @@ export const ACTION_VIEW_OLD_VERSION = gql`
     }
   }
 `;
+
+export const ACTION_UPDATE_USER_DETAILS = gql`
+  mutation ActionUpdateUserDetails($data: UserDetailsInput!) {
+    action_update_user_details(data: $data) {
+      updated
+    }
+  }
+`;

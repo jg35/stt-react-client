@@ -8,7 +8,13 @@ import { createToastMessage } from "~/lib/toast";
 
 export function useCustomQuery(
   gql,
-  { variables = {}, context = {}, userId = false, fetchPolicy = "cache-first" }
+  {
+    variables = {},
+    context = {},
+    userId = false,
+    // userVariables = [],
+    fetchPolicy = "cache-first",
+  }
 ) {
   const history = useHistory();
   const { authState } = useContext(AuthContext);
@@ -22,6 +28,19 @@ export function useCustomQuery(
     context,
     fetchPolicy,
   });
+
+  // useEffect(() => {
+  //   if (userVariables && authState.dbUser) {
+  //     runQuery({
+  //       variables: {
+  //         ...variables,
+  //         ...pick(authState.dbUser, userVariables),
+  //       },
+  //     });
+  //   } else if (!userVariables) {
+  //     runQuery();
+  //   }
+  // }, [authState.dbUser]);
 
   function setToastMessage(type, ref, timeout, blockPage) {
     updateUiState(

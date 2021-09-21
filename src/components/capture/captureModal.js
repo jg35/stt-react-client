@@ -26,8 +26,10 @@ export default function CaptureModal({
   scrollToFragment,
   scrollToEvent,
 }) {
+  const [overrideSize, setOverrideSize] = useState(null);
   const { setError } = useToastMessage();
   const [formTitle, setFormTitle] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
   const [insertFragment] = useMutation(INSERT_FRAGMENT);
   const [insertUserEvent] = useMutation(INSERT_USER_EVENT);
   const [updateFragment] = useMutation(UPDATE_FRAGMENT);
@@ -35,7 +37,8 @@ export default function CaptureModal({
   const [getQuestions, { data: questionData }] = useLazyQuery(FETCH_QUESTIONS);
   const { uiState, updateUiState } = useContext(UIContext);
   const { showModal, item, originatesFromQuestion } = uiState.capture;
-  const tutorialInProgress = uiState.tutorialStep !== -1;
+  const tutorialInProgress =
+    uiState.tutorialStep !== -1 && uiState.tutorialStep !== 1000;
 
   useEffect(() => {
     if (originatesFromQuestion) {
@@ -44,6 +47,9 @@ export default function CaptureModal({
   }, [item]);
 
   useEffect(() => {
+    if (item) {
+      setIsOpen(true);
+    }
     if (
       item &&
       item.type === "TEXT" &&
@@ -61,8 +67,12 @@ export default function CaptureModal({
     }
   }, [questionData, item]);
 
-  function closeModal() {
-    updateUiState({ capture: { showModal: false, item: null } }, false);
+  function closeHandler() {
+    const ANIMATE_CLOSE_TIME = 200;
+    setIsOpen(false);
+    setTimeout(() => {
+      updateUiState({ capture: { showModal: false, item: null } }, false);
+    }, ANIMATE_CLOSE_TIME);
   }
 
   function getSchema(type) {
@@ -115,7 +125,7 @@ export default function CaptureModal({
               },
             },
           });
-          closeModal();
+          closeHandler();
         },
       });
     } else {
@@ -135,7 +145,7 @@ export default function CaptureModal({
         if (item.date !== form.date) {
           scrollToFragment(form.id);
         }
-        closeModal();
+        closeHandler();
       });
     }
   }
@@ -168,7 +178,7 @@ export default function CaptureModal({
               },
             },
           });
-          closeModal();
+          closeHandler();
         },
       });
     } else {
@@ -184,12 +194,15 @@ export default function CaptureModal({
         if (item.date !== form.date) {
           scrollToEvent(form.id);
         }
-        closeModal();
+        closeHandler();
       });
     }
   }
 
   function getModalSize(type) {
+    if (overrideSize) {
+      return overrideSize;
+    }
     switch (type) {
       case "TEXT":
         return "lg";
@@ -222,8 +235,8 @@ export default function CaptureModal({
             stickyTop={tutorialInProgress}
             canClose={!tutorialInProgress}
             formIsDirty={props.dirty}
-            isOpen={true}
-            close={closeModal}
+            isOpen={isOpen}
+            close={closeHandler}
             size={getModalSize(item.type)}
           >
             <form
@@ -247,8 +260,9 @@ export default function CaptureModal({
                   {...props}
                   editContent={!editView}
                   originatesFromQuestion={originatesFromQuestion}
-                  closeModal={closeModal}
+                  closeHandler={closeHandler}
                   tutorialInProgress={tutorialInProgress}
+                  setModalSize={(size) => setOverrideSize(size)}
                 />
               )}
               {item.type === "CHAPTER" && (
@@ -259,11 +273,11 @@ export default function CaptureModal({
                 />
               )}
               {item.type === "PHOTO" && (
-                <PhotoForm {...props} closeForm={closeModal} />
+                <PhotoForm {...props} closeForm={closeHandler} />
               )}
               <FormActions
                 formIsDirty={props.dirty}
-                closeModal={closeModal}
+                closeHandler={closeHandler}
                 itemId={props.values.id}
                 isSubmitting={props.isSubmitting}
               />

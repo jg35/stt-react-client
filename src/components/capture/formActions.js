@@ -1,7 +1,7 @@
 import { Button, ButtonGroup, Grid } from "~/components/_styled";
 
 export default function FormActions({
-  closeModal,
+  closeHandler,
   itemId,
   isSubmitting,
   formIsDirty = false,
@@ -18,7 +18,7 @@ export default function FormActions({
         disabled={isSubmitting}
         variant="minimal"
         css="w-full md:w-36 mr-4"
-        onClick={closeModal}
+        onClick={closeHandler}
       >
         Cancel
       </Button>

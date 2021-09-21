@@ -1,7 +1,8 @@
 import DatePicker from "~/components/capture/datepicker";
 import FormField from "~/components/formField";
 import TextEditor from "~/components/capture/textEditor";
-import { FormInput, Grid } from "~/components/_styled";
+import { Grid } from "~/components/_styled";
+import { pick } from "lodash";
 
 export default function TextForm({
   handleChange,
@@ -10,9 +11,9 @@ export default function TextForm({
   errors,
   setFieldValue,
   originatesFromQuestion,
-
   editContent = true,
   closeModal,
+  setModalSize,
 }) {
   return (
     <>
@@ -24,6 +25,13 @@ export default function TextForm({
             handleChange={handleChange}
             value={values.content}
             error={errors.content}
+            onExpand={(expand) => {
+              // if (expand) {
+              //   setModalSize("fullscreen");
+              // } else {
+              //   setModalSize(null);
+              // }
+            }}
             onKeyUp={(e) => {
               if (
                 originatesFromQuestion &&
@@ -45,14 +53,17 @@ export default function TextForm({
       <Grid colSpan={[`col-span-12 ${!editContent && "col-span-6"}`]}>
         <FormField label="Date" error={errors.date}>
           <DatePicker
+            smartDate={pick(values, [
+              "smartDateReason",
+              "smartDateConfidence",
+              "isSmartDate",
+            ])}
             error={errors.date}
             date={values.date}
             popperPlacement="top-start"
             handleChange={(newDate) => {
-              const date = newDate.toISOString().replace(/T.*/, "");
-              const dateType = "MANUAL";
-              setFieldValue("date", date);
-              setFieldValue("dateType", dateType);
+              setFieldValue("date", newDate.toISOString().replace(/T.*/, ""));
+              setFieldValue("isSmartDate", false);
             }}
           />
         </FormField>

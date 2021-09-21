@@ -13,6 +13,7 @@ export default function PhotoForm({
   errors,
   setFieldValue,
   isSubmitting,
+  closeForm,
 }) {
   const [uppyOpen, setUppyOpen] = useState(!values.mediaUrl);
   const [uppyReady, setUppyReady] = useState(false);
@@ -56,6 +57,9 @@ export default function PhotoForm({
           onClose={() => {
             setUppyOpen(false);
             setUppyReady(false);
+            if (!values.mediaUrl) {
+              closeForm();
+            }
           }}
           onReady={() => setUppyReady(true)}
           onChange={(url) => {
@@ -84,7 +88,7 @@ export default function PhotoForm({
             popperPlacement="top-start"
             handleChange={(newDate) => {
               setFieldValue("date", newDate.toISOString().replace(/T.*/, ""));
-              setFieldValue("dateType", "MANUAL");
+              setFieldValue("isSmartDate", false);
             }}
           />
         </FormField>

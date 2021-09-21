@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Formik } from "formik";
 import { useMutation, gql } from "@apollo/client";
 import { useCustomQuery } from "~/hooks/useCustomApollo";
@@ -16,11 +17,20 @@ import AccessListItems from "~/components/accessList/accessListItems";
 
 export default function AccessListModal({ closeModal, show }) {
   const { setError } = useToastMessage();
+  const [isOpen, setIsOpen] = useState(show);
   const { data, loading } = useCustomQuery(FETCH_PRIVATE_ACCESS_TOKENS, {
     userId: true,
   });
   const [createAccessToken] = useMutation(ACTION_GENERATE_TOKEN);
   const [deleteAccessToken] = useMutation(DELETE_ACCESS_TOKEN);
+
+  function closeHandler() {
+    const ANIMATE_CLOSE_TIME = 200;
+    setIsOpen(false);
+    setTimeout(() => {
+      closeModal();
+    }, ANIMATE_CLOSE_TIME);
+  }
 
   function deleteTokenHandler(id) {
     return deleteAccessToken({
@@ -83,8 +93,8 @@ export default function AccessListModal({ closeModal, show }) {
         return (
           <Modal
             formIsDirty={props.dirty}
-            isOpen={show}
-            close={closeModal}
+            isOpen={isOpen}
+            close={closeHandler}
             size="lg"
           >
             <div>

@@ -32,7 +32,6 @@ export default function EventForm({
           date={values.date}
           handleChange={(newDate) => {
             setFieldValue("date", newDate.toISOString().replace(/T.*/, ""));
-            setFieldValue("dateType", "MANUAL");
           }}
         />
         <FormError error={errors.date} />

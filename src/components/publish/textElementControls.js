@@ -47,7 +47,7 @@ export default function TextElementControls({
               <Svg name="cancel" height={16} width={16}></Svg>
             </Button>
           )}
-          <Svg css="ml-2" width={12} height={12} name="chevron" />
+          <Svg css="ml-2" width={12} height={12} name="chevronDown" />
         </div>
       </div>
 

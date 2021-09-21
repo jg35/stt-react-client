@@ -23,7 +23,7 @@ export default function PublishOptionsForm({
         <FormLabel>Title</FormLabel>
         <FormInput
           name="title"
-          placeholder="The all important title - no pressure! 😊"
+          placeholder="The all important title - no pressure!"
           handleChange={handleChange}
           handleBlur={handleBlur}
           value={values.title}

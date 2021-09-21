@@ -37,6 +37,7 @@ export const onAuthStateChange = (syncUserMutation) => {
     .onAuthStateChanged(async (user) => {
       const emailForm = authStateVar().emailForm;
       if (user) {
+        authStateVar({ status: "syncing" });
         fbAuthUser = user;
         if (emailForm) {
           await user.updateProfile({

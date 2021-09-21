@@ -36,7 +36,7 @@ export default function Login() {
         return (form) => {
           // Don't resolve promise, as we need to wait until status changes before redirect
           return new Promise((resolve, reject) => {
-            authStateVar({ status: "loading", emailForm: form });
+            authStateVar({ status: "out", emailForm: form });
 
             setTimeout(() =>
               createAccountWithEmail(form)
@@ -52,10 +52,6 @@ export default function Login() {
             setSuccess({ ref: "SEND_RESET_EMAIL" });
           });
     }
-  }
-
-  if (!status || status === "loading") {
-    return null;
   }
 
   if (status === "in") {
@@ -96,8 +92,11 @@ export default function Login() {
             setAuthView={setAuthView}
             authView={authView}
             submit={getEmailSubmitHandler()}
+            syncing={status === "syncing"}
           />
-          {authView === "LOGIN" && <OAuthLogin />}
+          {authView === "LOGIN" && (
+            <OAuthLogin syncing={status === "syncing"} />
+          )}
         </Card>
       </Grid>
     </Container>

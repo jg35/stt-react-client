@@ -7,7 +7,13 @@ import WorldEvent from "~/components/timeline/worldEvent";
 import SectionCaptureActions from "~/components/timeline/sectionCaptureActions";
 import { Grid, Title, Text } from "~/components/_styled";
 
-export default function Section({ section, index, isLast, timelinePeriod }) {
+export default function Section({
+  section,
+  index,
+  isLast,
+  timelinePeriod,
+  userDob,
+}) {
   const [showActions, setShowActions] = useState(false);
 
   return (
@@ -48,7 +54,9 @@ export default function Section({ section, index, isLast, timelinePeriod }) {
 
           <SectionCaptureActions
             show={showActions}
-            date={section.startDate}
+            startDate={section.startDate}
+            endDate={section.endDate}
+            userDob={userDob}
             index={index}
           />
         </Grid>

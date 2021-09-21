@@ -41,7 +41,9 @@ export const FragmentSchema = Yup.object().shape({
       return true;
     }),
   date: Yup.string().ensure().required(),
-  dateType: Yup.string().default(null).nullable(),
+  isSmartDate: Yup.boolean().default(false),
+  smartDateReason: Yup.string().default(null).nullable(),
+  smartDateConfidence: Yup.number().default(0),
   mediaCaption: Yup.string().default(null).nullable(),
   mediaUrl: Yup.string()
     .test("mediaUrl", "Upload a photo to continue", function (value) {

@@ -109,6 +109,7 @@ export default function Timeline() {
                       key={i}
                       section={timelineSection}
                       timelinePeriod={timelinePeriod}
+                      userDob={data.stt_user_by_pk.dob}
                       index={i}
                       isLast={i === timeline.length - 1}
                     />

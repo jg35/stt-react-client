@@ -13,6 +13,7 @@ export const userFragment = gql`
     publicHandle
     bookOnline
     publishedVersion
+    hiddenQuestions
     deleteAt
     versions {
       id
@@ -36,7 +37,7 @@ export const fragmentFragment = gql`
     id
     content
     date
-    dateType
+    order
     type
     mediaUrl
     mediaCaption
@@ -45,6 +46,9 @@ export const fragmentFragment = gql`
     tag
     createdAt
     updatedAt
+    isSmartDate
+    smartDateConfidence
+    smartDateReason
   }
 `;
 
@@ -80,8 +84,10 @@ export const questionFragment = gql`
   fragment questionFragment on stt_question {
     id
     title
-    minAge
-    maxAge
-    tag
+    tags
+    startAge
+    endAge
+    startDate
+    endDate
   }
 `;

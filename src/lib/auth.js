@@ -3,19 +3,11 @@ const google = new firebase.auth.GoogleAuthProvider();
 const facebook = new firebase.auth.FacebookAuthProvider();
 
 export const signInWithGoogle = async () => {
-  try {
-    await firebase.auth().signInWithPopup(google);
-  } catch (error) {
-    console.log(error);
-  }
+  return firebase.auth().signInWithPopup(google);
 };
 
 export const signInWithFacebook = async () => {
-  try {
-    await firebase.auth().signInWithPopup(facebook);
-  } catch (error) {
-    console.log(error);
-  }
+  return firebase.auth().signInWithPopup(facebook);
 };
 
 export const createAccountWithEmail = async ({ email, password }) => {

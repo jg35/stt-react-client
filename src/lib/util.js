@@ -14,6 +14,39 @@ export const getTrialDaysRemaining = (trialExpireDate) => {
   return minDays;
 };
 
+export const getAge = (dob) => {
+  const now = DateTime.utc();
+  const dobDate = DateTime.fromISO(dob);
+  const dobYears = now.diff(dobDate, "years");
+  return Math.floor(dobYears.toObject().years);
+};
+
+export const getAgeFromDate = (dob, startDate, endDate) => {
+  const start = DateTime.fromISO(dob);
+  const end = DateTime.fromISO(
+    startDate && endDate ? getMedianDate(startDate, endDate) : startDate
+  );
+  return Math.floor(end.diff(start, "years").toObject().years);
+};
+
+export const getDateOnAge = (dob, ageYears) => {
+  const ageDate = DateTime.fromISO(dob).plus({ years: ageYears });
+  return ageDate.toISODate();
+};
+
+export const getMedianDate = (startDate, endDate) => {
+  const start = DateTime.fromISO(startDate);
+  const end = DateTime.fromISO(endDate);
+  const dayDiff = Math.floor(end.diff(start, "days").toObject().days / 2);
+  return start.plus({ days: dayDiff }).toISODate();
+};
+
+export const getDateDiff = (startDate, endDate, diffUnit) => {
+  const start = DateTime.fromISO(startDate);
+  const end = DateTime.fromISO(endDate);
+  return end.diff(start, diffUnit).toObject()[diffUnit];
+};
+
 export const getNumAsWord = (num) => {
   if (num <= 10) {
     return {
@@ -87,4 +120,88 @@ export const getHTMLTranslation = (key, params = []) => {
     });
     return <span dangerouslySetInnerHTML={{ __html: translation }} />;
   }
+};
+
+export const getSmartDate = (
+  { startAge, endAge, startDate, endDate },
+  userDob,
+  isQuestion = false
+) => {
+  let date;
+  let reason;
+  let confidence;
+
+  function getConfidence(startDate, endDate) {
+    const smartDateConfidence = [
+      // Offset the index
+      0,
+      // 1 week
+      1,
+      // 2 weeks
+      2,
+      // 4 weeks
+      4,
+      // 10 weeks
+      10,
+      // 1 year
+      52,
+      // 2 years
+      104,
+      // 3 years
+      156,
+      // 4 years
+      208,
+    ];
+
+    const diffWeeks = getDateDiff(startDate, endDate, "weeks");
+
+    const confidenceIndex = smartDateConfidence.findIndex(
+      (endWeek) => diffWeeks <= endWeek
+    );
+    const accuracyFactor =
+      1 - (confidenceIndex !== -1 ? confidenceIndex / 10 : 1);
+    return 100 * accuracyFactor;
+  }
+
+  if (startDate && !endDate) {
+    date = startDate;
+    confidence = 100;
+    reason = isQuestion ? "QUESTION_SPECIFIC_DATE" : "FRAGMENT_SPECIFIC_DATE";
+  } else if (startDate && endDate) {
+    date = getMedianDate(startDate, endDate);
+    confidence = getConfidence(startDate, endDate);
+    reason = isQuestion ? "QUESTION_RANGE_DATE" : "FRAGMENT_RANGE_DATE";
+  } else if (startAge && !endAge) {
+    date = getDateOnAge(userDob, startAge);
+    reason = isQuestion
+      ? "QUESTION_SPECIFIC_AGE_DATE"
+      : "FRAGMENT_SPECIFIC_AGE_DATE";
+    confidence = 100;
+  } else if (startAge && endAge) {
+    const startDate = getDateOnAge(userDob, startAge);
+    const endDate = getDateOnAge(userDob, endAge);
+    date = getDateOnAge(
+      userDob,
+      startAge + Math.floor((endAge - startAge) / 2)
+    );
+    console.log(startDate, endDate);
+    reason = isQuestion
+      ? "QUESTION_SPECIFIC_AGE_RANGE"
+      : "FRAGMENT_SPECIFIC_AGE_RANGE";
+    confidence = getConfidence(startDate, endDate);
+  } else {
+    date = "";
+    confidence = 0;
+  }
+
+  console.log("date: ", date);
+  console.log("smartDateReason: ", reason);
+  console.log("smartDateConfidence: ", confidence);
+
+  return {
+    date,
+    isSmartDate: true,
+    smartDateReason: reason,
+    smartDateConfidence: confidence || 10,
+  };
 };

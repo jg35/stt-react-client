@@ -12,12 +12,16 @@ import {
 export const SECTION_FETCH_CAPTURE_HEADER = gql`
   ${fragmentFragment}
   ${questionFragment}
+  ${userFragment}
   query SectionFetchCaptureHeader($userId: String!) {
     stt_question {
       ...questionFragment
     }
     stt_fragment(where: { userId: { _eq: $userId } }) {
       ...fragmentFragment
+    }
+    stt_user_by_pk(id: $userId) {
+      ...userFragment
     }
   }
 `;

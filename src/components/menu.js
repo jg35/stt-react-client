@@ -57,7 +57,7 @@ export default function Menu({
         <div
           style={{ boxShadow: "0 0 6px 2px rgba(0, 0, 0, 0.1)" }}
           className={`absolute right-0 top-9 flex flex-col items-end rounded z-30 bg-white  ${
-            compact ? "w-44" : "w-64"
+            compact ? "w-44" : "w-auto"
           }`}
         >
           {menuItems.map((item, itemIndex) => {

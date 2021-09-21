@@ -32,7 +32,7 @@ export default function ChapterForm({
           error={errors.date}
           handleChange={(newDate) => {
             setFieldValue("date", newDate.toISOString().replace(/T.*/, ""));
-            setFieldValue("dateType", "MANUAL");
+            setFieldValue("isSmartDate", false);
           }}
         />
       </FormField>

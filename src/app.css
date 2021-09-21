@@ -97,6 +97,9 @@
 }
 
 /* React datepicker */
+.react-datepicker-wrapper {
+  width: 100%;
+}
 .react-datepicker-wrapper input {
   @apply outline-none bg-offWhite border-2 border-transparent px-3 py-2 rounded w-full text-lg;
 }

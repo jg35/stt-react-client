@@ -88,7 +88,8 @@ export default function AuthWrap({ children }) {
   }, [data.authState]);
 
   switch (authState.status) {
-    case "loading":
+    // Initial state before any authState is known
+    case "":
       return null;
     case "in":
       return (
@@ -105,6 +106,7 @@ export default function AuthWrap({ children }) {
         </AuthContext.Provider>
       );
     case "out":
+    case "syncing":
       if (isLogin) {
         return (
           <AuthContext.Provider

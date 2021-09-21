@@ -13,7 +13,8 @@ import { getHTMLTranslation } from "~/lib/util";
 
 export default function OnlineToggle({ isOnline, userId, isPublic }) {
   const [updateUser, { data, loading }] = useMutation(UPDATE_USER);
-  const [showModal, setShowModal] = useState(false);
+  const [initModal, setInitModal] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   function proceed() {
     updateUser({
@@ -24,8 +25,16 @@ export default function OnlineToggle({ isOnline, userId, isPublic }) {
         },
       },
     }).then(() => {
-      setShowModal(false);
+      closeHandler();
     });
+  }
+
+  function closeHandler() {
+    const ANIMATE_CLOSE_TIME = 200;
+    setIsOpen(false);
+    setTimeout(() => {
+      setInitModal(false);
+    }, ANIMATE_CLOSE_TIME);
   }
 
   return (
@@ -38,7 +47,10 @@ export default function OnlineToggle({ isOnline, userId, isPublic }) {
           <input
             type="checkbox"
             title="Change online status"
-            onChange={() => setShowModal(true)}
+            onChange={() => {
+              setInitModal(true);
+              setIsOpen(true);
+            }}
             checked={isOnline}
             name="toggle"
             id="toggle"
@@ -50,46 +62,44 @@ export default function OnlineToggle({ isOnline, userId, isPublic }) {
           ></label>
         </div>
       </div>
-      <Modal size="sm" isOpen={showModal} close={() => setShowModal(false)}>
-        <div className="h-auto bg-white flex flex-col mb-12">
-          {isOnline ? (
-            <Text css="mb-0 text-center">
-              {getHTMLTranslation(
-                "components.publish.onlineToggle.offline.description"
-              )}
-            </Text>
-          ) : (
-            <BookPrivacyStatus
-              prefix="Your book is"
-              isPublic={isPublic}
-              describe
-            />
-          )}
-        </div>
-        <Grid colSpan={["col-span-12 md:col-span-6"]}>
-          <Button
-            variant="minimal"
-            css="w-full"
-            onClick={() => setShowModal(false)}
-          >
-            Cancel
-          </Button>
-          <Button
-            variant="cta"
-            css="w-full"
-            onClick={proceed}
-            inProgress={loading}
-          >
-            {isOnline
-              ? loading
-                ? "Going offline..."
-                : "Take my book offline"
-              : loading
-              ? "Going online..."
-              : "Put my book online"}
-          </Button>
-        </Grid>
-      </Modal>
+      {initModal && (
+        <Modal size="sm" isOpen={isOpen} close={closeHandler}>
+          <div className="h-auto bg-white flex flex-col mb-12">
+            {isOnline ? (
+              <Text css="mb-0 text-center">
+                {getHTMLTranslation(
+                  "components.publish.onlineToggle.offline.description"
+                )}
+              </Text>
+            ) : (
+              <BookPrivacyStatus
+                prefix="Your book is"
+                isPublic={isPublic}
+                describe
+              />
+            )}
+          </div>
+          <Grid colSpan={["col-span-12 md:col-span-6"]}>
+            <Button variant="minimal" css="w-full" onClick={closeHandler}>
+              Cancel
+            </Button>
+            <Button
+              variant="cta"
+              css="w-full"
+              onClick={proceed}
+              inProgress={loading}
+            >
+              {isOnline
+                ? loading
+                  ? "Going offline..."
+                  : "Take my book offline"
+                : loading
+                ? "Going online..."
+                : "Put my book online"}
+            </Button>
+          </Grid>
+        </Modal>
+      )}
     </>
   );
 }

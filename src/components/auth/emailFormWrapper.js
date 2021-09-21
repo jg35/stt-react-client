@@ -6,7 +6,12 @@ import {
 } from "~/lib/yup";
 import EmailForm from "~/components/auth/emailForm";
 
-export default function EmailFormWrapper({ submit, authView, setAuthView }) {
+export default function EmailFormWrapper({
+  submit,
+  authView,
+  setAuthView,
+  syncing = false,
+}) {
   function getSchema() {
     switch (authView) {
       case "LOGIN":
@@ -61,6 +66,7 @@ export default function EmailFormWrapper({ submit, authView, setAuthView }) {
               setAuthView={setAuthView}
               authView={authView}
               formSchema={getSchema()}
+              syncing={syncing}
             />
           );
         }}

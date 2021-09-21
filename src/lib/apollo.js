@@ -32,7 +32,7 @@ const authMiddlewareLink = new ApolloLink((operation, forward) => {
   return forward(operation);
 });
 
-export const authStateVar = makeVar({ status: "loading" });
+export const authStateVar = makeVar({ status: "" });
 
 export default new ApolloClient({
   connectToDevTools: true,

@@ -2,7 +2,7 @@ import { signInWithGoogle, signInWithFacebook } from "~/lib/auth";
 import { Button, Title } from "~/components/_styled";
 import Svg from "~/components/svg";
 
-export default function OAuthForm() {
+export default function OAuthForm({ syncing }) {
   return (
     <>
       <Title
@@ -14,13 +14,14 @@ export default function OAuthForm() {
       </Title>
       <div className="flex items-center ">
         <div className="flex-1 pr-1">
-          <Button variant="cta" onClick={signInWithGoogle}>
+          <Button variant="cta" onClick={signInWithGoogle} disabled={syncing}>
             <Svg name="google" css="h-5 w-5 mr-3" color="white" />
             Google
           </Button>
         </div>
         <div className="flex-1 pl-1">
           <Button
+            disabled={syncing}
             variant="cta"
             css="bg-facebook border-facebook"
             onClick={signInWithFacebook}
