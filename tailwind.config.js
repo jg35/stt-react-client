@@ -1,5 +1,16 @@
 module.exports = {
-  purge: ["./src/**/*.{js,jsx,ts,tsx}"],
+  purge: {
+    content: ["./src/**/*.{js,jsx,ts,tsx}"],
+    safelist: [
+      /^[.\S]*google$/,
+      /^[.\S]*green$/,
+      /^[.\S]*facebook$/,
+      /^[.\S]*facebookMessenger$/,
+      /^[.\S]*whatsapp$/,
+      /^[.\S]*gmail$/,
+      /^[.\S]*twitter$/,
+    ],
+  },
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
