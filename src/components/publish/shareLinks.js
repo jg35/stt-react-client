@@ -38,7 +38,7 @@ export default function ShareLinks({ title, author, shareUrl, isPublic }) {
       </WhatsappShareButton>
       <FacebookMessengerShareButton
         url={shareUrl}
-        appId={process.env.REACT_APP_FACEBOOK_POGGL_APP_ID}
+        appId={process.env.REACT_APP_FACEBOOK_APP_ID}
         redirectUri={`${process.env.REACT_APP_BASE_URL}/publish`}
       >
         <SocialIcon name="facebookMessenger" />
