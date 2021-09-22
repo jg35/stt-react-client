@@ -18,7 +18,7 @@ export default function QuestionMenu({ hideQuestion }) {
   return (
     <Menu
       autoClose={false}
-      toggle={<Svg name="overflow" color="gray" size={24} />}
+      toggle={<Svg name="overflow" color="text-gray" size={24} />}
       items={items}
     />
   );

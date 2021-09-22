@@ -18,7 +18,7 @@ function ToastMessage({ message }) {
     }
   }, []);
 
-  let closeIconColour = "white";
+  let closeIconColour = "text-white";
   let messageStyles =
     "fixed py-3 px-4 shadow font-medium z-50 flex w-full flex justify-center";
   switch (message.type) {
@@ -35,7 +35,7 @@ function ToastMessage({ message }) {
       messageStyles += " bg-successGreen text-white";
       break;
     default:
-      closeIconColour = "black";
+      closeIconColour = "text-black";
       messageStyles += " bg-white";
       break;
   }

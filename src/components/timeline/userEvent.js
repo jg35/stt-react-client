@@ -48,9 +48,9 @@ export default function UserEvent({ event }) {
         onMouseLeave={() => setActive(false)}
       >
         {!loading ? (
-          <Svg name="cancel" size={16} color="blue" />
+          <Svg name="cancel" size={16} color="text-blue" />
         ) : (
-          <LoadingSpinner color="blue" loading={loading} css="h-4 w-4" />
+          <LoadingSpinner color="text-blue" loading={loading} css="h-4 w-4" />
         )}
       </div>
     </button>

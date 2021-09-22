@@ -38,7 +38,7 @@ export default function QuestionCategorySelect({
             rotate={90}
             size={12}
             css="ml-2"
-            color="gray"
+            color="text-gray"
           />
         </div>
       }

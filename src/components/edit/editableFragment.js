@@ -54,7 +54,7 @@ export default function EditableFragment({ fragment, saveFragment }) {
           <FragmentHeaderMenu
             fragment={fragment}
             excludeActions={["CHANGE_VISIBILITY"]}
-            menuColor="gray"
+            menuColor="text-gray"
           />
         </div>
       </div>

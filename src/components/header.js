@@ -36,7 +36,7 @@ export default function Header({ minimal = false, scrollable = false }) {
       >
         <div className="flex items-center h-full">
           <NavLink to="/">
-            <Svg name="logo" color="black" />
+            <Svg name="logo" color="text-black" />
           </NavLink>
           {!minimal && dbUser && (
             <nav className="ml-3 flex" id="nav-items">

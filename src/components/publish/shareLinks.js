@@ -10,7 +10,7 @@ import {
 import { getTranslationString } from "~/lib/util";
 
 function SocialIcon({ name }) {
-  return <Svg name={name} size={32} hoverColor={name} />;
+  return <Svg name={name} size={32} hoverColor={`text-${name}`} />;
 }
 
 export default function ShareLinks({ title, author, shareUrl, isPublic }) {

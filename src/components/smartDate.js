@@ -14,7 +14,7 @@ export default function SmartDate({ reason, confidence }) {
         `components.smartDate.tooltip.${reason}`
       )}`}
     >
-      <Svg name="check" color="green" size={16} css="mr-1" />
+      <Svg name="check" color="text-green" size={16} css="mr-1" />
       <span>
         Smart Date&nbsp;
         <span>({confidence}%)</span>

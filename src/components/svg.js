@@ -16,9 +16,9 @@ export default function Svg({
     return (
       <div
         title={title}
-        className={`${css} rounded-full flex items-center justify-center text-${color} ${
+        className={`${css} rounded-full flex items-center justify-center ${color} ${
           hoverColor &&
-          `p-2 hover:bg-lightGray hover:text-${hoverColor} duration-200 ease-in`
+          `p-2 hover:bg-lightGray hover:${hoverColor} duration-200 ease-in`
         }`}
       >
         <svg

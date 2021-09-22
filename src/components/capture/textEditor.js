@@ -58,7 +58,7 @@ export default function TextEditor({
             setExpanded(expanding);
           }}
         >
-          <Svg name="expand" color="offBlack" />
+          <Svg name="expand" color="text-offBlack" />
         </Button>
       </div> */}
     </div>
