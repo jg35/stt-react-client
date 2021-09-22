@@ -146,19 +146,9 @@ export default function SectionCaptureActions({
           }}
         >
           {captureActive ? (
-            <Svg
-              name="minus"
-              color="text-gray"
-              css="animate-fade-in"
-              size={18}
-            />
+            <Svg name="minus" color="gray" css="animate-fade-in" size={18} />
           ) : (
-            <Svg
-              name="plus"
-              color="text-gray"
-              css="animate-fade-in"
-              size={18}
-            />
+            <Svg name="plus" color="gray" css="animate-fade-in" size={18} />
           )}
         </Button>
       )}

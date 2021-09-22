@@ -46,7 +46,7 @@ export default function CaptureHeaderActions({}) {
           <Svg
             name="question"
             css="md:hidden"
-            color={uiState.questionVisible && "text-white"}
+            color={uiState.questionVisible && "white"}
             size={18}
           />
           <span className="text-sm md:text-base">Questions</span>

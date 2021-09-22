@@ -15,7 +15,7 @@ export default function OAuthForm({ syncing }) {
       <div className="flex items-center ">
         <div className="flex-1 pr-1">
           <Button variant="cta" onClick={signInWithGoogle} disabled={syncing}>
-            <Svg name="google" css="mr-2" color="text-white" />
+            <Svg name="google" css="mr-2" color="white" />
             Google
           </Button>
         </div>
@@ -26,7 +26,7 @@ export default function OAuthForm({ syncing }) {
             css="bg-facebook border-facebook"
             onClick={signInWithFacebook}
           >
-            <Svg name="facebook" css="mr-2" color="text-white" />
+            <Svg name="facebook" css="mr-2" color="white" />
             Facebook
           </Button>
         </div>

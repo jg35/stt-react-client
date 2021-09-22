@@ -63,12 +63,7 @@ export default function FragmentHeader({
             className="px-2 py-1 cursor-default"
             title="This memory won't be included in your book"
           >
-            <Svg
-              css="cursor-default"
-              name="private"
-              color="text-gray"
-              size={18}
-            />
+            <Svg css="cursor-default" name="private" color="gray" size={18} />
           </div>
         )}
         <FragmentHeaderMenu fragment={fragment} />
