@@ -26,8 +26,10 @@ export default function TrialStatus({
   return (
     <div className="flex">
       <Button
-        size="compact"
-        css={`mx-auto w-full md:w-auto font-medium ${css}`}
+        size={isBillingView ? "default" : "compact"}
+        css={`mx-auto w-full  ${css} ${
+          !isBillingView && "md:w-auto font-medium"
+        }`}
         onClick={() =>
           updateUiState(
             {

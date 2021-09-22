@@ -61,7 +61,6 @@ export default function ManageStripeCustomer({
             stripeCustomerId={stripeCustomerId}
             expiry={trialExpiresDate}
             status={subscriptionStatus}
-            css="w-full md:w-auto"
             isBillingView
           />
         </div>
