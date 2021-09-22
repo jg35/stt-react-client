@@ -52,8 +52,8 @@ export default function ManageStripeCustomer({
   trialExpiresDate,
 }) {
   return (
-    <div>
-      <Title>Your subscription</Title>
+    <div className="border-b border-lightGray pb-6 mb-6">
+      <Title size="compact">Your subscription</Title>
       <Text>{buildSummary(subscriptionStatus, subscriptionMeta)}</Text>
       {subscriptionStatus === "IN_TRIAL" ? (
         <div className="mt-6">
@@ -76,7 +76,7 @@ export default function ManageStripeCustomer({
             name="appId"
             value={process.env.REACT_APP_HASURA_APP_ID}
           ></input>
-          <Button type="submit" css="w-full md:w-auto">
+          <Button type="submit" css="w-full">
             Manage my subscription
           </Button>
         </form>

@@ -6,6 +6,7 @@ export default function Card({
   css = "",
   variant = "default",
   size = "default",
+  onKeyUp = null,
 }) {
   const variants = {
     default: "bg-white",
@@ -20,6 +21,7 @@ export default function Card({
     <div
       className={joinTailwindClasses([variants[variant], sizes[size], css])}
       style={style}
+      onKeyUp={onKeyUp}
     >
       {children}
     </div>

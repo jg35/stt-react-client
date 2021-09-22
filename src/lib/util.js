@@ -201,3 +201,11 @@ export const getSmartDate = (
     smartDateConfidence: confidence || 10,
   };
 };
+
+export const closeHandler = (setIsOpen, closeModal) => {
+  const ANIMATE_CLOSE_TIME = 200;
+  setIsOpen(false);
+  setTimeout(() => {
+    closeModal();
+  }, ANIMATE_CLOSE_TIME);
+};

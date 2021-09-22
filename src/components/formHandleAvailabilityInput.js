@@ -92,7 +92,7 @@ export default function FormHandleAvailabilityInput({
   }
   return (
     <div>
-      <FormLabel>Handle</FormLabel>
+      <FormLabel>Set your url</FormLabel>
       <FormInput
         error={error}
         value={value}

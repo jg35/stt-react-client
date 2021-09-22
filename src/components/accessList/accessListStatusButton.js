@@ -22,9 +22,9 @@ export default function AccessListStatusButton({
   const isEmpty = !data.stt_accessToken.length;
 
   return (
-    <div>
+    <>
       {isEmpty && showEmptyCta && (
-        <Text css="text-red">
+        <Text css="text-orange">
           {getHTMLTranslation(
             "components.accessList.accessListStatusButton.accessListEmpty"
           )}
@@ -32,11 +32,10 @@ export default function AccessListStatusButton({
       )}
       <Button
         size={size}
-        css="max-w-sm"
         onClick={() => updateUiState({ showAccessListModal: true }, false)}
       >
         {text}
       </Button>
-    </div>
+    </>
   );
 }

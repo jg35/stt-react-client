@@ -10,6 +10,7 @@ import {
 import { AccessTokenPrivateSchema } from "~/lib/yup";
 import useToastMessage from "~/hooks/useToastMessage";
 import Modal from "~/components/modal";
+import { closeHandler } from "~/lib/util";
 
 import { Button, FormInput, Grid } from "~/components/_styled";
 import FormField from "~/components/formField";
@@ -23,14 +24,6 @@ export default function AccessListModal({ closeModal, show }) {
   });
   const [createAccessToken] = useMutation(ACTION_GENERATE_TOKEN);
   const [deleteAccessToken] = useMutation(DELETE_ACCESS_TOKEN);
-
-  function closeHandler() {
-    const ANIMATE_CLOSE_TIME = 200;
-    setIsOpen(false);
-    setTimeout(() => {
-      closeModal();
-    }, ANIMATE_CLOSE_TIME);
-  }
 
   function deleteTokenHandler(id) {
     return deleteAccessToken({
@@ -94,7 +87,7 @@ export default function AccessListModal({ closeModal, show }) {
           <Modal
             formIsDirty={props.dirty}
             isOpen={isOpen}
-            close={closeHandler}
+            close={() => closeHandler(setIsOpen, closeModal)}
             size="lg"
           >
             <div>

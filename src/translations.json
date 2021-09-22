@@ -1,6 +1,6 @@
 {
   "components.accessList.accessListItems.description": "When your book is private, readers will login using their email and login token",
-  "components.accessList.accessListStatusButton.accessListEmpty": "No readers are on your share list. Add your first reader.",
+  "components.accessList.accessListStatusButton.accessListEmpty": "Nobody is on your share list. Add your first reader",
   "components.accessList.managePrivacyStatus.description.private": "Readers added to your share list will login with their email and a login token",
   "components.accessList.managePrivacyStatus.description.public": "Visible to anyone that knows your handle",
   "components.bookPrivacyStatus.description.private": "Readers on your share list will be able to login and read your book",

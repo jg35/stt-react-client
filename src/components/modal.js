@@ -113,7 +113,19 @@ export default function Modal({
         style={{ ...(size === "full" ? { maxWidth: "1400px" } : {}) }}
         onClick={(e) => e.stopPropagation()}
       >
-        <Card css="min-h-full pt-6 px-6 pb-6 md:pt-12 relative">
+        <Card
+          css="min-h-full pt-6 px-6 pb-6 md:pt-12 relative"
+          onKeyUp={(e) => {
+            console.log(e);
+            if (e.code === "Escape" && canClose) {
+              if (formIsDirty) {
+                setShowCloseWarning(true);
+              } else {
+                close(true);
+              }
+            }
+          }}
+        >
           {canClose && (
             <Button
               size="compact"

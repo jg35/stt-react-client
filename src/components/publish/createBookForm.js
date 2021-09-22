@@ -52,10 +52,7 @@ export default function PublishOptionsForm({
 
       <div className="mb-12">
         {values.privacyStatus === "PRIVATE" && (
-          <AccessListStatusButton
-            emptyMessage="Add your reader to your share list"
-            size="default"
-          />
+          <AccessListStatusButton size="default" />
         )}
       </div>
 

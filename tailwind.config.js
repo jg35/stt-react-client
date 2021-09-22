@@ -105,6 +105,7 @@ module.exports = {
       green: "#9fe682",
       successGreen: "#76c73c",
       facebook: "#3b5998",
+      orange: "orange",
       facebookMessenger: "#0076fb",
       whatsapp: "#25D366",
       gmail: "#EA4335",

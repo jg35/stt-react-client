@@ -12,7 +12,7 @@ function PrivacyOption({ title, description, active, onClick }) {
           : "border-lightestGray hover:border-lightGray hover:bg-lightestGray"
       }
     >
-      <Title tag="h2" css="mt-2 mb-2">
+      <Title tag="h2" css="my-4">
         {title}
       </Title>
       <Text css="text-center w-full">{description}</Text>
@@ -27,9 +27,9 @@ export default function ManagePrivacyStatus({
 }) {
   return (
     <>
-      {showLabel && <FormLabel>Choose privacy status</FormLabel>}
+      {showLabel && <FormLabel>Set your privacy status</FormLabel>}
 
-      <div className="flex flex-wrap max-w-2xl">
+      <div className={`flex flex-wrap max-w-2xl ${showLabel && "mt-4"}`}>
         <div className="w-full sm:w-1/2 sm:pr-2 mt-2">
           <PrivacyOption
             onClick={() => setPrivacyStatus("PUBLIC")}

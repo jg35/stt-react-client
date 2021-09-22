@@ -54,7 +54,7 @@ export default function UserSettings({ dbUser }) {
           <div className="animate-fade-in">
             <Title>Update your user settings</Title>
             <form id="manage-user-settings-form" onSubmit={handleSubmit}>
-              <div className="max-w-lg">
+              <div>
                 <Grid colSpan={["col-span-12"]}>
                   <FormField label="Date of birth" error={errors.dob}>
                     <DatePicker

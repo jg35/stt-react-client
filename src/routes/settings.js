@@ -5,7 +5,6 @@ import Page from "~/components/page";
 import { Card, TabLink, Grid } from "~/components/_styled";
 
 import ManageUser from "~/components/settings/manageUser";
-import ManageBilling from "~/components/settings/manageBilling";
 import ManageAccount from "~/components/settings/manageAccount";
 import ManagePrivacy from "~/components/settings/managePrivacy";
 import usePageTitle from "~/hooks/usePageTitle";
@@ -31,8 +30,6 @@ export default function Settings() {
     switch (activeTab) {
       case "SETTINGS":
         return <ManageUser dbUser={dbUser} />;
-      case "BILLING":
-        return <ManageBilling dbUser={dbUser} />;
       case "ACCOUNT":
         return <ManageAccount dbUser={dbUser} />;
       case "PRIVACY":
@@ -59,8 +56,8 @@ export default function Settings() {
               colSpan={[
                 `${
                   dbUser && dbUser.versions.length > 1
-                    ? "col-span-3"
-                    : "col-span-4"
+                    ? "col-span-4"
+                    : "col-span-6"
                 } lg:col-span-12`,
               ]}
             >
@@ -83,20 +80,15 @@ export default function Settings() {
               <TabLink
                 activeTab={activeTab}
                 setActiveTab={setActiveTab}
-                tab="BILLING"
-                title="Billing"
-                description="Manage your subscription"
-              />
-              <TabLink
-                activeTab={activeTab}
-                setActiveTab={setActiveTab}
                 tab="ACCOUNT"
                 title="Account"
                 description="Manage your account"
               />
             </Grid>
           </Card>
-          <Card css="min-h-full p-0 pt-8 px-4 pb-4">{renderActiveTab()}</Card>
+          <Card css="min-h-full p-0 pt-8 px-4 pb-4 max-w-2xl mx-auto lg:mx-0">
+            {renderActiveTab()}
+          </Card>
         </Grid>
       </Page>
     )

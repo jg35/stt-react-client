@@ -13,7 +13,11 @@ import {
 } from "~/lib/gql";
 import { PrivacySettingsForm } from "~/lib/yup";
 
-export default function ManagePrivacy({ dbUser }) {
+export default function ManagePrivacy({
+  dbUser,
+  showShareList = true,
+  onSubmitSuccess = null,
+}) {
   const { setError } = useToastMessage();
   const { data, loading } = useCustomQuery(SECTION_FETCH_PRIVACY_SETTINGS, {
     userId: true,
@@ -44,9 +48,15 @@ export default function ManagePrivacy({ dbUser }) {
               privacyStatus,
               userId: dbUser.id,
             },
-          }).catch((e) =>
-            setError(e, { ref: "UPDATE", params: ["share list"] })
-          );
+          })
+            .then(() => {
+              if (onSubmitSuccess) {
+                onSubmitSuccess();
+              }
+            })
+            .catch((e) =>
+              setError(e, { ref: "UPDATE", params: ["share list"] })
+            );
         }}
         validationSchema={PrivacySettingsForm}
         validateOnChange={false}
@@ -74,11 +84,15 @@ export default function ManagePrivacy({ dbUser }) {
                 privacyStatus={props.values.privacyStatus}
               />
 
-              <div className="mt-6">
-                <FormLabel>Share list</FormLabel>
+              {showShareList && (
+                <div className="mt-6">
+                  <FormLabel>Manage your readers</FormLabel>
 
-                <AccessListStatusButton size="default" />
-              </div>
+                  <div className="mt-4">
+                    <AccessListStatusButton size="default" />
+                  </div>
+                </div>
+              )}
 
               <div className="flex justify-end mt-6 ">
                 <Button

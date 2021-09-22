@@ -1,11 +1,17 @@
+import { useState } from "react";
 import { Button } from "~/components/_styled";
-import { useHistory } from "react-router";
+import ManagePrivacyModal from "~/components/publish/managePrivacyModal";
 
 export default function ManagePrivacySettingsButton() {
-  const history = useHistory();
+  const [showModal, setShowModal] = useState(false);
   return (
-    <Button size="compact" onClick={() => history.push("/settings#privacy")}>
-      Manage privacy settings
-    </Button>
+    <>
+      <Button size="compact" onClick={() => setShowModal(true)}>
+        Manage privacy settings
+      </Button>
+      {showModal && (
+        <ManagePrivacyModal closeModal={() => setShowModal(false)} />
+      )}
+    </>
   );
 }

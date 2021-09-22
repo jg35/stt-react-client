@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Button,
   ButtonGroup,
@@ -10,6 +10,7 @@ import {
 import Svg from "~/components/svg";
 import PopoverColorPicker from "~/components/popoverColorPicker";
 import FontSelect from "~/components/fontSelect";
+import useClickOutside from "~/hooks/useClickOutside";
 
 export default function TextElementControls({
   update,
@@ -19,7 +20,13 @@ export default function TextElementControls({
   expand,
   isSticky = false,
 }) {
+  const dropdownRef = useRef();
   const [isExpanded, setIsExpanded] = useState(expandedId === element.id);
+  useClickOutside(dropdownRef, () => {
+    if (isExpanded) {
+      expand(null);
+    }
+  });
   useEffect(() => {
     setIsExpanded(expandedId === element.id);
   }, [expandedId]);
@@ -52,7 +59,10 @@ export default function TextElementControls({
       </div>
 
       {isExpanded && (
-        <div className="animate-fade-in px-4 pb-4 absolute top-10 left-0 bg-white z-40 shadow rounded-b w-full">
+        <div
+          className="animate-fade-in px-4 pb-4 absolute top-10 left-0 bg-white z-40 shadow rounded-b w-full"
+          ref={dropdownRef}
+        >
           <div className="flex items-center justify-between my-4">
             <FormLabel css="w-16 text-black">Text</FormLabel>
             <FormInput

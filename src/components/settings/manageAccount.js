@@ -15,6 +15,7 @@ import { Formik } from "formik";
 import { DeleteAccountSchema } from "~/lib/yup";
 import FormError from "~/components/formError";
 import { getHTMLTranslation } from "~/lib/util";
+import ManageStripeCustomer from "~/components/settings/manageStripeCustomer";
 
 export default function ManageAccount({ dbUser }) {
   const logout = useLogout();
@@ -32,7 +33,7 @@ export default function ManageAccount({ dbUser }) {
 
   return (
     <div className="animate-fade-in">
-      <Title>Manage my account</Title>
+      <Title css="mb-6">Manage my account</Title>
 
       {/* TODO */}
       {/* <Title size="compact">My data</Title>
@@ -41,20 +42,26 @@ export default function ManageAccount({ dbUser }) {
         export will be emailed to you when it's ready.
       </Text> */}
 
-      <Title size="compact">Delete my account</Title>
+      <ManageStripeCustomer
+        subscriptionStatus={dbUser.subscriptionStatus}
+        subscriptionMeta={dbUser.subscriptionMeta}
+        stripeCustomerId={dbUser.stripeCustomerId}
+        trialExpiresDate={dbUser.trialExpiresDate}
+      />
+
+      <Title size="compact">Delete your account</Title>
 
       <Text>
         {getHTMLTranslation(
           "components.settings.manageAccount.delete.description"
         )}
       </Text>
-      <Text>
+      <Text css="mb-6">
         {getHTMLTranslation(
           "components.settings.manageAccount.delete.continue"
         )}
       </Text>
       <Button
-        css="w-auto"
         onClick={() => {
           setInitDeleteModal(true);
           setIsOpen(true);
@@ -96,7 +103,7 @@ export default function ManageAccount({ dbUser }) {
                   id="delete-account-modal-form"
                   className=""
                 >
-                  <div className="form-control">
+                  <div className="form-control mt-6">
                     <FormLabel className="label">
                       Enter "Delete my account and all of my data" to continue
                     </FormLabel>
@@ -105,7 +112,7 @@ export default function ManageAccount({ dbUser }) {
                       handleBlur={handleBlur}
                       handleChange={handleChange}
                       name="confirm"
-                      placeholder="Delete my account and all of my data"
+                      placeholder={`Enter "Delete my account and all of my data"`}
                       error={errors.confirm}
                     />
                     <FormError error={errors.confirm} />

@@ -4,7 +4,7 @@ import { ACTION_STRIPE_FETCH_PRICES } from "~/lib/gql";
 import Modal from "~/components/modal";
 import { Title, Button, Text, Grid, Skeleton } from "~/components/_styled";
 import SubscriptionOptionCard from "~/components/settings/subscriptionOptionCard";
-import { getHTMLTranslation } from "~/lib/util";
+import { getHTMLTranslation, closeHandler } from "~/lib/util";
 
 export default function UserPaymentForm({
   type,
@@ -20,14 +20,6 @@ export default function UserPaymentForm({
   const { data } = useCustomQuery(ACTION_STRIPE_FETCH_PRICES, {
     variables: { appId: process.env.REACT_APP_HASURA_APP_ID },
   });
-
-  function closeHandler() {
-    const ANIMATE_CLOSE_TIME = 200;
-    setIsOpen(false);
-    setTimeout(() => {
-      closeModal();
-    }, ANIMATE_CLOSE_TIME);
-  }
 
   useEffect(async () => {
     if (data) {
@@ -112,7 +104,7 @@ export default function UserPaymentForm({
       size="md"
       isOpen={isOpen}
       canClose={intent === "MANUAL"}
-      close={closeHandler}
+      close={() => closeHandler(setIsOpen, closeModal)}
     >
       {inner}
     </Modal>
