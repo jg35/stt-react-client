@@ -16,9 +16,15 @@ export default function AccessListItems({ items, removeAccessToken }) {
       {items.length > 0 && (
         <ul className="my-6">
           <li className="py-2 font-medium">
-            <Grid colSpan={["col-span-5", "col-span-5", "col-span-2"]}>
+            <Grid
+              colSpan={[
+                "col-span-7 md:col-span-8",
+                "col-span-3 md:col-span-2",
+                "col-span-2",
+              ]}
+            >
               <span className="block">Email</span>
-              <span className="block">Login token</span>
+              <span className="block">Token</span>
               <span className="block"></span>
             </Grid>
           </li>
@@ -31,7 +37,12 @@ export default function AccessListItems({ items, removeAccessToken }) {
                   key={item.id || item.email}
                 >
                   <Grid
-                    colSpan={["col-span-5", "col-span-5", "col-span-2"]}
+                    colSpan={[
+                      "col-span-7 md:col-span-8",
+                      "col-span-3 md:col-span-2",
+                      ,
+                      "col-span-2",
+                    ]}
                     css="items-center"
                   >
                     <span className="block truncate">{item.email}</span>

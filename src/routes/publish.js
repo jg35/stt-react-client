@@ -146,7 +146,12 @@ export default function Publish() {
 
               <Grid colSpan={["col-span-12 lg:col-span-6"]} css="mt-6">
                 <ManagePrivacySettingsButton />
-                {!isPublic && <AccessListStatusButton userId={user.id} />}
+                {!isPublic && (
+                  <AccessListStatusButton
+                    userId={user.id}
+                    showEmptyCta={false}
+                  />
+                )}
               </Grid>
             </Card>
             {versions.length > 1 && (

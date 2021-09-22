@@ -88,7 +88,7 @@ export default function AccessListModal({ closeModal, show }) {
             formIsDirty={props.dirty}
             isOpen={isOpen}
             close={() => closeHandler(setIsOpen, closeModal)}
-            size="lg"
+            size="md"
           >
             <div>
               <AccessListItems

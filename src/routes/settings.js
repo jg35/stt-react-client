@@ -81,6 +81,7 @@ export default function Settings() {
                 activeTab={activeTab}
                 setActiveTab={setActiveTab}
                 tab="ACCOUNT"
+                isLast
                 title="Account"
                 description="Manage your account"
               />

@@ -9,9 +9,11 @@ export default function TabLink({
   description,
   css = "",
   style = {},
+  isLast = false,
 }) {
-  const baseCss =
-    "lg:mb-4 font-medium flex flex-col items-center lg:items-start cursor-pointer rounded border-2 p-1.5 lg:p-3 duration-200 transition-all w-full";
+  const baseCss = `${
+    !isLast && "lg:mb-4"
+  } font-medium flex flex-col items-center lg:items-start cursor-pointer rounded border-2 p-1.5 lg:p-3 duration-200 transition-all w-full`;
   const variants = {
     default: "hover:bg-lightestGray border-transparent",
     active: "border-black",
