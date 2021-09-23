@@ -4,6 +4,7 @@ import { uniq, shuffle } from "lodash";
 import { SECTION_FETCH_CAPTURE_HEADER, UPDATE_USER } from "~/lib/gql";
 import { Card, Grid } from "~/components/_styled";
 import { getAge, getAgeFromDate, getSmartDate } from "~/lib/util";
+import { AGE_RANGES } from "~/lib/constants";
 
 import CaptureHeaderSkeleton from "~/components/capture/captureHeaderSkeleton";
 import { AuthContext } from "~/components/authWrap";
@@ -26,7 +27,7 @@ export default function CaptureHeader({ init }) {
   const [updateUser] = useMutation(UPDATE_USER);
   const [questionOptions, setQuestionOptions] = useState(null);
 
-  function calcQuestionStartAge({ startAge, startDate, endDate }) {
+  function calcQuestionStartAge({ startAge, startDate, endDate, title }) {
     // We get the age of user on a given set of dates to get
     // the question into the right category
     if (startDate || endDate) {
@@ -35,6 +36,7 @@ export default function CaptureHeader({ init }) {
         startDate,
         endDate
       );
+      console.log(`ageOnDate (${title}): ${ageOnDate}`);
       // If user was not born when event happened, set startAge so it is hidden
       return ageOnDate >= 0 ? ageOnDate : 9999;
     }
@@ -47,36 +49,16 @@ export default function CaptureHeader({ init }) {
     }
   }, [init]);
 
-  const questionCategories = [
-    {
-      name: "Early memories",
-      startAge: 0,
-    },
-    {
-      name: "Childhood",
-      startAge: 5,
-    },
-    {
-      name: "Teenage years",
-      startAge: 13,
-    },
-    {
-      name: "Twenties",
-      startAge: 20,
-    },
-    {
-      name: "Thirties",
-      startAge: 30,
-    },
-    {
-      name: "Middle years",
-      startAge: 40,
-    },
-    {
-      name: "Older years",
-      startAge: 65,
-    },
-  ];
+  function isWithinCategory(startAge, endAge, catStartAge, catEndAge) {
+    // Nothing specific so goes into "All" category
+    if (startAge === 0 && endAge === null) {
+      return false;
+    }
+    if (startAge >= catStartAge && startAge <= catEndAge) {
+      return !endAge || endAge <= catEndAge;
+    }
+    return false;
+  }
 
   useEffect(() => {
     if (data) {
@@ -88,19 +70,25 @@ export default function CaptureHeader({ init }) {
         .map((q) => ({ ...q, startAge: calcQuestionStartAge(q) }))
         .filter(
           (q) =>
-            !data.stt_user_by_pk.hiddenQuestions.includes(q.id) &&
+            !data.stt_user_by_pk.hiddenQuestions.ids.includes(q.id) &&
+            !data.stt_user_by_pk.hiddenQuestions.tags.includes(q.tags[0]) &&
             userAge >= q.startAge &&
             !questionsAnswered.includes(q.id)
         );
+
       setQuestionOptions(
-        questionCategories.reduce(
+        AGE_RANGES.reduce(
           (categories, category, i) => {
-            const categoryQuestions = questions.filter(
-              (q) =>
-                q.startAge >= category.startAge &&
-                (i + 1 === questionCategories.length ||
-                  q.startAge < questionCategories[i + 1].startAge)
-            );
+            const categoryQuestions = questions.filter((q) => {
+              const IS_IN_CATEGORY_BOUNDS = isWithinCategory(
+                q.startAge,
+                q.endAge,
+                category.startAge,
+                category.endAge
+              );
+
+              return IS_IN_CATEGORY_BOUNDS;
+            });
             const renderCategory = {
               name: category.name,
               count: categoryQuestions.length,
@@ -131,22 +119,39 @@ export default function CaptureHeader({ init }) {
         <Grid
           gap="gap-y-2 md:gap-4"
           colSpan={[
-            "col-span-12 md:col-span-7 lg:col-span-8 xl:col-span-9",
-            "col-span-12 md:col-span-5 lg:col-span-4 xl:col-span-3",
+            "col-span-12 lg:col-span-8 xl:col-span-9",
+            "col-span-12 lg:col-span-4 xl:col-span-3",
           ]}
         >
           {(uiState.questionVisible || window.innerWidth >= 768) &&
             questionOptions && (
               <Question
                 questionOptions={questionOptions}
+                hideQuestionTag={(tag) =>
+                  updateUser({
+                    variables: {
+                      data: {
+                        hiddenQuestions: {
+                          ...data.stt_user_by_pk.hiddenQuestions,
+                          tags: data.stt_user_by_pk.hiddenQuestions.tags.concat(
+                            tag
+                          ),
+                        },
+                      },
+                      userId: user.id,
+                    },
+                  })
+                }
                 hideQuestion={(questionId) =>
                   updateUser({
                     variables: {
                       data: {
-                        hiddenQuestions:
-                          data.stt_user_by_pk.hiddenQuestions.concat(
+                        hiddenQuestions: {
+                          ...data.stt_user_by_pk.hiddenQuestions,
+                          ids: data.stt_user_by_pk.hiddenQuestions.ids.concat(
                             questionId
                           ),
+                        },
                       },
                       userId: user.id,
                     },

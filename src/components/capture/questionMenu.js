@@ -2,18 +2,34 @@ import Menu from "~/components/menu";
 import Svg from "~/components/svg";
 import colors from "~/lib/colors";
 
-export default function QuestionMenu({ hideQuestion }) {
+export default function QuestionMenu({
+  hideQuestion,
+  hideTag,
+  currentTag = null,
+}) {
   const items = [
     {
       component: (
         <span className="flex justify-end w-full whitespace-nowrap px-1">
-          Don't ask this question again
-          <Svg name="cancel" css="ml-2" size={18} />
+          Don't show this question again
+          {/* <Svg name="cancel" css="ml-1" size={18} /> */}
         </span>
       ),
       onClick: hideQuestion,
     },
   ];
+
+  if (currentTag !== null) {
+    items.push({
+      component: (
+        <span className="flex justify-end w-full whitespace-nowrap px-1">
+          Hide questions with tag: <strong>&nbsp;{currentTag}</strong>
+          {/* <Svg name="cancel" css="ml-1" size={18} /> */}
+        </span>
+      ),
+      onClick: hideTag,
+    });
+  }
 
   return (
     <Menu

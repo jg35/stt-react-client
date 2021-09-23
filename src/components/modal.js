@@ -116,7 +116,6 @@ export default function Modal({
         <Card
           css="min-h-full pt-6 px-6 pb-6 md:pt-12 relative"
           onKeyUp={(e) => {
-            console.log(e);
             if (e.code === "Escape" && canClose) {
               if (formIsDirty) {
                 setShowCloseWarning(true);

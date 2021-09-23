@@ -115,6 +115,10 @@ export const UserSettingsSchema = Yup.object()
   .shape({
     dob: Yup.string().required("Set your date of birth").ensure(),
     location: Yup.string().ensure().required("Set your location"),
+    hiddenQuestions: Yup.object().shape({
+      ids: Yup.array().of(Yup.number()),
+      tags: Yup.array().of(Yup.string()),
+    }),
   })
   .noUnknown();
 

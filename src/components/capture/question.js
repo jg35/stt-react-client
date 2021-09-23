@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Title, FormInput } from "~/components/_styled";
+import { Button, Title, FormInput, Grid } from "~/components/_styled";
 import Svg from "~/components/svg";
 import QuestionCategorySelect from "~/components/capture/questionCategorySelect";
 import QuestionMenu from "~/components/capture/questionMenu";
@@ -7,6 +7,7 @@ import QuestionMenu from "~/components/capture/questionMenu";
 export default function Question({
   questionOptions,
   hideQuestion,
+  hideQuestionTag,
   openQuestionModal,
 }) {
   const [currentQuestion, setCurrentQuestion] = useState(null);
@@ -55,6 +56,18 @@ export default function Question({
     hideQuestion(currentQuestion.id);
   }
 
+  function hideTagHandler() {
+    const tag = currentQuestion.tags[0];
+    const categoryQuestionCount = questionOptions[
+      questionCategory
+    ].questions.filter((q) => q.tags.includes(tag));
+    // If current category no longer has any questions, reset question category
+    if (!categoryQuestionCount.length) {
+      setQuestionCategory("All");
+    }
+    hideQuestionTag(tag);
+  }
+
   if (!currentQuestion) {
     return null;
   }
@@ -67,11 +80,12 @@ export default function Question({
       <div className="flex justify-between items-start">
         <Title css="mb-0 w-4/5 ">{currentQuestion.title}</Title>
 
-        <div className="flex">
-          {/* <span className="rounded bg-lightGray text-darkGray flex items-center py-1 px-2 capitalize text-sm font-medium">
-            parenthood
-          </span> */}
-          {/* TODO - show menu, with "Don't show this question again", "Don't show me questions with 'parenthood' category" */}
+        <div className="flex items-center">
+          {currentQuestion.tags.length && (
+            <span className="hidden md:block uppercase text-darkGray font-bold px-2 py-1 text-sm bg-lightestGray rounded-md flex items-center justify-center whitespace-nowrap mr-2">
+              {currentQuestion.tags[0]}
+            </span>
+          )}
 
           <div id="shuffle-button-wrapper">
             <Button
@@ -82,7 +96,11 @@ export default function Question({
               <Svg name="shuffle" size={20}></Svg>
             </Button>
           </div>
-          <QuestionMenu hideQuestion={hideQuestionHandler} />
+          <QuestionMenu
+            currentTag={currentQuestion.tags[0]}
+            hideTag={hideTagHandler}
+            hideQuestion={hideQuestionHandler}
+          />
         </div>
       </div>
       <div className="flex justify-between items-center">

@@ -1,32 +1,52 @@
-import { Formik } from "formik";
-import { useMutation, gql } from "@apollo/client";
+import { useState } from "react";
+import { Form, Formik } from "formik";
+import { omit } from "lodash";
+import { useMutation } from "@apollo/client";
+import { useCustomQuery } from "~/hooks/useCustomApollo";
 import { UserSettingsSchema } from "~/lib/yup";
-import { ACTION_UPDATE_USER_DETAILS } from "~/lib/gql";
+import {
+  ACTION_UPDATE_USER_DETAILS,
+  UPDATE_USER,
+  FETCH_QUESTIONS,
+} from "~/lib/gql";
 import { refreshToken } from "~/lib/firebase";
 
 import DatePicker from "~/components/capture/datepicker";
 import CountrySelect from "~/components/countrySelect";
 import FormField from "~/components/formField";
-import { Button, Title, Grid } from "~/components/_styled";
+import { Button, Title, Grid, Tag, FormLabel } from "~/components/_styled";
+import Svg from "~/components/svg";
 
 import useToastMessage from "~/hooks/useToastMessage";
 
-export default function UserSettings({ dbUser }) {
-  const [updateUser] = useMutation(ACTION_UPDATE_USER_DETAILS);
+export default function ManageUser({ dbUser }) {
+  const [showHiddenQuestions, setShowHiddenQuestions] = useState(false);
+  const [showHiddenTags, setShowHiddenTags] = useState(false);
+  const { data } = useCustomQuery(FETCH_QUESTIONS, {});
+  const [syncUser] = useMutation(ACTION_UPDATE_USER_DETAILS);
+  const [updateUser] = useMutation(UPDATE_USER);
   const { setError } = useToastMessage();
 
   function updateUserHandler(values) {
-    return updateUser({
-      variables: { data: values },
-      update: async (cache, { data }) => {
-        const { updated } = data.action_update_user_details;
-        if (updated) {
-          await refreshToken();
-          // Reset cache as session variable has changed
-          cache.reset();
-        }
-      },
-    });
+    return Promise.all([
+      updateUser({
+        variables: {
+          data: omit(values, ["dob", "location"]),
+          userId: dbUser.id,
+        },
+      }),
+      syncUser({
+        variables: { data: omit(values, ["hiddenQuestions"]) },
+        update: async (cache, { data }) => {
+          const { updated } = data.action_update_user_details;
+          if (updated) {
+            await refreshToken();
+            // Reset cache as session variable has changed
+            cache.reset();
+          }
+        },
+      }),
+    ]);
   }
   return (
     <Formik
@@ -86,6 +106,76 @@ export default function UserSettings({ dbUser }) {
                   </FormField>
                 </Grid>
               </div>
+              {data?.stt_question.length && (
+                <>
+                  <Title size="compact" tag="h2" css="mb-6">
+                    Manage questions
+                  </Title>
+
+                  <div className="mb-4">
+                    <FormLabel>Hidden questions</FormLabel>
+                    {values.hiddenQuestions.ids.length ? (
+                      <ul className="flex flex-wrap animate-fade-in mt-2">
+                        {values.hiddenQuestions.ids.map((id, key) => (
+                          <li
+                            className="my-1 whitespace-nowrap"
+                            title="Show this question"
+                            key={key}
+                            onClick={() =>
+                              setFieldValue(
+                                "hiddenQuestions.ids",
+                                values.hiddenQuestions.ids.filter(
+                                  (hId) => hId !== id
+                                )
+                              )
+                            }
+                          >
+                            <Tag
+                              css="normal-case cursor-pointer font-normal text-base"
+                              interactive
+                            >
+                              {data.stt_question.find((q) => q.id === id).title}
+                              <Svg name="cancel" css="ml-1" size={12} />
+                            </Tag>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <div className="mt-4 mb-2">All questions visible</div>
+                    )}
+                  </div>
+
+                  <div>
+                    <FormLabel>Hidden tags</FormLabel>
+                    {values.hiddenQuestions.tags.length ? (
+                      <ul className="flex flex-wrap animate-fade-in mt-2">
+                        {values.hiddenQuestions.tags.map((tag, key) => (
+                          <li
+                            className="my-1 whitespace-nowrap"
+                            title="Show this tag"
+                            key={key}
+                            onClick={() =>
+                              setFieldValue(
+                                "hiddenQuestions.tags",
+                                values.hiddenQuestions.tags.filter(
+                                  (hTag) => hTag !== tag
+                                )
+                              )
+                            }
+                          >
+                            <Tag css="cursor-pointer">
+                              {tag}
+                              <Svg name="cancel" css="ml-1" size={12} />
+                            </Tag>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <div className="mt-4 mb-2">All tags visible</div>
+                    )}
+                  </div>
+                </>
+              )}
               <div className="flex justify-end">
                 <Button
                   type="submit"

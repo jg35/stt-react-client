@@ -23,4 +23,5 @@ export { default as Paper } from "./paper";
 export { default as Skeleton } from "./skeleton";
 export { default as Surface } from "./surface";
 export { default as TabLink } from "./tabLink";
+export { default as Tag } from "./tag";
 export { default as InProgress } from "./inProgress";

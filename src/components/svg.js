@@ -14,11 +14,12 @@ export default function Svg({
 
   if (icon) {
     return (
-      <div
+      <span
         title={title}
         className={`${css} rounded-full flex items-center justify-center text-${color} ${
-          hoverColor &&
-          `p-2 hover:bg-lightGray hover:text-${hoverColor} duration-200 ease-in`
+          hoverColor
+            ? `p-2 hover:bg-lightGray hover:text-${hoverColor} duration-200 ease-in`
+            : ""
         }`}
       >
         <svg
@@ -29,7 +30,7 @@ export default function Svg({
         >
           {icon.path()}
         </svg>
-      </div>
+      </span>
     );
   }
   return null;
