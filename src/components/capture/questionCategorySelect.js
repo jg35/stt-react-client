@@ -10,7 +10,7 @@ function QuestionCategorySelectOption({ category, selectCategory }) {
     <Button
       variant="minimal"
       size="compact"
-      css="justify-end capitalize items-center"
+      css="justify-end items-center"
       onClick={() => selectCategory(category.name)}
     >
       {category.name}
@@ -30,7 +30,7 @@ export default function QuestionCategorySelect({
       compact
       toggle={
         <div className={`font-medium flex ${toggleCss}`}>
-          <span className="whitespace-nowrap capitalize flex items-center">
+          <span className="whitespace-nowrap flex items-center">
             {currentCategory.name}
           </span>
           <Svg name="chevronDown" size={12} css="ml-1" color="darkGray" />

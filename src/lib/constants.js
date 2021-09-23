@@ -1,6 +1,6 @@
 export const AGE_RANGES = [
   {
-    name: "Early memories",
+    name: "First memories",
     startAge: 0,
     endAge: 3,
   },

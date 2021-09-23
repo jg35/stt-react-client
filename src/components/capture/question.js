@@ -11,7 +11,7 @@ export default function Question({
   openQuestionModal,
 }) {
   const [currentQuestion, setCurrentQuestion] = useState(null);
-  const [questionCategory, setQuestionCategory] = useState("Early memories");
+  const [questionCategory, setQuestionCategory] = useState("First memories");
   const [questionAnswer, setQuestionAnswer] = useState("");
   const [shuffleIndex, setShuffleIndex] = useState(0);
 

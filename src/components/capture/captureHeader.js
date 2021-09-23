@@ -118,8 +118,8 @@ export default function CaptureHeader({ init }) {
       );
 
       if (questionsWithoutCategory.length) {
-        categoryQuestions["Other"] = {
-          name: "Other",
+        categoryQuestions["Everything else"] = {
+          name: "Everything else",
           count: questionsWithoutCategory.length,
           questions: [...questionsWithoutCategory],
           shuffleOrder: shuffle(questionsWithoutCategory.map((q) => q.id)),
