@@ -81,8 +81,6 @@ export default function Publish() {
     }
   }, [data, dbUser]);
 
-  const hasPrevVersions = versions.slice(1).length >= 1;
-
   const websiteUrl = `${process.env.REACT_APP_READER_VIEW_URL}/${dbUser?.publicHandle}`;
   const isPublic = publishedVersion?.privacyStatus === "PUBLIC";
   const bookOnline = dbUser?.bookOnline;
@@ -100,9 +98,13 @@ export default function Publish() {
       </div>
 
       {publishedVersion ? (
-        <Grid colSpan={["col-span-12 lg:col-span-6"]}>
+        <Grid colSpan={["col-span-12 lg:col-span-6"]} css="lg:h-full">
           <BookCover coverUrl={publishedVersion.coverUrl} />
-          <Grid colSpan={["col-span-12 md:col-span-6 lg:col-span-12"]}>
+
+          <Grid
+            colSpan={["col-span-12 md:col-span-6 lg:col-span-12"]}
+            css="w-full"
+          >
             <Card css="w-full md:h-full lg:h-fit-content">
               <Title>Your website</Title>
 

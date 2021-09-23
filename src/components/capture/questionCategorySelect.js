@@ -24,22 +24,16 @@ export default function QuestionCategorySelect({
   categoryOptions,
   selectCategory,
 }) {
-  let toggleCss = "text-gray";
+  let toggleCss = "text-darkGray";
   return currentCategory ? (
     <Menu
       compact
       toggle={
         <div className={`font-medium flex ${toggleCss}`}>
-          <span className="whitespace-nowrap capitalize">
+          <span className="whitespace-nowrap capitalize flex items-center">
             {currentCategory.name}
           </span>
-          <Svg
-            name="chevronDown"
-            rotate={90}
-            size={12}
-            css="ml-2"
-            color="gray"
-          />
+          <Svg name="chevronDown" size={12} css="ml-1" color="darkGray" />
         </div>
       }
       items={Object.keys(categoryOptions).map((categoryKey, i) => {

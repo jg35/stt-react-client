@@ -11,14 +11,28 @@ export default function Question({
   openQuestionModal,
 }) {
   const [currentQuestion, setCurrentQuestion] = useState(null);
-  const [questionCategory, setQuestionCategory] = useState("All");
+  const [questionCategory, setQuestionCategory] = useState("Early memories");
   const [questionAnswer, setQuestionAnswer] = useState("");
   const [shuffleIndex, setShuffleIndex] = useState(0);
 
   useEffect(() => {
+    if (!questionOptions[questionCategory]) {
+      // change the category
+      Object.keys(questionOptions).forEach((categoryKey) => {
+        if (questionOptions[categoryKey].questions.length) {
+          setQuestionCategory(categoryKey);
+          setShuffleIndex(0);
+          setCurrentQuestion(null);
+          return;
+        }
+      });
+    }
+
     if (
       // No question is set
       !currentQuestion ||
+      // There are no questions for the current category
+      !questionOptions[questionCategory] ||
       // Question was hidden or category was changed
       !questionOptions[questionCategory].questions.find(
         (q) => q.id === currentQuestion.id
@@ -29,6 +43,7 @@ export default function Question({
   }, [currentQuestion, questionOptions, questionCategory]);
 
   function shuffleQuestion() {
+    // After hiding questions or tags there may not be any questions left
     let newShuffleIndex = shuffleIndex + 1;
     if (newShuffleIndex >= questionOptions[questionCategory].questions.length) {
       newShuffleIndex = 0;
@@ -44,27 +59,27 @@ export default function Question({
   }
 
   function hideQuestionHandler() {
-    // Get number of questions
-    const categoryQuestionCount = questionOptions[
-      questionCategory
-    ].questions.filter((q) => q.id !== currentQuestion.id);
+    // // Get number of questions
+    // const categoryQuestionCount = questionOptions[
+    //   questionCategory
+    // ].questions.filter((q) => q.id !== currentQuestion.id);
 
-    // If current category no longer has any questions, reset question category
-    if (!categoryQuestionCount.length) {
-      setQuestionCategory("All");
-    }
+    // // If current category no longer has any questions, reset question category
+    // if (!categoryQuestionCount.length) {
+    //   setQuestionCategory("All");
+    // }
     hideQuestion(currentQuestion.id);
   }
 
   function hideTagHandler() {
     const tag = currentQuestion.tags[0];
-    const categoryQuestionCount = questionOptions[
-      questionCategory
-    ].questions.filter((q) => q.tags.includes(tag));
-    // If current category no longer has any questions, reset question category
-    if (!categoryQuestionCount.length) {
-      setQuestionCategory("All");
-    }
+    // const categoryQuestionCount = questionOptions[
+    //   questionCategory
+    // ].questions.filter((q) => q.tags.includes(tag));
+    // // If current category no longer has any questions, reset question category
+    // if (!categoryQuestionCount.length) {
+    //   setQuestionCategory("All");
+    // }
     hideQuestionTag(tag);
   }
 
@@ -82,8 +97,8 @@ export default function Question({
 
         <div className="flex items-center">
           {currentQuestion.tags.length && (
-            <span className="hidden md:block uppercase text-darkGray font-bold px-2 py-1 text-sm bg-lightestGray rounded-md flex items-center justify-center whitespace-nowrap mr-2">
-              {currentQuestion.tags[0]}
+            <span className="hidden md:block text-darkGray font-medium px-2 py-1 bg-lightestGray rounded-md flex items-center justify-center whitespace-nowrap mr-2">
+              #{currentQuestion.tags[0]}
             </span>
           )}
 

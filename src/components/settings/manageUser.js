@@ -130,12 +130,8 @@ export default function ManageUser({ dbUser }) {
                               )
                             }
                           >
-                            <Tag
-                              css="normal-case cursor-pointer font-normal text-base"
-                              interactive
-                            >
+                            <Tag css="font-normal text-base" interactive>
                               {data.stt_question.find((q) => q.id === id).title}
-                              <Svg name="cancel" css="ml-1" size={12} />
                             </Tag>
                           </li>
                         ))}
@@ -163,10 +159,7 @@ export default function ManageUser({ dbUser }) {
                               )
                             }
                           >
-                            <Tag css="cursor-pointer">
-                              {tag}
-                              <Svg name="cancel" css="ml-1" size={12} />
-                            </Tag>
+                            <Tag interactive>#{tag}</Tag>
                           </li>
                         ))}
                       </ul>

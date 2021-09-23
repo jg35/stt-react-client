@@ -27,6 +27,5 @@ export const AGE_RANGES = [
   {
     name: "Older years",
     startAge: 60,
-    endAge: 10000,
   },
 ];

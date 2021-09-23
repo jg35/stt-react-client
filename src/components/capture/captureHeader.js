@@ -49,15 +49,24 @@ export default function CaptureHeader({ init }) {
     }
   }, [init]);
 
+  // What did you most like about school (min: 4, max: 17)
+  // Should be in childhood / teenage years
   function isWithinCategory(startAge, endAge, catStartAge, catEndAge) {
     // Nothing specific so goes into "All" category
     if (startAge === 0 && endAge === null) {
       return false;
     }
-    if (startAge >= catStartAge && startAge <= catEndAge) {
-      return !endAge || endAge <= catEndAge;
+
+    if (!endAge && catEndAge) {
+      return startAge >= catStartAge && startAge <= catEndAge;
+    } else if (!endAge && !catEndAge) {
+      return startAge >= catStartAge;
     }
-    return false;
+
+    const INTERSECTS = startAge <= catStartAge && endAge >= catEndAge;
+    const MATCH = startAge >= catStartAge && endAge <= catEndAge;
+
+    return INTERSECTS || MATCH;
   }
 
   useEffect(() => {
@@ -76,40 +85,50 @@ export default function CaptureHeader({ init }) {
             !questionsAnswered.includes(q.id)
         );
 
-      setQuestionOptions(
-        AGE_RANGES.reduce(
-          (categories, category, i) => {
-            const categoryQuestions = questions.filter((q) => {
-              const IS_IN_CATEGORY_BOUNDS = isWithinCategory(
-                q.startAge,
-                q.endAge,
-                category.startAge,
-                category.endAge
-              );
+      const matchedQuestionIds = [];
+      const categoryQuestions = AGE_RANGES.reduce((categories, category, i) => {
+        const categoryQuestions = questions.filter((q) => {
+          const IS_IN_CATEGORY_BOUNDS = isWithinCategory(
+            q.startAge,
+            q.endAge,
+            category.startAge,
+            category.endAge
+          );
 
-              return IS_IN_CATEGORY_BOUNDS;
-            });
-            const renderCategory = {
-              name: category.name,
-              count: categoryQuestions.length,
-              questions: categoryQuestions,
-              shuffleOrder: shuffle(categoryQuestions.map((q) => q.id)),
-            };
-            if (renderCategory.questions.length) {
-              categories[category.name] = renderCategory;
-            }
-            return categories;
-          },
-          {
-            All: {
-              name: "All",
-              count: questions.length,
-              questions: [...questions],
-              shuffleOrder: shuffle(questions.map((q) => q.id)),
-            },
+          if (IS_IN_CATEGORY_BOUNDS) {
+            matchedQuestionIds.push(q.id);
           }
-        )
+
+          return IS_IN_CATEGORY_BOUNDS;
+        });
+        const renderCategory = {
+          name: category.name,
+          count: categoryQuestions.length,
+          questions: categoryQuestions,
+          shuffleOrder: shuffle(categoryQuestions.map((q) => q.id)),
+        };
+        if (renderCategory.questions.length) {
+          categories[category.name] = renderCategory;
+        }
+        return categories;
+      }, {});
+
+      const questionsWithoutCategory = questions.filter(
+        (q) => !matchedQuestionIds.includes(q.id)
       );
+
+      if (questionsWithoutCategory.length) {
+        categoryQuestions["Other"] = {
+          name: "Other",
+          count: questionsWithoutCategory.length,
+          questions: [...questionsWithoutCategory],
+          shuffleOrder: shuffle(questionsWithoutCategory.map((q) => q.id)),
+        };
+      }
+
+      console.log(categoryQuestions);
+
+      setQuestionOptions(categoryQuestions);
     }
   }, [data]);
 
