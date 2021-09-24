@@ -57,9 +57,6 @@ export default function PhotoForm({
           onClose={() => {
             setUppyOpen(false);
             setUppyReady(false);
-            if (!values.mediaUrl) {
-              closeForm();
-            }
           }}
           onReady={() => setUppyReady(true)}
           onChange={(url) => {

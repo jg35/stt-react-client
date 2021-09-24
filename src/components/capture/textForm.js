@@ -12,7 +12,7 @@ export default function TextForm({
   setFieldValue,
   originatesFromQuestion,
   editContent = true,
-  closeModal,
+  closeHandler,
   setModalSize,
 }) {
   return (
@@ -38,7 +38,7 @@ export default function TextForm({
                 e.key === "Backspace" &&
                 e.target.value.length === 0
               ) {
-                closeModal();
+                closeHandler();
                 const input = document.querySelector(".js-question-text-input");
                 if (input) {
                   input.focus();

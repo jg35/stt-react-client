@@ -114,7 +114,21 @@ export default function UppyDashboard({
       setReady(false);
     } else {
       const files = uppy.getFiles();
-      if (files.length === 0 && signedUrl && open) {
+      const fState = files.length && Object.values(uppy.getState().files)[0];
+      const EDITING_UPLOADED_IMAGE = fState && fState.progress.uploadComplete;
+      const EDITING_EXISTING_IMAGE = files.length === 0 && signedUrl;
+      if (EDITING_UPLOADED_IMAGE) {
+        // Resets progress so user can edit image again
+        uppy.setFileState(fState.id, {
+          progress: {
+            percentage: 0,
+            bytesUploaded: 0,
+            uploadComplete: false,
+            uploadStarted: null,
+          },
+        });
+        setReady(true);
+      } else if (EDITING_EXISTING_IMAGE) {
         setReady(false);
         addRemoteImage(signedUrl);
       } else {
