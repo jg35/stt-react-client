@@ -179,7 +179,6 @@ export default function PublishNewVersion() {
                   ],
                 });
               } else if (publishStep === 3) {
-                // Create the book
                 return publishVersionHandler(values);
               }
               return saveVersionHandler(saveValues).then(() => {

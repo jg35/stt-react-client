@@ -10,6 +10,7 @@ import { useCustomQuery } from "~/hooks/useCustomApollo";
 import {
   SECTION_FETCH_PRIVACY_SETTINGS,
   SECTION_UPDATE_PRIVACY_SETTINGS,
+  ACTION_CHECK_HANDLE_AVAILABILITY,
 } from "~/lib/gql";
 import { PrivacySettingsForm } from "~/lib/yup";
 
@@ -23,6 +24,9 @@ export default function ManagePrivacy({
     userId: true,
   });
   const [updatePrivacySettings] = useMutation(SECTION_UPDATE_PRIVACY_SETTINGS);
+  const [checkHandleAvailability] = useMutation(
+    ACTION_CHECK_HANDLE_AVAILABILITY
+  );
 
   if (loading || !data) {
     return (
@@ -58,7 +62,32 @@ export default function ManagePrivacy({
               setError(e, { ref: "UPDATE", params: ["share list"] })
             );
         }}
-        validationSchema={PrivacySettingsForm}
+        validate={async (values) => {
+          const errors = {};
+          const { publicHandle, privacyStatus } = values;
+          if (!privacyStatus) {
+            errors.privacyStatus = "The privacy status is required";
+          }
+          if (!publicHandle.length) {
+            errors.publicHandle = "The handle is required";
+          } else if (publicHandle.length < 6) {
+            errors.publicHandle = "Your handle must be at least 6 characters";
+          } else if (!publicHandle.match(/^[a-z0-9]+$/i)) {
+            errors.publicHandle =
+              "The handle can only consist of letters and numbers and cannot contain any spaces";
+          } else {
+            const { data } = await checkHandleAvailability({
+              variables: { handle: publicHandle },
+            });
+            const { available, message } = data.action_stt_handle_availability;
+            if (!available) {
+              errors.publicHandle =
+                message || `${publicHandle} is not an available handle`;
+            }
+          }
+          return errors;
+        }}
+        // validationSchema={PrivacySettingsForm}
         validateOnChange={false}
         validateOnBlur={false}
       >

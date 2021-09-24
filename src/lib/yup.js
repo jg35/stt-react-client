@@ -18,11 +18,6 @@ export const AccessTokenPrivateSchema = Yup.object().shape({
   type: Yup.string().ensure().default("PRIVATE"),
 });
 
-export const PrivacySettingsForm = Yup.object().shape({
-  publicHandle: Yup.string().ensure(),
-  privacyStatus: Yup.string().default("PRIVATE"),
-});
-
 export const EventSchema = Yup.object().shape({
   id: Yup.number(),
   title: Yup.string().ensure().required("Give your event a name"),

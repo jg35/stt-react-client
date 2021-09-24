@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useMutation } from "@apollo/client";
 import { throttle } from "lodash";
 import { ACTION_CHECK_HANDLE_AVAILABILITY } from "~/lib/gql";
@@ -26,6 +26,12 @@ export default function FormHandleAvailabilityInput({
       const handle = e.target.value;
       if (!handle.length) {
         setFieldError("publicHandle", "The handle is required");
+        setIsLoading(false);
+      } else if (handle.length < 6) {
+        setFieldError(
+          "publicHandle",
+          "Your handle must be at least 6 characters"
+        );
         setIsLoading(false);
       } else if (!handle.match(/^[a-z0-9]+$/i)) {
         setFieldError(
