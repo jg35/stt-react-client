@@ -141,7 +141,7 @@ export default function ManageUser({ dbUser }) {
                     )}
                   </div>
 
-                  <div>
+                  <div className="mb-4">
                     <FormLabel>Hidden tags</FormLabel>
                     {values.hiddenQuestions.tags.length ? (
                       <ul className="flex flex-wrap animate-fade-in mt-2">
