@@ -39,7 +39,6 @@ export default function PhotoForm({
                 style={{ maxHeight: "50vh" }}
               />
             </div>
-            <div className="w-full h-screen bg-black"></div>
             <span className="absolute bottom-0 block bg-black text-white text-center rounded-b py-2 font-medium opacity-70 w-full cursor-pointer">
               {uppyOpen && !uppyReady ? (
                 <span className="flex justify-center items-center">
