@@ -19,20 +19,13 @@ export default function ShareLinks({ title, author, shareUrl, isPublic }) {
       <EmailShareButton
         url={shareUrl}
         subject={getTranslationString("share.email.subject")}
-        body={getTranslationString("share.email.body", [
-          { key: "BOOK_NAME", value: title },
-          { key: "BOOK_AUTHOR", value: author },
-        ])}
         separator={"\n\n"}
       >
         <SocialIcon name="gmail" />
       </EmailShareButton>
       <WhatsappShareButton
         url={shareUrl}
-        title={getTranslationString("share.whatsapp.title", [
-          { key: "BOOK_NAME", value: title },
-          { key: "BOOK_AUTHOR", value: author },
-        ])}
+        title={getTranslationString("share.social.title")}
       >
         <SocialIcon name="whatsapp" />
       </WhatsappShareButton>
@@ -47,7 +40,7 @@ export default function ShareLinks({ title, author, shareUrl, isPublic }) {
         <>
           <FacebookShareButton
             url={shareUrl}
-            quote={getTranslationString("share.facebook.quote")}
+            quote={getTranslationString("share.social.title")}
           >
             <SocialIcon name="facebook" />
           </FacebookShareButton>
@@ -55,10 +48,7 @@ export default function ShareLinks({ title, author, shareUrl, isPublic }) {
           <TwitterShareButton
             url={shareUrl}
             hashtags={["storiestotell", "memoir", "autobiography"]}
-            title={getTranslationString("share.twitter.title", [
-              { key: "BOOK_NAME", value: title },
-              { key: "BOOK_AUTHOR", value: author },
-            ])}
+            title={getTranslationString("share.social.title")}
           >
             <SocialIcon name="twitter" />
           </TwitterShareButton>

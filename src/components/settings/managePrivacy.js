@@ -68,21 +68,25 @@ export default function ManagePrivacy({
           if (!privacyStatus) {
             errors.privacyStatus = "The privacy status is required";
           }
-          if (!publicHandle.length) {
-            errors.publicHandle = "The handle is required";
-          } else if (publicHandle.length < 6) {
-            errors.publicHandle = "Your handle must be at least 6 characters";
-          } else if (!publicHandle.match(/^[a-z0-9]+$/i)) {
-            errors.publicHandle =
-              "The handle can only consist of letters and numbers and cannot contain any spaces";
-          } else {
-            const { data } = await checkHandleAvailability({
-              variables: { handle: publicHandle },
-            });
-            const { available, message } = data.action_stt_handle_availability;
-            if (!available) {
+
+          if (data.stt_user[0].publicHandle !== publicHandle) {
+            if (!publicHandle.length) {
+              errors.publicHandle = "The handle is required";
+            } else if (publicHandle.length < 6) {
+              errors.publicHandle = "Your handle must be at least 6 characters";
+            } else if (!publicHandle.match(/^[a-z0-9]+$/i)) {
               errors.publicHandle =
-                message || `${publicHandle} is not an available handle`;
+                "The handle can only consist of letters and numbers and cannot contain any spaces";
+            } else {
+              const { data } = await checkHandleAvailability({
+                variables: { handle: publicHandle },
+              });
+              const { available, message } =
+                data.action_stt_handle_availability;
+              if (!available) {
+                errors.publicHandle =
+                  message || `${publicHandle} is not an available handle`;
+              }
             }
           }
           return errors;

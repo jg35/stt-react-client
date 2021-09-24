@@ -132,15 +132,18 @@ export default function Publish() {
             </Card>
             <Card css="w-full md:h-full lg:h-fit-content">
               <Title>Share your book</Title>
-              <Text>
-                Share your website by selecting one of the options below
-              </Text>
               <ShareLinks
                 title={publishedVersion.title}
                 author={publishedVersion.author}
                 isPublic={isPublic}
                 shareUrl={websiteUrl}
               />
+              {!isPublic && (
+                <Text css="text-darkGray mt-2">
+                  If your book is private, readers will need their login
+                  information to access the book
+                </Text>
+              )}
             </Card>
             <Card css="w-full md:h-full lg:h-fit-content">
               <Title>Privacy</Title>
