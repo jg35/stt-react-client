@@ -45,7 +45,7 @@ export default function Modal({
       sizeStyles = "w-full h-auto lg:w-4/5 max-w-5xl";
       break;
     case "full":
-      sizeStyles = "w-full h-auto max-h-full max-w-full";
+      sizeStyles = "w-full h-auto max-h-full lg:w-4/5 max-w-7xl";
       break;
     case "fullscreen":
       sizeStyles = "min-h-full min-w-full h-screen w-full fixed top-0 left-0";
@@ -114,7 +114,7 @@ export default function Modal({
         onClick={(e) => e.stopPropagation()}
       >
         <Card
-          css="min-h-full pt-6 px-6 pb-6 md:pt-12 relative"
+          css={`min-h-full pt-6 px-6 pb-6 md:pt-12 relative`}
           onKeyUp={(e) => {
             if (e.code === "Escape" && canClose) {
               if (formIsDirty) {

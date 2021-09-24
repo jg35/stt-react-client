@@ -1,6 +1,10 @@
-import FormError from "~/components/formError";
-import { FormInput, FormLabel } from "~/components/_styled";
+import { useContext } from "react";
+import { FormInput } from "~/components/_styled";
+import FormField from "~/components/formField";
 import DatePicker from "~/components/capture/datepicker";
+import { AuthContext } from "~/components/authWrap";
+import { getDatePickerAgeCaption } from "~/lib/util";
+import { pick } from "lodash";
 
 export default function EventForm({
   handleChange,
@@ -10,9 +14,12 @@ export default function EventForm({
   setFieldValue,
   tutorialInProgress,
 }) {
+  const {
+    authState: { dbUser },
+  } = useContext(AuthContext);
   return (
     <>
-      <div className="form-control">
+      <FormField error={errors.title}>
         <FormInput
           autoFocus={!tutorialInProgress}
           name="title"
@@ -22,20 +29,22 @@ export default function EventForm({
           value={values.title}
           error={errors.title}
         />
-        <FormError error={errors.title} />
-      </div>
+      </FormField>
 
-      <div className="form-control">
-        <FormLabel>Date</FormLabel>
+      <FormField
+        label="Date"
+        error={errors.date}
+        caption={getDatePickerAgeCaption(values.date, dbUser.dob)}
+      >
         <DatePicker
+          smartDate={pick(values, ["smartDateReason", "isSmartDate"])}
           error={errors.date}
           date={values.date}
           handleChange={(newDate) => {
             setFieldValue("date", newDate.toISOString().replace(/T.*/, ""));
           }}
         />
-        <FormError error={errors.date} />
-      </div>
+      </FormField>
     </>
   );
 }

@@ -47,7 +47,6 @@ export const fragmentFragment = gql`
     createdAt
     updatedAt
     isSmartDate
-    smartDateConfidence
     smartDateReason
   }
 `;

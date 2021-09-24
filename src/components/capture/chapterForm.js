@@ -1,6 +1,10 @@
+import { useContext } from "react";
 import DatePicker from "~/components/capture/datepicker";
 import FormField from "~/components/formField";
 import { FormInput, FormLabel } from "~/components/_styled";
+import { AuthContext } from "~/components/authWrap";
+import { getDatePickerAgeCaption } from "~/lib/util";
+import { pick } from "lodash";
 
 export default function ChapterForm({
   handleChange,
@@ -10,6 +14,9 @@ export default function ChapterForm({
   setFieldValue,
   editContent = true,
 }) {
+  const {
+    authState: { dbUser },
+  } = useContext(AuthContext);
   return (
     <>
       {editContent && (
@@ -26,8 +33,13 @@ export default function ChapterForm({
         </FormField>
       )}
 
-      <FormField label="Date" error={errors.date}>
+      <FormField
+        label="Date"
+        error={errors.date}
+        caption={getDatePickerAgeCaption(values.date, dbUser.dob)}
+      >
         <DatePicker
+          smartDate={pick(values, ["smartDateReason", "isSmartDate"])}
           date={values.date}
           error={errors.date}
           handleChange={(newDate) => {

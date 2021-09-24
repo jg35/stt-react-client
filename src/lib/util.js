@@ -29,6 +29,9 @@ export const getAgeFromDate = (dob, startDate, endDate) => {
   return Math.floor(end.diff(start, "years").toObject().years);
 };
 
+export const getDatePickerAgeCaption = (date, dob) =>
+  date ? `You were ${getAgeFromDate(dob, date)} years old on this date` : null;
+
 export const getDateOnAge = (dob, ageYears) => {
   const ageDate = DateTime.fromISO(dob).plus({ years: ageYears });
   return ageDate.toISODate();
@@ -127,10 +130,15 @@ export const getSmartDate = (
   userDob,
   isQuestion = false
 ) => {
-  let date;
-  let reason;
-  let confidence;
-
+  let date = "";
+  let smartDateReason = {
+    confidence: 10,
+    date: "",
+    reason: "",
+    startDate: null,
+    endDate: null,
+    ageOnDate: null,
+  };
   // TODO if a question is in all category (no start age || end age, date is 100%)
   // TODO if something is in last senior age cateogry (start age with no max age) date is again 100% accurate
 
@@ -166,42 +174,54 @@ export const getSmartDate = (
     return Math.floor(100 * accuracyFactor);
   }
 
-  if (startDate && !endDate) {
+  if (endAge === null && startDate === null) {
+    smartDateReason.confidence = 0;
+  } else if (startDate && !endDate) {
+    smartDateReason.startDate = startDate;
     date = startDate;
-    confidence = 100;
-    reason = isQuestion ? "QUESTION_SPECIFIC_DATE" : "FRAGMENT_SPECIFIC_DATE";
+    smartDateReason.confidence = 100;
+    smartDateReason.reason = isQuestion
+      ? "QUESTION_SPECIFIC_DATE"
+      : "FRAGMENT_SPECIFIC_DATE";
   } else if (startDate && endDate) {
+    smartDateReason.startDate = startDate;
+    smartDateReason.endDate = endDate;
     date = getMedianDate(startDate, endDate);
-    confidence = getConfidence(startDate, endDate);
-    reason = isQuestion ? "QUESTION_RANGE_DATE" : "FRAGMENT_RANGE_DATE";
-  } else if (!isNaN(startAge) && isNaN(endAge)) {
+    smartDateReason.confidence = getConfidence(startDate, endDate);
+    smartDateReason.reason = isQuestion
+      ? "QUESTION_RANGE_DATE"
+      : "FRAGMENT_RANGE_DATE";
+  } else if (!isNaN(startAge) && (isNaN(endAge) || endAge === -1)) {
     date = getDateOnAge(userDob, startAge);
-    reason = isQuestion
+    smartDateReason.startDate = date;
+    smartDateReason.reason = isQuestion
       ? "QUESTION_SPECIFIC_AGE_DATE"
       : "FRAGMENT_SPECIFIC_AGE_DATE";
-    confidence = 100;
+    smartDateReason.confidence = 100;
   } else if (!isNaN(startAge) && !isNaN(endAge)) {
     const startDate = getDateOnAge(userDob, startAge);
     const endDate = getDateOnAge(userDob, endAge);
+    smartDateReason.startDate = startDate;
+    smartDateReason.endDate = endDate;
     date = getDateOnAge(
       userDob,
       startAge + Math.floor((endAge - startAge) / 2)
     );
-    reason = isQuestion
+    smartDateReason.reason = isQuestion
       ? "QUESTION_SPECIFIC_AGE_RANGE_DATE"
       : "FRAGMENT_SPECIFIC_AGE_RANGE_DATE";
-    confidence = getConfidence(startDate, endDate);
-  } else {
-    console.log("all question....");
-    date = "";
-    confidence = 0;
+    smartDateReason.confidence = getConfidence(startDate, endDate);
+  }
+
+  if (date) {
+    smartDateReason.date = date;
+    smartDateReason.ageOnDate = getAgeFromDate(userDob, smartDateReason.date);
   }
 
   return {
     date,
     isSmartDate: date !== "",
-    smartDateReason: reason,
-    smartDateConfidence: confidence || 10,
+    smartDateReason,
   };
 };
 

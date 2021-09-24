@@ -238,6 +238,7 @@ export default function CaptureModal({
             isOpen={isOpen}
             close={closeHandler}
             size={getModalSize(item.type)}
+            noScroll={item.type !== "PHOTO"}
           >
             <form
               id="capture-form"

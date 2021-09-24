@@ -63,10 +63,7 @@ export default function DatePicker({
       />
       {smartDate && smartDate.isSmartDate && (
         <div className="absolute right-4 z-50 top-2">
-          <SmartDate
-            reason={smartDate.smartDateReason}
-            confidence={smartDate.smartDateConfidence}
-          />
+          <SmartDate reason={smartDate.smartDateReason} />
         </div>
       )}
     </div>

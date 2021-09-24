@@ -1,8 +1,11 @@
+import { useContext } from "react";
 import DatePicker from "~/components/capture/datepicker";
 import FormField from "~/components/formField";
 import TextEditor from "~/components/capture/textEditor";
 import { Grid } from "~/components/_styled";
 import { pick } from "lodash";
+import { getDatePickerAgeCaption } from "~/lib/util";
+import { AuthContext } from "~/components/authWrap";
 
 export default function TextForm({
   handleChange,
@@ -15,6 +18,9 @@ export default function TextForm({
   closeHandler,
   setModalSize,
 }) {
+  const {
+    authState: { dbUser },
+  } = useContext(AuthContext);
   return (
     <>
       {editContent && (
@@ -51,13 +57,14 @@ export default function TextForm({
       )}
 
       <Grid colSpan={[`col-span-12 ${!editContent && "col-span-6"}`]}>
-        <FormField label="Date" error={errors.date}>
+        {/* TODO - put form field etc within datepicker component to reduce duplication */}
+        <FormField
+          label="Date"
+          error={errors.date}
+          caption={getDatePickerAgeCaption(values.date, dbUser.dob)}
+        >
           <DatePicker
-            smartDate={pick(values, [
-              "smartDateReason",
-              "smartDateConfidence",
-              "isSmartDate",
-            ])}
+            smartDate={pick(values, ["smartDateReason", "isSmartDate"])}
             error={errors.date}
             date={values.date}
             popperPlacement="top-start"

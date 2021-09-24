@@ -60,7 +60,13 @@ export default function SectionCaptureActions({
           }`}
           size="compact"
           onClick={() =>
-            updateUiState(makeCreateUserEventForm({ date: startDate }), false)
+            updateUiState(
+              makeCreateUserEventForm({
+                date: startDate,
+                ...getSmartDate({ startDate, endDate }, userDob),
+              }),
+              false
+            )
           }
         >
           <Svg name="calendar" css="md:hidden " size={18} />

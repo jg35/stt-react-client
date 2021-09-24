@@ -18,6 +18,11 @@ export const AccessTokenPrivateSchema = Yup.object().shape({
   type: Yup.string().ensure().default("PRIVATE"),
 });
 
+export const PrivacySettingsForm = Yup.object().shape({
+  publicHandle: Yup.string().ensure().required(),
+  privacyStatus: Yup.string().default("PRIVATE"),
+});
+
 export const EventSchema = Yup.object().shape({
   id: Yup.number(),
   title: Yup.string().ensure().required("Give your event a name"),
@@ -37,8 +42,16 @@ export const FragmentSchema = Yup.object().shape({
     }),
   date: Yup.string().ensure().required(),
   isSmartDate: Yup.boolean().default(false),
-  smartDateReason: Yup.string().default(null).nullable(),
-  smartDateConfidence: Yup.number().default(0),
+  smartDateReason: Yup.object()
+    .shape({
+      ageOnDate: Yup.number().nullable(),
+      confidence: Yup.number().nullable(),
+      date: Yup.string().nullable(),
+      startDate: Yup.string().nullable(),
+      endDate: Yup.string().nullable(),
+      reason: Yup.string().nullable(),
+    })
+    .nullable(),
   mediaCaption: Yup.string().default(null).nullable(),
   mediaUrl: Yup.string()
     .test("mediaUrl", "Upload a photo to continue", function (value) {

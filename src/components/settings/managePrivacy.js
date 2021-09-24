@@ -12,6 +12,7 @@ import {
   SECTION_UPDATE_PRIVACY_SETTINGS,
   ACTION_CHECK_HANDLE_AVAILABILITY,
 } from "~/lib/gql";
+import { PrivacySettingsForm } from "~/lib/yup";
 
 export default function ManagePrivacy({
   dbUser,
