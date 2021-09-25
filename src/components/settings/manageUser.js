@@ -159,7 +159,7 @@ export default function ManageUser({ dbUser }) {
                               )
                             }
                           >
-                            <Tag interactive>#{tag}</Tag>
+                            <Tag interactive>#{tag.replace(/\s/g, "-")}</Tag>
                           </li>
                         ))}
                       </ul>
