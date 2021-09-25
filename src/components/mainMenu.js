@@ -27,12 +27,12 @@ export default function MainMenu() {
               </Text>
             </div>
 
-            <div className="w-12 overflow-hidden">
+            <div className="w-12">
               {user.photoURL ? (
                 <img
                   src={user.photoURL}
                   alt={user.displayName}
-                  className="w-12 h-12 rounded-full shadow"
+                  className="w-12 h-12 rounded-full overflow-hidden shadow"
                 />
               ) : (
                 <div className="w-12 h-12 rounded-full uppercase text-xl bg-lightGray flex items-center justify-center font-bold shadow">

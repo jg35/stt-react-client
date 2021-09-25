@@ -41,6 +41,9 @@
     color: #cac7c7;
     /* font-family: futura-pt, sans-serif; */
   }
+  ::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 @layer utilities {
