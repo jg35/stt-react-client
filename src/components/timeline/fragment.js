@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
+import { UIContext } from "~/app";
+import { makeEditFragmentForm } from "~/lib/uiManager";
 import FragmentHeader from "~/components/timeline/fragmentHeader";
 import ChapterFragment from "~/components/timeline/chapterFragment";
 import MemoryFragment from "~/components/timeline/memoryFragment";
@@ -11,6 +13,7 @@ export default function Fragment({
   isLast,
   moveFragment,
 }) {
+  const { updateUiState } = useContext(UIContext);
   return (
     <div
       className="rounded-md bg-white shadow flex flex-col h-full"
@@ -24,13 +27,18 @@ export default function Fragment({
         isLast={isLast}
         moveFragment={moveFragment}
       />
-      {fragment.type === "CHAPTER" && (
-        <ChapterFragment title={fragment.content} />
-      )}
+      <div
+        className="w-full h-full flex cursor-pointer"
+        onClick={() => updateUiState(makeEditFragmentForm(fragment), false)}
+      >
+        {fragment.type === "CHAPTER" && (
+          <ChapterFragment title={fragment.content} />
+        )}
 
-      {fragment.type === "TEXT" && <MemoryFragment fragment={fragment} />}
+        {fragment.type === "TEXT" && <MemoryFragment fragment={fragment} />}
 
-      {fragment.type === "PHOTO" && <PhotoFragment fragment={fragment} />}
+        {fragment.type === "PHOTO" && <PhotoFragment fragment={fragment} />}
+      </div>
     </div>
   );
 }
