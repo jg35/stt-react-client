@@ -57,6 +57,11 @@ export default function CaptureHeader({ init }) {
       return false;
     }
 
+    // Date specific ages
+    if (startAge && endAge === -1) {
+      return startAge >= catStartAge && startAge <= catEndAge;
+    }
+
     if (!endAge && catEndAge) {
       return startAge >= catStartAge && startAge <= catEndAge;
     } else if (!endAge && !catEndAge) {

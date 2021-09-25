@@ -29,9 +29,53 @@ export const getAgeFromDate = (dob, startDate, endDate) => {
   return Math.floor(end.diff(start, "years").toObject().years);
 };
 
-export const getDatePickerAgeCaption = (date, dob) =>
-  date ? `You were ${getAgeFromDate(dob, date)} years old on this date` : null;
+function shouldPlural(ref, count) {
+  if (count > 1 || count === 0) {
+    return `${ref}s`;
+  }
+  return ref;
+}
 
+export const getDatePickerAgeCaption = (date, dob) => {
+  const start = DateTime.fromISO(dob);
+  const end = DateTime.fromISO(date);
+  const { years, months, days } = end
+    .diff(start, ["years", "months", "days"])
+    .toObject();
+
+  if (!years && !months) {
+    if (!days) {
+      return `Your first day on earth`;
+    }
+    return `${days} ${shouldPlural("day", days)} old`;
+  } else if (months && !years) {
+    if (!days) {
+      return `${months} ${shouldPlural("month", months)} old`;
+    }
+    return `${months} ${shouldPlural(
+      "month",
+      months
+    )} and ${days} ${shouldPlural("day", days)} old`;
+  } else {
+    if (!months && !days) {
+      return `${years} ${shouldPlural("year", years)} old`;
+    } else if (months && !days) {
+      return `${years} ${shouldPlural(
+        "year",
+        years
+      )} and ${months} ${shouldPlural("month", months)} old`;
+    } else if (days && !months) {
+      return `${years} ${shouldPlural(
+        "year",
+        years
+      )} and ${days} ${shouldPlural("day", days)} old`;
+    }
+    return `${years} ${shouldPlural("year", years)}, ${months} ${shouldPlural(
+      "month",
+      months
+    )} and ${days} ${shouldPlural("day", days)} old`;
+  }
+};
 export const getDateOnAge = (dob, ageYears) => {
   const ageDate = DateTime.fromISO(dob).plus({ years: ageYears });
   return ageDate.toISODate();
