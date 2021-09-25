@@ -31,6 +31,8 @@ export const eventFragment = gql`
     createdAt
     updatedAt
     userId
+    isSmartDate
+    smartDateReason
   }
 `;
 

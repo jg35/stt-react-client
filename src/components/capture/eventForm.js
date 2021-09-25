@@ -42,6 +42,7 @@ export default function EventForm({
           date={values.date}
           handleChange={(newDate) => {
             setFieldValue("date", newDate.toISOString().replace(/T.*/, ""));
+            setFieldValue("isSmartDate", false);
           }}
         />
       </FormField>

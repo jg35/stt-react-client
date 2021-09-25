@@ -28,6 +28,17 @@ export const EventSchema = Yup.object().shape({
   title: Yup.string().ensure().required("Give your event a name"),
   date: Yup.string().ensure().required("Add a date"),
   type: Yup.string().default("EVENT"),
+  isSmartDate: Yup.boolean().default(false),
+  smartDateReason: Yup.object()
+    .shape({
+      ageOnDate: Yup.number().nullable(),
+      confidence: Yup.number().nullable(),
+      date: Yup.string().nullable(),
+      startDate: Yup.string().nullable(),
+      endDate: Yup.string().nullable(),
+      reason: Yup.string().nullable(),
+    })
+    .nullable(),
 });
 
 export const FragmentSchema = Yup.object().shape({

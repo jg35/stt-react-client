@@ -157,6 +157,8 @@ export default function CaptureModal({
           data: {
             title: form.title,
             date: form.date,
+            smartDateReason: form.smartDateReason,
+            isSmartDate: form.isSmartDate,
           },
         },
         update(cache, { data }) {
