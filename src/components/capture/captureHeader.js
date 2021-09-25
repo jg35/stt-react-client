@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useLazyQuery, useMutation } from "@apollo/client";
-import { uniq, shuffle } from "lodash";
+import { uniq, shuffle, isEmpty } from "lodash";
 import { SECTION_FETCH_CAPTURE_HEADER, UPDATE_USER } from "~/lib/gql";
 import { Card, Grid } from "~/components/_styled";
 import { getAge, getAgeFromDate, getSmartDate } from "~/lib/util";
@@ -36,7 +36,6 @@ export default function CaptureHeader({ init }) {
         startDate,
         endDate
       );
-      console.log(`ageOnDate (${title}): ${ageOnDate}`);
       // If user was not born when event happened, set startAge so it is hidden
       return ageOnDate >= 0 ? ageOnDate : 9999;
     }
@@ -131,13 +130,13 @@ export default function CaptureHeader({ init }) {
         };
       }
 
-      console.log(categoryQuestions);
-
-      setQuestionOptions(categoryQuestions);
+      if (!isEmpty(categoryQuestions)) {
+        setQuestionOptions(categoryQuestions);
+      }
     }
   }, [data]);
 
-  if (data) {
+  if (questionOptions) {
     return (
       <Card css="p-2 md:p-4">
         <Grid

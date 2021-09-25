@@ -33,6 +33,7 @@ export default {
         subscriptionStatus: null,
         stripeCustomerId: null,
       },
+      showVerifyModal: false,
       messages: [],
       editPreviewScrollPosition: null,
       previewScrollPosition: null,

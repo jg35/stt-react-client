@@ -13,6 +13,8 @@ export const userFragment = gql`
     publicHandle
     bookOnline
     publishedVersion
+    termsSignedOn
+    privacySignedOn
     hiddenQuestions
     deleteAt
     versions {

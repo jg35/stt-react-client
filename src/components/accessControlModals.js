@@ -15,7 +15,6 @@ export default function AccessControlModals() {
     authState: { dbUser, user },
   } = useContext(AuthContext);
   const { uiState, updateUiState } = useContext(UIContext);
-  const [showVerifyEmail] = useState(!user.emailVerified);
   const [showUserForm, setShowUserForm] = useState(false);
   const [showTutorial, setShowTutorial] = useState(false);
 
@@ -30,6 +29,14 @@ export default function AccessControlModals() {
 
   useEffect(() => {
     if (dbUser) {
+      if (
+        !user.emailVerified ||
+        !dbUser.termsSignedOn ||
+        !dbUser.privacySignedOn
+      ) {
+        // This loads it but won't close it later (a good thing)
+        updateUiState({ showVerifyModal: true }, false);
+      }
       const subStatus = dbUser.subscriptionStatus;
       let paymentState = {
         subscriptionStatus: dbUser.subscriptionStatus,
@@ -58,10 +65,13 @@ export default function AccessControlModals() {
     }
   }, [dbUser]);
 
-  // In order of precendence. We only ever show one of these.
+  if (!dbUser) {
+    return null;
+  }
 
-  if (showVerifyEmail) {
-    return <UserVerifyForm />;
+  // In order of precendence. We only ever show one of these.
+  if (uiState.showVerifyModal) {
+    return <UserVerifyForm emailVerified={user.emailVerified} user={dbUser} />;
   }
 
   if (uiState.payment.showModal) {
