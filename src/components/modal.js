@@ -82,6 +82,7 @@ export default function Modal({
       }}
       transition="linear"
       animate={isOpen ? "open" : "close"}
+      id="modal-wrapper"
       className={`fixed z-40 h-full opacity-0 w-full top-0 left-0 flex justify-center pt-2 md:pt-6 px-2 md:px-4 pb-4 ${position}`}
     >
       <motion.div

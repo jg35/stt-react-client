@@ -3,6 +3,7 @@ import { useLazyQuery, useMutation } from "@apollo/client";
 import { AuthContext } from "~/components/authWrap";
 import { Button, Text, Grid } from "~/components/_styled";
 import { useHistory } from "react-router";
+import Waiting from "~/components/waiting";
 
 import { FETCH_TIMELINE_VIEW, UPDATE_USER } from "~/lib/gql";
 import { UIContext } from "~/app";
@@ -109,7 +110,7 @@ export default function Tutorial() {
   }
 
   if (currentStep.fixed) {
-    tutorialStyles += " min-w-full h-40 py-2 px-4";
+    tutorialStyles += " min-w-full h-40 py-2 px-4 rounded-t-lg";
   } else {
     if (currentStep.xl) {
       tutorialStyles += " w-96 p-4 h-52";
@@ -173,14 +174,23 @@ export default function Tutorial() {
                 variant="cta"
                 size="compact"
                 disabled={currentStep.async}
-                inProgress={currentStep.async || updateUserLoading}
+                inProgress={
+                  updateUserLoading && currentStep.step === steps.length
+                }
                 onClick={() => proceed(currentStep.step + 1)}
               >
-                {currentStep.async || updateUserLoading
-                  ? updateUserLoading
-                    ? "Saving..."
-                    : "Waiting..."
-                  : currentStep.nextText}
+                {currentStep.async || updateUserLoading ? (
+                  updateUserLoading ? (
+                    "Saving..."
+                  ) : (
+                    <span className="flex items-center justify-center">
+                      <Waiting size={20} color="white" css="mr-2" />
+                      Waiting
+                    </span>
+                  )
+                ) : (
+                  currentStep.nextText
+                )}
               </Button>
             </Grid>
           </div>

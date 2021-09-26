@@ -15,7 +15,8 @@ function setPopper(referenceEl, popperEl, options) {
   if (!referenceEl || options.fixed) {
     virtualEl = {
       getBoundingClientRect: () => {
-        const height = document.querySelector("body").clientHeight;
+        const modal = document.querySelector("#modal-wrapper");
+        const height = (modal && modal.clientHeight) || window.innerHeight;
         let y, x;
         if (!options.fixed) {
           y = height / 2 - popperEl.clientHeight / 2;
@@ -66,7 +67,15 @@ function setPopper(referenceEl, popperEl, options) {
             },
             showAfterChangeModifier,
           ]
-        : [showAfterChangeModifier],
+        : [
+            showAfterChangeModifier,
+            {
+              name: "offset",
+              options: {
+                offset: [0, 0],
+              },
+            },
+          ],
     });
   }
 }
@@ -118,7 +127,7 @@ export const steps = [
   registerStep({
     step: 5,
     title: "Questions",
-    body: "Find a question you like and start typing your answer",
+    body: "Find a question you like and start typing your answer...",
     nextText: "Okay",
     isComplete: (data, uiState) =>
       data.stt_fragment.length > 0 ||
@@ -130,7 +139,7 @@ export const steps = [
   registerStep({
     step: 6,
     title: "Your first memory",
-    body: `Write another sentence or two and when your happy, date your memory and click "Add" to save your memory.`,
+    body: `Write another sentence or two and when your happy, date your memory and click "Add" to save your memory...`,
     isComplete: (data, uiState) =>
       data.stt_fragment.length > 0 || uiState.tutorialStep > 6,
     async: true,
@@ -195,7 +204,7 @@ export const steps = [
     step: 10,
     title: "Event",
     body: (data, uiState) =>
-      `Let's add an event now. Events are visual markers to help trigger other memories. Click here to continue.`,
+      `Let's add an event now. Events are visual markers to help trigger other memories. Click here to continue...`,
     isComplete: (data, uiState) =>
       data.stt_userEvent.length > 0 ||
       uiState.capture.showModal === true ||
@@ -219,7 +228,7 @@ export const steps = [
     step: 11,
     title: "Your first event",
     body: (data, uiState) =>
-      `Think of something that has hapepend in your life. Enter a title, set the date and click “Add” to create your event.`,
+      `Think of something that has hapepend in your life. Enter a title, set the date and click “Add” to create your event...`,
     isComplete: (data, uiState) =>
       data.stt_userEvent.length > 0 || uiState.tutorialStep > 11,
     async: true,
@@ -269,7 +278,7 @@ export const steps = [
     step: 14,
     title: "Timeline",
     body: (data, uiState) =>
-      `Let’s try adding a photo now. Click here to continue.`,
+      `Let’s try adding a photo now. Click here to continue...`,
     isComplete: (data, uiState) =>
       data.stt_fragment.find((f) => f.type === "PHOTO") ||
       uiState.tutorialStep > 14 ||
@@ -291,7 +300,7 @@ export const steps = [
     step: 15,
     title: "Capture - Photo",
     body: (data, uiState) =>
-      `Upload your image, enter a caption (if you like) and date your photo. Click “Add” to save your photo.`,
+      `Upload your image, enter a caption (if you like) and date your photo. Click “Add” to save your photo...`,
     isComplete: (data, uiState) =>
       data.stt_fragment.find((f) => f.type === "PHOTO") ||
       uiState.tutorialStep > 15,
@@ -314,7 +323,7 @@ export const steps = [
   registerStep({
     step: 16,
     title: "Chapters",
-    body: `Every book needs a chapter so let's create one. Click here to continue.`,
+    body: `Every book needs a chapter so let's create one. Click here to continue...`,
     placement: "top-end",
     isComplete: (data, uiState) =>
       data.stt_fragment.find((f) => f.type === "CHAPTER") ||
@@ -336,7 +345,7 @@ export const steps = [
     step: 17,
     title: "Your first chapter",
     body: (data, uiState) =>
-      `Enter a name and click "Add" to save your chapter`,
+      `Enter a name and click "Add" to save your chapter...`,
     isComplete: (data, uiState) =>
       data.stt_fragment.find((f) => f.type === "CHAPTER") ||
       uiState.tutorialStep > 17,
@@ -354,7 +363,7 @@ export const steps = [
     step: 18,
     title: "Editing",
     body: (data, uiState) =>
-      `Fantastic, all of the different bits are there in our timeline now. Let’s head over to the edit view now.`,
+      `Fantastic, all of the different bits are there in our timeline now. Let’s head over to the edit view now...`,
     placement: "bottom-start",
     isComplete: (data, uiState, pathName) =>
       pathName.includes("edit") || uiState.tutorialStep > 18,
