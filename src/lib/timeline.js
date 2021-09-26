@@ -154,7 +154,8 @@ export function generateTimeline(
     timePeriod.worldEvents = sortBy(
       worldEvents.filter((event) => {
         return (
-          event.date >= timePeriod.startDate && event.date <= timePeriod.endDate
+          event.date >= currentPeriod.toISODate() &&
+          event.date <= timePeriod.endDate
         );
       }),
       ["date"]

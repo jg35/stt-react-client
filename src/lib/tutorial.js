@@ -3,7 +3,6 @@ import {
   scrollToFragment,
   scrollToEvent,
   scrollToEditFragment,
-  scrollToTimelineTop,
 } from "~/lib/timeline";
 
 export function getNextStep(steps, data, uiState, pathName) {
@@ -73,6 +72,12 @@ function setPopper(referenceEl, popperEl, options) {
 
 const IS_MOBILE = window.innerWidth < 768;
 
+function getModalMaxHeight(addOffset = 0) {
+  const tooltipSize = document.querySelector("#tooltip").clientHeight;
+  const padding = IS_MOBILE ? 24 : 40;
+  return `calc(var(--vh, 1vh) * 100 - ${tooltipSize + padding + addOffset}px)`;
+}
+
 export const steps = [
   registerStep({
     step: 1,
@@ -126,9 +131,7 @@ export const steps = [
     title: "Your first memory",
     body: `Write another sentence or two and when your happy, date your memory and click "Add" to save your memory.`,
     isComplete: (data, uiState) =>
-      data.stt_fragment.length > 0 ||
-      (uiState.capture.item && uiState.capture.item.date) ||
-      uiState.tutorialStep > 6,
+      data.stt_fragment.length > 0 || uiState.tutorialStep > 6,
     async: true,
     fixed: true,
     saveProgress: false,
@@ -142,7 +145,7 @@ export const steps = [
         false
       );
       const modalWrapper = document.querySelector("#capture-form-wrapper");
-      modalWrapper.style["max-height"] = "calc(var(--vh, 1vh) * 100 - 180px)";
+      modalWrapper.style["max-height"] = getModalMaxHeight();
     },
   }),
   registerStep({
@@ -224,7 +227,7 @@ export const steps = [
     placement: "bottom-end",
     preInit: function (data) {
       const modalWrapper = document.querySelector("#capture-form-wrapper");
-      modalWrapper.style["max-height"] = "calc(var(--vh, 1vh) * 100 - 180px)";
+      modalWrapper.style["max-height"] = getModalMaxHeight();
     },
     fixed: true,
   }),
@@ -294,13 +297,13 @@ export const steps = [
     async: true,
     saveProgress: false,
     preInit: function () {
-      const max = "calc(var(--vh, 1vh) * 100 - 180px)";
-      const uppyInnerMax = "calc(var(--vh, 1vh) * 100 - 220px)";
+      const max = getModalMaxHeight();
+      // const uppyInnerMax = getModalMaxHeight(40);
       const uppyInner = document.querySelector(".uppy-Dashboard-inner");
       document.querySelector("#capture-form-wrapper").style["max-height"] = max;
-      uppyInner.style["max-height"] = uppyInnerMax;
-      uppyInner.style["top"] = "35px";
+      uppyInner.style["top"] = 12;
       if (window.innerWidth >= 820) {
+        uppyInner.style["top"] = 0;
         uppyInner.style["transform"] = "translateX(-50%)";
       }
     },
@@ -341,8 +344,8 @@ export const steps = [
     referenceElSelector: "#capture-form-wrapper",
     placement: "bottom-end",
     preInit: function () {
-      const max = "calc(var(--vh, 1vh) * 100 - 180px)";
-      document.querySelector("#capture-form-wrapper").style["max-height"] = max;
+      document.querySelector("#capture-form-wrapper").style["max-height"] =
+        getModalMaxHeight();
     },
     fixed: true,
   }),
@@ -484,6 +487,7 @@ function registerStep({
         });
       }
       setTutorialStepCss(this.step);
+
       setTimeout(() => {
         const referenceEl = document.querySelector(this.referenceElSelector);
         setPopper(referenceEl, popperEl, {

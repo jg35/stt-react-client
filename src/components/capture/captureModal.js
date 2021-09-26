@@ -276,7 +276,7 @@ export default function CaptureModal({
                 />
               )}
               {item.type === "PHOTO" && (
-                <PhotoForm {...props} closeForm={closeHandler} />
+                <PhotoForm {...props} closeForm={closeHandler} tutorialInProgress={tutorialInProgress} />
               )}
               <FormActions
                 formIsDirty={props.dirty}

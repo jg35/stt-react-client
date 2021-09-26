@@ -14,6 +14,7 @@ export default function TextEditor({
   error,
   onExpand,
   autoFocus = true,
+  height = "h-44 md:h-60",
 }) {
   const [expanded, setExpanded] = useState(false);
   const [placeholder] = useState(
@@ -41,7 +42,7 @@ export default function TextEditor({
         placeholder="Write down your memory"
         className={`focus:outline-none bg-lightestGray resize-none p-4 text-lg ${
           error && "input-error"
-        } w-full h-44 md:h-60 rounded`}
+        } w-full ${height} rounded`}
         onBlur={handleBlur}
         onChange={handleChange}
         value={value}
