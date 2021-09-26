@@ -15,12 +15,13 @@ function setPopper(referenceEl, popperEl, options) {
   if (!referenceEl || options.fixed) {
     virtualEl = {
       getBoundingClientRect: () => {
+        const height = document.querySelector("body").clientHeight;
         let y, x;
         if (!options.fixed) {
-          y = window.innerHeight / 2 - popperEl.clientHeight / 2;
+          y = height / 2 - popperEl.clientHeight / 2;
           x = window.innerWidth / 2 + popperEl.clientWidth / 2;
         } else {
-          y = window.innerHeight;
+          y = height;
           x = 0;
         }
 
@@ -49,7 +50,7 @@ function setPopper(referenceEl, popperEl, options) {
   if (referenceEl || virtualEl) {
     createPopper(virtualEl || referenceEl, popperEl, {
       placement: options.placement,
-      modifiers: referenceEl
+      modifiers: !virtualEl
         ? [
             {
               name: "arrow",
@@ -74,7 +75,7 @@ const IS_MOBILE = window.innerWidth < 768;
 
 function getModalMaxHeight(addOffset = 0) {
   const tooltipSize = document.querySelector("#tooltip").clientHeight;
-  const padding = IS_MOBILE ? 24 : 40;
+  const padding = IS_MOBILE ? 20 : 40;
   return `calc(var(--vh, 1vh) * 100 - ${tooltipSize + padding + addOffset}px)`;
 }
 
@@ -224,7 +225,7 @@ export const steps = [
     async: true,
     saveProgress: false,
     referenceElSelector: "#capture-form-wrapper",
-    placement: "bottom-end",
+    placement: "auto",
     preInit: function (data) {
       const modalWrapper = document.querySelector("#capture-form-wrapper");
       modalWrapper.style["max-height"] = getModalMaxHeight();
@@ -367,7 +368,7 @@ export const steps = [
     body: (data, uiState) =>
       `The edit view shows you what your book will look like in it’s final form and makes it easy to make quick edits to your memories`,
     isComplete: (data, uiState) => uiState.tutorialStep > 19,
-    placement: "bottom",
+    placement: "auto",
     referenceElSelector: ".js-preview-scroll-container div",
   }),
   registerStep({
@@ -376,7 +377,7 @@ export const steps = [
     body: (data, uiState) =>
       `Memories in your book are in date order. If something isn't in the right place, just update the date.`,
     isComplete: (data, uiState) => uiState.tutorialStep > 20,
-    placement: "bottom",
+    placement: "auto",
     referenceElSelector: ".js-preview-scroll-container > div",
     nextText: "Okay",
   }),
@@ -387,7 +388,7 @@ export const steps = [
       `To edit one of your memories, click into it and start typing. Click outside or press tab to save your changes.`,
     isComplete: (data, uiState) => uiState.tutorialStep > 21,
     nextText: "Okay",
-    placement: "bottom",
+    placement: "auto",
     preInit: function (data) {
       const frag = data.stt_fragment.find((f) => f.type === "TEXT");
       scrollToEditFragment(frag.id);
@@ -402,8 +403,6 @@ export const steps = [
     isComplete: (data, uiState) => uiState.tutorialStep > 22,
     xl: true,
     nextText: "Got it",
-    // placement: "bottom-start",
-    // referenceElSelector: `a[href="/"]`,
   }),
   registerStep({
     step: 23,
