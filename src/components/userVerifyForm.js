@@ -131,7 +131,7 @@ export default function UserVerifyForm({ emailVerified, user }) {
                   });
                 }}
               >
-                {getHTMLTranslation("components.userVerifyForm.resend")}
+                {getHTMLTranslation("components.userVerifyForm.send")}
               </Button>
               <Button variant="cta" onClick={() => history.go()}>
                 {getHTMLTranslation("components.userVerifyForm.confirm")}
