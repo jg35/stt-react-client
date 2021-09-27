@@ -46,7 +46,9 @@ export default function EditableFragment({ fragment, saveFragment }) {
           showInfo ? "flex" : "hidden"
         } edit-fragment-info absolute -top-10 h-10 animate-fade-in min-w-full justify-between items-center z-20`}
       >
-        <div className="text-gray"></div>
+        <div className="text-gray truncate w-1/2 md:w-2/3">
+          {fragment.question ? fragment.question.title : ""}
+        </div>
         <div className="flex items-center">
           <Text size="compact" tag="span" css="mr-2 text-gray">
             {renderFragmentDate(fragment.date)}
