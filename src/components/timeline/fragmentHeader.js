@@ -17,9 +17,7 @@ export default function FragmentHeader({
   return (
     <div className="py-1 pl-3 pr-1 flex justify-between items-center border-b border-lightGray">
       <div className="text-center text-gray text-sm font-medium flex cursor-default">
-        {renderDate
-          ? `${renderDate}${fragment.isSmartDate ? " (smart)" : ""}`
-          : "No date"}
+        {renderDate ? renderDate : "No date"}
       </div>
 
       <div

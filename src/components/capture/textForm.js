@@ -13,7 +13,6 @@ export default function TextForm({
   values,
   errors,
   setFieldValue,
-  originatesFromQuestion,
   editContent = true,
   closeHandler,
   setModalSize,
@@ -31,7 +30,7 @@ export default function TextForm({
             handleBlur={handleBlur}
             handleChange={handleChange}
             value={values.content}
-            height={tutorialInProgress && "h-44"}
+            height={tutorialInProgress ? "h-44" : undefined}
             error={errors.content}
             onExpand={(expand) => {
               // if (expand) {
@@ -42,7 +41,7 @@ export default function TextForm({
             }}
             onKeyUp={(e) => {
               if (
-                originatesFromQuestion &&
+                values.questionId &&
                 e.key === "Backspace" &&
                 e.target.value.length === 0
               ) {

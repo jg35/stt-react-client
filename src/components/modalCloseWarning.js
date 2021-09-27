@@ -9,7 +9,7 @@ export default function ModalCloseWarning({
   return (
     isOpen && (
       <div
-        className="animate-fade-in absolute min-w-full min-h-full h-full bg-lightestGray left-0 top-0"
+        className="animate-fade-in absolute min-w-full min-h-full h-full bg-lightestGray left-0 top-0 rounded-2xl"
         style={{ zIndex: 999999 }}
       >
         <Card

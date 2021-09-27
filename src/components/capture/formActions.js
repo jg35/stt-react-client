@@ -13,10 +13,9 @@ export default function FormActions({
     submitText = !itemId ? "Add" : "Update";
   }
   return (
-    <div className="flex justify-end">
+    <div className="flex justify-end mt-4">
       <Button
         disabled={isSubmitting}
-        variant="minimal"
         css="w-full md:w-36 mr-4"
         onClick={closeHandler}
       >

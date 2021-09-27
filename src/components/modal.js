@@ -15,6 +15,8 @@ export default function Modal({
   canClose = true,
   formIsDirty = false,
   noScroll = false,
+  outsideCloseWarning = false,
+  cancelOutsideCloseWarning = null,
 }) {
   const [showCloseWarning, setShowCloseWarning] = useState(false);
   const modal = useRef();
@@ -28,6 +30,18 @@ export default function Modal({
     }
   }, [formIsDirty, canClose, close]);
   useClickOutside(modal, onClickOutside);
+
+  useEffect(() => {
+    if (!showCloseWarning && cancelOutsideCloseWarning) {
+      cancelOutsideCloseWarning();
+    }
+  }, [showCloseWarning]);
+
+  useEffect(() => {
+    if (outsideCloseWarning) {
+      setShowCloseWarning(true);
+    }
+  }, [outsideCloseWarning]);
 
   useEffect(() => {
     document.querySelector("body").style.overflow = "hidden";

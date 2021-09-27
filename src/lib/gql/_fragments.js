@@ -46,6 +46,9 @@ export const fragmentFragment = gql`
     mediaUrl
     mediaCaption
     questionId
+    question {
+      title
+    }
     hidden
     tag
     createdAt

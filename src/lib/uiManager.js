@@ -56,7 +56,6 @@ export default {
 export function makeCreateFragmentForm(initialValue = {}, options = {}) {
   return {
     capture: {
-      originatesFromQuestion: !!initialValue.questionId,
       showModal: true,
       item: FragmentSchema.cast(initialValue),
       revealAfterCreate: options.revealAfterCreate || false,

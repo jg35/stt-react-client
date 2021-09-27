@@ -26,6 +26,7 @@ export default function CaptureModal({
   scrollToFragment,
   scrollToEvent,
 }) {
+  const [closeWarning, setCloseWarning] = useState(false);
   const [overrideSize, setOverrideSize] = useState(null);
   const { setError } = useToastMessage();
   const [formTitle, setFormTitle] = useState("");
@@ -36,12 +37,12 @@ export default function CaptureModal({
   const [updateUserEvent] = useMutation(UPDATE_USER_EVENT);
   const [getQuestions, { data: questionData }] = useLazyQuery(FETCH_QUESTIONS);
   const { uiState, updateUiState } = useContext(UIContext);
-  const { showModal, item, originatesFromQuestion } = uiState.capture;
+  const { showModal, item } = uiState.capture;
   const tutorialInProgress =
     uiState.tutorialStep !== -1 && uiState.tutorialStep !== 1000;
 
   useEffect(() => {
-    if (originatesFromQuestion) {
+    if (item && item.questionId) {
       getQuestions();
     }
   }, [item]);
@@ -50,12 +51,7 @@ export default function CaptureModal({
     if (item) {
       setIsOpen(true);
     }
-    if (
-      item &&
-      item.type === "TEXT" &&
-      originatesFromQuestion &&
-      questionData
-    ) {
+    if (item && item.type === "TEXT" && item.questionId && questionData) {
       const question = questionData.stt_question.find(
         (q) => q.id === item.questionId
       );
@@ -67,7 +63,16 @@ export default function CaptureModal({
     }
   }, [questionData, item]);
 
+  function warnBeforeClose(isDirty) {
+    if (!isDirty) {
+      closeHandler();
+    } else {
+      setCloseWarning(true);
+    }
+  }
+
   function closeHandler() {
+    setCloseWarning(false);
     const ANIMATE_CLOSE_TIME = 200;
     setIsOpen(false);
     setTimeout(() => {
@@ -104,7 +109,7 @@ export default function CaptureModal({
     if (!form.id) {
       return insertFragment({
         variables: {
-          data: form,
+          data: omit(form, ["question"]),
         },
         update(cache, { data }) {
           cache.modify({
@@ -138,6 +143,7 @@ export default function CaptureModal({
             "createdAt",
             "updatedAt",
             "signedMediaUrl",
+            "question",
           ]),
           id: form.id,
         },
@@ -237,6 +243,8 @@ export default function CaptureModal({
             stickyTop={tutorialInProgress}
             canClose={!tutorialInProgress}
             formIsDirty={props.dirty}
+            outsideCloseWarning={closeWarning}
+            cancelOutsideCloseWarning={() => setCloseWarning(false)}
             isOpen={isOpen}
             close={closeHandler}
             size={getModalSize(item.type)}
@@ -262,7 +270,6 @@ export default function CaptureModal({
                 <TextForm
                   {...props}
                   editContent={!editView}
-                  originatesFromQuestion={originatesFromQuestion}
                   closeHandler={closeHandler}
                   tutorialInProgress={tutorialInProgress}
                   setModalSize={(size) => setOverrideSize(size)}
@@ -276,11 +283,15 @@ export default function CaptureModal({
                 />
               )}
               {item.type === "PHOTO" && (
-                <PhotoForm {...props} closeForm={closeHandler} tutorialInProgress={tutorialInProgress} />
+                <PhotoForm
+                  {...props}
+                  closeForm={closeHandler}
+                  tutorialInProgress={tutorialInProgress}
+                />
               )}
               <FormActions
                 formIsDirty={props.dirty}
-                closeHandler={closeHandler}
+                closeHandler={() => warnBeforeClose(props.dirty)}
                 itemId={props.values.id}
                 isSubmitting={props.isSubmitting}
               />
