@@ -20,7 +20,7 @@ export default function SmartDate({ reason }) {
     >
       <Svg name="check" color="green" size={16} css="mr-1" />
       <span>
-        Smart Date&nbsp;
+        Auto Date&nbsp;
         <span>({reason.confidence}%)</span>
       </span>
     </span>
