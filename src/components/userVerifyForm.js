@@ -71,7 +71,7 @@ export default function UserVerifyForm({ emailVerified, user }) {
               <PolicyAgreementCheckbox
                 id="privacyToggle"
                 policyName="privacy policy"
-                link="https://www.iubenda.com/privacy-policy/26041690"
+                link="https://www.iubenda.com/privacy-policy/26041690/legal"
                 value={privacyAgreed}
                 toggle={() => setPrivacyAgreed(!privacyAgreed)}
               />
