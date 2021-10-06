@@ -23,7 +23,7 @@ export default function Svg({
         }`}
       >
         <svg
-          height={size}
+          width={size}
           viewBox={icon.viewBox || "0 0 24 24"}
           className={`${css} fill-current`}
         >
