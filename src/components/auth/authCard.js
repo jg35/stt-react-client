@@ -5,10 +5,9 @@ export default function AuthCard({ title, children: content }) {
   return (
     <Container
       background={{
-        backgroundImage: "url('bg-2.jpg')",
+        backgroundImage: "url('bg.jpg')",
         backgroundFilter:
-          "blur(2px) grayscale(100%) brightness(135%) opacity(.3) sepia(20%)",
-        // color: "rgba(150, 150, 150, .7)",
+          "blur(2px) grayscale(100%) brightness(135%) opacity(.4) sepia(0%)",
       }}
     >
       <div className="h-full w-full flex flex-col items-center justify-center p-4">
