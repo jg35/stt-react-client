@@ -4,18 +4,12 @@ import { createToastMessage } from "~/lib/toast";
 import { refreshToken } from "~/lib/firebase";
 import { useHistory } from "react-router";
 
-const MESSAGE_TIMEOUT = 5000;
-
 export default function useToastMessage() {
   const history = useHistory();
   const { uiState, updateUiState } = useContext(UIContext);
 
-  function setToastMessage(type, message, closeManually) {
-    const toast = createToastMessage(
-      type,
-      message,
-      closeManually ? 0 : MESSAGE_TIMEOUT
-    );
+  function setToastMessage(type, message) {
+    const toast = createToastMessage(type, message);
     updateUiState(
       {
         messages: [...uiState.messages, toast],
@@ -25,7 +19,7 @@ export default function useToastMessage() {
   }
 
   return {
-    setError: (error, message, closeManually = false) => {
+    setError: (error, message) => {
       if (error && error.graphQLErrors) {
         // Here we check the error code, incase we need to handle differently than showing a message
         const errorCode = error.graphQLErrors[0].extensions.code;
@@ -43,14 +37,14 @@ export default function useToastMessage() {
             });
             break;
           default:
-            setToastMessage("ERROR", message, closeManually);
+            setToastMessage("ERROR", message);
         }
       } else {
-        setToastMessage("ERROR", message, closeManually);
+        setToastMessage("ERROR", message);
       }
     },
-    setSuccess: (message, closeManually = false) => {
-      setToastMessage("SUCCESS", message, closeManually);
+    setSuccess: (message) => {
+      setToastMessage("SUCCESS", message);
     },
   };
 }

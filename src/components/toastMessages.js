@@ -1,70 +1,48 @@
 import { useContext, useEffect, useState } from "react";
-import colors from "~/lib/colors";
 import { UIContext } from "~/app";
-import Svg from "~/components/svg";
-import { Text } from "~/components/_styled";
-
-function ToastMessage({ message }) {
-  const [show, setShow] = useState(false);
-
-  useEffect(() => {
-    if (message) {
-      setShow(true);
-    }
-    if (message.timeout) {
-      setTimeout(() => {
-        setShow(false);
-      }, message.timeout);
-    }
-  }, []);
-
-  let closeIconColour = "white";
-  let messageStyles =
-    "fixed py-3 px-4 shadow font-medium z-50 flex w-full flex justify-center";
-  switch (message.type) {
-    case "ERROR":
-      if (message.blockPage) {
-        messageStyles +=
-          " h-full items-center text-2xl opacity-95 bg-black text-white top-0 animate-fade-in";
-      } else {
-        messageStyles += " bg-red text-white";
-      }
-
-      break;
-    case "SUCCESS":
-      messageStyles += " bg-successGreen text-white";
-      break;
-    default:
-      closeIconColour = "black";
-      messageStyles += " bg-white";
-      break;
-  }
-  if (!message.blockPage) {
-    messageStyles += show ? " animate-slide-in" : " animate-slide-out";
-  }
-
-  return (
-    <div className={messageStyles}>
-      <Text>{message.text}</Text>
-      {!message.timeout && !message.blockPage && (
-        <div
-          className="p-1 ml-2 cursor-pointer"
-          onClick={(e) => {
-            e.stopPropagation();
-            setShow(false);
-          }}
-        >
-          <Svg name="cancel" size={16} color={closeIconColour} />
-        </div>
-      )}
-    </div>
-  );
-}
+import { motion } from "framer-motion";
 
 export default function ToastMessages() {
   const { uiState, updateUiState } = useContext(UIContext);
+  const [message, setMessage] = useState(
+    uiState.messages[uiState.messages.length - 1]
+  );
+  const [messageStyle, setMessageStyle] = useState("");
 
-  return uiState.messages.map((message) => {
-    return <ToastMessage key={message.id} message={message} />;
-  });
+  useEffect(() => {
+    const message = uiState.messages[uiState.messages.length - 1];
+    if (message) {
+      setMessage(message);
+      setMessageStyle(
+        message.type === "SUCCESS" ? "bg-successGreen" : "bg-red"
+      );
+      setTimeout(() => {
+        updateUiState(
+          {
+            messages: uiState.messages.filter((m) => m.id !== message.id),
+          },
+          false
+        );
+        setMessage(null);
+      }, message.timeout);
+    }
+  }, [uiState.messages]);
+
+  return (
+    <motion.div
+      className={`w-full fixed z-50 flex font-medium text-white justify-center items-center p-2 top-0 ${messageStyle}`}
+      initial="hidden"
+      animate={message ? "visible" : "hidden"}
+      variants={{
+        visible: {
+          y: 0,
+        },
+        hidden: {
+          y: -30,
+        },
+      }}
+    >
+      {message?.text}
+    </motion.div>
+  );
 }

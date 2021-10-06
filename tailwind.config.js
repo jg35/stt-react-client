@@ -114,7 +114,7 @@ module.exports = {
       transparent: "transparent",
       google: "#4285f4",
       green: "#9fe682",
-      successGreen: "#76c73c",
+      successGreen: "#79b727",
       facebook: "#3b5998",
       orange: "orange",
       facebookMessenger: "#0076fb",

@@ -42,13 +42,10 @@ export function useCustomQuery(
   //   }
   // }, [authState.dbUser]);
 
-  function setToastMessage(type, ref, timeout, blockPage) {
+  function setToastMessage(type, ref) {
     updateUiState(
       {
-        messages: [
-          ...uiState.messages,
-          createToastMessage(type, { ref }, timeout, blockPage),
-        ],
+        messages: [...uiState.messages, createToastMessage(type, { ref })],
       },
       false
     );
@@ -73,7 +70,7 @@ export function useCustomQuery(
           break;
         default:
         // Blocks the page, so the user can't use the app
-        // setToastMessage("ERROR", "FETCH_DEFAULT", false, true);
+        // setToastMessage("ERROR", "FETCH_DEFAULT");
       }
     }
   }, [data, error, loading]);

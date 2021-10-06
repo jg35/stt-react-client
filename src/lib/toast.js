@@ -22,14 +22,10 @@ const TOAST_MESSAGES = {
       `"Something went wrong when publishing your book. Please try again"`,
   },
   SUCCESS: {
-    CREATE: ([thing]) => `You've successfully created a new ${thing}`,
-    UPDATE: ([thing]) => `You've succcesfully updated your ${thing}`,
-    LOGIN: () => `Welcome back`,
-    DELETE_VERSION: () => `Your book was deleted`,
-    PUBLISHED_VERSION: () =>
-      `You've succesfully published your book! It can now be found here on your publish list`,
-    DELETE_LATEST_VERSION: () =>
-      `Your book was deleted. Your previously published version will now be visible to readers.`,
+    CREATE: ([thing]) => `You've successfully created a new ${thing}.`,
+    UPDATE: ([thing]) => `You've succcesfully updated your ${thing}.`,
+    DELETE_VERSION: () => `Your book was delete.`,
+    PUBLISHED_VERSION: () => `Your book was published!`,
     SEND_RESET_EMAIL: () =>
       `Please check your email for instructions to reset your password. Once done, continue to login.`,
     DELETE_ACCOUNT: (deleteDate) =>
@@ -37,19 +33,13 @@ const TOAST_MESSAGES = {
     RESTORED_ACCOUNT: (userFirstName) =>
       `Welcome back${userFirstName}. Your account has now been restored.`,
     REPUBLISHED_VERSION: (version) =>
-      `Version ${version} was successfully republished`,
-
+      `Version ${version} was successfully republished.`,
     SEND_CONFIRMATION_EMAIL: () =>
-      `Your new email confirmation was sent. Please check your email`,
+      `A new confirmation has been sent to your email address. Please check your email to activate your account.`,
   },
 };
 
-export function createToastMessage(
-  type,
-  message = "",
-  timeout = false,
-  blockPage = false
-) {
+export function createToastMessage(type, message = "") {
   return {
     type,
     text:
@@ -57,7 +47,6 @@ export function createToastMessage(
         ? TOAST_MESSAGES[type][message.ref](message.params || [])
         : message,
     id: uuid(),
-    timeout: timeout ? DEFAULT_TIMEOUT : 0,
-    blockPage,
+    timeout: DEFAULT_TIMEOUT,
   };
 }

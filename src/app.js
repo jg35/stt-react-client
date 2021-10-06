@@ -71,13 +71,10 @@ export default function App() {
     }
   }
 
-  function setToastMessage({ type, ref, params, timeout }) {
+  function setToastMessage({ type, ref, params }) {
     update(
       {
-        messages: [
-          ...uiState.messages,
-          createToastMessage(type, ref, params, timeout),
-        ],
+        messages: [...uiState.messages, createToastMessage(type, ref, params)],
       },
       false
     );
@@ -162,9 +159,9 @@ export default function App() {
                   <NotFound />
                 </Route>
               </Switch>
-              <ToastMessages />
             </Hooks>
           </AuthWrap>
+          <ToastMessages />
         </Router>
       </ApolloProvider>
     </UIContext.Provider>

@@ -21,8 +21,10 @@ export default function AccountActivation() {
         </Title>
         <Text>
           To activate your account, we need to confirm your email address.
-          <br />
-          You can request another confirmation email below.
+        </Text>
+        <Text>
+          This was sent by email when you signed up. To resend this, click
+          below.
         </Text>
         <Grid colSpan={["col-span-12 md:col-span-6"]}>
           <Button
@@ -39,6 +41,7 @@ export default function AccountActivation() {
             Resend confirmation email
           </Button>
           <Button
+            variant="cta"
             size="compact"
             onClick={() => {
               history.go();
