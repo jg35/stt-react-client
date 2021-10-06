@@ -1,36 +1,27 @@
 import { signInWithGoogle, signInWithFacebook } from "~/lib/auth";
-import { Button, Title } from "~/components/_styled";
+import { Button } from "~/components/_styled";
 import Svg from "~/components/svg";
 
-export default function OAuthForm({ syncing }) {
+export default function OAuthForm({ syncing, screen = "LOGIN" }) {
   return (
     <>
-      <Title
-        tag="h2"
-        size="compact"
-        css="text-center border-t border-lightGray mt-4 mb-4 pt-4"
+      <Button
+        css="bg-offWhite border-offWhite text-offBlack my-4 hover:text-white hover:bg-google hover:border-google"
+        onClick={signInWithGoogle}
+        disabled={syncing}
       >
-        Or continue with
-      </Title>
-      <div className="flex items-center ">
-        <div className="flex-1 pr-1">
-          <Button variant="cta" onClick={signInWithGoogle} disabled={syncing}>
-            <Svg name="google" css="mr-2" color="white" />
-            Google
-          </Button>
-        </div>
-        <div className="flex-1 pl-1">
-          <Button
-            disabled={syncing}
-            variant="cta"
-            css="bg-facebook border-facebook"
-            onClick={signInWithFacebook}
-          >
-            <Svg name="facebook" css="mr-2" color="white" />
-            Facebook
-          </Button>
-        </div>
-      </div>
+        <Svg name="google" css="mr-2" color="currentColor" />
+        {screen === "LOGIN" ? "Continue" : "Sign up"} with Google
+      </Button>
+
+      <Button
+        disabled={syncing}
+        css="bg-offWhite border-offWhite text-facebook my-4 hover:text-offWhite hover:bg-facebook hover:border-facebook"
+        onClick={signInWithFacebook}
+      >
+        <Svg name="facebook" css="mr-2" color="currentColor" />
+        {screen === "LOGIN" ? "Continue" : "Sign up"} with Facebook
+      </Button>
     </>
   );
 }

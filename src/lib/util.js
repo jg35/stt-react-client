@@ -3,6 +3,7 @@ import React from "react";
 import tailwindProperties from "~/tailwindProperties.json";
 import translations from "~/translations.json";
 import { overrideTailwindClasses } from "tailwind-override";
+import { uniqueId } from "lodash";
 
 export const getTrialDaysRemaining = (trialExpireDate) => {
   const now = DateTime.utc();
@@ -275,4 +276,15 @@ export const closeHandler = (setIsOpen, closeModal) => {
   setTimeout(() => {
     closeModal();
   }, ANIMATE_CLOSE_TIME);
+};
+
+export const createNotification = ({ text, type, clearable, action, href }) => {
+  return {
+    id: uniqueId(),
+    text,
+    clearable,
+    action,
+    href,
+    type,
+  };
 };

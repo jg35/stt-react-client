@@ -126,7 +126,7 @@ export default function Publish() {
 
               <OnlineToggle
                 isOnline={bookOnline}
-                userId={user.id}
+                userId={user.uid}
                 isPublic={isPublic}
               />
             </Card>
@@ -153,7 +153,7 @@ export default function Publish() {
                 <ManagePrivacySettingsButton />
                 {!isPublic && (
                   <AccessListStatusButton
-                    userId={user.id}
+                    userId={user.uid}
                     showEmptyCta={false}
                   />
                 )}

@@ -7,8 +7,8 @@ import { AuthContext } from "~/components/authWrap";
 import ProceedModal from "~/components/proceedModal";
 import { UIContext } from "~/app";
 import UserPaymentForm from "~/components/userPaymentForm";
-import UserVerifyForm from "~/components/userVerifyForm";
 import AccessListModal from "~/components/accessList/accessListModal";
+import { createNotification } from "../lib/util";
 
 export default function AccessControlModals() {
   const {
@@ -29,13 +29,21 @@ export default function AccessControlModals() {
 
   useEffect(() => {
     if (dbUser) {
-      if (
-        !user.emailVerified ||
-        !dbUser.termsSignedOn ||
-        !dbUser.privacySignedOn
-      ) {
-        // This loads it but won't close it later (a good thing)
-        updateUiState({ showVerifyModal: true }, false);
+      if (!user.emailVerified) {
+        updateUiState(
+          {
+            accountActivated: false,
+            notifications: uiState.notifications.concat(
+              createNotification({
+                type: "ACTION",
+                clearable: false,
+                text: "Finish activating your account",
+                href: "/settings/#account",
+              })
+            ),
+          },
+          false
+        );
       }
       const subStatus = dbUser.subscriptionStatus;
       let paymentState = {
@@ -67,11 +75,6 @@ export default function AccessControlModals() {
 
   if (!dbUser) {
     return null;
-  }
-
-  // In order of precendence. We only ever show one of these.
-  if (uiState.showVerifyModal) {
-    return <UserVerifyForm emailVerified={user.emailVerified} user={dbUser} />;
   }
 
   if (uiState.payment.showModal) {
@@ -126,7 +129,7 @@ export default function AccessControlModals() {
   if (uiState.showAccessListModal) {
     return (
       <AccessListModal
-        userId={user.id}
+        userId={user.uid}
         show={true}
         closeModal={() => updateUiState({ showAccessListModal: false }, false)}
       />

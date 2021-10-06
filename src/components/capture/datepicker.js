@@ -19,7 +19,7 @@ export default function DatePicker({
     authState: { user },
   } = useContext(AuthContext);
   const [getUser, { data }] = useLazyQuery(FETCH_USER, {
-    variables: { userId: user.id },
+    variables: { userId: user.uid },
   });
   const [firstDate, setFirstDate] = useState(minDate);
   const [jsDate, setJsDate] = useState(null);
@@ -45,6 +45,7 @@ export default function DatePicker({
   return (
     <div className="relative overflow-visible">
       <ReactDatePicker
+        open={false}
         id="form-datepicker"
         minDate={firstDate}
         maxDate={maxDate || new Date()}

@@ -16,6 +16,8 @@ import PublishNewVersion from "~/routes/publishNewVersion";
 import Edit from "~/routes/edit";
 import Settings from "~/routes/settings";
 import Login from "~/routes/login";
+import Register from "~/routes/register";
+import ForgotPassword from "~/routes/forgotPassword";
 import NotFound from "~/routes/404";
 import ComponentLibrary from "~/routes/componentLibrary";
 
@@ -141,6 +143,12 @@ export default function App() {
                 </Route>
                 <Route path="/login" exact>
                   <Login />
+                </Route>
+                <Route path="/register" exact>
+                  <Register />
+                </Route>
+                <Route path="/forgot-password" exact>
+                  <ForgotPassword />
                 </Route>
                 <Route path="/" exact>
                   <Timeline />

@@ -9,13 +9,14 @@ import {
   Title,
   Text,
 } from "~/components/_styled";
-import useToastMessage from "~/hooks/useToastMessage";
 import Modal from "~/components/modal";
 import { Formik } from "formik";
 import { DeleteAccountSchema } from "~/lib/yup";
 import FormError from "~/components/formError";
 import { getHTMLTranslation } from "~/lib/util";
 import ManageStripeCustomer from "~/components/settings/manageStripeCustomer";
+
+import AccountActivation from "./accountActivation";
 
 export default function ManageAccount({ dbUser }) {
   const logout = useLogout();
@@ -42,6 +43,8 @@ export default function ManageAccount({ dbUser }) {
         export will be emailed to you when it's ready.
       </Text> */}
 
+      <AccountActivation />
+
       <ManageStripeCustomer
         subscriptionStatus={dbUser.subscriptionStatus}
         subscriptionMeta={dbUser.subscriptionMeta}
@@ -62,6 +65,7 @@ export default function ManageAccount({ dbUser }) {
         )}
       </Text>
       <Button
+        size="compact"
         onClick={() => {
           setInitDeleteModal(true);
           setIsOpen(true);

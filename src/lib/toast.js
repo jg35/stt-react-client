@@ -35,9 +35,12 @@ const TOAST_MESSAGES = {
     DELETE_ACCOUNT: (deleteDate) =>
       `Your account is now scheduled for deletion. Login before ${deleteDate} to restore your account.`,
     RESTORED_ACCOUNT: (userFirstName) =>
-      `Welcome back ${userFirstName}. Your account has now been restored.`,
+      `Welcome back${userFirstName}. Your account has now been restored.`,
     REPUBLISHED_VERSION: (version) =>
       `Version ${version} was successfully republished`,
+
+    SEND_CONFIRMATION_EMAIL: () =>
+      `Your new email confirmation was sent. Please check your email`,
   },
 };
 

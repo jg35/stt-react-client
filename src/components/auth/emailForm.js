@@ -9,25 +9,14 @@ export default function EmailForm({
   values,
   isSubmitting,
   dirty,
-  isValid,
-  authView,
-  resetForm,
-  formSchema,
-  setAuthView,
+  formType,
   syncing,
 }) {
-  function setAuthViewHandler(newView) {
-    resetForm({
-      values: formSchema.cast(),
-    });
-    setAuthView(newView);
-  }
-
   function getSubmitText() {
     if (syncing) {
       return "Syncing user...";
     }
-    switch (authView) {
+    switch (formType) {
       case "LOGIN":
         return isSubmitting ? "Logging in..." : "Login";
       case "CREATE_ACCOUNT":
@@ -40,32 +29,6 @@ export default function EmailForm({
   return (
     <>
       <form onSubmit={handleSubmit} id="email-form">
-        {authView === "CREATE_ACCOUNT" && (
-          <Grid colSpan={["col-span-12 md:col-span-6"]} gap="gap-y-1 gap-x-2">
-            <div>
-              <FormInput
-                name="firstName"
-                placeholder="Your first name"
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                value={values.firstName}
-                error={errors.firstName}
-              />
-              <FormError error={errors.firstName} />
-            </div>
-            <div>
-              <FormInput
-                name="lastName"
-                placeholder="Your last name"
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                value={values.lastName}
-                error={errors.lastName}
-              />
-              <FormError error={errors.lastName} />
-            </div>
-          </Grid>
-        )}
         <FormInput
           name="email"
           placeholder="Your email"
@@ -76,7 +39,7 @@ export default function EmailForm({
           error={errors.email}
         />
         <FormError error={errors.email} />
-        {authView !== "FORGOT_PASSWORD" && (
+        {formType !== "FORGOT_PASSWORD" && (
           <>
             <FormInput
               name="password"
@@ -101,38 +64,6 @@ export default function EmailForm({
           </Button>
         </div>
       </form>
-      <div className="flex justify-between pt-4">
-        <div>
-          {authView === "LOGIN" ? (
-            <Button
-              variant="minimal"
-              size="compact"
-              onClick={() => setAuthViewHandler("CREATE_ACCOUNT")}
-            >
-              Create an account
-            </Button>
-          ) : (
-            <Button
-              variant="minimal"
-              size="compact"
-              onClick={() => setAuthViewHandler("LOGIN")}
-            >
-              Back
-            </Button>
-          )}
-        </div>
-        <div>
-          {authView === "LOGIN" && (
-            <Button
-              variant="minimal"
-              size="compact"
-              onClick={() => setAuthViewHandler("FORGOT_PASSWORD")}
-            >
-              Forgotten password?
-            </Button>
-          )}
-        </div>
-      </div>
     </>
   );
 }

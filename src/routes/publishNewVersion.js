@@ -51,7 +51,7 @@ export default function PublishNewVersion() {
         version.publishedAt = new Date().toISOString().replace(/T.*/, "");
       }
       if (!version.author) {
-        version.author = user.displayName;
+        version.author = user.displayName || "";
       }
       setCurrentVersion(version);
     }

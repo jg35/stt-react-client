@@ -1,5 +1,34 @@
 export default [
   {
+    id: "GB",
+    name: "United Kingdom",
+    continent: "Europe",
+    currencyId: "GBP",
+    phoneCode: "44",
+    flag: "🇬🇧",
+  },
+  {
+    id: "US",
+    name: "United States",
+    continent: "North America",
+    currencyId: "USD",
+    phoneCode: "1",
+    flag: "🇺🇸",
+  },
+  {
+    id: "CA",
+    name: "Canada",
+    continent: "North America",
+    currencyId: "CAD",
+    phoneCode: "1",
+    flag: "🇨🇦",
+  },
+  {
+    id: "SEPERATOR",
+    name: "---------------",
+    disabled: true,
+  },
+  {
     id: "AF",
     name: "Afghanistan",
     continent: "Asia",

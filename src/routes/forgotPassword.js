@@ -1,17 +1,19 @@
 import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { loginWithEmail } from "~/lib/auth";
+import { sendResetPasswordEmail } from "~/lib/auth";
 import { AuthContext } from "~/components/authWrap";
 
+import { Text } from "~/components/_styled";
 import AuthCard from "~/components/auth/authCard";
 import AuthCardLink from "~/components/auth/authCardLink";
 import EmailFormWrapper from "~/components/auth/emailFormWrapper";
-import OAuthLogin from "~/components/auth/oAuthLogin";
+import useToastMessage from "~/hooks/useToastMessage";
 import usePageTitle from "~/hooks/usePageTitle";
 import AuthCardSeperator from "../components/auth/authSeperator";
 
 export default function Login() {
   usePageTitle("Login");
+  const { setSuccess } = useToastMessage();
   const history = useHistory();
   const {
     authState: { status },
@@ -22,29 +24,20 @@ export default function Login() {
   }
 
   return (
-    <AuthCard title="Login to your account">
-      <OAuthLogin screen="LOGIN" syncing={status === "syncing"} />
-
-      <AuthCardSeperator>Login with email</AuthCardSeperator>
-
+    <AuthCard title="Reset your password">
       <EmailFormWrapper
-        formType="LOGIN"
+        formType="FORGOT_PASSWORD"
         submit={(form) => {
-          return loginWithEmail(form).then(() => {
-            history.push("/");
+          return sendResetPasswordEmail(form).then(() => {
+            history.push("/login");
+            setSuccess({ ref: "SEND_RESET_EMAIL" });
           });
         }}
       />
 
-      <div className="flex mt-2">
-        <AuthCardLink route="/forgot-password">
-          Forgotten password?
-        </AuthCardLink>
-      </div>
-
       <AuthCardSeperator margin="my-4" />
 
-      <AuthCardLink route="/register">Create an account</AuthCardLink>
+      <AuthCardLink route="/login">Here by mistake? Login</AuthCardLink>
     </AuthCard>
   );
 }

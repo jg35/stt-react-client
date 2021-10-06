@@ -19,9 +19,11 @@ export default function MainMenu() {
         <NavLink className="fill text-right" to="/settings">
           <div className="flex items-center justify-end p-2">
             <div className="px-2 truncate w-40">
-              <Text tag="span" size="compact" css="block">
-                {user.displayName}
-              </Text>
+              {user.displayName && (
+                <Text tag="span" size="compact" css="block">
+                  {user.displayName}
+                </Text>
+              )}
               <Text tag="span" size="compact" css="text-gray text-sm">
                 {user.email}
               </Text>
@@ -36,11 +38,14 @@ export default function MainMenu() {
                 />
               ) : (
                 <div className="w-12 h-12 rounded-full uppercase text-xl bg-lightGray flex items-center justify-center font-bold shadow">
-                  {user.displayName &&
+                  {user.displayName ? (
                     user.displayName
                       .split(" ")
                       .map((w) => w[0])
-                      .join("")}
+                      .join("")
+                  ) : (
+                    <Svg name="account" size={50} />
+                  )}
                 </div>
               )}
             </div>

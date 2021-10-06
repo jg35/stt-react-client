@@ -11,10 +11,7 @@ export default function Page({
   paddingBottom = true,
 }) {
   return (
-    <Container
-      background={{ backgroundColor: colors.offWhite }}
-      maxWidth={maxWidth}
-    >
+    <Container background={{ color: colors.offWhite }} maxWidth={maxWidth}>
       <Surface id="page">
         <Header minimal={minimal} scrollable={scrollable} />
         <PageContent scrollable={scrollable} paddingBottom={paddingBottom}>

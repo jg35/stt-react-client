@@ -21,7 +21,7 @@ export function useCustomQuery(
   const { uiState, updateUiState } = useContext(UIContext);
 
   if (userId) {
-    variables.userId = authState.user.id;
+    variables.userId = authState.user.uid;
   }
   const { data, loading, error } = useQuery(gql, {
     variables,

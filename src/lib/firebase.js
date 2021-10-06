@@ -4,7 +4,11 @@ import { authStateVar } from "~/lib/apollo";
 firebase.initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: "agent-name-7a4c5",
+  appId: "1:397143712192:web:2a37a16a07caabfb9f2825",
 });
+
+export const analytics = firebase.analytics();
 
 let fbAuthUser;
 
@@ -35,23 +39,17 @@ export const onAuthStateChange = (syncUserMutation) => {
   const onAuthStateChangeListener = firebase
     .auth()
     .onAuthStateChanged(async (user) => {
-      const emailForm = authStateVar().emailForm;
       if (user) {
-        authStateVar({ status: "syncing" });
         fbAuthUser = user;
-        if (emailForm) {
-          await user.updateProfile({
-            displayName: `${emailForm.firstName} ${emailForm.lastName}`,
-          });
+        const userObj = user.toJSON();
+        authStateVar({ status: "syncing" });
+        if (user.metadata) {
+          // if(user.metadata.creationTime === user.metadata.lastSignInTime) {
+          //   gtag("event", "sign_up", {
+          //     // method: "Google"
+          //   });
+          // }
         }
-        const { displayName, email, emailVerified, uid: id, photoURL } = user;
-        const userDetails = {
-          displayName,
-          email,
-          id,
-          photoURL,
-          emailVerified,
-        };
         const token = await user.getIdToken();
         const idTokenResult = await user.getIdTokenResult();
         const hasuraClaims =
@@ -73,14 +71,14 @@ export const onAuthStateChange = (syncUserMutation) => {
             .then(async () => {
               // Force refresh the token to get the updated claims
               const token = await user.getIdToken(true);
-              authStateVar({ status: "in", token, user: userDetails });
+              authStateVar({ status: "in", token, user: userObj });
             })
             .catch(() => {
               // Need to handle this better. For now just sign out so they can try and login again
               // signOut()
             });
         } else {
-          authStateVar({ status: "in", token, user: userDetails });
+          authStateVar({ status: "in", token, user: userObj });
         }
       } else {
         authStateVar({ status: "out" });

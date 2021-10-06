@@ -20,7 +20,7 @@ export default function CountrySelect({
         Select a country
       </option>
       {countries.map((o, i) => (
-        <option value={o.id} key={i}>
+        <option value={o.id} key={i} disabled={o.disabled}>
           {o.flag}
           &nbsp;
           {o.name}

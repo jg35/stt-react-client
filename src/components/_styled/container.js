@@ -1,5 +1,4 @@
 import { joinTailwindClasses } from "~/lib/util";
-
 export default function Container({
   maxWidth = "1400px",
   children,
@@ -33,6 +32,19 @@ export default function Container({
     <div>
       <div
         style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          zIndex: -2,
+          backgroundSize: "cover",
+          backgroundImage: background.backgroundImage,
+          filter: background.backgroundFilter,
+        }}
+      />
+      <div
+        style={{
           ...{
             position: "absolute",
             top: 0,
@@ -40,8 +52,9 @@ export default function Container({
             width: "100%",
             height: "100%",
             zIndex: -1,
+            backgroundColor: background.color,
+            border: background.border,
           },
-          ...background,
         }}
       />
       {container}

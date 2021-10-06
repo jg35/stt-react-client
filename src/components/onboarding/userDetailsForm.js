@@ -45,11 +45,16 @@ export default function UserDeailsForm() {
   }
 
   return (
-    <Modal isOpen size="md" canClose={false} noScroll>
+    <Modal isOpen size="sm" canClose={false} noScroll>
       <div className="h-full flex flex-col">
         <Title css="text-center">
           {getHTMLTranslation("components.onboarding.userDetailsForm.welcome", [
-            { key: "FIRST_NAME", value: user.displayName.split(" ")[0] },
+            {
+              key: "FIRST_NAME",
+              value: user.displayName
+                ? ` ${user.displayName.split(" ")[0]}`
+                : "",
+            },
           ])}
         </Title>
         <Text size="large">
@@ -92,7 +97,7 @@ export default function UserDeailsForm() {
                   className="flex-1 form-control"
                   style={{ marginBottom: "10px" }}
                 >
-                  <FormLabel>Your country</FormLabel>
+                  <FormLabel>Select your country</FormLabel>
                   <CountrySelect
                     name="location"
                     handleChange={handleChange}
@@ -108,7 +113,7 @@ export default function UserDeailsForm() {
                 className="flex-1 form-control"
                 style={{ marginBottom: "10px" }}
               >
-                <FormLabel>Date of birth</FormLabel>
+                <FormLabel>Enter your date of birth</FormLabel>
                 <DatePicker
                   popperPlacement="top-start"
                   minDate={new Date().setYear(new Date().getFullYear() - 100)}
@@ -126,12 +131,7 @@ export default function UserDeailsForm() {
                 <FormError error={errors.dob} />
               </div>
 
-              <Button
-                type="submit"
-                size="large"
-                variant="cta"
-                inProgress={isSubmitting}
-              >
+              <Button type="submit" variant="cta" inProgress={isSubmitting}>
                 {isSubmitting ? "Creating timeline..." : "Create timeline"}
               </Button>
             </form>

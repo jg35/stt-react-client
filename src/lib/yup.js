@@ -79,7 +79,7 @@ export const FragmentSchema = Yup.object().shape({
 });
 
 export const OnboardingSchema = Yup.object().shape({
-  location: Yup.string().ensure().required(),
+  location: Yup.string().label("Country").ensure().required(),
   dob: Yup.string().label("Date of birth").ensure().required(),
 });
 
@@ -151,8 +151,6 @@ export const EmailLoginSchema = Yup.object().shape({
 });
 
 export const EmailCreateSchema = Yup.object().shape({
-  firstName: Yup.string().ensure().required(),
-  lastName: Yup.string().ensure().required(),
   email: Yup.string().email().ensure().required(),
   password: Yup.string()
     .ensure()

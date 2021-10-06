@@ -6,7 +6,7 @@
   "components.bookPrivacyStatus.description.private": "Readers on your share list will be able to login and read your book",
   "components.bookPrivacyStatus.description.public": "Anyone that knows your handle will be able to read your book",
   "components.onboarding.userDetailsForm.description": "Let's fill in your location and date of birth so we can setup your timeline.",
-  "components.onboarding.userDetailsForm.welcome": "Hello {{FIRST_NAME}}! 👋",
+  "components.onboarding.userDetailsForm.welcome": "Hello{{FIRST_NAME}}! 👋",
   "components.publish.createBookForm.setHandle": " Now let's set your web address. This is where readers will access your book",
   "components.publish.createBookForm.shareSettings": "Finally, decide how you would like to share your book",
   "components.publish.onlineToggle.offline.description": "While your book is offline readers will no longer have access to your book",

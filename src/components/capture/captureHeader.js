@@ -20,7 +20,7 @@ export default function CaptureHeader({ init }) {
   const [getCaptureHeader, { loading, data }] = useLazyQuery(
     SECTION_FETCH_CAPTURE_HEADER,
     {
-      variables: { userId: user.id },
+      variables: { userId: user.uid },
     }
   );
 
@@ -161,7 +161,7 @@ export default function CaptureHeader({ init }) {
                           ),
                         },
                       },
-                      userId: user.id,
+                      userId: user.uid,
                     },
                   })
                 }
@@ -176,7 +176,7 @@ export default function CaptureHeader({ init }) {
                           ),
                         },
                       },
-                      userId: user.id,
+                      userId: user.uid,
                     },
                   })
                 }

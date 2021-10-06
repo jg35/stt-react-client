@@ -19,7 +19,6 @@ function handleSetAuth(
     user: null,
     token: "",
     dbUser: null,
-    emailForm: null,
   }
 ) {
   return {
@@ -38,6 +37,9 @@ export default function AuthWrap({ children }) {
   const { setSuccess } = useToastMessage();
   const [authState, setAuthState] = useState(handleSetAuth(data.authState));
   let isLogin = useRouteMatch("/login");
+  let isRegister = useRouteMatch("/register");
+  let isForgot = useRouteMatch("/forgot-password");
+  const isAuthRoute = isLogin || isRegister || isForgot;
 
   useEffect(() => {
     let onAuthStateChangeListener = onAuthStateChange(syncUser);
@@ -60,7 +62,7 @@ export default function AuthWrap({ children }) {
       if (hasuraUser.stt_user_by_pk.deleteAt) {
         updateUser({
           variables: {
-            userId: authState.user.id,
+            userId: authState.user.uid,
             data: {
               deleteAt: null,
             },
@@ -68,7 +70,11 @@ export default function AuthWrap({ children }) {
         }).then(() => {
           setSuccess({
             ref: "RESTORED_ACCOUNT",
-            params: [authState.user.displayName.split(" ")[0]],
+            params: [
+              authState.user.displayName
+                ? ` ${authState.user.displayName.split(" ")}`
+                : "",
+            ],
           });
         });
       }
@@ -80,7 +86,7 @@ export default function AuthWrap({ children }) {
     if (auth.user) {
       getUser({
         variables: {
-          userId: auth.user.id,
+          userId: auth.user.uid,
         },
       });
     }
@@ -107,7 +113,7 @@ export default function AuthWrap({ children }) {
       );
     case "out":
     case "syncing":
-      if (isLogin) {
+      if (isAuthRoute) {
         return (
           <AuthContext.Provider
             value={{

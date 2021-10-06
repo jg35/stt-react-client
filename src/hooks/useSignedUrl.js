@@ -48,11 +48,11 @@ export function useSignedImageUrls() {
   const [getSignedUrls] = useMutation(ACTION_S3_GET_SIGNED_URL);
 
   useEffect(() => {
-    if (user && user.id) {
+    if (user && user.uid) {
       // TODO - this works initially, but then need to make additional requests for signed urls for every image added further
       getImages({
         variables: {
-          userId: user.id,
+          userId: user.uid,
         },
       });
     }
