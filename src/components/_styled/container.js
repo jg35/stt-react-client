@@ -29,34 +29,12 @@ export default function Container({
     return container;
   }
   return (
-    <div>
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          zIndex: -2,
-          backgroundSize: "cover",
-          backgroundImage: background.backgroundImage,
-          filter: background.backgroundFilter,
-        }}
-      />
-      <div
-        style={{
-          ...{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            zIndex: -1,
-            backgroundColor: background.color,
-            border: background.border,
-          },
-        }}
-      />
+    <div
+      style={{
+        backgroundColor: background.color,
+        border: background.border,
+      }}
+    >
       {container}
     </div>
   );

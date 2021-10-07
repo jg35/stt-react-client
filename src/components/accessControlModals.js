@@ -8,12 +8,15 @@ import ProceedModal from "~/components/proceedModal";
 import { UIContext } from "~/app";
 import UserPaymentForm from "~/components/userPaymentForm";
 import AccessListModal from "~/components/accessList/accessListModal";
-import { createNotification } from "../lib/util";
+import useNotification from "~/components/notifications/useNotification";
 
 export default function AccessControlModals() {
   const {
     authState: { dbUser, user },
   } = useContext(AuthContext);
+  const { notification: confirmEmail, markCompleted } = useNotification(
+    dbUser?.notifications.find((n) => n.ref === "CONFIRM_USER_EMAIL")
+  );
   const { uiState, updateUiState } = useContext(UIContext);
   const [showUserForm, setShowUserForm] = useState(false);
   const [showTutorial, setShowTutorial] = useState(false);
@@ -27,24 +30,22 @@ export default function AccessControlModals() {
     return DateTime.fromISO(expiresDate).diffNow().toObject().milliseconds <= 0;
   }
 
+  function userVerificationCheck(verified) {
+    if (!verified) {
+      updateUiState(
+        {
+          accountActivated: false,
+        },
+        false
+      );
+    } else if (verified && !confirmEmail.completedAt) {
+      markCompleted(confirmEmail.id);
+    }
+  }
+
   useEffect(() => {
     if (dbUser) {
-      if (!user.emailVerified) {
-        updateUiState(
-          {
-            accountActivated: false,
-            notifications: uiState.notifications.concat(
-              createNotification({
-                type: "ACTION",
-                clearable: false,
-                text: "Finish activating your account",
-                href: "/settings/#account",
-              })
-            ),
-          },
-          false
-        );
-      }
+      userVerificationCheck(user.emailVerified);
       const subStatus = dbUser.subscriptionStatus;
       let paymentState = {
         subscriptionStatus: dbUser.subscriptionStatus,

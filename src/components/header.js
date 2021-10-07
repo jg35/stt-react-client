@@ -7,7 +7,7 @@ import MainMenu from "~/components/mainMenu";
 import TrialStatus from "~/components/trialStatus";
 import { UIContext } from "~/app";
 import { AuthContext } from "~/components/authWrap";
-import Notifications from "~/components/notifications";
+import NotificationMenu from "~/components/notifications/notificationMenu";
 
 export default function Header({ minimal = false, scrollable = false }) {
   const { uiState, updateUiState } = useContext(UIContext);
@@ -87,7 +87,7 @@ export default function Header({ minimal = false, scrollable = false }) {
               </div>
             )}
             <div className="mr-2">
-              <Notifications />
+              <NotificationMenu notifications={dbUser?.notifications || []} />
             </div>
 
             <MainMenu />
