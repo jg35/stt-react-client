@@ -5,7 +5,6 @@ export const userFragment = gql`
     id
     location
     dob
-    onboarding
     trialExpiresDate
     stripeCustomerId
     subscriptionStatus
@@ -13,8 +12,6 @@ export const userFragment = gql`
     publicHandle
     bookOnline
     publishedVersion
-    termsSignedOn
-    privacySignedOn
     hiddenQuestions
     deleteAt
     versions {

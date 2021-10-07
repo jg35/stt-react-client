@@ -77,30 +77,18 @@ export default function Tutorial() {
   }
 
   function endTutorial() {
-    updateUser({
-      variables: { userId: dbUser.id, data: { onboarding: true } },
-      update(cache, { data }) {
-        cache.modify({
-          id: cache.identify(dbUser),
-          fields: {
-            onboarding: () => true,
-          },
-        });
-
-        currentStep.end(data, uiState);
-        updateUiState({
-          capture: {
-            showModal: false,
-            item: null,
-            event: null,
-          },
-          showPreview: false,
-          tutorialStep: 1000,
-          activeCaptureIndex: null,
-        });
-        setCurrentStep(null);
+    currentStep.end(data, uiState);
+    updateUiState({
+      capture: {
+        showModal: false,
+        item: null,
+        event: null,
       },
-    }).catch((e) => setError(e, { ref: "UPDATE", params: ["account"] }));
+      showPreview: false,
+      tutorialStep: 1000,
+      activeCaptureIndex: null,
+    });
+    setCurrentStep(null);
   }
 
   let tutorialStyles = "z-50 bg-white border-lightGray border";

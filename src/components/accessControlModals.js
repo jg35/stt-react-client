@@ -19,7 +19,6 @@ export default function AccessControlModals() {
   );
   const { uiState, updateUiState } = useContext(UIContext);
   const [showUserForm, setShowUserForm] = useState(false);
-  const [showTutorial, setShowTutorial] = useState(false);
 
   function hasExpired(expiresDate, isSeconds) {
     if (isSeconds) {
@@ -67,8 +66,6 @@ export default function AccessControlModals() {
         paymentState.intent = "AUTO";
         updateUiState({ payment: paymentState }, false);
       }
-
-      setShowTutorial(dbUser.onboarding === false);
 
       setShowUserForm(!dbUser.dob && !dbUser.location);
     }
@@ -141,7 +138,7 @@ export default function AccessControlModals() {
     return <UserDetailsForm />;
   }
 
-  if (showTutorial) {
+  if (uiState.tutorial) {
     return <Tutorial />;
   }
 
