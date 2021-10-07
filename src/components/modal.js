@@ -82,7 +82,7 @@ export default function Modal({
       variants={{
         open: {
           opacity: [0, 1],
-          backgroundColor: ["#000000e6", "#000000e6"],
+          backgroundColor: ["rgba(25, 25, 25, .8)", "rgba(25, 25, 25, .8)"],
           transition: {
             duration: 0.5,
           },

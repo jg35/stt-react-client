@@ -45,6 +45,7 @@ export default function DatePicker({
   return (
     <div className="relative overflow-visible">
       <ReactDatePicker
+        autoComplete="off"
         open={false}
         id="form-datepicker"
         minDate={firstDate}

@@ -16,16 +16,14 @@ export default function AccountActivation() {
     return (
       <div className="pb-6 mb-6 border-b border-lightGray">
         <Title size="compact" css="relative inline-block">
-          Activate your account
+          Verify your email for Stories To Tell
           <AlertCircle active={true} position="top-1 -right-4" />
         </Title>
         <Text>
-          To activate your account, we need to confirm your email address.
+          An email was sent to you when you signed up. Click on the link inside
+          to activate your account.
         </Text>
-        <Text>
-          This was sent by email when you signed up. To resend this, click
-          below.
-        </Text>
+        <Text>To resend this, click below.</Text>
         <Grid colSpan={["col-span-12 md:col-span-6"]}>
           <Button
             size="compact"
@@ -47,7 +45,7 @@ export default function AccountActivation() {
               history.go();
             }}
           >
-            I've activated my account
+            I've verified my email
           </Button>
         </Grid>
       </div>
