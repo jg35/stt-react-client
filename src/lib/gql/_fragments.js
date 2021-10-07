@@ -20,6 +20,30 @@ export const userFragment = gql`
     versions {
       id
     }
+    notifications {
+      id
+      ref
+      type
+      clearable
+      clearedAt
+      completedAt
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+export const notificationFragment = gql`
+  fragment notificationFragment on stt_notification {
+    id
+    userId
+    ref
+    type
+    clearable
+    clearedAt
+    completedAt
+    createdAt
+    updatedAt
   }
 `;
 
