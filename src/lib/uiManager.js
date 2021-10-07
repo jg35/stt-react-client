@@ -23,8 +23,10 @@ export default {
       displayMessages: {
         ORPHANED_FRAGMENTS: true,
       },
-      tutorialStep: -1,
-      tutorialClickedPreviewFragment: false,
+      tutorial: {
+        active: false,
+        step: 1,
+      },
       activeCaptureIndex: false,
       payment: {
         showModal: false,

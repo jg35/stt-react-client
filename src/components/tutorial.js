@@ -1,30 +1,49 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
-import { useLazyQuery, useMutation } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 import { AuthContext } from "~/components/authWrap";
 import { Button, Text, Grid } from "~/components/_styled";
 import { useHistory } from "react-router";
-import Waiting from "~/components/waiting";
+import { cloneDeep } from "lodash";
 
-import { FETCH_TIMELINE_VIEW, UPDATE_USER } from "~/lib/gql";
+import { FETCH_TIMELINE_VIEW } from "~/lib/gql";
 import { UIContext } from "~/app";
 import { steps, getNextStep } from "~/lib/tutorial";
-import useToastMessage from "~/hooks/useToastMessage";
+import useNotification from "~/components/notifications/useNotification";
+
+import {
+  getTutorialFragments,
+  getTutorialUserEvents,
+} from "~/lib/tutorialData";
 
 export default function Tutorial() {
   const history = useHistory();
   const tutorialWidgetRef = useRef(null);
   const tutorialWidgetRefInner = useRef(null);
-  const { setError } = useToastMessage();
-  const [updateUser, { loading: updateUserLoading }] = useMutation(UPDATE_USER);
   const {
     authState: { dbUser },
   } = useContext(AuthContext);
+  const { notification: tutorialNotification, markCleared } = useNotification(
+    dbUser.notifications.find((n) => n.ref === "TRY_TUTORIAL")
+  );
   const { uiState, updateUiState } = useContext(UIContext);
-  const [getTimeline, { data, loading }] = useLazyQuery(FETCH_TIMELINE_VIEW, {
+
+  const [tutorialData, setTutorialData] = useState(null);
+
+  const [getTimeline, { data }] = useLazyQuery(FETCH_TIMELINE_VIEW, {
     variables: {
       userId: dbUser.id,
     },
   });
+
+  useEffect(() => {
+    if (data) {
+      const clonedData = cloneDeep(data);
+      clonedData.stt_fragment = getTutorialFragments();
+      clonedData.stt_userEvent = getTutorialUserEvents();
+      setTutorialData(clonedData);
+    }
+  }, [data]);
+
   const [currentStep, setCurrentStep] = useState(null);
 
   useEffect(() => {
@@ -36,18 +55,18 @@ export default function Tutorial() {
     return history.listen((location) => {
       checkNextStep(location.pathname);
     });
-  }, [data, uiState, history]);
+  }, [tutorialData, uiState, history]);
 
   function checkNextStep(pathName = history.location.pathname) {
-    if (data) {
-      const nextStep = getNextStep(steps, data, uiState, pathName);
+    if (tutorialData) {
+      const nextStep = getNextStep(steps, tutorialData, uiState, pathName);
       if (
         (nextStep && !currentStep) ||
         (nextStep && currentStep && nextStep.step !== currentStep.step)
       ) {
         // End the current step
         if (currentStep) {
-          currentStep.end(data, uiState, updateUiState);
+          currentStep.end(tutorialData, uiState, updateUiState);
         }
 
         // Set the next step
@@ -64,7 +83,12 @@ export default function Tutorial() {
   useEffect(() => {
     // Current step has changed and should be initialised
     if (currentStep && tutorialWidgetRef.current) {
-      currentStep.init(data, uiState, updateUiState, tutorialWidgetRef.current);
+      currentStep.init(
+        tutorialData,
+        uiState,
+        updateUiState,
+        tutorialWidgetRef.current
+      );
     }
   }, [currentStep, tutorialWidgetRef]);
 
@@ -72,23 +96,40 @@ export default function Tutorial() {
     if (nextStep > steps.length) {
       endTutorial();
     } else {
-      updateUiState({ tutorialStep: nextStep });
+      updateUiState(
+        {
+          tutorial: {
+            active: true,
+            step: nextStep,
+          },
+        },
+        false
+      );
     }
   }
 
   function endTutorial() {
-    currentStep.end(data, uiState);
-    updateUiState({
-      capture: {
-        showModal: false,
-        item: null,
-        event: null,
+    currentStep.end(tutorialData, uiState);
+    updateUiState(
+      {
+        capture: {
+          showModal: false,
+          item: null,
+          event: null,
+        },
+        showPreview: false,
+        tutorial: {
+          step: 0,
+          active: false,
+        },
+        activeCaptureIndex: null,
       },
-      showPreview: false,
-      tutorialStep: 1000,
-      activeCaptureIndex: null,
-    });
+      false
+    );
     setCurrentStep(null);
+    if (tutorialNotification) {
+      markCleared();
+    }
   }
 
   let tutorialStyles = "z-50 bg-white border-lightGray border";
@@ -101,7 +142,7 @@ export default function Tutorial() {
     tutorialStyles += " min-w-full h-40 py-2 px-4 rounded-t-lg";
   } else {
     if (currentStep.xl) {
-      tutorialStyles += " w-96 p-4 h-52";
+      tutorialStyles += " w-96 p-4 h-60";
     } else {
       tutorialStyles += " w-60 p-2 h-auto";
     }
@@ -122,8 +163,8 @@ export default function Tutorial() {
         <div
           className={`${
             currentStep.fixed && "md:py-2"
-          } flex justify-between font-medium ${
-            currentStep.xl ? "text-base" : "text-sm"
+          } flex justify-between items-center font-medium ${
+            currentStep.xl ? "text-lg" : "text-sm"
           }`}
         >
           <span>{currentStep.title}</span>
@@ -133,27 +174,30 @@ export default function Tutorial() {
         </div>
         <div>
           <Text
-            variant={currentStep.xl ? "large" : "default"}
+            size={currentStep.xl ? "large" : "default"}
             css={`
               ${currentStep.xl ? "mt-4" : "mt-2"}
             `}
           >
             {typeof currentStep.body === "function"
-              ? currentStep.body(data, uiState)
+              ? currentStep.body(tutorialData, uiState)
               : currentStep.body}
           </Text>
         </div>
         <div className="flex justify-end">
           <div className="w-full md:max-w-lg">
-            <Grid colSpan={["col-span-6"]}>
+            <Grid
+              gap="gap-x-2 gap-y-0"
+              colSpan={
+                !currentStep.last
+                  ? [`col-span-6`]
+                  : ["col-span-0", "col-span-12"]
+              }
+            >
               <div>
                 {!currentStep.last && (
-                  <Button
-                    size="compact"
-                    onClick={endTutorial}
-                    inProgress={updateUserLoading}
-                  >
-                    {updateUserLoading ? "Updating..." : "Skip tutorial"}
+                  <Button size="compact" onClick={endTutorial}>
+                    {currentStep.step === 1 ? "Close" : "End tutorial"}
                   </Button>
                 )}
               </div>
@@ -162,23 +206,9 @@ export default function Tutorial() {
                 variant="cta"
                 size="compact"
                 disabled={currentStep.async}
-                inProgress={
-                  updateUserLoading && currentStep.step === steps.length
-                }
                 onClick={() => proceed(currentStep.step + 1)}
               >
-                {currentStep.async || updateUserLoading ? (
-                  updateUserLoading ? (
-                    "Saving..."
-                  ) : (
-                    <span className="flex items-center justify-center">
-                      <Waiting size={20} color="white" css="mr-2" />
-                      Waiting
-                    </span>
-                  )
-                ) : (
-                  currentStep.nextText
-                )}
+                {currentStep.nextText}
               </Button>
             </Grid>
           </div>

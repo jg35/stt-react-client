@@ -2,7 +2,11 @@ import imageSizes from "~/lib/imageSizes";
 import { useGetSignedImageUrl } from "~/hooks/useSignedUrl";
 
 export default function PhotoFragment({ fragment }) {
-  const url = useGetSignedImageUrl(fragment.mediaUrl + imageSizes["1400px"]);
+  const url = useGetSignedImageUrl(
+    fragment.lockMediaUrl
+      ? fragment.mediaUrl
+      : fragment.mediaUrl + imageSizes["1400px"]
+  );
   const caption = fragment.mediaCaption;
   return (
     <div
@@ -17,20 +21,11 @@ export default function PhotoFragment({ fragment }) {
     >
       {caption && (
         <>
-          <div className="absolute w-full h-10 bottom-0 bg-black rounded-b-md rounded-b opacity-70"></div>
-          <span className="h-10 absolute bottom-0 block text-white text-center rounded-b py-2 font-medium w-full rounded-b">
+          <div className="absolute w-full bottom-0 left-0 py-1 px-2 h-auto bg-offBlack bg-opacity-80 text-white text-center">
             {caption}
-          </span>
+          </div>
         </>
       )}
-      {/* {caption && (
-        <>
-          <div className="absolute w-full h-8 opacity-50 bottom-0 bg-black rounded-b-md"></div>
-          <span className="absolute w-full h-8 text-white py-1 px-2 block bottom-0">
-            {fragment.title || fragment.mediaCaption}
-          </span>
-        </>
-      )} */}
     </div>
   );
 }

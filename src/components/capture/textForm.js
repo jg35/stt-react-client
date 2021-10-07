@@ -15,8 +15,6 @@ export default function TextForm({
   setFieldValue,
   editContent = true,
   closeHandler,
-  setModalSize,
-  tutorialInProgress,
 }) {
   const {
     authState: { dbUser },
@@ -30,7 +28,6 @@ export default function TextForm({
             handleBlur={handleBlur}
             handleChange={handleChange}
             value={values.content}
-            height={tutorialInProgress ? "h-44" : undefined}
             error={errors.content}
             onExpand={(expand) => {
               // if (expand) {

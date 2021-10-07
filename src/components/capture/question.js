@@ -97,7 +97,10 @@ export default function Question({
 
         <div className="flex items-center">
           {currentQuestion.tags.length && (
-            <span className="hidden md:block text-darkGray font-medium px-2 py-1 bg-lightestGray rounded-md flex items-center justify-center whitespace-nowrap mr-2">
+            <span
+              id="question-tag"
+              className="hidden md:block text-darkGray font-medium px-2 py-1 bg-lightestGray rounded-md flex items-center justify-center whitespace-nowrap mr-2"
+            >
               #{currentQuestion.tags[0].replace(/\s/g, "-")}
             </span>
           )}

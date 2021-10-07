@@ -38,8 +38,6 @@ export default function CaptureModal({
   const [getQuestions, { data: questionData }] = useLazyQuery(FETCH_QUESTIONS);
   const { uiState, updateUiState } = useContext(UIContext);
   const { showModal, item } = uiState.capture;
-  const tutorialInProgress =
-    uiState.tutorialStep !== -1 && uiState.tutorialStep !== 1000;
 
   useEffect(() => {
     if (item && item.questionId) {
@@ -240,8 +238,6 @@ export default function CaptureModal({
       {(props) => {
         return (
           <Modal
-            stickyTop={tutorialInProgress}
-            canClose={!tutorialInProgress}
             formIsDirty={props.dirty}
             outsideCloseWarning={closeWarning}
             cancelOutsideCloseWarning={() => setCloseWarning(false)}
@@ -262,32 +258,21 @@ export default function CaptureModal({
               >
                 {formTitle}
               </Title>
-              {item.type === "EVENT" && (
-                <EventForm {...props} tutorialInProgress={tutorialInProgress} />
-              )}
+              {item.type === "EVENT" && <EventForm {...props} />}
 
               {item.type === "TEXT" && (
                 <TextForm
                   {...props}
                   editContent={!editView}
                   closeHandler={closeHandler}
-                  tutorialInProgress={tutorialInProgress}
                   setModalSize={(size) => setOverrideSize(size)}
                 />
               )}
               {item.type === "CHAPTER" && (
-                <ChapterForm
-                  {...props}
-                  editContent={!editView}
-                  tutorialInProgress={tutorialInProgress}
-                />
+                <ChapterForm {...props} editContent={!editView} />
               )}
               {item.type === "PHOTO" && (
-                <PhotoForm
-                  {...props}
-                  closeForm={closeHandler}
-                  tutorialInProgress={tutorialInProgress}
-                />
+                <PhotoForm {...props} closeForm={closeHandler} />
               )}
               <FormActions
                 formIsDirty={props.dirty}

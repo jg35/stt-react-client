@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "~/components/authWrap";
+import { UIContext } from "~/app";
 import useLogout from "~/hooks/useLogout";
 
 import Svg from "~/components/svg";
@@ -12,6 +13,7 @@ export default function MainMenu() {
   const {
     authState: { user, dbUser },
   } = useContext(AuthContext);
+  const { updateUiState } = useContext(UIContext);
 
   const items = [
     {
@@ -61,6 +63,26 @@ export default function MainMenu() {
         >
           Settings <Svg name="settings" css="ml-2" />
         </NavLink>
+      ),
+    },
+    {
+      component: (
+        <span
+          className="fill text-right flex items-center justify-end p-2"
+          onClick={() => {
+            updateUiState(
+              {
+                tutorial: {
+                  active: true,
+                  step: 1,
+                },
+              },
+              false
+            );
+          }}
+        >
+          Run the tutorial <Svg name="tutorial" css="ml-2" />
+        </span>
       ),
     },
     {

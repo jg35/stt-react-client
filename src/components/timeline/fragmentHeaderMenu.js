@@ -9,11 +9,7 @@ import Svg from "~/components/svg";
 import LoadingSpinner from "~/components/loadingSpinner";
 import useToastMessage from "~/hooks/useToastMessage";
 
-export default function FragmentHeaderMenu({
-  fragment,
-  excludeActions = [],
-  menuColor = "black",
-}) {
+export default function FragmentHeaderMenu({ fragment, excludeActions = [] }) {
   const { setError } = useToastMessage();
   const { updateUiState, showDeleteWarning } = useContext(UIContext);
   const [updateFragment, { loading: updateFragmentLoading }] =
@@ -139,7 +135,7 @@ export default function FragmentHeaderMenu({
     <Menu
       autoClose={false}
       compact
-      toggle={<Svg name="overflow" color={menuColor} size={24} />}
+      toggle={<Svg name="overflow" color="gray" size={24} />}
       items={items}
     />
   );

@@ -1,7 +1,10 @@
+import { useContext } from "react";
+import { UIContext } from "~/app";
 import { useMutation } from "@apollo/client";
 import { UPDATE_NOTIFICATION } from "~/lib/gql";
 
 export default function useNotification(dbNotification) {
+  const { updateUiState } = useContext(UIContext);
   const [updateNotification] = useMutation(UPDATE_NOTIFICATION);
   const notifications = [
     {
@@ -17,8 +20,15 @@ export default function useNotification(dbNotification) {
       clearable: true,
       text: "Learn the ropes with our tutorial",
       onClick: () => {
-        console.log("load the tutorial");
-        // update ui state to load the tutorial
+        updateUiState(
+          {
+            tutorial: {
+              active: true,
+              step: 1,
+            },
+          },
+          false
+        );
       },
     },
   ];
@@ -29,10 +39,10 @@ export default function useNotification(dbNotification) {
           ...dbNotification,
         }
       : null,
-    markCompleted: (id) => {
+    markCompleted: () => {
       return updateNotification({
         variables: {
-          id,
+          id: dbNotification?.id,
           data: {
             completedAt: new Date(),
           },
@@ -42,7 +52,7 @@ export default function useNotification(dbNotification) {
     markCleared: (id) => {
       return updateNotification({
         variables: {
-          id,
+          id: dbNotification?.id,
           data: {
             clearedAt: new Date(),
           },

@@ -24,7 +24,6 @@ export default function Preview({ fragments }) {
 
   function fragmentScrollHandler(fragmentId) {
     scrollToFragment(fragmentId);
-    updateUiState({ tutorialClickedPreviewFragment: true });
   }
 
   if (uiState.showPreview) {

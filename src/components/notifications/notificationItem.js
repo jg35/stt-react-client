@@ -26,7 +26,7 @@ export default function NotificationItem({ dbNotification, closeMenu }) {
           className="ml-1 p-1"
           onClick={(e) => {
             e.stopPropagation();
-            markCleared(dbNotification.id);
+            markCleared();
             closeMenu();
           }}
         >

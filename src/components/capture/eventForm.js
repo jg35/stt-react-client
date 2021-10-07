@@ -12,7 +12,6 @@ export default function EventForm({
   values,
   errors,
   setFieldValue,
-  tutorialInProgress,
 }) {
   const {
     authState: { dbUser },
@@ -21,7 +20,7 @@ export default function EventForm({
     <>
       <FormField error={errors.title}>
         <FormInput
-          autoFocus={!tutorialInProgress}
+          autoFocus
           name="title"
           placeholder="Enter event title"
           handleChange={handleChange}

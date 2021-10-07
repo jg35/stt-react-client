@@ -53,7 +53,10 @@ export default function ScrollNavigator({ years, dob }) {
     );
   }
   return (
-    <div className="relative flex flex-col justify-between items-center w-full h-full py-3">
+    <div
+      id="scroll-navigator"
+      className="relative flex flex-col justify-between items-center w-full h-full py-3"
+    >
       <TimelineMarker />
       {visibleYears.map((year, index) => {
         if (hoverYear && hoverYear === year.year) {

@@ -16,7 +16,10 @@ export default function FragmentHeader({
 
   return (
     <div className="py-1 pl-3 pr-1 flex justify-between items-center border-b border-lightGray">
-      <div className="text-center text-gray text-sm font-medium flex cursor-default">
+      <div
+        id="fragment-header-date"
+        className="text-center text-gray text-sm font-medium flex cursor-default"
+      >
         {renderDate ? renderDate : "No date"}
       </div>
 
@@ -41,6 +44,7 @@ export default function FragmentHeader({
             )}
             {!isLast && (
               <Button
+                id="fragment-header-reorder-button"
                 variant="minimal"
                 size="compact"
                 onClick={() =>

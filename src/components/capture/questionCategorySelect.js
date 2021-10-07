@@ -27,6 +27,7 @@ export default function QuestionCategorySelect({
   let toggleCss = "text-darkGray";
   return currentCategory ? (
     <Menu
+      id="question-category-menu"
       compact
       toggle={
         <div className={`font-medium flex ${toggleCss}`}>

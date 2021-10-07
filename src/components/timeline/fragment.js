@@ -40,7 +40,7 @@ export default function Fragment({
 
         {fragment.type === "PHOTO" && <PhotoFragment fragment={fragment} />}
         {fragment.question?.title && (
-          <div className="self-end left-0 bottom-0 w-full h-auto py-1 px-2 bg-offBlack bg-opacity-70 text-white flex ">
+          <div className="self-end left-0 bottom-0 w-full h-auto py-1 px-2 bg-offBlack bg-opacity-80 text-white flex ">
             <Svg name="question" color="white" css="mr-1" size={14} />
             <span className="truncate">{fragment.question.title}</span>
           </div>

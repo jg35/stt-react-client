@@ -38,7 +38,7 @@ export default function AccessControlModals() {
         false
       );
     } else if (verified && !confirmEmail.completedAt) {
-      markCompleted(confirmEmail.id);
+      markCompleted();
     }
   }
 
@@ -138,7 +138,7 @@ export default function AccessControlModals() {
     return <UserDetailsForm />;
   }
 
-  if (uiState.tutorial) {
+  if (uiState.tutorial.active) {
     return <Tutorial />;
   }
 

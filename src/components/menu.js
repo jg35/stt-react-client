@@ -3,6 +3,7 @@ import Button from "~/components/_styled/button";
 import useClickOutside from "~/hooks/useClickOutside";
 
 export default function Menu({
+  id = "menu",
   items,
   toggle,
   compact = false,
@@ -45,7 +46,7 @@ export default function Menu({
     }
   }
   return (
-    <div id="menu" className="relative" ref={menuRef}>
+    <div id={id} className="relative" ref={menuRef}>
       <Button
         size="compact"
         variant={minimal ? "minimal" : "default"}

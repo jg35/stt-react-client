@@ -206,7 +206,7 @@
   left: -4px;
 }
 
-#page[class*="tutorial-step"] > * {
+#page[class*="tutorial-step"] * {
   pointer-events: none;
 }
 
@@ -215,70 +215,19 @@
 }
 
 #page.tutorial-step-1,
-#page.tutorial-step-24,
+#page.tutorial-step-11,
+#page.tutorial-step-18,
 #page.blur {
   filter: blur(1.5px) grayscale(0.4);
   transition: filter 200ms ease-out;
 }
 
-#page.tutorial-step-4 #shuffle-button-wrapper,
-#page.tutorial-step-4 #menu {
+#page.tutorial-step-4 #shuffle-button-wrapper * {
   pointer-events: all !important;
 }
 
-#page.tutorial-step-5 #form-question-text-input,
-#page.tutorial-step-5 #shuffle-button-wrapper,
-#page.tutorial-step-5 #menu {
-  pointer-events: all !important;
-}
-
-/* Memory form */
-#page.tutorial-step-6 #form-text-editor,
-#page.tutorial-step-6 #form-datepicker,
-#page.tutorial-step-6 .react-datepicker__tab-loop * {
-  pointer-events: all !important;
-}
-
-#page.tutorial-step-10 .js-section-actions-event-btn {
-  pointer-events: all !important;
-}
-
-/* Event form */
-#page.tutorial-step-11 #form-text-input,
-#page.tutorial-step-11 #form-submit-btn,
-#page.tutorial-step-11 #form-datepicker,
-#page.tutorial-step-11 .react-datepicker__tab-loop * {
-  pointer-events: all !important;
-}
-
-#page.tutorial-step-14 .js-section-actions-photo-btn {
-  pointer-events: all !important;
-}
-
-#page.tutorial-step-15 #uppy-dashboard,
-#page.tutorial-step-15 #form-text-input,
-#page.tutorial-step-15 #form-submit-btn,
-#page.tutorial-step-15 #form-datepicker,
-#page.tutorial-step-15 .react-datepicker__tab-loop * {
-  pointer-events: all !important;
-}
-
-#page.tutorial-step-16 .js-section-actions-chapter-btn {
-  pointer-events: all !important;
-}
-
-#page.tutorial-step-17 #form-text-input,
-#page.tutorial-step-17 #form-submit-btn,
-#page.tutorial-step-17 #form-datepicker,
-#page.tutorial-step-17 .react-datepicker__tab-loop * {
-  pointer-events: all !important;
-}
-
-#page.tutorial-step-18 #nav-item-edit {
-  pointer-events: all !important;
-}
-
-#page.tutorial-step-21 div[data-preview-fragment-type="TEXT"] * {
+#page.tutorial-step-6 #shuffle-button-wrapper,
+#page.tutorial-step-6 #question-category-menu * {
   pointer-events: all !important;
 }
 

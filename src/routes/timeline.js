@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
-import { debounce, values, get } from "lodash";
+import { debounce, values, cloneDeep } from "lodash";
 import { useCustomQuery } from "~/hooks/useCustomApollo";
-import { refreshToken } from "~/lib/firebase";
 
 import { FETCH_TIMELINE_VIEW } from "~/lib/gql";
 
@@ -26,6 +25,11 @@ import TimelineSkeleton from "~/components/timeline/timelineSkeleton";
 import OrphanedFragments from "~/components/timeline/orphanedFragments";
 import { UIContext } from "~/app";
 
+import {
+  getTutorialFragments,
+  getTutorialUserEvents,
+} from "~/lib/tutorialData";
+
 export default function Timeline() {
   usePageTitle("Timeline");
   const { uiState, updateUiState } = useContext(UIContext);
@@ -44,16 +48,21 @@ export default function Timeline() {
 
   useEffect(() => {
     if (data) {
+      let renderData = cloneDeep(data);
+      if (uiState.tutorial.active) {
+        renderData.stt_fragment = getTutorialFragments();
+        renderData.stt_userEvent = getTutorialUserEvents();
+        renderData.stt_user_by_pk.dob = "1989-12-02";
+      }
       const [timeline, sortedFragments, undatedMemories] = generateTimeline(
-        data,
+        renderData,
         timelinePeriod
       );
-
       setTimeline(timeline);
       setFragments(sortedFragments);
       setOrphanedFragments(undatedMemories);
     }
-  }, [data, timelinePeriod]);
+  }, [data, timelinePeriod, uiState.tutorial.active]);
 
   useEffect(() => {
     const lastScrollPosition = uiState.timelineScrollPosition;
