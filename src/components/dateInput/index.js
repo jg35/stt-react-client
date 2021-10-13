@@ -66,7 +66,7 @@ export default function DateInput({
 
   function getCaption() {
     if (!useDateFinder) {
-      return "Enter the date in years, months and days (e.g. 1953/10/04)";
+      return "Years, months and days (e.g. 1953/10/04)";
     }
     if (caption) {
       return caption;
@@ -82,7 +82,7 @@ export default function DateInput({
         </span>
       );
     } else {
-      return "Use the date finder, or enter in years, months and days (e.g. 1953/10/04)";
+      return "Years, months and days (e.g. 1953/10/04)";
     }
   }
 
@@ -143,14 +143,14 @@ export default function DateInput({
           "yyyy-MM-dd"
         );
       }
-      onChangeHandler(dt?.toISODate() || "");
+      onChangeHandler(dt?.toISODate() || inputValue || "");
     }
   }, [inputValue, timelineData]);
 
   return (
     <FormField label={label} error={error} caption={getCaption()} css="w-full">
       <div
-        className={`relative flex w-full h-12 border-2 rounded-md ${
+        className={`relative flex flex-wrap md:flex-nowrap w-full border-2 rounded-md ${
           error ? "border-red" : "border-transparent"
         }`}
       >
@@ -179,13 +179,13 @@ export default function DateInput({
         </div>
         {useDateFinder && (
           <>
-            <div ref={inputRef}>
+            <div ref={inputRef} className="w-full md:w-auto">
               <Button
                 id="findDateBtn"
                 variant="cta"
                 size="compact"
                 title="Find a date"
-                css="rounded-r h-full w-40 rounded-l-none bg-lightBlack"
+                css=" h-full w-full md:w-40 rounded-b rounded-t-none md:rounded-l-none md:rounded-r bg-lightBlack"
                 onClick={() => setDateFinderOpen(!dateFinderOpen)}
               >
                 <span className="font-medium inline-block">Find a date</span>

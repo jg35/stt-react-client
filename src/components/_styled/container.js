@@ -6,6 +6,7 @@ export default function Container({
   style = {},
   id,
   background = null,
+  overflow = "hidden",
 }) {
   const baseCss = "mx-auto w-full";
 
@@ -18,7 +19,7 @@ export default function Container({
         maxWidth,
         height: "100vh",
         height: "calc(var(--vh, 1vh) * 100)",
-        overflow: "hidden",
+        overflow,
       }}
     >
       {children}

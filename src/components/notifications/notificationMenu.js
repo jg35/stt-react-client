@@ -21,10 +21,7 @@ function NotificationSection({
         index !== 0 && "pt-2 border-t border-lightGray"
       }`}
     >
-      {/* <Text css="text-right font-medium text-md mt-0 mb-1 whitespace-nowrap">
-        {title && `${title} (${items.length})`}
-      </Text> */}
-      <Text css="text-right text-sm font-bold block ml-2 whitespace-nowrap mb-1">
+      <Text css="text-right text-sm font-medium block ml-2 whitespace-nowrap mb-1">
         {title && `${title} (${items.length})`}
       </Text>
       <Text css="text-right mt-0 mb-1 whitespace-nowrap">{description}</Text>
@@ -55,6 +52,7 @@ export default function NotificationMenu({ notifications }) {
     setNotificationCount(filteredNotifications.length);
     setNotificationSections(
       filteredNotifications.reduce((sections, notification) => {
+        console.log(notification);
         if (!sections[notification.type]) {
           sections[notification.type] = [notification];
         } else {
@@ -100,12 +98,7 @@ export default function NotificationMenu({ notifications }) {
         >
           {HAS_NOTIFICAITONS ? (
             <>
-              <Title css="mb-0 py-2 relative flex">
-                Notifications{" "}
-                <span className="text-sm text-gray font-bold block ml-2">
-                  ({notificationCount})
-                </span>
-              </Title>
+              <Title css="mb-0 py-2 relative flex">Notifications</Title>
               {Object.keys(notificationSections).map((sectionKey, i) => {
                 return (
                   <NotificationSection

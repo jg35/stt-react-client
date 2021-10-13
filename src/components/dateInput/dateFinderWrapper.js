@@ -36,21 +36,45 @@ export default function DateFinderWrapper({
   );
   useEffect(() => {
     let popper;
+
     if (wrapperRef.current && inputRef.current) {
-      popper = createPopper(inputRef.current, wrapperRef.current, {
+      const popperEl = wrapperRef.current;
+      let referenceEl = inputRef.current;
+      const IS_MOBILE = window.innerWidth < 768;
+      if (IS_MOBILE) {
+        referenceEl = {
+          getBoundingClientRect: () => {
+            const modal = document.querySelector("#modal-wrapper");
+            const height = (modal && modal.clientHeight) || window.innerHeight;
+            const y = height / 2 - popperEl.clientHeight / 2;
+            const x = window.innerWidth / 2 + popperEl.clientWidth / 2;
+            return {
+              width: popperEl.clientWidth,
+              height: popperEl.clientHeight,
+              top: y,
+              left: x,
+              bottom: y,
+              right: x,
+            };
+          },
+        };
+      }
+      popper = createPopper(referenceEl, popperEl, {
         placement: "left",
-        modifiers: [
-          {
-            name: "arrow",
-          },
-          {
-            name: "offset",
-            options: {
-              offset: [0, 12],
-            },
-          },
-          showAfterChangeModifier,
-        ],
+        modifiers: IS_MOBILE
+          ? []
+          : [
+              {
+                name: "arrow",
+              },
+              {
+                name: "offset",
+                options: {
+                  offset: [0, 12],
+                },
+              },
+              showAfterChangeModifier,
+            ],
       });
     }
     return () => {
@@ -68,14 +92,14 @@ export default function DateFinderWrapper({
         width: "360px",
         zIndex: open ? 50 : -1,
       }}
-      className={`absolute ${
+      className={`w-screen absolute ${
         open ? "opacity-100 ease-in" : "opacity-0 ease-out invisible"
       } transition-all duration-200`}
     >
       <div
         className="relative py-2"
         style={{
-          left: "1px",
+          left: window.innerWidth < 768 ? 0 : "1px",
         }}
       >
         {children}

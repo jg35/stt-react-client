@@ -8,10 +8,11 @@ export default function AuthCard({ title, children: content }) {
       background={{
         color: colors.lightestGray,
       }}
+      overflow="scroll"
     >
-      <div className="h-full w-full flex flex-col items-center justify-center p-4">
+      <div className="min-h-full w-full flex flex-col items-center justify-center p-4 overflow-scroll">
         <Card
-          css="border border-gray md:p-6 max-w-full bg-white"
+          css="border border-gray md:p-6 max-w-full bg-white min-h-full"
           style={{ width: "450px" }}
         >
           <a href={process.env.REACT_APP_HOME_URL} title="Go to homepage">

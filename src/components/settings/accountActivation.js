@@ -41,8 +41,9 @@ export default function AccountActivation() {
           <Button
             variant="cta"
             size="compact"
-            onClick={() => {
-              history.go();
+            onClick={(e) => {
+              e.preventDefault();
+              window.location.reload();
             }}
           >
             I've verified my email

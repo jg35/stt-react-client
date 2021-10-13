@@ -53,47 +53,48 @@ export const getDatePickerAgeCaption = (date, dob) => {
   if (!date) {
     return "";
   }
-  const start = DateTime.fromISO(dob);
-  const end = DateTime.fromISO(date);
-  let { years, months, days } = end
-    .diff(start, ["years", "months", "days"])
+  const startDate = DateTime.fromISO(dob);
+  const endDate = DateTime.fromISO(date);
+  let { years, months, days } = endDate
+    .diff(startDate, ["years", "months", "days"])
     .toObject();
 
   years = Math.floor(years);
   months = Math.floor(months);
   days = Math.floor(days);
+  const end = "on this date";
 
   if (!years && !months) {
     if (!days) {
       return `Your first day`;
     }
-    return `${days} ${shouldPlural("day", days)} old`;
+    return `${days} ${shouldPlural("day", days)} old ${end}`;
   } else if (months && !years) {
     if (!days) {
-      return `${months} ${shouldPlural("month", months)} old`;
+      return `${months} ${shouldPlural("month", months)} old ${end}`;
     }
     return `${months} ${shouldPlural(
       "month",
       months
-    )} and ${days} ${shouldPlural("day", days)} old`;
+    )} and ${days} ${shouldPlural("day", days)} old ${end}`;
   } else {
     if (!months && !days) {
-      return `${years} ${shouldPlural("year", years)} old`;
+      return `${years} ${shouldPlural("year", years)} old ${end}`;
     } else if (months && !days) {
       return `${years} ${shouldPlural(
         "year",
         years
-      )} and ${months} ${shouldPlural("month", months)} old`;
+      )} and ${months} ${shouldPlural("month", months)} old ${end}`;
     } else if (days && !months) {
       return `${years} ${shouldPlural(
         "year",
         years
-      )} and ${days} ${shouldPlural("day", days)} old`;
+      )} and ${days} ${shouldPlural("day", days)} old ${end}`;
     }
     return `${years} ${shouldPlural("year", years)}, ${months} ${shouldPlural(
       "month",
       months
-    )} and ${days} ${shouldPlural("day", days)} old`;
+    )} and ${days} ${shouldPlural("day", days)} old ${end}`;
   }
 };
 export const getDateOnAge = (dob, ageYears) => {

@@ -92,7 +92,7 @@ export const steps = [
   registerStep({
     step: 1,
     title: "Welcome 👋",
-    body: `This tutorial will give you a short introduction to the timeline, so you're equipped to start adding things to your book. When you're ready, press start.`,
+    body: `This tutorial gives you a short introduction to the timeline, so you're ready to start adding things to your book.`,
     nextText: "Start",
     isComplete: (data, uiState) => uiState.tutorial.step > 1,
     async: false,
@@ -131,7 +131,8 @@ export const steps = [
     step: 5,
     title: "Questions",
     body: `Notice each question is tagged. If a tag isn't relevant to you, click on the dots in the corner to open the question menu. There you can hide questions with that tag.`,
-    isComplete: (data, uiState) => uiState.tutorial.step > 5,
+    isComplete: (data, uiState) =>
+      window.innerWidth < 768 || uiState.tutorial.step > 5,
     async: false,
     placement: "bottom",
     referenceElSelector: "#question-tag",
@@ -142,7 +143,7 @@ export const steps = [
     body: `Questions are grouped around different periods of your life. Try switching time periods using this
     dropdown`,
     isComplete: (data, uiState) => uiState.tutorial.step > 6,
-    placement: "left-start",
+    placement: "auto",
     async: false,
     referenceElSelector: "#question-category-menu",
   }),
@@ -163,6 +164,7 @@ export const steps = [
     placement: "top",
     referenceElSelector: "div[data-fragment-id]",
     preInit: function (data, uiState, updateUiState) {
+      updateUiState({ questionVisible: false }, false);
       const frag = data.stt_fragment.find((f) => !!f.questionId);
       this.referenceElSelector = `div[data-fragment-id="${frag.id}"]`;
       scrollToFragment(frag.id, false);
@@ -205,7 +207,7 @@ export const steps = [
   registerStep({
     step: 11,
     title: "Timeline",
-    body: `Everything else in the timeline is strictly chronological as this defines the structure of your book. To get things where they need to be you can edit the date.`,
+    body: `Your timeline is strictly chronological as this creates the structure for your book. To get things where they need to be you can edit the date.`,
     isComplete: (data, uiState) => uiState.tutorial.step > 11,
     async: false,
     xl: true,
@@ -309,7 +311,7 @@ export const steps = [
     last: true,
     title: "The end",
     nextText: "Close tutorial",
-    body: `Now it's time for you start exploring. If you need help with any of the topics covered, look for the help button in the main menu. We'll be there to help you!`,
+    body: `If you need help with any of the topics covered, look for the help button in the main menu. We'll be there to help you!`,
     isComplete: (data, uiState) => uiState.tutorial.step > 18,
     async: false,
   }),

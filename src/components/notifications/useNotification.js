@@ -1,9 +1,11 @@
 import { useContext } from "react";
 import { UIContext } from "~/app";
+import { useHistory } from "react-router";
 import { useMutation } from "@apollo/client";
 import { UPDATE_NOTIFICATION } from "~/lib/gql";
 
 export default function useNotification(dbNotification) {
+  const history = useHistory();
   const { updateUiState } = useContext(UIContext);
   const [updateNotification] = useMutation(UPDATE_NOTIFICATION);
   const notifications = [
@@ -20,6 +22,7 @@ export default function useNotification(dbNotification) {
       clearable: true,
       text: "Learn the ropes with our tutorial",
       onClick: () => {
+        history.push("/");
         updateUiState(
           {
             tutorial: {
