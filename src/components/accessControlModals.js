@@ -37,7 +37,7 @@ export default function AccessControlModals() {
         },
         false
       );
-    } else if (verified && !confirmEmail.completedAt) {
+    } else if (verified && !confirmEmail?.completedAt) {
       markCompleted();
     }
   }
