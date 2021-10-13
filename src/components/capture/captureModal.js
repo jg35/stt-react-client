@@ -233,7 +233,7 @@ export default function CaptureModal({
         })
       }
       validationSchema={getSchema(item.type)}
-      validateOnChange={item.type === "EVENT"}
+      validateOnChange={false}
       validateOnBlur={false}
     >
       {(props) => {

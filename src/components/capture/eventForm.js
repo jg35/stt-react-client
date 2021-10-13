@@ -9,15 +9,26 @@ export default function EventForm({
   values,
   errors,
   setFieldValue,
+  setFieldError,
 }) {
   return (
     <>
       <FormField error={errors.title} label="Name">
         <FormInput
           autoFocus
-          name="Name"
+          name="title"
           placeholder="Your event name..."
-          handleChange={handleChange}
+          handleChange={(e) => {
+            handleChange(e);
+            const length = e.target.value.replace(/\s/g, "").length;
+
+            setFieldError(
+              "title",
+              length > 30
+                ? "Your event name cannot be more than 30 characters long"
+                : null
+            );
+          }}
           handleBlur={handleBlur}
           value={values.title}
           error={errors.title}
