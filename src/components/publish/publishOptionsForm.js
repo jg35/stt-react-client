@@ -47,6 +47,8 @@ export default function PublishOptionsForm({
       <DatePicker
         label="Publication date"
         popperPlacement="top-start"
+        insideModal={false}
+        useDateFinder={false}
         date={values.publishedAt}
         error={errors.publishedAt}
         handleChange={(newDate) => {

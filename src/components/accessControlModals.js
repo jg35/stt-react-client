@@ -75,18 +75,6 @@ export default function AccessControlModals() {
     return null;
   }
 
-  // return (
-  //   <DateFinder
-  //     value=""
-  //     handleError={(errors) => {
-  //       console.log(errors);
-  //     }}
-  //     handleChange={(value) => {
-  //       console.log(value);
-  //     }}
-  //   />
-  // );
-
   if (uiState.payment.showModal) {
     return (
       <UserPaymentForm

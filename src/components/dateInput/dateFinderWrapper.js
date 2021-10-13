@@ -1,57 +1,86 @@
-import { useRef } from "react";
-import { motion } from "framer-motion";
+import { useRef, useEffect } from "react";
 import useClickOutside from "~/hooks/useClickOutside";
+import { createPopper } from "@popperjs/core";
 
-export default function DateFinderWrapper({ open, children, closeHandler }) {
+const showAfterChangeModifier = {
+  name: "showAfterChange",
+  enabled: true,
+  phase: "afterWrite",
+  fn({ state }) {
+    state.elements.popper.classList.remove("hidden");
+    state.elements.popper.classList.add("animate-fade-in");
+  },
+};
+
+export default function DateFinderWrapper({
+  open,
+  children,
+  closeHandler,
+  inputRef,
+  insideModal,
+}) {
   const wrapperRef = useRef(null);
-  useClickOutside(wrapperRef, (e) => {
-    if (open && !(e.target.id && e.target.id === "tooltip")) {
-      closeHandler();
-    }
-  });
-  return (
-    <motion.div
-      ref={wrapperRef}
-      initial="hidden"
-      animate={open ? "visible" : "hidden"}
-      transition={{ duration: 0.3 }}
-      variants={{
-        visible: {
-          opacity: 1,
-          height: "auto",
-          left: [20, 20, 0],
-          borderRadius: "6px",
-        },
-        hidden: {
-          opacity: [1, 0],
-          width: 0,
-          height: 0,
-          left: 20,
-          borderRadius: "50%",
-          transition: {
-            delay: 0.2,
+  useClickOutside(
+    wrapperRef,
+    (e) => {
+      const isToggle =
+        (e.target.id && e.target.id === "findDateBtn") ||
+        (e.target.closest("button") &&
+          e.target.closest("button").id === "findDateBtn");
+      const isTooltip = e.target.id && e.target.id === "tooltip";
+      if (open && !(isTooltip || isToggle)) {
+        closeHandler();
+      }
+    },
+    insideModal ? "#modal-wrapper" : null
+  );
+  useEffect(() => {
+    let popper;
+    if (wrapperRef.current && inputRef.current) {
+      popper = createPopper(inputRef.current, wrapperRef.current, {
+        placement: "left",
+        modifiers: [
+          {
+            name: "arrow",
           },
-        },
-      }}
+          {
+            name: "offset",
+            options: {
+              offset: [0, 12],
+            },
+          },
+          showAfterChangeModifier,
+        ],
+      });
+    }
+    return () => {
+      if (popper) {
+        popper.destroy();
+      }
+    };
+  }, [wrapperRef, inputRef]);
+
+  return (
+    <div
+      ref={wrapperRef}
       id="tooltip"
       style={{
-        width: "100%",
-        top: "50%",
-        transform: "translateY(-50%)",
+        width: "360px",
+        zIndex: open ? 50 : -1,
       }}
-      className={`absolute hidden shadow-md bg-lightestGray z-50`}
+      className={`absolute ${
+        open ? "opacity-100 ease-in" : "opacity-0 ease-out invisible"
+      } transition-all duration-200`}
     >
-      <motion.div
-        animate={open ? "visible" : "hidden"}
-        initial="hidden"
-        variants={{
-          visible: { opacity: 1, transition: { delay: 0.5 } },
-          hidden: { opacity: 0 },
+      <div
+        className="relative py-2"
+        style={{
+          left: "1px",
         }}
-        transition={{ duration: 0.2 }}
       >
         {children}
-      </motion.div>
-    </motion.div>
+      </div>
+      <div id="arrow" data-popper-arrow></div>
+    </div>
   );
 }

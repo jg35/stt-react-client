@@ -55,9 +55,13 @@ export const getDatePickerAgeCaption = (date, dob) => {
   }
   const start = DateTime.fromISO(dob);
   const end = DateTime.fromISO(date);
-  const { years, months, days } = end
+  let { years, months, days } = end
     .diff(start, ["years", "months", "days"])
     .toObject();
+
+  years = Math.floor(years);
+  months = Math.floor(months);
+  days = Math.floor(days);
 
   if (!years && !months) {
     if (!days) {

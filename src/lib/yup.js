@@ -24,11 +24,26 @@ export const PrivacySettingsForm = Yup.object().shape({
   privacyStatus: Yup.string().default("PRIVATE"),
 });
 
-export const EventSchema = (dob) =>
+export const EventSchema = (dobIso) =>
   Yup.object().shape({
     id: Yup.number(),
     title: Yup.string().ensure().required("Give your event a name").max(30),
-    date: Yup.string().ensure().required("Add a date"),
+    date: Yup.string()
+      .ensure()
+      .required("Add a date")
+      .test("is-valid", "Date is not valid", function (value) {
+        return DateTime.fromISO(value).isValid;
+      })
+      .test(
+        "is-after-dob",
+        `Date cannot be before date of birth`,
+        (value) => value >= dobIso
+      )
+      .test(
+        "is-not-in-future",
+        "Date cannot be in the future",
+        (value) => value <= DateTime.utc().toISODate()
+      ),
     type: Yup.string().default("EVENT"),
     isSmartDate: Yup.boolean().default(false),
     smartDateReason: Yup.object()
@@ -98,7 +113,23 @@ export const FragmentSchema = (dobIso) =>
 
 export const OnboardingSchema = Yup.object().shape({
   location: Yup.string().label("Country").ensure().required(),
-  dob: Yup.string().label("Date of birth").ensure().required(),
+  dob: Yup.string()
+    .label("Date of birth")
+    .ensure()
+    .required()
+    .test("is-valid", "Date is not valid", function (value) {
+      return DateTime.fromISO(value).isValid;
+    })
+    .test(
+      "is-real-age",
+      `Year of birth must be on or after 1900`,
+      (value) => value >= "1900-01-01"
+    )
+    .test(
+      "is-18",
+      "You must be 18 or over to use Stories To Tell",
+      (value) => value <= DateTime.utc().minus({ years: 18 }).toISODate()
+    ),
 });
 
 const Position = Yup.object().shape({
@@ -138,7 +169,13 @@ export const VersionSchema = (publishStep, token = "") =>
     theme: ThemeSchema,
     title: Yup.string().ensure().required(),
     author: Yup.string().ensure().required(),
-    publishedAt: Yup.string().label("Publication date").ensure().required(),
+    publishedAt: Yup.string()
+      .label("Publication date")
+      .ensure()
+      .required()
+      .test("is-valid", "Date is not valid", function (value) {
+        return DateTime.fromISO(value).isValid;
+      }),
     privacyStatus: Yup.string().default("PRIVATE"),
     // Saved on user, but within version flow
     publicHandle: Yup.string()
@@ -150,7 +187,23 @@ export const VersionSchema = (publishStep, token = "") =>
 
 export const UserSettingsSchema = Yup.object()
   .shape({
-    dob: Yup.string().required("Set your date of birth").ensure(),
+    dob: Yup.string()
+      .ensure()
+      .required("Set your date of birth")
+      .test("is-valid", "Date is not valid", function (value) {
+        console.log(value);
+        return DateTime.fromFormat(value, "yyyy-MM-dd").isValid;
+      })
+      .test(
+        "is-real-age",
+        `Year of birth must be on or after 1900`,
+        (value) => value >= "1900-01-01"
+      )
+      .test(
+        "is-18",
+        "You must be 18 or over to use Stories To Tell",
+        (value) => value <= DateTime.utc().minus({ years: 18 }).toISODate()
+      ),
     location: Yup.string().ensure().required("Set your location"),
     hiddenQuestions: Yup.object().shape({
       ids: Yup.array().of(Yup.number()),

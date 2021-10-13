@@ -77,10 +77,9 @@ export default function ManageUser({ dbUser }) {
               <div>
                 <Grid colSpan={["col-span-12"]}>
                   <DatePicker
+                    useDateFinder={false}
                     label="Date of birth"
-                    minDate={new Date().setYear(new Date().getFullYear() - 100)}
-                    maxDate={new Date().setYear(new Date().getFullYear() - 18)}
-                    placeholder="DD/MM/YYYY"
+                    insideModal={false}
                     error={errors.dob}
                     date={values.dob}
                     handleChange={(newDate) => {

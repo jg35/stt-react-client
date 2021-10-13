@@ -1,10 +1,14 @@
 import { useEffect } from "react";
 
 // Improved version of https://usehooks.com/useOnClickOutside/
-const useClickOutside = (ref, handler) => {
+const useClickOutside = (ref, handler, clickAreaSelector = null) => {
   useEffect(() => {
     let startedInside = false;
     let startedWhenMounted = false;
+    let clickArea = document;
+    if (clickAreaSelector) {
+      clickArea = document.querySelector(clickAreaSelector);
+    }
 
     const listener = (event) => {
       // Do nothing if `mousedown` or `touchstart` started inside ref element
@@ -20,14 +24,14 @@ const useClickOutside = (ref, handler) => {
       startedInside = ref.current && ref.current.contains(event.target);
     };
 
-    document.addEventListener("mousedown", validateEventStart);
-    document.addEventListener("touchstart", validateEventStart);
-    document.addEventListener("click", listener);
+    clickArea.addEventListener("mousedown", validateEventStart);
+    clickArea.addEventListener("touchstart", validateEventStart);
+    clickArea.addEventListener("click", listener);
 
     return () => {
-      document.removeEventListener("mousedown", validateEventStart);
-      document.removeEventListener("touchstart", validateEventStart);
-      document.removeEventListener("click", listener);
+      clickArea.removeEventListener("mousedown", validateEventStart);
+      clickArea.removeEventListener("touchstart", validateEventStart);
+      clickArea.removeEventListener("click", listener);
     };
   }, [ref, handler]);
 };

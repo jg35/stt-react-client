@@ -109,18 +109,18 @@ export default function UserDeailsForm() {
                 </div>
               </div>
 
-              <DatePicker
-                label="Enter your date of birth"
-                popperPlacement="top-start"
-                minDate={new Date().setYear(new Date().getFullYear() - 100)}
-                maxDate={new Date().setYear(new Date().getFullYear() - 18)}
-                placeholder="DD/MM/YYYY"
-                error={errors.dob}
-                date={values.dob}
-                handleChange={(newDate) => {
-                  setFieldValue("dob", newDate);
-                }}
-              />
+              <div className="mb-6">
+                <DatePicker
+                  label="Enter your date of birth"
+                  error={errors.dob}
+                  date={values.dob}
+                  insideModal={false}
+                  useDateFinder={false}
+                  handleChange={(newDate) => {
+                    setFieldValue("dob", newDate);
+                  }}
+                />
+              </div>
 
               <Button type="submit" variant="cta" inProgress={isSubmitting}>
                 {isSubmitting ? "Creating timeline..." : "Create timeline"}

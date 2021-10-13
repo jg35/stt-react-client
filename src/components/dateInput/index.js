@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { DateTime } from "luxon";
 import { useCustomQuery } from "~/hooks/useCustomApollo";
 import { FETCH_TIMELINE_VIEW } from "~/lib/gql";
 
+import { Button } from "~/components/_styled";
 import Svg from "~/components/svg";
 import FormField from "~/components/formField";
 import DateFinder from "~/components/dateInput/dateFinder";
@@ -16,15 +17,17 @@ export default function DateInput({
   handleChange,
   date,
   error,
-  placeholder = "yyyy/mm/dd",
+  placeholder = "YYYY/MM/DD",
   minDate,
   maxDate = null,
   smartDate = null,
   setShowCaption,
   label = "Date",
   caption = null,
+  insideModal = true,
+  useDateFinder = true,
 }) {
-  console.log(smartDate);
+  const inputRef = useRef(null);
   const [inputValue, setInputValue] = useState(null);
   const [currentValue, setCurrentValue] = useState("");
   const [dateFinderValue, setDateFinderValue] = useState("");
@@ -62,6 +65,9 @@ export default function DateInput({
   }
 
   function getCaption() {
+    if (!useDateFinder) {
+      return "Enter the date in years, months and days (e.g. 1953/10/04)";
+    }
     if (caption) {
       return caption;
     } else if (dateFinderValue) {
@@ -76,12 +82,11 @@ export default function DateInput({
         </span>
       );
     } else {
-      return "Use the date finder, or enter in years, months and days.";
+      return "Use the date finder, or enter in years, months and days (e.g. 1953/10/04)";
     }
   }
 
-  // Setting the date finder value from changes in the input
-  useEffect(() => {
+  function dateFinderInputValueChange() {
     if (timelineData) {
       if (inputValue === null) {
         return;
@@ -124,21 +129,37 @@ export default function DateInput({
         }
       }
     }
+  }
+
+  // Setting the date finder value from changes in the input
+  useEffect(() => {
+    if (useDateFinder) {
+      dateFinderInputValueChange();
+    } else {
+      let dt;
+      if (typeof inputValue === "string") {
+        dt = DateTime.fromFormat(
+          inputValue.trim().replaceAll("/", "-"),
+          "yyyy-MM-dd"
+        );
+      }
+      onChangeHandler(dt?.toISODate() || "");
+    }
   }, [inputValue, timelineData]);
 
   return (
-    <FormField label={label} error={error} caption={getCaption()}>
+    <FormField label={label} error={error} caption={getCaption()} css="w-full">
       <div
-        className={`relative flex w-auto h-12 border-2 rounded-md ${
+        className={`relative flex w-full h-12 border-2 rounded-md ${
           error ? "border-red" : "border-transparent"
         }`}
       >
-        <div className="relative">
+        <div className="relative w-full flex">
           <input
             autoComplete="off"
             id="dateFinderInput"
             onChange={(e) => setInputValue(e.target.value)}
-            className="input flex-1"
+            className="input rounded-r-none"
             value={inputValue}
             type="text"
             placeholder={placeholder}
@@ -148,34 +169,44 @@ export default function DateInput({
               className="absolute right-2 top-2.5 border-green border-2 p-1 uppercase font-bold text-xs text-green rounded cursor-help"
               title={
                 smartDate.smartDateReason.confidence === 100
-                  ? "We've set this date automatically because the question relates to a specific day of your life."
-                  : "We've set this date automatically based on the time period or question. It might not be precise."
+                  ? "We set this date automatically because the question relates to a specific day of your life."
+                  : "We set this date automatically from the time period or question. It might not be accurate."
               }
             >
               Auto
             </span>
           )}
         </div>
-        <div
-          id="findDateBtn"
-          title="Find a date"
-          tabIndex="0"
-          className="block cursor-pointer px-4 h-full bg-lightBlack text-white justify-center rounded-r flex items-center"
-          onClick={() => setDateFinderOpen(true)}
-        >
-          <span className="font-medium inline-block">Open date finder</span>
+        {useDateFinder && (
+          <>
+            <div ref={inputRef}>
+              <Button
+                id="findDateBtn"
+                variant="cta"
+                size="compact"
+                title="Find a date"
+                css="rounded-r h-full w-40 rounded-l-none bg-lightBlack"
+                onClick={() => setDateFinderOpen(!dateFinderOpen)}
+              >
+                <span className="font-medium inline-block">Find a date</span>
 
-          <Svg name="calendar" color="white" css="ml-1" />
-        </div>
-        <DateFinder
-          value={dateFinderValue}
-          open={dateFinderOpen}
-          timelineData={timelineData}
-          setOpen={setDateFinderOpen}
-          onChange={(newVal) => {
-            setCurrentValue(newVal);
-          }}
-        />
+                <Svg name="calendar" color="white" css="ml-1" />
+              </Button>
+            </div>
+            <DateFinder
+              insideModal={insideModal}
+              inputRef={inputRef}
+              value={dateFinderValue}
+              open={dateFinderOpen}
+              timelineData={timelineData}
+              setOpen={setDateFinderOpen}
+              onChange={(newVal) => {
+                onChangeHandler(newVal);
+                setCurrentValue(newVal);
+              }}
+            />
+          </>
+        )}
       </div>
     </FormField>
   );

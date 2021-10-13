@@ -78,6 +78,8 @@ export default function DateFinder({
   value,
   onChange,
   timelineData,
+  inputRef,
+  insideModal,
 }) {
   const scrollContainer = useRef(null);
   const [expandedDate, setExpandedDate] = useState(null);
@@ -156,8 +158,13 @@ export default function DateFinder({
   }, [detailLevel, selectionTree, scrollContainer]);
 
   return (
-    <DateFinderWrapper open={open} closeHandler={closeDateFinder}>
-      <div className="h-full w-full border-2 border-lightBlack rounded-md">
+    <DateFinderWrapper
+      insideModal={insideModal}
+      open={open}
+      closeHandler={closeDateFinder}
+      inputRef={inputRef}
+    >
+      <div className="h-full w-full border-2 border-lightBlack rounded-md shadow-xl bg-lightestGray">
         <div className="bg-lightBlack flex justify-between items-center p-2">
           <Button
             size="compact"
@@ -165,7 +172,7 @@ export default function DateFinder({
             onClick={closeDateFinder}
             css="w-24 text-gray font-medium hover:text-white justify-start"
           >
-            Cancel
+            Close
           </Button>
           <div className="flex justify-end">
             {date ? (

@@ -33,12 +33,6 @@ export default function ChapterForm({
           />
         </FormField>
       )}
-
-      {/* <FormField
-        label="Date"
-        error={errors.date}
-        caption={getDatePickerAgeCaption(values.date, dbUser.dob)}
-      > */}
       <DatePicker
         label="Date"
         smartDate={pick(values, ["smartDateReason", "isSmartDate"])}
@@ -49,7 +43,6 @@ export default function ChapterForm({
           setFieldValue("isSmartDate", false);
         }}
       />
-      {/* </FormField> */}
     </>
   );
 }

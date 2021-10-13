@@ -37,7 +37,7 @@ export default function EmailForm({
           handleBlur={handleBlur}
           value={values.email}
           error={errors.email}
-          autoComplete="off"
+          autoComplete="on"
         />
         <FormError error={errors.email} />
         {formType !== "FORGOT_PASSWORD" && (
