@@ -1,9 +1,6 @@
-import { useContext, useState } from "react";
 import { FormInput } from "~/components/_styled";
 import FormField from "~/components/formField";
 import DatePicker from "~/components/dateInput";
-import { AuthContext } from "~/components/authWrap";
-import { getDatePickerAgeCaption } from "~/lib/util";
 import { pick } from "lodash";
 
 export default function EventForm({
@@ -13,17 +10,13 @@ export default function EventForm({
   errors,
   setFieldValue,
 }) {
-  const [showCaption, setShowCaption] = useState(false);
-  const {
-    authState: { dbUser },
-  } = useContext(AuthContext);
   return (
     <>
-      <FormField error={errors.title}>
+      <FormField error={errors.title} label="Name">
         <FormInput
           autoFocus
-          name="title"
-          placeholder="Enter event title"
+          name="Name"
+          placeholder="Your event name..."
           handleChange={handleChange}
           handleBlur={handleBlur}
           value={values.title}
@@ -31,25 +24,16 @@ export default function EventForm({
         />
       </FormField>
 
-      {/* <FormField
-        label="Date"
-        error={errors.date}
-        caption={
-          showCaption && getDatePickerAgeCaption(values.date, dbUser.dob)
-        }
-      > */}
       <DatePicker
         label="Date"
         smartDate={pick(values, ["smartDateReason", "isSmartDate"])}
         error={errors.date}
-        setShowCaption={setShowCaption}
         date={values.date}
         handleChange={(newDate) => {
           setFieldValue("date", newDate);
           setFieldValue("isSmartDate", false);
         }}
       />
-      {/* </FormField> */}
     </>
   );
 }

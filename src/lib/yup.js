@@ -27,7 +27,10 @@ export const PrivacySettingsForm = Yup.object().shape({
 export const EventSchema = (dobIso) =>
   Yup.object().shape({
     id: Yup.number(),
-    title: Yup.string().ensure().required("Give your event a name").max(30),
+    title: Yup.string()
+      .ensure()
+      .required("Give your event a name")
+      .max(30, "Your event name cannot be more than 30 characters long"),
     date: Yup.string()
       .ensure()
       .required("Add a date")
@@ -223,14 +226,14 @@ export const EmailLoginSchema = Yup.object().shape({
 
 export const EmailCreateSchema = Yup.object().shape({
   email: Yup.string().email().ensure().required(),
-  password: Yup.string()
-    .ensure()
-    .min(8)
-    .matches(
-      "^(?=.*[A-Z])(?=.*[a-z])(?=.*[\\d])([A-Za-z\\d]{8,})$",
-      "You should have a mix of upper and lowercase numbers & letters"
-    )
-    .required(),
+  password: Yup.string().ensure().min(8).required(),
+  confirmPassword: Yup.string().test(
+    "matches-password",
+    "Does not match your password",
+    function (value) {
+      return value === this.parent.password;
+    }
+  ),
 });
 
 export const DeleteAccountSchema = Yup.object().shape({

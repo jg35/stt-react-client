@@ -1,9 +1,6 @@
-import { useContext } from "react";
 import DatePicker from "~/components/dateInput";
 import FormField from "~/components/formField";
-import { FormInput, FormLabel } from "~/components/_styled";
-import { AuthContext } from "~/components/authWrap";
-import { getDatePickerAgeCaption } from "~/lib/util";
+import { FormInput } from "~/components/_styled";
 import { pick } from "lodash";
 
 export default function ChapterForm({
@@ -12,12 +9,8 @@ export default function ChapterForm({
   values,
   errors,
   setFieldValue,
-  setFieldError,
   editContent = true,
 }) {
-  const {
-    authState: { dbUser },
-  } = useContext(AuthContext);
   return (
     <>
       {editContent && (

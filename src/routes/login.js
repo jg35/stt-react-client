@@ -38,7 +38,7 @@ export default function Login() {
 
       <div className="flex mt-2">
         <AuthCardLink route="/forgot-password">
-          Forgotten password?
+          Forgot your password?
         </AuthCardLink>
       </div>
 

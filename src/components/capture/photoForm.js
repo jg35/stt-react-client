@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import DatePicker from "~/components/dateInput";
 import { InProgress, FormInput, Grid } from "~/components/_styled";
 import FormField from "~/components/formField";
@@ -6,8 +6,6 @@ import { pick } from "lodash";
 import Image from "~/components/image";
 import Uppy from "~/components/uppy";
 import imageSizes from "~/lib/imageSizes";
-import { getDatePickerAgeCaption } from "~/lib/util";
-import { AuthContext } from "~/components/authWrap";
 
 export default function PhotoForm({
   handleChange,
@@ -16,11 +14,7 @@ export default function PhotoForm({
   errors,
   setFieldValue,
   isSubmitting,
-  closeForm,
 }) {
-  const {
-    authState: { dbUser },
-  } = useContext(AuthContext);
   const [uppyOpen, setUppyOpen] = useState(!values.mediaUrl);
   const [uppyReady, setUppyReady] = useState(false);
   return (
@@ -79,20 +73,17 @@ export default function PhotoForm({
             handleChange={handleChange}
           />
         </FormField>
-        {/* <FormField label="Date" error={errors.date}> */}
+
         <DatePicker
           label="Date"
           smartDate={pick(values, ["smartDateReason", "isSmartDate"])}
-          caption={getDatePickerAgeCaption(values.date, dbUser.dob)}
           date={values.date}
           error={errors.date}
-          popperPlacement="top-start"
           handleChange={(newDate) => {
             setFieldValue("date", newDate);
             setFieldValue("isSmartDate", false);
           }}
         />
-        {/* </FormField> */}
       </Grid>
     </Grid>
   );

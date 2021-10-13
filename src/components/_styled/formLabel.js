@@ -9,7 +9,7 @@ export default function FormLabel({
 }) {
   const baseCss = "";
   const variants = {
-    default: "text-gray",
+    default: "text-darkGray",
   };
   return (
     <label

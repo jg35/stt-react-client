@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { Form, Formik } from "formik";
+import { Formik } from "formik";
 import { omit } from "lodash";
 import { useMutation } from "@apollo/client";
 import { useCustomQuery } from "~/hooks/useCustomApollo";
@@ -15,13 +14,9 @@ import DatePicker from "~/components/dateInput";
 import CountrySelect from "~/components/countrySelect";
 import FormField from "~/components/formField";
 import { Button, Title, Grid, Tag, FormLabel } from "~/components/_styled";
-import Svg from "~/components/svg";
-
 import useToastMessage from "~/hooks/useToastMessage";
 
 export default function ManageUser({ dbUser }) {
-  const [showHiddenQuestions, setShowHiddenQuestions] = useState(false);
-  const [showHiddenTags, setShowHiddenTags] = useState(false);
   const { data } = useCustomQuery(FETCH_QUESTIONS, {});
   const [syncUser] = useMutation(ACTION_UPDATE_USER_DETAILS);
   const [updateUser] = useMutation(UPDATE_USER);
