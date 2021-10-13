@@ -30,7 +30,7 @@ export const EventSchema = (dobIso) =>
     title: Yup.string()
       .ensure()
       .required("Give your event a name")
-      .max(30, "Your event name cannot be more than 30 characters long"),
+      .max(40, "Your event name cannot be more than 40 characters long"),
     date: Yup.string()
       .ensure()
       .required("Add a date")
