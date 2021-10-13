@@ -24,8 +24,8 @@ export default function EventForm({
 
             setFieldError(
               "title",
-              length > 40
-                ? "Your event name cannot be more than 40 characters long"
+              length > 50
+                ? "Your event name cannot be more than 50 characters long"
                 : null
             );
           }}
