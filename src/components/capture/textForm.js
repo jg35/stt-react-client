@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import DatePicker from "~/components/capture/datepicker";
+import DatePicker from "~/components/dateInput";
 import FormField from "~/components/formField";
 import TextEditor from "~/components/capture/textEditor";
 import { Grid } from "~/components/_styled";
@@ -56,22 +56,23 @@ export default function TextForm({
 
       <Grid colSpan={[`col-span-12 ${!editContent && "col-span-6"}`]}>
         {/* TODO - put form field etc within datepicker component to reduce duplication */}
-        <FormField
+        {/* <FormField
           label="Date"
           error={errors.date}
           caption={getDatePickerAgeCaption(values.date, dbUser.dob)}
-        >
-          <DatePicker
-            smartDate={pick(values, ["smartDateReason", "isSmartDate"])}
-            error={errors.date}
-            date={values.date}
-            popperPlacement="top-start"
-            handleChange={(newDate) => {
-              setFieldValue("date", newDate.toISOString().replace(/T.*/, ""));
-              setFieldValue("isSmartDate", false);
-            }}
-          />
-        </FormField>
+        > */}
+        <DatePicker
+          label="Date"
+          smartDate={pick(values, ["smartDateReason", "isSmartDate"])}
+          error={errors.date}
+          date={values.date}
+          popperPlacement="top-start"
+          handleChange={(newDate) => {
+            setFieldValue("date", newDate);
+            setFieldValue("isSmartDate", false);
+          }}
+        />
+        {/* </FormField> */}
       </Grid>
     </>
   );

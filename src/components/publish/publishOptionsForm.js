@@ -1,5 +1,5 @@
 import { FormInput, FormLabel, Title } from "~/components/_styled";
-import DatePicker from "~/components/capture/datepicker";
+import DatePicker from "~/components/dateInput";
 import FormError from "~/components/formError";
 import { getHTMLTranslation } from "~/lib/util";
 
@@ -43,21 +43,16 @@ export default function PublishOptionsForm({
         />
         <FormError error={errors.author} />
       </div>
-      <div className="form-control w-full">
-        <FormLabel>Publication date</FormLabel>
-        <DatePicker
-          popperPlacement="top-start"
-          date={values.publishedAt}
-          error={errors.publishedAt}
-          handleChange={(newDate) => {
-            setFieldValue(
-              "publishedAt",
-              newDate.toISOString().replace(/T.*/, "")
-            );
-          }}
-        />
-        <FormError error={errors.publishedAt} />
-      </div>
+
+      <DatePicker
+        label="Publication date"
+        popperPlacement="top-start"
+        date={values.publishedAt}
+        error={errors.publishedAt}
+        handleChange={(newDate) => {
+          setFieldValue("publishedAt", newDate);
+        }}
+      />
     </div>
   );
 }

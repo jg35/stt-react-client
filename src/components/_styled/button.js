@@ -15,9 +15,10 @@ export default function Button({
   title = "",
 }) {
   const baseCss = `flex justify-center items-center rounded border-2 duration-200 ease-in w-full ${
-    disabled ? "cursor-not-allowed opacity-80" : "cursor-pointer"
+    disabled ? "cursor-default opacity-80" : "cursor-pointer"
   }`;
   const variants = {
+    nothing: `bg-transparent border-transparent`,
     minimal: `bg-transparent hover:bg-lightestGray border-transparent hover:border-lightestGray`,
     default: `bg-lightestGray border-lightestGray ${
       !disabled && "hover:border-lightGray hover:shadow-sm hover:bg-lightGray "

@@ -9,7 +9,7 @@ import { OnboardingSchema } from "~/lib/yup";
 import { ACTION_UPDATE_USER_DETAILS } from "~/lib/gql";
 import FormError from "~/components/formError";
 import CountrySelect from "~/components/countrySelect";
-import DatePicker from "~/components/capture/datepicker";
+import DatePicker from "~/components/dateInput";
 import { Button, FormLabel, Title, Text } from "~/components/_styled";
 import { AuthContext } from "~/components/authWrap";
 import { useEffect } from "react";
@@ -109,27 +109,18 @@ export default function UserDeailsForm() {
                 </div>
               </div>
 
-              <div
-                className="flex-1 form-control"
-                style={{ marginBottom: "10px" }}
-              >
-                <FormLabel>Enter your date of birth</FormLabel>
-                <DatePicker
-                  popperPlacement="top-start"
-                  minDate={new Date().setYear(new Date().getFullYear() - 100)}
-                  maxDate={new Date().setYear(new Date().getFullYear() - 18)}
-                  placeholder="DD/MM/YYYY"
-                  error={errors.dob}
-                  date={values.dob}
-                  handleChange={(newDate) => {
-                    setFieldValue(
-                      "dob",
-                      newDate.toISOString().replace(/T.*/, "")
-                    );
-                  }}
-                />
-                <FormError error={errors.dob} />
-              </div>
+              <DatePicker
+                label="Enter your date of birth"
+                popperPlacement="top-start"
+                minDate={new Date().setYear(new Date().getFullYear() - 100)}
+                maxDate={new Date().setYear(new Date().getFullYear() - 18)}
+                placeholder="DD/MM/YYYY"
+                error={errors.dob}
+                date={values.dob}
+                handleChange={(newDate) => {
+                  setFieldValue("dob", newDate);
+                }}
+              />
 
               <Button type="submit" variant="cta" inProgress={isSubmitting}>
                 {isSubmitting ? "Creating timeline..." : "Create timeline"}

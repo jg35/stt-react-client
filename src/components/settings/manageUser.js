@@ -11,7 +11,7 @@ import {
 } from "~/lib/gql";
 import { refreshToken } from "~/lib/firebase";
 
-import DatePicker from "~/components/capture/datepicker";
+import DatePicker from "~/components/dateInput";
 import CountrySelect from "~/components/countrySelect";
 import FormField from "~/components/formField";
 import { Button, Title, Grid, Tag, FormLabel } from "~/components/_styled";
@@ -76,25 +76,18 @@ export default function ManageUser({ dbUser }) {
             <form id="manage-user-settings-form" onSubmit={handleSubmit}>
               <div>
                 <Grid colSpan={["col-span-12"]}>
-                  <FormField label="Date of birth" error={errors.dob}>
-                    <DatePicker
-                      minDate={new Date().setYear(
-                        new Date().getFullYear() - 100
-                      )}
-                      maxDate={new Date().setYear(
-                        new Date().getFullYear() - 18
-                      )}
-                      placeholder="DD/MM/YYYY"
-                      error={errors.dob}
-                      date={values.dob}
-                      handleChange={(newDate) => {
-                        setFieldValue(
-                          "dob",
-                          newDate.toISOString().replace(/T.*/, "")
-                        );
-                      }}
-                    />
-                  </FormField>
+                  <DatePicker
+                    label="Date of birth"
+                    minDate={new Date().setYear(new Date().getFullYear() - 100)}
+                    maxDate={new Date().setYear(new Date().getFullYear() - 18)}
+                    placeholder="DD/MM/YYYY"
+                    error={errors.dob}
+                    date={values.dob}
+                    handleChange={(newDate) => {
+                      setFieldValue("dob", newDate);
+                    }}
+                  />
+
                   <FormField label="Your country" error={errors.location}>
                     <CountrySelect
                       name="location"

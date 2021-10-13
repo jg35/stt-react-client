@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import DatePicker from "~/components/capture/datepicker";
+import DatePicker from "~/components/dateInput";
 import FormField from "~/components/formField";
 import { FormInput, FormLabel } from "~/components/_styled";
 import { AuthContext } from "~/components/authWrap";
@@ -12,6 +12,7 @@ export default function ChapterForm({
   values,
   errors,
   setFieldValue,
+  setFieldError,
   editContent = true,
 }) {
   const {
@@ -33,21 +34,22 @@ export default function ChapterForm({
         </FormField>
       )}
 
-      <FormField
+      {/* <FormField
         label="Date"
         error={errors.date}
         caption={getDatePickerAgeCaption(values.date, dbUser.dob)}
-      >
-        <DatePicker
-          smartDate={pick(values, ["smartDateReason", "isSmartDate"])}
-          date={values.date}
-          error={errors.date}
-          handleChange={(newDate) => {
-            setFieldValue("date", newDate.toISOString().replace(/T.*/, ""));
-            setFieldValue("isSmartDate", false);
-          }}
-        />
-      </FormField>
+      > */}
+      <DatePicker
+        label="Date"
+        smartDate={pick(values, ["smartDateReason", "isSmartDate"])}
+        date={values.date}
+        error={errors.date}
+        handleChange={(newDate) => {
+          setFieldValue("date", newDate);
+          setFieldValue("isSmartDate", false);
+        }}
+      />
+      {/* </FormField> */}
     </>
   );
 }

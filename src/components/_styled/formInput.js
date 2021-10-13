@@ -15,6 +15,7 @@ export default function FormInput({
   handleChange,
   handleBlur,
   handleKeyUp = null,
+  autoComplete = "off",
 }) {
   const baseCss = `outline-none bg-offWhite border-transparent border-2 rounded w-full transition duration-200 ease-in ${
     error && "border-red"
@@ -32,6 +33,7 @@ export default function FormInput({
 
   return (
     <input
+      autoComplete={autoComplete}
       id={id}
       type={type}
       name={name}

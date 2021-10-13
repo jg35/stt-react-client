@@ -22,6 +22,18 @@ export const getAge = (dob) => {
   return Math.floor(dobYears.toObject().years);
 };
 
+export const getAgeBetweenDates = (dobDt, startDateDt, endDateDt) => {
+  const nowDt = DateTime.utc();
+  let startYears = startDateDt.diff(dobDt, "years");
+  startYears = startYears.years >= 0 ? startYears.years : 0;
+  let endCompareYrs = endDateDt;
+  if (nowDt.toISODate() < endDateDt.toISODate()) {
+    endCompareYrs = nowDt;
+  }
+  let endYears = Math.round(endCompareYrs.diff(dobDt, "years").years - 1);
+  return `${Math.floor(startYears)}-${endYears === -1 ? 0 : endYears}`;
+};
+
 export const getAgeFromDate = (dob, startDate, endDate) => {
   const start = DateTime.fromISO(dob);
   const end = DateTime.fromISO(
@@ -38,6 +50,9 @@ function shouldPlural(ref, count) {
 }
 
 export const getDatePickerAgeCaption = (date, dob) => {
+  if (!date) {
+    return "";
+  }
   const start = DateTime.fromISO(dob);
   const end = DateTime.fromISO(date);
   const { years, months, days } = end
@@ -46,7 +61,7 @@ export const getDatePickerAgeCaption = (date, dob) => {
 
   if (!years && !months) {
     if (!days) {
-      return `Your first day on earth`;
+      return `Your first day`;
     }
     return `${days} ${shouldPlural("day", days)} old`;
   } else if (months && !years) {

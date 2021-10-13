@@ -1,6 +1,7 @@
 import * as Yup from "yup";
 import { capitalize, startCase } from "lodash";
 import { v4 as uuid } from "uuid";
+import { DateTime } from "luxon";
 
 import { setLocale } from "yup";
 
@@ -23,60 +24,77 @@ export const PrivacySettingsForm = Yup.object().shape({
   privacyStatus: Yup.string().default("PRIVATE"),
 });
 
-export const EventSchema = Yup.object().shape({
-  id: Yup.number(),
-  title: Yup.string().ensure().required("Give your event a name"),
-  date: Yup.string().ensure().required("Add a date"),
-  type: Yup.string().default("EVENT"),
-  isSmartDate: Yup.boolean().default(false),
-  smartDateReason: Yup.object()
-    .shape({
-      ageOnDate: Yup.number().nullable(),
-      confidence: Yup.number().nullable(),
-      date: Yup.string().nullable(),
-      startDate: Yup.string().nullable(),
-      endDate: Yup.string().nullable(),
-      reason: Yup.string().nullable(),
-    })
-    .nullable(),
-});
+export const EventSchema = (dob) =>
+  Yup.object().shape({
+    id: Yup.number(),
+    title: Yup.string().ensure().required("Give your event a name").max(30),
+    date: Yup.string().ensure().required("Add a date"),
+    type: Yup.string().default("EVENT"),
+    isSmartDate: Yup.boolean().default(false),
+    smartDateReason: Yup.object()
+      .shape({
+        ageOnDate: Yup.number().nullable(),
+        confidence: Yup.number().nullable(),
+        date: Yup.string().nullable(),
+        startDate: Yup.string().nullable(),
+        endDate: Yup.string().nullable(),
+        reason: Yup.string().nullable(),
+      })
+      .nullable(),
+  });
 
-export const FragmentSchema = Yup.object().shape({
-  id: Yup.number(),
-  content: Yup.string()
-    .ensure()
-    .test("content", "Add your memory", function (value) {
-      if (this.parent.type !== "PHOTO") {
-        return !!value;
-      }
-      return true;
-    }),
-  date: Yup.string().ensure().required(),
-  isSmartDate: Yup.boolean().default(false),
-  smartDateReason: Yup.object()
-    .shape({
-      ageOnDate: Yup.number().nullable(),
-      confidence: Yup.number().nullable(),
-      date: Yup.string().nullable(),
-      startDate: Yup.string().nullable(),
-      endDate: Yup.string().nullable(),
-      reason: Yup.string().nullable(),
-    })
-    .nullable(),
-  mediaCaption: Yup.string().default(null).nullable(),
-  mediaUrl: Yup.string()
-    .test("mediaUrl", "Upload a photo to continue", function (value) {
-      if (this.parent.type === "PHOTO") {
-        return !!value;
-      }
-      return true;
-    })
-    .default(null)
-    .nullable(),
-  questionId: Yup.number().default(null).nullable(),
-  tag: Yup.string().default(null).nullable(),
-  type: Yup.string().ensure().required(),
-});
+export const FragmentSchema = (dobIso) =>
+  Yup.object().shape({
+    id: Yup.number(),
+    content: Yup.string()
+      .ensure()
+      .test("content", "Add your memory", function (value) {
+        if (this.parent.type !== "PHOTO") {
+          return !!value;
+        }
+        return true;
+      }),
+    date: Yup.string()
+      .ensure()
+      .required()
+      .test("is-valid", "Date is not valid", function (value) {
+        return DateTime.fromISO(value).isValid;
+      })
+      .test(
+        "is-after-dob",
+        `Date cannot be before date of birth`,
+        (value) => value >= dobIso
+      )
+      .test(
+        "is-not-in-future",
+        "Date cannot be in the future",
+        (value) => value <= DateTime.utc().toISODate()
+      ),
+    isSmartDate: Yup.boolean().default(false),
+    smartDateReason: Yup.object()
+      .shape({
+        ageOnDate: Yup.number().nullable(),
+        confidence: Yup.number().nullable(),
+        date: Yup.string().nullable(),
+        startDate: Yup.string().nullable(),
+        endDate: Yup.string().nullable(),
+        reason: Yup.string().nullable(),
+      })
+      .nullable(),
+    mediaCaption: Yup.string().default(null).nullable(),
+    mediaUrl: Yup.string()
+      .test("mediaUrl", "Upload a photo to continue", function (value) {
+        if (this.parent.type === "PHOTO") {
+          return !!value;
+        }
+        return true;
+      })
+      .default(null)
+      .nullable(),
+    questionId: Yup.number().default(null).nullable(),
+    tag: Yup.string().default(null).nullable(),
+    type: Yup.string().ensure().required(),
+  });
 
 export const OnboardingSchema = Yup.object().shape({
   location: Yup.string().label("Country").ensure().required(),

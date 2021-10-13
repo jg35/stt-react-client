@@ -25,6 +25,7 @@ export default function CaptureModal({
   editView = false,
   scrollToFragment,
   scrollToEvent,
+  dob,
 }) {
   const [closeWarning, setCloseWarning] = useState(false);
   const [overrideSize, setOverrideSize] = useState(null);
@@ -81,12 +82,12 @@ export default function CaptureModal({
   function getSchema(type) {
     switch (type) {
       case "EVENT":
-        return EventSchema;
+        return EventSchema(dob);
       case "TEXT":
       case "PHOTO":
       case "CHAPTER":
       default:
-        return FragmentSchema;
+        return FragmentSchema(dob);
     }
   }
 
@@ -232,7 +233,7 @@ export default function CaptureModal({
         })
       }
       validationSchema={getSchema(item.type)}
-      validateOnChange={false}
+      validateOnChange={item.type === "EVENT"}
       validateOnBlur={false}
     >
       {(props) => {
@@ -275,6 +276,7 @@ export default function CaptureModal({
                 <PhotoForm {...props} closeForm={closeHandler} />
               )}
               <FormActions
+                isValid={props.isValid}
                 formIsDirty={props.dirty}
                 closeHandler={() => warnBeforeClose(props.dirty)}
                 itemId={props.values.id}

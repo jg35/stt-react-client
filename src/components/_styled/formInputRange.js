@@ -4,9 +4,11 @@ export default function FormInputRange({
   step,
   min,
   max,
+  id,
 }) {
   return (
     <input
+      id={id}
       type="range"
       className="flex-1"
       value={value}

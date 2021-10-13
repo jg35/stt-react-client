@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import { AuthContext } from "~/components/authWrap";
 import { UIContext } from "~/app";
 import useLogout from "~/hooks/useLogout";
@@ -9,6 +9,7 @@ import { Text } from "~/components/_styled";
 import Menu from "~/components/menu";
 
 export default function MainMenu() {
+  const history = useHistory();
   const logout = useLogout();
   const {
     authState: { user, dbUser },
@@ -70,6 +71,7 @@ export default function MainMenu() {
         <span
           className="fill text-right flex items-center justify-end p-2"
           onClick={() => {
+            history.push("/");
             updateUiState(
               {
                 tutorial: {
@@ -81,7 +83,7 @@ export default function MainMenu() {
             );
           }}
         >
-          Run the tutorial <Svg name="tutorial" css="ml-2" />
+          Play the tutorial <Svg name="tutorial" css="ml-2" />
         </span>
       ),
     },

@@ -1,7 +1,7 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { FormInput } from "~/components/_styled";
 import FormField from "~/components/formField";
-import DatePicker from "~/components/capture/datepicker";
+import DatePicker from "~/components/dateInput";
 import { AuthContext } from "~/components/authWrap";
 import { getDatePickerAgeCaption } from "~/lib/util";
 import { pick } from "lodash";
@@ -13,6 +13,7 @@ export default function EventForm({
   errors,
   setFieldValue,
 }) {
+  const [showCaption, setShowCaption] = useState(false);
   const {
     authState: { dbUser },
   } = useContext(AuthContext);
@@ -30,21 +31,25 @@ export default function EventForm({
         />
       </FormField>
 
-      <FormField
+      {/* <FormField
         label="Date"
         error={errors.date}
-        caption={getDatePickerAgeCaption(values.date, dbUser.dob)}
-      >
-        <DatePicker
-          smartDate={pick(values, ["smartDateReason", "isSmartDate"])}
-          error={errors.date}
-          date={values.date}
-          handleChange={(newDate) => {
-            setFieldValue("date", newDate.toISOString().replace(/T.*/, ""));
-            setFieldValue("isSmartDate", false);
-          }}
-        />
-      </FormField>
+        caption={
+          showCaption && getDatePickerAgeCaption(values.date, dbUser.dob)
+        }
+      > */}
+      <DatePicker
+        label="Date"
+        smartDate={pick(values, ["smartDateReason", "isSmartDate"])}
+        error={errors.date}
+        setShowCaption={setShowCaption}
+        date={values.date}
+        handleChange={(newDate) => {
+          setFieldValue("date", newDate);
+          setFieldValue("isSmartDate", false);
+        }}
+      />
+      {/* </FormField> */}
     </>
   );
 }

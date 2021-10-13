@@ -60,7 +60,7 @@ export function makeCreateFragmentForm(initialValue = {}, options = {}) {
   return {
     capture: {
       showModal: true,
-      item: FragmentSchema.cast(initialValue),
+      item: FragmentSchema().cast(initialValue),
       revealAfterCreate: options.revealAfterCreate || false,
     },
   };
@@ -70,7 +70,7 @@ export function makeCreateUserEventForm(initialValue = {}, options = {}) {
   return {
     capture: {
       showModal: true,
-      item: EventSchema.cast(initialValue),
+      item: EventSchema().cast(initialValue),
       revealAfterCreate: options.revealAfterCreate || false,
     },
   };

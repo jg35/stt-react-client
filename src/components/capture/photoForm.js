@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import DatePicker from "~/components/capture/datepicker";
+import DatePicker from "~/components/dateInput";
 import { InProgress, FormInput, Grid } from "~/components/_styled";
 import FormField from "~/components/formField";
 import { pick } from "lodash";
@@ -79,19 +79,20 @@ export default function PhotoForm({
             handleChange={handleChange}
           />
         </FormField>
-        <FormField label="Date" error={errors.date}>
-          <DatePicker
-            smartDate={pick(values, ["smartDateReason", "isSmartDate"])}
-            caption={getDatePickerAgeCaption(values.date, dbUser.dob)}
-            date={values.date}
-            error={errors.date}
-            popperPlacement="top-start"
-            handleChange={(newDate) => {
-              setFieldValue("date", newDate.toISOString().replace(/T.*/, ""));
-              setFieldValue("isSmartDate", false);
-            }}
-          />
-        </FormField>
+        {/* <FormField label="Date" error={errors.date}> */}
+        <DatePicker
+          label="Date"
+          smartDate={pick(values, ["smartDateReason", "isSmartDate"])}
+          caption={getDatePickerAgeCaption(values.date, dbUser.dob)}
+          date={values.date}
+          error={errors.date}
+          popperPlacement="top-start"
+          handleChange={(newDate) => {
+            setFieldValue("date", newDate);
+            setFieldValue("isSmartDate", false);
+          }}
+        />
+        {/* </FormField> */}
       </Grid>
     </Grid>
   );

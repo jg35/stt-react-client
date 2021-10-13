@@ -1,11 +1,12 @@
 import { Card, Container, Title, Text } from "~/components/_styled";
 import { getHTMLTranslation } from "~/lib/util";
+import colors from "~/lib/colors";
 
 export default function AuthCard({ title, children: content }) {
   return (
     <Container
       background={{
-        color: "lightestGray",
+        color: colors.lightestGray,
       }}
     >
       <div className="h-full w-full flex flex-col items-center justify-center p-4">

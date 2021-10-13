@@ -156,6 +156,7 @@ export default function Timeline() {
         </div>
       </Page>
       <CaptureModal
+        dob={data?.stt_user_by_pk.dob}
         scrollToFragment={debounce((fragmentId) => {
           scrollToFragment(fragmentId);
         }, 500)}

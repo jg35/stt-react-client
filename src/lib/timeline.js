@@ -89,7 +89,7 @@ function getPeriodTitle(location, currentPeriod, timespan) {
   }
 }
 
-function getPeriodAge(dateOfBirth, currentPeriod) {
+export function getPeriodAge(dateOfBirth, currentPeriod) {
   const diff = currentPeriod.diff(dateOfBirth, ["years", "months"]);
   const { years, months } = diff.toObject();
   const ageMonths = Math.floor(months);

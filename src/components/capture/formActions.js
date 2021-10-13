@@ -5,6 +5,7 @@ export default function FormActions({
   itemId,
   isSubmitting,
   formIsDirty = false,
+  isValid,
 }) {
   let submitText;
   if (isSubmitting) {

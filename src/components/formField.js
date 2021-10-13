@@ -12,7 +12,7 @@ export default function FormField({
       <FormLabel css="mb-1">{label}</FormLabel>
       {field}
       <FormCaption variant={error ? "error" : "info"}>
-        {caption || error}
+        {error || caption}
       </FormCaption>
     </div>
   );

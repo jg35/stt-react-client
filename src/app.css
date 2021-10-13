@@ -251,6 +251,13 @@ input[type="range"]::-webkit-slider-thumb {
   border: 3px solid black;
 }
 
+#dateFinderRange::-webkit-slider-thumb {
+  @apply appearance-none h-5 w-5 bg-white cursor-pointer -mt-1.5 shadow-lg;
+  border-radius: 50%;
+  background-color: #666666;
+  border: 3px solid #666;
+}
+
 input[type="range"]::-webkit-slider-runnable-track {
   @apply w-full h-2 cursor-pointer bg-lightestGray rounded;
 }
