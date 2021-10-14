@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DatePicker from "~/components/dateInput";
 import { InProgress, FormInput, Grid } from "~/components/_styled";
 import FormField from "~/components/formField";
@@ -17,6 +17,12 @@ export default function PhotoForm({
 }) {
   const [uppyOpen, setUppyOpen] = useState(!values.mediaUrl);
   const [uppyReady, setUppyReady] = useState(false);
+
+  useEffect(() => {
+    document.querySelector("#capture-form-wrapper").style["width"] = uppyOpen
+      ? "0"
+      : "";
+  }, [uppyOpen]);
   return (
     <Grid colSpan={["col-span-12"]}>
       <FormField label="Photo" error={errors.mediaUrl}>

@@ -99,28 +99,8 @@ export default function Modal({
       id="modal-wrapper"
       className={`fixed z-40 h-full opacity-0 w-full top-0 left-0 flex justify-center pt-2 md:pt-6 px-2 md:px-4 pb-4 ${position}`}
     >
-      <motion.div
+      <div
         ref={modal}
-        variants={{
-          open: {
-            opacity: [0, 1],
-            scale: [0.5, 1],
-            rotate: [-5, 0],
-            y: ["-12.5%", "0%"],
-            transition: {
-              duration: 0.2,
-            },
-          },
-          close: {
-            opacity: 0,
-            rotate: 0,
-            transition: {
-              duration: 0.2,
-            },
-          },
-        }}
-        transition="linear"
-        animate={isOpen ? "open" : "close"}
         className={`${sizeStyles} max-h-full ${
           !noScroll && "overflow-scroll"
         } relative`}
@@ -164,7 +144,7 @@ export default function Modal({
           back={() => setShowCloseWarning(false)}
           close={close}
         />
-      </motion.div>
+      </div>
     </motion.div>
   );
 }
