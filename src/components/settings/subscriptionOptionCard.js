@@ -1,6 +1,7 @@
 import { Button, Title, Text } from "~/components/_styled";
 import Svg from "~/components/svg";
 import colors from "~/lib/colors";
+import { getCurrencySymbol } from "~/lib/util";
 
 function getTitle(interval) {
   switch (interval) {
@@ -52,8 +53,8 @@ function getDesc(interval) {
   }
 }
 
-function formatPrice(price) {
-  return `£${price / 100}`;
+function formatPrice(price, currency) {
+  return `${getCurrencySymbol(currency)}${price / 100}`;
 }
 
 export default function SubscriptionOptionCard({
@@ -80,7 +81,7 @@ export default function SubscriptionOptionCard({
         <Title size="large" css={`mb-0`}>
           {planName}
         </Title>
-        <Text size="large">{formatPrice(option.amount)}</Text>
+        <Text size="large">{formatPrice(option.amount, option.currency)}</Text>
         <Text>{getDesc(option.interval)}</Text>
       </div>
 

@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
-import { useCustomQuery } from "~/hooks/useCustomApollo";
+import { useLazyQuery } from "@apollo/client";
 import { ACTION_STRIPE_FETCH_PRICES } from "~/lib/gql";
 import Modal from "~/components/modal";
 import { Title, Button, Text, Grid, Skeleton } from "~/components/_styled";
 import SubscriptionOptionCard from "~/components/settings/subscriptionOptionCard";
-import { getHTMLTranslation, closeHandler } from "~/lib/util";
+import {
+  getHTMLTranslation,
+  closeHandler,
+  getUserTargetCurrency,
+} from "~/lib/util";
 
 export default function UserPaymentForm({
   type,
@@ -17,19 +21,24 @@ export default function UserPaymentForm({
   const [subscriptionOptions, setSubscriptionOptions] = useState([]);
   const [isOpen, setIsOpen] = useState(true);
   const [priceId, setPriceId] = useState(null);
-  const { data } = useCustomQuery(ACTION_STRIPE_FETCH_PRICES, {
-    variables: { appId: process.env.REACT_APP_HASURA_APP_ID },
-  });
+  const [getStripePrices, { data }] = useLazyQuery(ACTION_STRIPE_FETCH_PRICES);
 
   useEffect(async () => {
     if (data) {
-      setSubscriptionOptions(
-        [...data.action_subscriptions_get_prices].sort((a, b) =>
-          a.amount > b.amount ? 1 : -1
-        )
-      );
+      setSubscriptionOptions([...data.action_subscriptions_get_prices]);
     }
   }, [data]);
+
+  useEffect(() => {
+    getUserTargetCurrency().then((targetCurrency) => {
+      getStripePrices({
+        variables: {
+          appId: process.env.REACT_APP_HASURA_APP_ID,
+          targetCurrency,
+        },
+      });
+    });
+  }, []);
 
   function getPaymentMessage() {
     if (intent === "MANUAL") {

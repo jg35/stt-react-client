@@ -308,3 +308,35 @@ export const createNotification = ({ text, type, clearable, action, href }) => {
     type,
   };
 };
+
+const lookupIpKey = () => {
+  const appApiKey = "vvtr89ms5aktf0ns";
+  return fetch(`https://api.ipregistry.co/?key=${appApiKey}`).then((response) =>
+    response.json()
+  );
+};
+
+export const getUserTargetCurrency = () => {
+  return lookupIpKey().then((ipInfo) => {
+    switch (ipInfo.location.continent.code) {
+      case "EU":
+        if (ipInfo.location.country.code === "GB") {
+          return "GBP";
+        }
+        return "EUR";
+      default:
+        return "USD";
+    }
+  });
+};
+
+export const getCurrencySymbol = (currency) => {
+  switch (currency) {
+    case "USD":
+      return "$";
+    case "EUR":
+      return "€";
+    case "GBP":
+      return "£";
+  }
+};

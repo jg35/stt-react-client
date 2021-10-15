@@ -66,11 +66,15 @@ export const ACTION_S3_GET_SIGNED_URL = gql`
 `;
 
 export const ACTION_STRIPE_FETCH_PRICES = gql`
-  query ActionStripeFetchPrices($appId: String!) {
-    action_subscriptions_get_prices(appId: $appId) {
+  query ActionStripeFetchPrices($appId: String!, $targetCurrency: String!) {
+    action_subscriptions_get_prices(
+      appId: $appId
+      targetCurrency: $targetCurrency
+    ) {
       id
       interval
       amount
+      currency
     }
   }
 `;
