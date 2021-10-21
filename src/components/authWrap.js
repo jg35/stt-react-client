@@ -72,7 +72,7 @@ export default function AuthWrap({ children }) {
             ref: "RESTORED_ACCOUNT",
             params: [
               authState.user.displayName
-                ? ` ${authState.user.displayName.split(" ")}`
+                ? ` ${authState.user.displayName.split(" ")[0]}`
                 : "",
             ],
           });
