@@ -19,7 +19,7 @@ export default function Section({
   return (
     <div className={`px-1`}>
       <section
-        className={`bg-white py-12 px-2 md:px-4 md:pr-6 rounded-md shadow-md`}
+        className={`bg-white pt-6 pb-2 px-2 md:px-4 md:pr-6 rounded-md shadow-md`}
         data-season-year={section.year}
         data-section-index={index}
         onMouseEnter={() => setShowActions(true)}
@@ -85,7 +85,7 @@ export default function Section({
         )}
       </section>
       <div
-        className={`${!isLast && "border-b-2 mb-4 pb-4 border-lightGray"}`}
+        className={`${!isLast && "border-b-2 mb-6 pb-6 border-lightGray"}`}
       ></div>
     </div>
   );
