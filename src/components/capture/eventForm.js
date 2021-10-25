@@ -17,7 +17,7 @@ export default function EventForm({
         <FormInput
           autoFocus
           name="title"
-          placeholder="Your event name..."
+          placeholder="Event name..."
           handleChange={(e) => {
             handleChange(e);
             const length = e.target.value.replace(/\s/g, "").length;

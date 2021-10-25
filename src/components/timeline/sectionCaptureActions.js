@@ -70,7 +70,7 @@ export default function SectionCaptureActions({
           }
         >
           <Svg name="calendar" css="md:hidden " size={18} />
-          <span className="hidden md:block">Add event</span>
+          <span className="hidden md:block">Add life event</span>
         </Button>
 
         <Button

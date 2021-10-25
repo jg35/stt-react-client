@@ -266,7 +266,7 @@ export const steps = [
     step: 15,
     title: "Timeline",
     body: (data, uiState) =>
-      `The blue events are the ones you created yourself. Brown events are our world events. Events are not included in your book.`,
+      `The blue events are life events you create yourself. Brown events are our world events. Events are not included in your book.`,
     isComplete: (data, uiState) => uiState.tutorial.step > 15,
     async: false,
     placement: "top-start",

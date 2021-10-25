@@ -56,8 +56,14 @@ export default function CaptureModal({
       );
       setFormTitle(question.title);
     } else if (item) {
-      const fragmentType =
-        item.type === "TEXT" ? "memory" : lowerCase(item.type);
+      let fragmentType;
+      if (item.type === "TEXT") {
+        fragmentType = "memory";
+      } else if (item.type === "EVENT") {
+        fragmentType = "life event";
+      } else {
+        fragmentType = lowerCase(item.type);
+      }
       setFormTitle(`${item.id ? "Edit" : "New"} ${fragmentType}`);
     }
   }, [questionData, item]);
