@@ -129,7 +129,7 @@ export default function Timeline() {
                   orphanCount={orphanedFragments.length}
                 />
               </main>
-              <div className="hidden md:block w-16 min-h-full bg-white ml-2 rounded-md">
+              <div className="hidden md:block w-20 min-h-full ml-2 rounded-md px-1">
                 <ScrollNavigator
                   dob={data.stt_user_by_pk.dob}
                   years={values(
