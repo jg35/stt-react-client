@@ -78,76 +78,77 @@ export default function Timeline() {
   return (
     <>
       <Page maxWidth="1920px" paddingBottom={false}>
-        <CaptureHeader init={!loading} />
+        <div className="px-1">
+          <CaptureHeader init={!loading} />
+        </div>
 
-        <div className="pt-2 overflow-hidden pb-2 flex">
+        <div className="pt-4 overflow-hidden pb-2 flex">
           {data && data.stt_user_by_pk.dob && timeline ? (
             <>
-              <Card css="max-h-full max-w-full px-2 md:px-4 py-0 flex flex-1">
-                <main
-                  id="timeline-scroll-container"
-                  ref={timelineScrollContainer}
-                  className="md:mr-2 overflow-y-scroll overflow-x-hidden js-timeline-scroll-container w-full"
-                  onScroll={debounce((e) => {
-                    if (e.target.scrollTop !== uiState.timelineScrollPosition) {
-                      // Find the current scrolled year and store it
-                      const sections = e.target.querySelectorAll("section");
-                      const scrollTop = e.target.scrollTop;
-                      let currentSection;
-                      for (var i = 0; i < sections.length; i++) {
-                        if (
-                          sections[i].offsetTop - sections[i].clientHeight >=
-                            scrollTop ||
-                          i === sections.length - 1
-                        ) {
-                          currentSection = sections[i];
-                          break;
-                        }
+              <main
+                id="timeline-scroll-container"
+                ref={timelineScrollContainer}
+                className="overflow-y-scroll overflow-x-hidden js-timeline-scroll-container w-full"
+                onScroll={debounce((e) => {
+                  if (e.target.scrollTop !== uiState.timelineScrollPosition) {
+                    // Find the current scrolled year and store it
+                    const sections = e.target.querySelectorAll("section");
+                    const scrollTop = e.target.scrollTop;
+                    let currentSection;
+                    for (var i = 0; i < sections.length; i++) {
+                      if (
+                        sections[i].offsetTop - sections[i].clientHeight >=
+                          scrollTop ||
+                        i === sections.length - 1
+                      ) {
+                        currentSection = sections[i];
+                        break;
                       }
-                      updateUiState({
-                        timelineScrollYear:
-                          currentSection &&
-                          currentSection.getAttribute("data-season-year"),
-                        timelineScrollPosition: e.target.scrollTop,
-                      });
                     }
-                  }, 1000)}
-                >
-                  {timeline.map((timelineSection, i) => (
-                    <Section
-                      key={i}
-                      section={timelineSection}
-                      timelinePeriod={timelinePeriod}
-                      userDob={data.stt_user_by_pk.dob}
-                      index={i}
-                      isLast={i === timeline.length - 1}
-                    />
-                  ))}
-                  <TimePeriodSelector
+                    updateUiState({
+                      timelineScrollYear:
+                        currentSection &&
+                        currentSection.getAttribute("data-season-year"),
+                      timelineScrollPosition: e.target.scrollTop,
+                    });
+                  }
+                }, 1000)}
+              >
+                {timeline.map((timelineSection, i) => (
+                  <Section
+                    key={i}
+                    section={timelineSection}
                     timelinePeriod={timelinePeriod}
-                    orphanCount={orphanedFragments.length}
+                    userDob={data.stt_user_by_pk.dob}
+                    index={i}
+                    isLast={i === timeline.length - 1}
                   />
-                </main>
-                <div className="hidden md:block w-12 min-h-full bg-white">
-                  <ScrollNavigator
-                    dob={data.stt_user_by_pk.dob}
-                    years={values(
-                      timeline.reduce((years, season) => {
-                        if (!years[season.year]) {
-                          years[season.year] = {
-                            year: season.year,
-                            fragments: false,
-                          };
-                        }
-                        if (season.fragments.length) {
-                          years[season.year].fragments = true;
-                        }
-                        return years;
-                      }, {})
-                    )}
-                  />
-                </div>
-              </Card>
+                ))}
+                <TimePeriodSelector
+                  timelinePeriod={timelinePeriod}
+                  orphanCount={orphanedFragments.length}
+                />
+              </main>
+              <div className="hidden md:block w-16 min-h-full bg-white ml-2 rounded-md">
+                <ScrollNavigator
+                  dob={data.stt_user_by_pk.dob}
+                  years={values(
+                    timeline.reduce((years, season) => {
+                      if (!years[season.year]) {
+                        years[season.year] = {
+                          year: season.year,
+                          fragments: false,
+                        };
+                      }
+                      if (season.fragments.length) {
+                        years[season.year].fragments = true;
+                      }
+                      return years;
+                    }, {})
+                  )}
+                />
+              </div>
+
               <Preview fragments={fragments} />
             </>
           ) : (

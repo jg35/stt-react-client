@@ -17,69 +17,76 @@ export default function Section({
   const [showActions, setShowActions] = useState(false);
 
   return (
-    <section
-      className={`py-12 md:pr-6 ${!isLast && "border-b-8 border-lightestGray"}`}
-      data-season-year={section.year}
-      data-section-index={index}
-      onMouseEnter={() => setShowActions(true)}
-      onMouseOver={debounce(() => setShowActions(true), 200)}
-      onMouseLeave={debounce(() => setShowActions(false), 200)}
-    >
-      <header className="pb-4" style={{ minHeight: "3rem" }}>
-        <Grid colSpan={["col-span-5", "col-span-7"]} gap="gap-x-2 md:gap-x-4">
-          <div className="flex flex-col md:flex-row md:items-center">
-            <Title size="large" css="flex items-center mb-0">
-              {timelinePeriod !== "YEAR" && (
-                <span className="md:hidden">
-                  {section.title.replace(/\d{4}(.+)?$/, (m1) => {
-                    return m1.slice(-2);
-                  })}
+    <div className={`px-1`}>
+      <section
+        className={`bg-white py-12 px-2 md:px-4 md:pr-6 rounded-md shadow-md`}
+        data-season-year={section.year}
+        data-section-index={index}
+        onMouseEnter={() => setShowActions(true)}
+        onMouseOver={debounce(() => setShowActions(true), 200)}
+        onMouseLeave={debounce(() => setShowActions(false), 200)}
+      >
+        <header className="pb-4" style={{ minHeight: "3rem" }}>
+          <Grid colSpan={["col-span-5", "col-span-7"]} gap="gap-x-2 md:gap-x-4">
+            <div className="flex flex-col md:flex-row md:items-center">
+              <Title size="large" css="flex items-center mb-0">
+                {timelinePeriod !== "YEAR" && (
+                  <span className="md:hidden">
+                    {section.title.replace(/\d{4}(.+)?$/, (m1) => {
+                      return m1.slice(-2);
+                    })}
+                  </span>
+                )}
+                <span
+                  className={`${
+                    timelinePeriod !== "YEAR" && "hidden md:block"
+                  }`}
+                >
+                  {section.title}
                 </span>
-              )}
-              <span
-                className={`${timelinePeriod !== "YEAR" && "hidden md:block"}`}
+              </Title>
+              <Text
+                tag="span"
+                size="compact"
+                css="md:ml-2 text-gray text-base md:text-lg"
               >
-                {section.title}
-              </span>
-            </Title>
-            <Text
-              tag="span"
-              size="compact"
-              css="md:ml-2 text-gray text-base md:text-lg"
+                <span className="hidden md:inline">&middot;&nbsp;</span>
+                {section.age}
+              </Text>
+            </div>
+
+            <SectionCaptureActions
+              show={showActions}
+              startDate={section.startDate}
+              endDate={section.endDate}
+              userDob={userDob}
+              index={index}
+            />
+          </Grid>
+        </header>
+        {(section.userEvents.length > 0 || section.worldEvents.length > 0) && (
+          <>
+            <div
+              className="flex whitespace-nowrap lg:whitespace-wrap overflow-x-scroll lg:flex-wrap mt-2"
+              id="section-events-grid"
             >
-              <span className="hidden md:inline">&middot;&nbsp;</span>
-              {section.age}
-            </Text>
-          </div>
+              {section.userEvents.map((e, i) => {
+                return <UserEvent event={e} key={i} />;
+              })}
 
-          <SectionCaptureActions
-            show={showActions}
-            startDate={section.startDate}
-            endDate={section.endDate}
-            userDob={userDob}
-            index={index}
-          />
-        </Grid>
-      </header>
-      {(section.userEvents.length > 0 || section.worldEvents.length > 0) && (
-        <>
-          <div
-            className="flex whitespace-nowrap lg:whitespace-wrap overflow-x-scroll lg:flex-wrap mt-2"
-            id="section-events-grid"
-          >
-            {section.userEvents.map((e, i) => {
-              return <UserEvent event={e} key={i} />;
-            })}
-
-            {section.worldEvents.map((e, i) => {
-              return <WorldEvent event={e} key={i} />;
-            })}
-          </div>
-        </>
-      )}
-      {section.fragments.length > 0 && (
-        <FragmentList fragments={section.fragments} />
-      )}
-    </section>
+              {section.worldEvents.map((e, i) => {
+                return <WorldEvent event={e} key={i} />;
+              })}
+            </div>
+          </>
+        )}
+        {section.fragments.length > 0 && (
+          <FragmentList fragments={section.fragments} />
+        )}
+      </section>
+      <div
+        className={`${!isLast && "border-b-2 mb-4 pb-4 border-lightGray"}`}
+      ></div>
+    </div>
   );
 }

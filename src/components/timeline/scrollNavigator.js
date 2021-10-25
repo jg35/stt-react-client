@@ -55,7 +55,7 @@ export default function ScrollNavigator({ years, dob }) {
   return (
     <div
       id="scroll-navigator"
-      className="relative flex flex-col justify-between items-center w-full h-full py-3"
+      className="rounded-md shadow-md relative flex flex-col justify-between items-center w-full h-full py-3"
     >
       <TimelineMarker />
       {visibleYears.map((year, index) => {
@@ -84,7 +84,7 @@ export default function ScrollNavigator({ years, dob }) {
         } else {
           return (
             <YearWrap year={year.year} key={index}>
-              <span className={`w-1.5 h-1.5 rounded bg-gray`}></span>
+              <span className={`w-1.5 h-1.5 rounded bg-darkGray`}></span>
             </YearWrap>
           );
         }
