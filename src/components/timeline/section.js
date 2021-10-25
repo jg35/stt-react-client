@@ -19,7 +19,7 @@ export default function Section({
   return (
     <div className={`px-1`}>
       <section
-        className={`bg-white pt-6 pb-2 px-2 md:px-4 md:pr-6 rounded-md shadow-md`}
+        className={`border-l-2 border-offBlack bg-white pt-6 pb-2 px-2 md:px-4 md:pr-6 rounded-r-md shadow-md`}
         data-season-year={section.year}
         data-section-index={index}
         onMouseEnter={() => setShowActions(true)}
