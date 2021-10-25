@@ -90,7 +90,7 @@ export default function Question({
   return (
     <div
       id="question-panel"
-      className="bg-white rounded px-2 pt-2 border-2 shadow pl-3"
+      className="bg-white rounded px-2 pt-2 border-2 pl-3"
     >
       <div className="flex justify-between items-start">
         <Title css="mb-0 w-4/5 ">{currentQuestion.title}</Title>
