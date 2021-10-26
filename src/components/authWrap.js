@@ -42,7 +42,7 @@ export default function AuthWrap({ children }) {
   const isAuthRoute = isLogin || isRegister || isForgot;
 
   useEffect(() => {
-    let onAuthStateChangeListener = onAuthStateChange(syncUser);
+    let onAuthStateChangeListener = onAuthStateChange(syncUser, updateUser);
     return () => {
       onAuthStateChangeListener = undefined;
     };

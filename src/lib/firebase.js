@@ -1,5 +1,6 @@
 import firebase from "firebase";
 import { authStateVar } from "~/lib/apollo";
+import { DateTime } from "luxon";
 
 firebase.initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -35,7 +36,7 @@ export const refreshToken = () => {
   return Promise.reject();
 };
 
-export const onAuthStateChange = (syncUserMutation) => {
+export const onAuthStateChange = (syncUserMutation, updateUserMutation) => {
   const onAuthStateChangeListener = firebase
     .auth()
     .onAuthStateChanged(async (user) => {
@@ -79,6 +80,14 @@ export const onAuthStateChange = (syncUserMutation) => {
             });
         } else {
           authStateVar({ status: "in", token, user: userObj });
+          updateUserMutation({
+            variables: {
+              userId: user.uid,
+              data: {
+                lastOnline: DateTime.utc().toISO(),
+              },
+            },
+          });
         }
       } else {
         authStateVar({ status: "out" });
