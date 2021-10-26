@@ -55,7 +55,7 @@ export default function ScrollNavigator({ years, dob }) {
   return (
     <div
       id="scroll-navigator"
-      className="bg-white rounded-md shadow-md relative flex flex-col justify-between items-center w-full h-full py-3"
+      className="bg-white rounded-md shadow relative flex flex-col justify-between items-center w-full h-full py-3"
     >
       <TimelineMarker />
       {visibleYears.map((year, index) => {
