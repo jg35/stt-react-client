@@ -24,7 +24,7 @@ export default function Question({
 
   useEffect(() => {
     const questionSet = getQuestionSet();
-    if (!questionSet.shuffleOrder.length) {
+    if (questionSet && !questionSet.shuffleOrder.length) {
       // change the category
       questionOptions.forEach((questionSet) => {
         console.log(questionSet);
@@ -51,17 +51,19 @@ export default function Question({
 
   function shuffleQuestion() {
     const questionSet = getQuestionSet();
-    // After hiding questions or tags there may not be any questions left
-    let newShuffleIndex = shuffleIndex + 1;
-    if (newShuffleIndex >= questionSet.shuffleOrder.length) {
-      newShuffleIndex = 0;
+    if (questionSet) {
+      // After hiding questions or tags there may not be any questions left
+      let newShuffleIndex = shuffleIndex + 1;
+      if (newShuffleIndex >= questionSet.shuffleOrder.length) {
+        newShuffleIndex = 0;
+      }
+      setCurrentQuestion(
+        questionSet.questions.find(
+          (q) => q.id === questionSet.shuffleOrder[newShuffleIndex]
+        )
+      );
+      setShuffleIndex(newShuffleIndex);
     }
-    setCurrentQuestion(
-      questionSet.questions.find(
-        (q) => q.id === questionSet.shuffleOrder[newShuffleIndex]
-      )
-    );
-    setShuffleIndex(newShuffleIndex);
   }
 
   function hideQuestionHandler() {
