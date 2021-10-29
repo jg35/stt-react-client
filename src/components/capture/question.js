@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { Button, Title, FormInput, Grid } from "~/components/_styled";
+import { Button, Title, FormInput } from "~/components/_styled";
 import Svg from "~/components/svg";
-import QuestionCategorySelect from "~/components/capture/questionCategorySelect";
 import QuestionMenu from "~/components/capture/questionMenu";
-
+import QuestionSelectButton from "~/components/capture/questionSelectButton";
+import QuestionSelectModal from "~/components/capture/questionSelectModal";
 export default function Question({
   questionOptions,
   hideQuestion,
@@ -11,16 +11,25 @@ export default function Question({
   openQuestionModal,
 }) {
   const [currentQuestion, setCurrentQuestion] = useState(null);
-  const [questionCategory, setQuestionCategory] = useState("First memories");
+  const [questionSetId, setQuestionSetId] = useState(2);
   const [questionAnswer, setQuestionAnswer] = useState("");
+  const [selectModalOpen, setSelectModalOpen] = useState(false);
   const [shuffleIndex, setShuffleIndex] = useState(0);
 
+  function getQuestionSet() {
+    return (
+      questionOptions && questionOptions.find((o) => o.id === questionSetId)
+    );
+  }
+
   useEffect(() => {
-    if (!questionOptions[questionCategory]) {
+    const questionSet = getQuestionSet();
+    if (!questionSet.shuffleOrder.length) {
       // change the category
-      Object.keys(questionOptions).forEach((categoryKey) => {
-        if (questionOptions[categoryKey].questions.length) {
-          setQuestionCategory(categoryKey);
+      questionOptions.forEach((questionSet) => {
+        console.log(questionSet);
+        if (questionSet.shuffleOrder.length) {
+          setQuestionSetId(questionSet.id);
           setShuffleIndex(0);
           setCurrentQuestion(null);
           return;
@@ -32,54 +41,35 @@ export default function Question({
       // No question is set
       !currentQuestion ||
       // There are no questions for the current category
-      !questionOptions[questionCategory] ||
+      !questionSet ||
       // Question was hidden or category was changed
-      !questionOptions[questionCategory].questions.find(
-        (q) => q.id === currentQuestion.id
-      )
+      !questionSet.questions.find((q) => q.id === currentQuestion.id)
     ) {
       shuffleQuestion();
     }
-  }, [currentQuestion, questionOptions, questionCategory]);
+  }, [currentQuestion, questionOptions, questionSetId]);
 
   function shuffleQuestion() {
+    const questionSet = getQuestionSet();
     // After hiding questions or tags there may not be any questions left
     let newShuffleIndex = shuffleIndex + 1;
-    if (newShuffleIndex >= questionOptions[questionCategory].questions.length) {
+    if (newShuffleIndex >= questionSet.shuffleOrder.length) {
       newShuffleIndex = 0;
     }
     setCurrentQuestion(
-      questionOptions[questionCategory].questions.find(
-        (q) =>
-          q.id ===
-          questionOptions[questionCategory].shuffleOrder[newShuffleIndex]
+      questionSet.questions.find(
+        (q) => q.id === questionSet.shuffleOrder[newShuffleIndex]
       )
     );
     setShuffleIndex(newShuffleIndex);
   }
 
   function hideQuestionHandler() {
-    // // Get number of questions
-    // const categoryQuestionCount = questionOptions[
-    //   questionCategory
-    // ].questions.filter((q) => q.id !== currentQuestion.id);
-
-    // // If current category no longer has any questions, reset question category
-    // if (!categoryQuestionCount.length) {
-    //   setQuestionCategory("All");
-    // }
     hideQuestion(currentQuestion.id);
   }
 
   function hideTagHandler() {
     const tag = currentQuestion.tags[0];
-    // const categoryQuestionCount = questionOptions[
-    //   questionCategory
-    // ].questions.filter((q) => q.tags.includes(tag));
-    // // If current category no longer has any questions, reset question category
-    // if (!categoryQuestionCount.length) {
-    //   setQuestionCategory("All");
-    // }
     hideQuestionTag(tag);
   }
 
@@ -90,21 +80,13 @@ export default function Question({
   return (
     <div
       id="question-panel"
-      className="bg-white rounded px-2 pt-2 border-2 pl-3"
+      className="border-2 border-lightBlack rounded pr-1 py-2 pl-3"
     >
-      <div className="flex justify-between items-start">
-        <Title css="mb-0 w-4/5 ">{currentQuestion.title}</Title>
-
-        <div className="flex items-center">
-          {currentQuestion.tags.length && (
-            <span
-              id="question-tag"
-              className="hidden md:block text-darkGray font-medium px-2 py-1 bg-lightestGray rounded-md flex items-center justify-center whitespace-nowrap mr-2"
-            >
-              #{currentQuestion.tags[0].replace(/\s/g, "-")}
-            </span>
-          )}
-
+      <div className="flex items-start">
+        <div className="w-full">
+          <Title css="mb-0 w-11/12">{currentQuestion.title}</Title>
+        </div>
+        <div className="flex items-center justify-end">
           <div id="shuffle-button-wrapper">
             <Button
               variant="minimal"
@@ -114,17 +96,18 @@ export default function Question({
               <Svg name="shuffle" size={20}></Svg>
             </Button>
           </div>
-          <QuestionMenu
-            currentTag={currentQuestion.tags[0]}
-            hideTag={hideTagHandler}
-            hideQuestion={hideQuestionHandler}
-          />
+          {/* <QuestionMenu hideQuestion={hideQuestionHandler} /> */}
         </div>
       </div>
-      <div className="flex justify-between items-center">
+      <div className="flex items-center">
         <FormInput
           id="form-question-text-input"
-          style={{ paddingLeft: 0 }}
+          style={{
+            paddingLeft: 0,
+            backgroundColor: "transparent",
+            paddingBottom: 0,
+          }}
+          variant="question"
           value={questionAnswer}
           handleChange={(e) => {
             setQuestionAnswer(e.target.value);
@@ -135,16 +118,23 @@ export default function Question({
               }, 500);
             }
           }}
-          css="bg-white w-3/4 p-0 truncate js-question-text-input"
-          placeholder="Start writing here..."
+          css="bg-white p-0 truncate js-question-text-input"
+          placeholder="Start answering here..."
         />
-        <QuestionCategorySelect
-          currentCategory={questionOptions[questionCategory]}
-          categoryOptions={questionOptions}
-          selectCategory={(category) => {
-            setQuestionCategory(category);
-            setShuffleIndex(0);
+        <QuestionSelectButton
+          questionSet={getQuestionSet()}
+          toggle={() => setSelectModalOpen(!selectModalOpen)}
+        />
+        <QuestionSelectModal
+          close={() => setSelectModalOpen(false)}
+          isOpen={selectModalOpen}
+          questionSet={getQuestionSet()}
+          questionOptions={questionOptions}
+          selectQuestionSet={(id) => {
+            setQuestionSetId(id);
           }}
+          // TODO toggle instead of hide
+          hideQuestion={hideQuestion}
         />
       </div>
     </div>

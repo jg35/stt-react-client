@@ -52,7 +52,6 @@ export default function NotificationMenu({ notifications }) {
     setNotificationCount(filteredNotifications.length);
     setNotificationSections(
       filteredNotifications.reduce((sections, notification) => {
-        console.log(notification);
         if (!sections[notification.type]) {
           sections[notification.type] = [notification];
         } else {

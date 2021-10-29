@@ -62,12 +62,12 @@
   }
   .input {
     /* max-width: 40rem; */
-    @apply outline-none bg-offWhite py-2 px-3 rounded w-full text-lg border-2 border-transparent transition duration-200 ease-in;
+    @apply outline-none bg-white border-b border-lightGray focus:border-gray focus:bg-offWhite py-2 px-3 w-full text-lg transition duration-200 ease-in;
   }
 
   .input--compact {
     max-width: 40rem;
-    @apply outline-none bg-offWhite py-1.5 px-2 text-base rounded w-full border border-transparent transition duration-200 ease-in;
+    @apply outline-none bg-white border-b border-lightGray focus:border-gray focus:bg-offWhite py-1.5 px-2 text-base w-full transition duration-200 ease-in;
   }
 
   .select option:disabled {

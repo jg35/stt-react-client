@@ -99,6 +99,10 @@ module.exports = {
       gridTemplateColumns: {
         14: "repeat(14, minmax(0, 1fr))",
       },
+      grayscale: {
+        70: "60%",
+        40: "40%",
+      },
     },
     colors: {
       offBlack: "#1e1e1e",
@@ -128,7 +132,9 @@ module.exports = {
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      grayscale: ["hover", "focus"],
+    },
   },
   plugins: [],
 };

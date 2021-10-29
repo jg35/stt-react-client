@@ -54,7 +54,7 @@ export default function CaptureHeaderActions({}) {
       )}
       <CaptureHeaderActionButton
         icon="calendar"
-        type="Life Event"
+        type="Event"
         action={() =>
           updateUiState(
             makeCreateUserEventForm({}, { revealAfterCreate: true }),

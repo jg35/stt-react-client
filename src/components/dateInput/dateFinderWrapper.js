@@ -41,7 +41,7 @@ export default function DateFinderWrapper({
       const popperEl = wrapperRef.current;
       let referenceEl = inputRef.current;
       const IS_MOBILE = window.innerWidth < 768;
-      console.log(IS_MOBILE);
+
       if (IS_MOBILE) {
         referenceEl = {
           getBoundingClientRect: () => {

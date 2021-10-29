@@ -11,15 +11,6 @@
   "components.publish.createBookForm.shareSettings": "Finally, decide how you would like to share your book",
   "components.publish.onlineToggle.offline.description": "While your book is offline readers will no longer have access to your book",
   "components.publish.publishOptionsForm.details": "Lets start with a few bits of information to help eReaders and other devices understand your book",
-  "components.smartDate.tooltip.QUESTION_SPECIFIC_DATE": "The question is about an event that happened on this date",
-  "components.smartDate.tooltip.QUESTION_SPECIFIC_AGE_DATE": "The question is about an event that happened on this date",
-  "components.smartDate.tooltip.QUESTION_RANGE_DATE": "This is the median date in a question about a specific period of time",
-  "components.smartDate.tooltip.QUESTION_SPECIFIC_AGE_RANGE_DATE": "This is the median date in a question about a specific period of time",
-  "components.smartDate.tooltip.FRAGMENT_RANGE_DATE": "This is the median date in a specific period of time",
-
-  "components.smartDate.tooltip.FRAGMENT_SPECIFIC_DATE": "The question is about an event that happened on this date",
-  "components.smartDate.tooltip.FRAGMENT_AGE_RANGE_DATE": "This is the median date in a question about a specific period of time",
-  "components.smartDate.tooltip.FRAGMENT_SPECIFIC_AGE_DATE": "The question is about an event that happened on this date",
 
   "components.settings.manageAccount.delete.continue": "If you want to delete your account, click below.",
   "components.settings.manageAccount.delete.description": " If you would like to keep your book online and preserve your data consider cancelling your subscription instead. Published books will stay online regardless of your subscription status.",

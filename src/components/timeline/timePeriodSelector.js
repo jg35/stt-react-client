@@ -34,16 +34,16 @@ export default function TimePeriodSelector({ timelinePeriod, orphanCount }) {
   return (
     <div
       id="time-period-selector"
-      className="bg-white z-40 fixed left-0 md:left-4 bottom-0 w-full md:w-max md:bottom-4 flex items-center shadow-lg py-2 pl-4 pr-1 md:rounded md:border-0 border-t border-lightGray"
+      className="bg-white fixed left-0 md:left-3 bottom-0 w-full md:w-max md:bottom-4 flex items-center shadow-lg py-2 pl-4 pr-1 md:rounded md:border-0 border-t border-lightGray"
     >
-      <Text tag="span" size="compact" css="font-medium mr-2 flex">
+      <Text tag="span" size="compact" css="mr-2 flex">
         View <span className="hidden md:block">&nbsp;timeline&nbsp;</span> in
       </Text>
       <ButtonGroup>
         <Button
           size="compact"
           onClick={() => selectTimePeriod("YEAR")}
-          css={`rounded-full ${timelinePeriod === "YEAR" && "underline"}
+          css={`rounded-xl ${timelinePeriod === "YEAR" && "font-medium"}
           `}
         >
           Years
@@ -51,14 +51,14 @@ export default function TimePeriodSelector({ timelinePeriod, orphanCount }) {
         <Button
           size="compact"
           onClick={() => selectTimePeriod("SEASON")}
-          css={`rounded-full ${timelinePeriod === "SEASON" && "underline"}`}
+          css={`rounded-xl ${timelinePeriod === "SEASON" && "font-medium"}`}
         >
           Seasons
         </Button>
         <Button
           size="compact"
           onClick={() => selectTimePeriod("MONTH")}
-          css={`rounded-full ${timelinePeriod === "MONTH" && "underline"}`}
+          css={`rounded-xl ${timelinePeriod === "MONTH" && "font-medium"}`}
         >
           Months
         </Button>

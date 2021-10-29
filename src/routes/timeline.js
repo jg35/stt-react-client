@@ -1,11 +1,10 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
-import { debounce, values, cloneDeep } from "lodash";
+import { debounce, cloneDeep } from "lodash";
 import { useCustomQuery } from "~/hooks/useCustomApollo";
 
 import { FETCH_TIMELINE_VIEW } from "~/lib/gql";
 
 import Page from "~/components/page";
-import { Grid, Card } from "~/components/_styled";
 
 import CaptureModal from "~/components/capture/captureModal";
 import CaptureHeader from "~/components/capture/captureHeader";
@@ -22,7 +21,6 @@ import {
 import TimePeriodSelector from "~/components/timeline/timePeriodSelector";
 
 import TimelineSkeleton from "~/components/timeline/timelineSkeleton";
-import OrphanedFragments from "~/components/timeline/orphanedFragments";
 import { UIContext } from "~/app";
 
 import {
@@ -78,17 +76,16 @@ export default function Timeline() {
   return (
     <>
       <Page maxWidth="1920px" paddingBottom={false}>
-        <div className="px-1">
-          <CaptureHeader init={!loading} />
-        </div>
+        <CaptureHeader init={!loading} />
 
-        <div className="pt-4 overflow-hidden pb-2 flex">
-          {data && data.stt_user_by_pk.dob && timeline ? (
+        <div className="overflow-hidden py-4 px-2 flex bg-offWhite shadow-inner">
+          {!timeline && <TimelineSkeleton />}
+          {data && data.stt_user_by_pk.dob && timeline && (
             <>
               <main
                 id="timeline-scroll-container"
                 ref={timelineScrollContainer}
-                className="overflow-y-scroll overflow-x-hidden js-timeline-scroll-container w-full"
+                className="overflow-y-scroll overflow-x-hidden js-timeline-scroll-container flex-1 pb-1"
                 onScroll={debounce((e) => {
                   if (e.target.scrollTop !== uiState.timelineScrollPosition) {
                     // Find the current scrolled year and store it
@@ -129,30 +126,20 @@ export default function Timeline() {
                   orphanCount={orphanedFragments.length}
                 />
               </main>
-              <div className="hidden md:block w-20 min-h-full ml-2 rounded-md px-1">
-                <ScrollNavigator
-                  dob={data.stt_user_by_pk.dob}
-                  years={values(
-                    timeline.reduce((years, season) => {
-                      if (!years[season.year]) {
-                        years[season.year] = {
-                          year: season.year,
-                          fragments: false,
-                        };
-                      }
-                      if (season.fragments.length) {
-                        years[season.year].fragments = true;
-                      }
-                      return years;
-                    }, {})
-                  )}
-                />
-              </div>
+
+              {!uiState.showPreview && (
+                <div
+                  className="hidden md:block min-h-full ml-1 px-1"
+                  style={{
+                    minWidth: "80px",
+                  }}
+                >
+                  <ScrollNavigator dob={data.stt_user_by_pk.dob} />
+                </div>
+              )}
 
               <Preview fragments={fragments} />
             </>
-          ) : (
-            <TimelineSkeleton />
           )}
         </div>
       </Page>

@@ -191,102 +191,49 @@ export const getHTMLTranslation = (key, params = []) => {
 };
 
 export const getSmartDate = (
-  { startAge, endAge, startDate, endDate },
-  userDob,
-  isQuestion = false
+  { suggestedAge, ageExact, startDate, endDate },
+  userDob
 ) => {
   let date = "";
-  let smartDateReason = {
-    confidence: 10,
-    date: "",
-    reason: "",
-    startDate: null,
-    endDate: null,
-    ageOnDate: null,
-  };
-  // TODO if a question is in all category (no start age || end age, date is 100%)
-  // TODO if something is in last senior age cateogry (start age with no max age) date is again 100% accurate
+  let exact = false;
+  let detailLevel = 0;
 
-  function getConfidence(startDate, endDate) {
-    const smartDateConfidence = [
-      // Offset the index
-      0,
-      // 1 week
-      1,
-      // 2 weeks
-      2,
-      // 4 weeks
-      4,
-      // 10 weeks
-      10,
-      // 1 year
-      52,
-      // 2 years
-      104,
-      // 3 years
-      156,
-      // 4 years
-      208,
-    ];
-
-    const diffWeeks = getDateDiff(startDate, endDate, "weeks");
-
-    const confidenceIndex = smartDateConfidence.findIndex(
-      (endWeek) => diffWeeks <= endWeek
-    );
-    const accuracyFactor =
-      1 - (confidenceIndex !== -1 ? confidenceIndex / 10 : 1);
-    return Math.floor(100 * accuracyFactor);
-  }
-
-  if (endAge === null && startDate === null) {
-    smartDateReason.confidence = 0;
-  } else if (startDate && !endDate) {
-    smartDateReason.startDate = startDate;
-    date = startDate;
-    smartDateReason.confidence = 100;
-    smartDateReason.reason = isQuestion
-      ? "QUESTION_SPECIFIC_DATE"
-      : "FRAGMENT_SPECIFIC_DATE";
-  } else if (startDate && endDate) {
-    smartDateReason.startDate = startDate;
-    smartDateReason.endDate = endDate;
-    date = getMedianDate(startDate, endDate);
-    smartDateReason.confidence = getConfidence(startDate, endDate);
-    smartDateReason.reason = isQuestion
-      ? "QUESTION_RANGE_DATE"
-      : "FRAGMENT_RANGE_DATE";
-  } else if (!isNaN(startAge) && (isNaN(endAge) || endAge === -1)) {
-    date = getDateOnAge(userDob, startAge);
-    smartDateReason.startDate = date;
-    smartDateReason.reason = isQuestion
-      ? "QUESTION_SPECIFIC_AGE_DATE"
-      : "FRAGMENT_SPECIFIC_AGE_DATE";
-    smartDateReason.confidence = 100;
-  } else if (!isNaN(startAge) && !isNaN(endAge)) {
-    const startDate = getDateOnAge(userDob, startAge);
-    const endDate = getDateOnAge(userDob, endAge);
-    smartDateReason.startDate = startDate;
-    smartDateReason.endDate = endDate;
-    date = getDateOnAge(
-      userDob,
-      startAge + Math.floor((endAge - startAge) / 2)
-    );
-    smartDateReason.reason = isQuestion
-      ? "QUESTION_SPECIFIC_AGE_RANGE_DATE"
-      : "FRAGMENT_SPECIFIC_AGE_RANGE_DATE";
-    smartDateReason.confidence = getConfidence(startDate, endDate);
-  }
-
-  if (date) {
-    smartDateReason.date = date;
-    smartDateReason.ageOnDate = getAgeFromDate(userDob, smartDateReason.date);
+  if (startDate) {
+    if (startDate && endDate) {
+      date = getMedianDate(startDate, endDate);
+      const dayDiff = getDateDiff(startDate, endDate, "days");
+      if (dayDiff <= 31) {
+        // Show days
+        detailLevel = 3;
+      } else if (dayDiff <= 365) {
+        // Show months
+        detailLevel = 2;
+      } else {
+        // Show years
+        detailLevel = 1;
+      }
+    } else {
+      date = startDate;
+      exact = true;
+      detailLevel = 3;
+    }
+  } else if (suggestedAge) {
+    date = getDateOnAge(userDob, suggestedAge);
+    detailLevel = 1;
+    if (ageExact) {
+      exact = true;
+      detailLevel = 3;
+    }
   }
 
   return {
     date,
-    isSmartDate: date !== "",
-    smartDateReason,
+    smartDate: {
+      date,
+      detailLevel,
+      exact,
+      isSmartDate: date !== "",
+    },
   };
 };
 

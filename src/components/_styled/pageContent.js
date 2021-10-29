@@ -5,10 +5,10 @@ export default function PageContent({
 }) {
   return (
     <main
-      className={`animate-fade-in flex-1 flex flex-col pt-2 ${
+      className={`animate-fade-in flex-1 flex flex-col ${
         paddingBottom && "pb-2"
       } h-full max-h-full ${
-        scrollable ? "overflow-scroll px-4" : "overflow-hidden px-2"
+        scrollable ? "overflow-scroll" : "overflow-hidden"
       }`}
     >
       {content}

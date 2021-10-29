@@ -48,15 +48,12 @@ export const EventSchema = (dobIso) =>
         (value) => value <= DateTime.utc().toISODate()
       ),
     type: Yup.string().default("EVENT"),
-    isSmartDate: Yup.boolean().default(false),
-    smartDateReason: Yup.object()
+    smartDate: Yup.object()
       .shape({
-        ageOnDate: Yup.number().nullable(),
-        confidence: Yup.number().nullable(),
         date: Yup.string().nullable(),
-        startDate: Yup.string().nullable(),
-        endDate: Yup.string().nullable(),
-        reason: Yup.string().nullable(),
+        isSmartDate: Yup.boolean().default(false),
+        detailLevel: Yup.number().nullable(),
+        exact: Yup.boolean().default(false),
       })
       .nullable(),
   });
@@ -88,15 +85,12 @@ export const FragmentSchema = (dobIso) =>
         "Date cannot be in the future",
         (value) => value <= DateTime.utc().toISODate()
       ),
-    isSmartDate: Yup.boolean().default(false),
-    smartDateReason: Yup.object()
+    smartDate: Yup.object()
       .shape({
-        ageOnDate: Yup.number().nullable(),
-        confidence: Yup.number().nullable(),
         date: Yup.string().nullable(),
-        startDate: Yup.string().nullable(),
-        endDate: Yup.string().nullable(),
-        reason: Yup.string().nullable(),
+        isSmartDate: Yup.boolean().default(false),
+        detailLevel: Yup.number().nullable(),
+        exact: Yup.boolean().default(false),
       })
       .nullable(),
     mediaCaption: Yup.string().default(null).nullable(),
@@ -194,7 +188,6 @@ export const UserSettingsSchema = Yup.object()
       .ensure()
       .required("Set your date of birth")
       .test("is-valid", "Date is not valid", function (value) {
-        console.log(value);
         return DateTime.fromFormat(value, "yyyy-MM-dd").isValid;
       })
       .test(
@@ -210,7 +203,6 @@ export const UserSettingsSchema = Yup.object()
     location: Yup.string().ensure().required("Set your location"),
     hiddenQuestions: Yup.object().shape({
       ids: Yup.array().of(Yup.number()),
-      tags: Yup.array().of(Yup.string()),
     }),
   })
   .noUnknown();

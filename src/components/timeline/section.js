@@ -17,9 +17,9 @@ export default function Section({
   const [showActions, setShowActions] = useState(false);
 
   return (
-    <div className={`px-1`}>
+    <div className={`px-1 ${!isLast && "mb-4"}`}>
       <section
-        className={`bg-white pt-6 pb-2 px-2 md:px-4 md:pr-6 rounded-md shadow`}
+        className={`bg-white shadow pt-4 md:pt-6 pb-2 px-4 md:pr-6 rounded-r`}
         data-season-year={section.year}
         data-section-index={index}
         onMouseEnter={() => setShowActions(true)}
@@ -27,9 +27,12 @@ export default function Section({
         onMouseLeave={debounce(() => setShowActions(false), 200)}
       >
         <header className="pb-4" style={{ minHeight: "3rem" }}>
-          <Grid colSpan={["col-span-5", "col-span-7"]} gap="gap-x-2 md:gap-x-4">
+          <Grid
+            colSpan={["col-span-5 flex items-center", "col-span-7"]}
+            gap="gap-x-2 md:gap-x-4"
+          >
             <div className="flex flex-col md:flex-row md:items-center">
-              <Title size="large" css="flex items-center mb-0">
+              <Title size="default" css="flex items-center mb-0">
                 {timelinePeriod !== "YEAR" && (
                   <span className="md:hidden">
                     {section.title.replace(/\d{4}(.+)?$/, (m1) => {
@@ -67,7 +70,7 @@ export default function Section({
         {(section.userEvents.length > 0 || section.worldEvents.length > 0) && (
           <>
             <div
-              className="flex whitespace-nowrap lg:whitespace-wrap overflow-x-scroll lg:flex-wrap mt-2"
+              className="flex whitespace-nowrap lg:whitespace-wrap overflow-x-scroll lg:flex-wrap"
               id="section-events-grid"
             >
               {section.userEvents.map((e, i) => {
@@ -84,9 +87,6 @@ export default function Section({
           <FragmentList fragments={section.fragments} />
         )}
       </section>
-      <div
-        className={`${!isLast && "border-b-2 mb-6 pb-6 border-lightGray"}`}
-      ></div>
     </div>
   );
 }

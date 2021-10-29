@@ -40,9 +40,9 @@ export default function TextEditor({
           e.target.value = val;
         }}
         placeholder="Write down your memory"
-        className={`focus:outline-none bg-lightestGray resize-none p-4 text-lg ${
-          error && "input-error"
-        } w-full ${height} rounded`}
+        className={`focus:outline-none bg-white border-lightGray transition duration-200 ease-in resize-none py-3 px-4 text-lg ${
+          error ? "input-error border" : "focus:bg-offWhite"
+        } w-full ${height}`}
         onBlur={handleBlur}
         onChange={handleChange}
         value={value}

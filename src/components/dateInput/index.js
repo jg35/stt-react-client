@@ -150,7 +150,7 @@ export default function DateInput({
   return (
     <FormField label={label} error={error} caption={getCaption()} css="w-full">
       <div
-        className={`relative flex flex-wrap md:flex-nowrap w-full border-2 rounded-md ${
+        className={`relative flex flex-wrap md:flex-nowrap w-full border rounded-b md:rounded-r md:rounded-l-none ${
           error ? "border-red" : "border-transparent"
         }`}
       >
@@ -159,21 +159,32 @@ export default function DateInput({
             autoComplete="off"
             id="dateFinderInput"
             onChange={(e) => setInputValue(e.target.value)}
-            className="input rounded-r-none"
+            className="input"
             value={inputValue}
             type="text"
             placeholder={placeholder}
           />
           {smartDate && smartDate.isSmartDate && (
             <span
-              className="absolute right-2 top-2.5 border-green border-2 p-1 uppercase font-bold text-xs text-green rounded cursor-help"
+              className={`absolute right-2 top-2.5 p-1 uppercase font-bold text-xs rounded cursor-help ${
+                smartDate.exact
+                  ? "border-green text-green"
+                  : "border-lightBlack text-lightBlack"
+              }`}
               title={
-                smartDate.smartDateReason.confidence === 100
-                  ? "We set this date automatically because the question relates to a specific day of your life."
-                  : "We set this date automatically from the time period or question. It might not be accurate."
+                smartDate.exact
+                  ? "We set this date automatically because the question relates to a specific day in your life."
+                  : "We've suggested this date from the time period you selected, question dates or your approximate age at the time."
               }
             >
-              Auto
+              {smartDate.exact ? (
+                <span className="flex block">
+                  Auto&nbsp;
+                  <Svg name="check" color="green" size="10" />
+                </span>
+              ) : (
+                "Suggested"
+              )}
             </span>
           )}
         </div>
@@ -185,7 +196,7 @@ export default function DateInput({
                 variant="cta"
                 size="compact"
                 title="Find a date"
-                css=" h-full w-full md:w-40 rounded-b rounded-t-none md:rounded-l-none md:rounded-r bg-lightBlack"
+                css=" h-full w-full md:w-40 rounded-b rounded-t-none md:rounded-l-none md:rounded-r bg-offBlack"
                 onClick={() => setDateFinderOpen(!dateFinderOpen)}
               >
                 <span className="font-medium inline-block">Find a date</span>
@@ -194,6 +205,9 @@ export default function DateInput({
               </Button>
             </div>
             <DateFinder
+              smartDateDetailLevel={
+                smartDate && smartDate.isSmartDate && smartDate.detailLevel
+              }
               insideModal={insideModal}
               inputRef={inputRef}
               value={dateFinderValue}

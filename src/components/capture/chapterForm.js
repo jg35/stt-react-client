@@ -28,12 +28,12 @@ export default function ChapterForm({
       )}
       <DatePicker
         label="Date"
-        smartDate={pick(values, ["smartDateReason", "isSmartDate"])}
+        smartDate={values.smartDate}
         date={values.date}
         error={errors.date}
         handleChange={(newDate) => {
           setFieldValue("date", newDate);
-          setFieldValue("isSmartDate", false);
+          setFieldValue("smartDate.isSmartDate", false);
         }}
       />
     </>

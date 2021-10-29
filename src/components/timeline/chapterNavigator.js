@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Svg from "~/components/svg";
 import { scrollToFragment, scrollToEditFragment } from "~/lib/timeline";
 
-export default function ScrollNavigator({ fragments, editView = false }) {
+function ScrollNavigator({ fragments, editView = false }) {
   const [hoverChapter, setHoverChapter] = useState(null);
   const [chapters, setChapters] = useState([]);
   const [totalLength, setTotalLength] = useState(0);
@@ -44,7 +44,11 @@ export default function ScrollNavigator({ fragments, editView = false }) {
         className="flex-1 flex items-center justify-center"
         onClick={() => setHoverChapter(chapterId)}
         onMouseEnter={() => setHoverChapter(chapterId)}
-        onMouseLeave={() => setHoverChapter(null)}
+        onMouseLeave={() => {
+          if (hoverChapter === chapterId) {
+            setHoverChapter(null);
+          }
+        }}
       >
         {children}
       </div>
@@ -107,3 +111,5 @@ export default function ScrollNavigator({ fragments, editView = false }) {
     </div>
   );
 }
+
+export default React.memo(ScrollNavigator);

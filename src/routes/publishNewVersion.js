@@ -14,7 +14,7 @@ import {
   ACTION_PUBLISH_VERSION,
 } from "~/lib/gql";
 import Page from "~/components/page";
-import { Card } from "~/components/_styled";
+import { Card, Empty } from "~/components/_styled";
 import PublishNewSkeleton from "~/components/publish/publishNewSkeleton";
 import PublishStepper from "~/components/publish/publishStepper";
 import CoverEditorForm from "~/components/publish/coverEditorForm";
@@ -32,9 +32,11 @@ export default function PublishNewVersion() {
   } = useContext(AuthContext);
 
   const [publishStep, setPublishStep] = useState(1);
+  const [empty, setEmpty] = useState(false);
   const [currentVersion, setCurrentVersion] = useState(null);
   const [updateVersion] = useMutation(UPDATE_VERSION);
   const [publishVersion] = useMutation(ACTION_PUBLISH_VERSION);
+
   const { data } = useCustomQuery(FETCH_CREATE_BOOK_VIEW, {
     userId: true,
     fetchPolicy: "network-only",
@@ -42,6 +44,10 @@ export default function PublishNewVersion() {
 
   useEffect(() => {
     if (data && data.stt_version && dbUser) {
+      if (!data.stt_fragment.length) {
+        setEmpty(true);
+        return;
+      }
       const version = VersionSchema(publishStep, token).cast({
         ...cloneDeep(data.stt_version[0]),
         publicHandle: (dbUser && dbUser.publicHandle) || "",
@@ -152,6 +158,19 @@ export default function PublishNewVersion() {
           />
         );
     }
+  }
+
+  if (empty) {
+    return (
+      <Page>
+        <Card css="border-4 border-white p-0 flex flex-col h-full rounded-lg overflow-scroll">
+          <Empty
+            title="Nothing to publish yet..."
+            info="Add content to your timeline before publishing your book"
+          />
+        </Card>
+      </Page>
+    );
   }
 
   if (currentVersion) {

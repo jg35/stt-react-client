@@ -31,8 +31,16 @@ export const FETCH_TIMELINE_VIEW = gql`
     stt_user_by_pk(id: $userId) {
       ...userFragment
     }
-    stt_question {
-      ...questionFragment
+    stt_questionSet(where: { category: { _is_null: false } }) {
+      id
+      title
+      description
+      category
+      order
+      imageUrl
+      questions {
+        ...questionFragment
+      }
     }
     stt_version(
       where: { userId: { _eq: $userId }, _and: { generated: { _eq: false } } }
@@ -78,7 +86,11 @@ export const FETCH_PUBLISH_VIEW = gql`
 
 export const FETCH_CREATE_BOOK_VIEW = gql`
   ${versionFragment}
+  ${fragmentFragment}
   query FetchCreateBookView($userId: String!) {
+    stt_fragment(where: { userId: { _eq: $userId } }) {
+      ...fragmentFragment
+    }
     stt_version(
       where: { generated: { _eq: false }, userId: { _eq: $userId } }
       order_by: { id: desc }

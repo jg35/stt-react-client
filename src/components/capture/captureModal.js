@@ -51,16 +51,22 @@ export default function CaptureModal({
       setIsOpen(true);
     }
     if (item && item.type === "TEXT" && item.questionId && questionData) {
-      const question = questionData.stt_question.find(
-        (q) => q.id === item.questionId
-      );
-      setFormTitle(question.title);
+      const question = questionData.stt_questionSet.reduce((q, questionSet) => {
+        if (q) {
+          return q;
+        }
+        const match = questionSet.questions.find(
+          (qsQ) => qsQ.id === item.questionId
+        );
+        return match || null;
+      }, null);
+      setFormTitle(question?.title);
     } else if (item) {
       let fragmentType;
       if (item.type === "TEXT") {
         fragmentType = "memory";
       } else if (item.type === "EVENT") {
-        fragmentType = "life event";
+        fragmentType = "event";
       } else {
         fragmentType = lowerCase(item.type);
       }
@@ -168,8 +174,7 @@ export default function CaptureModal({
           data: {
             title: form.title,
             date: form.date,
-            smartDateReason: form.smartDateReason,
-            isSmartDate: form.isSmartDate,
+            smartDate: form.smartDate,
           },
         },
         update(cache, { data }) {

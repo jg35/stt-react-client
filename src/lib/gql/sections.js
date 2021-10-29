@@ -14,8 +14,16 @@ export const SECTION_FETCH_CAPTURE_HEADER = gql`
   ${questionFragment}
   ${userFragment}
   query SectionFetchCaptureHeader($userId: String!) {
-    stt_question {
-      ...questionFragment
+    stt_questionSet(where: { category: { _is_null: false } }) {
+      id
+      title
+      description
+      category
+      order
+      imageUrl
+      questions {
+        ...questionFragment
+      }
     }
     stt_fragment(where: { userId: { _eq: $userId } }) {
       ...fragmentFragment

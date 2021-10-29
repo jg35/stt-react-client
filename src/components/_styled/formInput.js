@@ -17,12 +17,13 @@ export default function FormInput({
   handleKeyUp = null,
   autoComplete = "off",
 }) {
-  const baseCss = `outline-none bg-offWhite border-transparent border-2 rounded w-full transition duration-200 ease-in ${
-    error && "border-red"
-  }`;
+  const baseCss = `outline-none w-full transition duration-200 ease-in`;
 
   const variants = {
-    default: "",
+    default: error
+      ? "border-red border"
+      : "border-b border-lightGray focus:border-gray focus:bg-offWhite",
+    question: "",
   };
 
   const sizes = {

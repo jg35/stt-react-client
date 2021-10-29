@@ -1,11 +1,9 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useLazyQuery, useMutation } from "@apollo/client";
-import { uniq, shuffle, isEmpty } from "lodash";
+import { uniq, shuffle, cloneDeep } from "lodash";
 import { SECTION_FETCH_CAPTURE_HEADER, UPDATE_USER } from "~/lib/gql";
 import { Card, Grid } from "~/components/_styled";
 import { getAge, getAgeFromDate, getSmartDate } from "~/lib/util";
-import { AGE_RANGES } from "~/lib/constants";
-
 import CaptureHeaderSkeleton from "~/components/capture/captureHeaderSkeleton";
 import { AuthContext } from "~/components/authWrap";
 import { UIContext } from "~/app";
@@ -27,118 +25,57 @@ export default function CaptureHeader({ init }) {
   const [updateUser] = useMutation(UPDATE_USER);
   const [questionOptions, setQuestionOptions] = useState(null);
 
-  function calcQuestionStartAge({ startAge, startDate, endDate, title }) {
-    // We get the age of user on a given set of dates to get
-    // the question into the right category
-    if (startDate || endDate) {
-      const ageOnDate = getAgeFromDate(
-        data.stt_user_by_pk.dob,
-        startDate,
-        endDate
-      );
-      // If user was not born when event happened, set startAge so it is hidden
-      return ageOnDate >= 0 ? ageOnDate : 9999;
-    }
-    return startAge;
-  }
-
   useEffect(() => {
     if (init && !data) {
       getCaptureHeader();
     }
   }, [init]);
 
-  // What did you most like about school (min: 4, max: 17)
-  // Should be in childhood / teenage years
-  function isWithinCategory(startAge, endAge, catStartAge, catEndAge) {
-    // Nothing specific so goes into "All" category
-    if (startAge === 0 && endAge === null) {
-      return false;
-    }
-
-    // Date specific ages
-    if (startAge && endAge === -1) {
-      return startAge >= catStartAge && startAge <= catEndAge;
-    }
-
-    if (!endAge && catEndAge) {
-      return startAge >= catStartAge && startAge <= catEndAge;
-    } else if (!endAge && !catEndAge) {
-      return startAge >= catStartAge;
-    }
-
-    const INTERSECTS = startAge <= catStartAge && endAge >= catEndAge;
-    const MATCH = startAge >= catStartAge && endAge <= catEndAge;
-
-    return INTERSECTS || MATCH;
-  }
-
   useEffect(() => {
     if (data) {
       const userAge = getAge(data.stt_user_by_pk.dob);
       const questionsAnswered = uniq(
-        data.stt_fragment.filter((f) => !!f.questionId).map((f) => f.questionId)
+        data.stt_fragment.filter((f) => f.questionId).map((f) => f.questionId)
       );
-      const questions = data.stt_question
-        .map((q) => ({ ...q, startAge: calcQuestionStartAge(q) }))
-        .filter(
-          (q) =>
-            !data.stt_user_by_pk.hiddenQuestions.ids.includes(q.id) &&
-            !data.stt_user_by_pk.hiddenQuestions.tags.includes(q.tags[0]) &&
-            userAge >= q.startAge &&
-            !questionsAnswered.includes(q.id)
-        );
-
-      const matchedQuestionIds = [];
-      const categoryQuestions = AGE_RANGES.reduce((categories, category, i) => {
-        const categoryQuestions = questions.filter((q) => {
-          const IS_IN_CATEGORY_BOUNDS = isWithinCategory(
-            q.startAge,
-            q.endAge,
-            category.startAge,
-            category.endAge
-          );
-
-          if (IS_IN_CATEGORY_BOUNDS) {
-            matchedQuestionIds.push(q.id);
-          }
-
-          return IS_IN_CATEGORY_BOUNDS;
-        });
-        const renderCategory = {
-          name: category.name,
-          count: categoryQuestions.length,
-          questions: categoryQuestions,
-          shuffleOrder: shuffle(categoryQuestions.map((q) => q.id)),
-        };
-        if (renderCategory.questions.length) {
-          categories[category.name] = renderCategory;
-        }
-        return categories;
-      }, {});
-
-      const questionsWithoutCategory = questions.filter(
-        (q) => !matchedQuestionIds.includes(q.id)
+      setQuestionOptions(
+        cloneDeep(data.stt_questionSet).map((questionSet) => {
+          const questions = questionSet.questions
+            // Filter questions that did not happen in lifetime
+            .filter((q) => {
+              if (q.ageExact) {
+                return userAge >= q.suggestedAge;
+              } else if (q.startDate) {
+                const livingOnStartDate =
+                  getAgeFromDate(data.stt_user_by_pk.dob, q.startDate) >= 0;
+                const livingOnEndDate =
+                  q.endDate &&
+                  getAgeFromDate(data.stt_user_by_pk.dob, q.endDate) >= 0;
+                return livingOnStartDate || livingOnEndDate;
+              }
+              return true;
+            })
+            // Mark questions that have been answered
+            .map((q) => {
+              q.answered = questionsAnswered.includes(q.id);
+              q.hidden = data.stt_user_by_pk.hiddenQuestions.ids.includes(q.id);
+              return q;
+            });
+          return {
+            ...questionSet,
+            count: questions.length,
+            shuffleOrder: shuffle(
+              questions.filter((q) => !q.answered && !q.hidden).map((q) => q.id)
+            ),
+            questions,
+          };
+        })
       );
-
-      if (questionsWithoutCategory.length) {
-        categoryQuestions["Everything else"] = {
-          name: "Everything else",
-          count: questionsWithoutCategory.length,
-          questions: [...questionsWithoutCategory],
-          shuffleOrder: shuffle(questionsWithoutCategory.map((q) => q.id)),
-        };
-      }
-
-      if (!isEmpty(categoryQuestions)) {
-        setQuestionOptions(categoryQuestions);
-      }
     }
   }, [data]);
 
   if (questionOptions) {
     return (
-      <Card css="p-2 md:p-4">
+      <div className="px-3 py-3 bg-white">
         <Grid
           gap="gap-y-2 md:gap-4"
           colSpan={[
@@ -150,21 +87,6 @@ export default function CaptureHeader({ init }) {
             questionOptions && (
               <Question
                 questionOptions={questionOptions}
-                hideQuestionTag={(tag) =>
-                  updateUser({
-                    variables: {
-                      data: {
-                        hiddenQuestions: {
-                          ...data.stt_user_by_pk.hiddenQuestions,
-                          tags: data.stt_user_by_pk.hiddenQuestions.tags.concat(
-                            tag
-                          ),
-                        },
-                      },
-                      userId: user.uid,
-                    },
-                  })
-                }
                 hideQuestion={(questionId) =>
                   updateUser({
                     variables: {
@@ -187,11 +109,7 @@ export default function CaptureHeader({ init }) {
                         type: "TEXT",
                         content: answerValue,
                         questionId: question.id,
-                        ...getSmartDate(
-                          question,
-                          data.stt_user_by_pk.dob,
-                          true
-                        ),
+                        ...getSmartDate(question, data.stt_user_by_pk.dob),
                       },
                       { revealAfterCreate: true }
                     ),
@@ -202,7 +120,7 @@ export default function CaptureHeader({ init }) {
             )}
           <CaptureHeaderActions />
         </Grid>
-      </Card>
+      </div>
     );
   }
   return (

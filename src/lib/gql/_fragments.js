@@ -52,8 +52,7 @@ export const eventFragment = gql`
     createdAt
     updatedAt
     userId
-    isSmartDate
-    smartDateReason
+    smartDate
   }
 `;
 
@@ -74,8 +73,7 @@ export const fragmentFragment = gql`
     tag
     createdAt
     updatedAt
-    isSmartDate
-    smartDateReason
+    smartDate
   }
 `;
 
@@ -111,9 +109,8 @@ export const questionFragment = gql`
   fragment questionFragment on stt_question {
     id
     title
-    tags
-    startAge
-    endAge
+    suggestedAge
+    ageExact
     startDate
     endDate
   }

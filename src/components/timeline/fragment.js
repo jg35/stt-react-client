@@ -17,7 +17,7 @@ export default function Fragment({
   const { updateUiState } = useContext(UIContext);
   return (
     <div
-      className="rounded-md bg-white shadow flex flex-col h-full overflow-hidden"
+      className="rounded-tl-md rounded-br-lg bg-white shadow flex flex-col h-full overflow-hidden"
       data-fragment-id={fragment.id}
       data-fragment-type={fragment.type}
     >

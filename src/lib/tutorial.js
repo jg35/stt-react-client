@@ -127,25 +127,24 @@ export const steps = [
     placement: "bottom",
     referenceElSelector: "#shuffle-button-wrapper",
   }),
-  registerStep({
-    step: 5,
-    title: "Questions",
-    body: `Notice each question is tagged. If a tag isn't relevant to you, click on the dots in the corner to open the question menu. There you can hide questions with that tag.`,
-    isComplete: (data, uiState) =>
-      window.innerWidth < 768 || uiState.tutorial.step > 5,
-    async: false,
-    placement: "bottom",
-    referenceElSelector: "#question-tag",
-  }),
+  // registerStep({
+  //   step: 5,
+  //   title: "Questions",
+  //   body: `Notice each question is tagged. If a tag isn't relevant to you, click on the dots in the corner to open the question menu. There you can hide questions with that tag.`,
+  //   isComplete: (data, uiState) =>
+  //     window.innerWidth < 768 || uiState.tutorial.step > 5,
+  //   async: false,
+  //   placement: "bottom",
+  //   referenceElSelector: "#question-tag",
+  // }),
   registerStep({
     step: 6,
     title: "Questions",
-    body: `Questions are grouped around different periods of your life. Try switching time periods using this
-    dropdown`,
+    body: `There are many sets of questions about different areas of your life. You can click on the current question pack to swap it out.`,
     isComplete: (data, uiState) => uiState.tutorial.step > 6,
     placement: "auto",
     async: false,
-    referenceElSelector: "#question-category-menu",
+    referenceElSelector: "#question-select-button",
   }),
   registerStep({
     step: 7,
@@ -266,7 +265,7 @@ export const steps = [
     step: 15,
     title: "Timeline",
     body: (data, uiState) =>
-      `The blue events are life events you create yourself. Brown events are our world events. Events are not included in your book.`,
+      `The blue events are events you create yourself. Brown events are our world events. Events are not included in your book.`,
     isComplete: (data, uiState) => uiState.tutorial.step > 15,
     async: false,
     placement: "top-start",

@@ -93,7 +93,8 @@ export default function ManageUser({ dbUser }) {
                   </FormField>
                 </Grid>
               </div>
-              {data?.stt_question.length && (
+              {/* TODO show/hide certain sets when we get new ui */}
+              {/* {data?.stt_question.length && (
                 <>
                   <Title size="compact" tag="h2" css="mb-6">
                     Manage questions
@@ -155,7 +156,7 @@ export default function ManageUser({ dbUser }) {
                     )}
                   </div>
                 </>
-              )}
+              )} */}
               <div className="flex justify-end">
                 <Button
                   type="submit"

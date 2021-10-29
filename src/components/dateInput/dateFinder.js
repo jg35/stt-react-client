@@ -80,11 +80,12 @@ export default function DateFinder({
   timelineData,
   inputRef,
   insideModal,
+  smartDateDetailLevel,
 }) {
   const scrollContainer = useRef(null);
   const [expandedDate, setExpandedDate] = useState(null);
 
-  const [detailLevel, setDetailLevel] = useState(0);
+  const [detailLevel, setDetailLevel] = useState(smartDateDetailLevel || 0);
   const [selectionTree, setSelectionTree] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
   const [date, setDate] = useState("");
@@ -101,7 +102,7 @@ export default function DateFinder({
         timelineData
       );
       setSelectionTree(newSelectionTree);
-      setDetailLevel(detailLevel);
+      setDetailLevel(smartDateDetailLevel || detailLevel);
       if (outsideValue.length >= 10) {
         setDate(outsideValue.slice(0, 10));
         setDateFromOutside(true);
@@ -181,8 +182,11 @@ export default function DateFinder({
                 variant="nothing"
                 onClick={() => {
                   let inputDate;
+
                   if (dobIso > date) {
                     inputDate = dobIso;
+                  } else if (smartDateDetailLevel) {
+                    inputDate = date;
                   } else if (detailLevel <= 2) {
                     inputDate = date.slice(0, 4);
                   } else if (detailLevel === 3 && !dateFromPicker) {

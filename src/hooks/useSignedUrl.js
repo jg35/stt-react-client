@@ -95,6 +95,27 @@ export function useSignedImageUrls() {
         .concat([
           "resources/fonts/available.json",
           "resources/fonts/sprite50Px.png",
+          "resources/images/stt-question-sets/academia.jpg",
+          "resources/images/stt-question-sets/back-to-school.jpg",
+          "resources/images/stt-question-sets/being-a-kid.jpg",
+          "resources/images/stt-question-sets/commuting.jpg",
+          "resources/images/stt-question-sets/intro-to-you.jpg",
+          "resources/images/stt-question-sets/life-reflections.jpg",
+          "resources/images/stt-question-sets/origins.jpg",
+          "resources/images/stt-question-sets/parenting.jpg",
+          "resources/images/stt-question-sets/partners-for-life.jpg",
+          "resources/images/stt-question-sets/post-teens.jpg",
+          "resources/images/stt-question-sets/retirement.jpg",
+          "resources/images/stt-question-sets/secondary-education.jpg",
+          "resources/images/stt-question-sets/teenage-years.jpg",
+          "resources/images/stt-question-sets/the-family-nest.jpg",
+          "resources/images/stt-question-sets/the-family-unit.jpg",
+          "resources/images/stt-question-sets/words-of-wisdom.jpg",
+          "resources/images/stt-question-sets/worldly-impressions.jpg",
+          "resources/images/stt-question-sets/dreams-and-aspirations.jpg",
+          "resources/images/stt-question-sets/love-romance-dating.jpg",
+          "resources/images/stt-question-sets/memorable-dates.jpg",
+          "resources/images/stt-question-sets/defining-moments.jpg",
         ]);
 
       let requestPaths = [];
