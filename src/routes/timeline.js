@@ -75,7 +75,7 @@ export default function Timeline() {
 
   return (
     <>
-      <Page maxWidth="1920px" paddingBottom={false}>
+      <Page maxWidth="1920px" headerCss="mb-0" pageContentCss="px-0 md:px-0">
         <CaptureHeader init={!loading} />
 
         <div className="overflow-hidden py-4 px-2 flex bg-offWhite shadow-inner">

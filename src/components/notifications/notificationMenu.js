@@ -66,7 +66,11 @@ export default function NotificationMenu({ notifications }) {
 
   return (
     <div className="relative" ref={notificationMenu}>
-      <Button size="compact" css="relative" onClick={() => setOpen(!open)}>
+      <Button
+        size="compact"
+        css="relative bg-transparent border-transparent"
+        onClick={() => setOpen(!open)}
+      >
         <AlertCircle
           flash={false}
           active={HAS_NOTIFICAITONS}

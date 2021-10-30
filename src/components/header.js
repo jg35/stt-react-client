@@ -8,8 +8,15 @@ import TrialStatus from "~/components/trialStatus";
 import { UIContext } from "~/app";
 import { AuthContext } from "~/components/authWrap";
 import NotificationMenu from "~/components/notifications/notificationMenu";
+import { max } from "lodash-es";
 
-export default function Header({ minimal = false, scrollable = false }) {
+export default function Header({
+  minimal = false,
+  scrollable = false,
+  css,
+  maxWidth,
+}) {
+  console.log("maxWidth", maxWidth);
   const { uiState, updateUiState } = useContext(UIContext);
   const {
     authState: { dbUser },
@@ -23,21 +30,9 @@ export default function Header({ minimal = false, scrollable = false }) {
     dbUser.subscriptionStatus === "IN_TRIAL";
 
   return (
-    <>
-      <header
-        className={`px-4 py-2 ${scrollable && "shadow z-40 lg:shadow-none"}`}
-      >
-        <Grid
-          autoRows="auto-rows-max"
-          colSpan={[
-            `col-span-6 ${showTrialStatusMessage && "md:col-span-4"}`,
-            `col-span-6 ${
-              showTrialStatusMessage && "md:col-span-4 md:order-3"
-            }`,
-          ].concat(
-            showTrialStatusMessage ? "col-span-12 md:col-span-4 md:order-2" : []
-          )}
-        >
+    <div className={`w-full bg-white border-b border-lightGray ${css}`}>
+      <header className={`px-4 py-2 mx-auto`} style={{ maxWidth }}>
+        <Grid autoRows="auto-rows-max" colSpan={[`col-span-6`]}>
           <div className="flex items-center h-full">
             <NavLink to="/">
               <Svg name="logo" color="black" />
@@ -77,7 +72,7 @@ export default function Header({ minimal = false, scrollable = false }) {
               <div id="show-preview-btn" className="mr-2 hidden lg:block">
                 <Button
                   size="compact"
-                  css="w-auto"
+                  css="w-auto bg-transparent border-transparent"
                   onClick={() =>
                     updateUiState({ showPreview: !uiState.showPreview })
                   }
@@ -92,17 +87,8 @@ export default function Header({ minimal = false, scrollable = false }) {
 
             <MainMenu />
           </div>
-          {showTrialStatusMessage && (
-            <div>
-              <TrialStatus
-                stripeCustomerId={dbUser.stripeCustomerId}
-                expiry={dbUser.trialExpiresDate}
-                status={dbUser.subscriptionStatus}
-              />
-            </div>
-          )}
         </Grid>
       </header>
-    </>
+    </div>
   );
 }

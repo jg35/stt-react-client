@@ -1,15 +1,17 @@
 export default function PageContent({
   children: content,
   scrollable = false,
-  paddingBottom = true,
+  maxWidth,
+  css = "px-2 md:px-4 pb-2",
 }) {
   return (
     <main
-      className={`animate-fade-in flex-1 flex flex-col ${
-        paddingBottom && "pb-2"
-      } h-full max-h-full ${
+      style={{
+        maxWidth,
+      }}
+      className={`mx-auto w-full animate-fade-in flex-1 flex flex-col h-full max-h-full ${
         scrollable ? "overflow-scroll" : "overflow-hidden"
-      }`}
+      } ${css}`}
     >
       {content}
     </main>

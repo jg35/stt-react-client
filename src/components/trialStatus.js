@@ -27,7 +27,7 @@ export default function TrialStatus({
     <div className="flex">
       <Button
         size={isBillingView ? "default" : "compact"}
-        css={`mx-auto w-full  ${css} ${
+        css={`mx-auto w-full bg-transparent border-transparent ${css} ${
           !isBillingView && "md:w-auto font-medium"
         }`}
         onClick={() =>
@@ -58,7 +58,7 @@ export default function TrialStatus({
         <Button
           size="compact"
           variant="minimal"
-          css="ml-1 w-auto"
+          css="ml-1 w-auto bg-transparent border-transparent"
           onClick={() => updateUiState({ hideTrialStatus: true })}
         >
           <Svg name="cancel" />

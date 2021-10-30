@@ -6,15 +6,25 @@ import { Surface, Container, PageContent } from "~/components/_styled";
 export default function Page({
   children,
   minimal = false,
-  maxWidth = "1400px",
+  maxWidth = "1600px",
   scrollable = false,
-  paddingBottom = true,
+  headerCss = "mb-4",
+  pageContentCss,
 }) {
   return (
-    <Container background={{ color: colors.offWhite }} maxWidth={maxWidth}>
+    <Container background={{ color: colors.offWhite }}>
       <Surface id="page">
-        <Header minimal={minimal} scrollable={scrollable} />
-        <PageContent scrollable={scrollable} paddingBottom={paddingBottom}>
+        <Header
+          minimal={minimal}
+          scrollable={scrollable}
+          css={headerCss}
+          maxWidth={maxWidth}
+        />
+        <PageContent
+          scrollable={scrollable}
+          maxWidth={maxWidth}
+          css={pageContentCss}
+        >
           {children}
         </PageContent>
       </Surface>
