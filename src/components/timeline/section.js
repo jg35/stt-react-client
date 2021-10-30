@@ -19,14 +19,14 @@ export default function Section({
   return (
     <div className={`px-1 ${!isLast && "mb-4"}`}>
       <section
-        className={`bg-white shadow pt-4 md:pt-6 pb-2 px-4 md:pr-6 rounded-r`}
+        className={`bg-white shadow py-4 md:py-6 pb-2 px-4 md:pr-6 rounded`}
         data-season-year={section.year}
         data-section-index={index}
         onMouseEnter={() => setShowActions(true)}
         onMouseOver={debounce(() => setShowActions(true), 200)}
         onMouseLeave={debounce(() => setShowActions(false), 200)}
       >
-        <header className="pb-4" style={{ minHeight: "3rem" }}>
+        <header>
           <Grid
             colSpan={["col-span-5 flex items-center", "col-span-7"]}
             gap="gap-x-2 md:gap-x-4"
@@ -47,13 +47,13 @@ export default function Section({
                 >
                   {section.title}
                 </span>
+                <span className="hidden sm:inline">&nbsp;&middot;</span>
               </Title>
               <Text
                 tag="span"
                 size="compact"
-                css="md:ml-2 text-gray text-base md:text-lg"
+                css="md:ml-2 text-gray font-medium text-base"
               >
-                <span className="hidden md:inline">&middot;&nbsp;</span>
                 {section.age}
               </Text>
             </div>

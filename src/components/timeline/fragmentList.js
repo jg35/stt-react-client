@@ -49,7 +49,7 @@ export default function FragmentList({ fragments, editView = false }) {
     });
   }
   return (
-    <div className="pl-1 pr-1 pb-2 -mx-2 overflow-x-scroll flex lg:flex-wrap">
+    <div className="pl-1 pr-1 pt-6 -mx-2 overflow-x-scroll flex lg:flex-wrap">
       {fragments.map((fragment, i) => {
         const prev = fragments[i - 1] || {};
         const next = fragments[i + 1] || {};
@@ -60,8 +60,8 @@ export default function FragmentList({ fragments, editView = false }) {
         const isLast = matchesPrev && !matchesNext;
         return (
           <div
-            className="py-2 px-2 min-w-f1/2 sm:min-w-f1/3 md:min-w-f1/4 lg:min-w-0 lg:w-1/3"
-            style={{ height: "250px", minWidth: "275px", maxWidth: "375px" }}
+            className="py-2 px-2"
+            style={{ height: "250px", minWidth: "300px", maxWidth: "300px" }}
             key={fragment.id}
           >
             <Fragment

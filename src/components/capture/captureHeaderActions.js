@@ -10,11 +10,11 @@ import { UIContext } from "~/app";
 function CaptureHeaderActionButton({ action, icon, type }) {
   return (
     <Button
-      css="px-4 font-medium md:h-full flex-col justify-around md:justify-center h-14 md:flex-row"
+      css="px-4 md:h-full flex-col justify-around md:justify-center h-14 md:flex-row"
       onClick={action}
     >
-      <Svg name={icon} css="md:hidden " size={18} />
-      <span className="text-sm md:text-base ">
+      <Svg name={icon} css="md:hidden" color="currentColor" size={18} />
+      <span className="text-sm md:text-base">
         <span className="hidden md:block">
           Add
           <br />
@@ -35,7 +35,7 @@ export default function CaptureHeaderActions({}) {
     >
       {window.innerWidth < 768 && (
         <Button
-          css={`font-medium px-4 h-14 justify-around flex-col ${
+          css={`px-4 h-14 justify-around flex-col ${
             uiState.questionVisible &&
             "shadow bg-darkGray hover:bg-darkGray hover:border-darkGray border-darkGray text-white"
           } `}
@@ -43,12 +43,7 @@ export default function CaptureHeaderActions({}) {
             updateUiState({ questionVisible: !uiState.questionVisible }, false)
           }
         >
-          <Svg
-            name="question"
-            css="md:hidden"
-            color={uiState.questionVisible && "white"}
-            size={18}
-          />
+          <Svg name="question" css="md:hidden" color="currentColor" size={18} />
           <span className="text-sm md:text-base">Questions</span>
         </Button>
       )}

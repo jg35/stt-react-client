@@ -80,12 +80,9 @@ export default function Question({
   }
 
   return (
-    <div
-      id="question-panel"
-      className="border-2 border-lightBlack rounded pr-1 py-2 pl-3"
-    >
+    <div id="question-panel" className="py-2 px-3 pr-1 border-2 rounded">
       <div className="flex items-start">
-        <div className="w-full">
+        <div className="flex-1">
           <Title css="mb-0 w-11/12">{currentQuestion.title}</Title>
         </div>
         <div className="flex items-center justify-end">
@@ -98,18 +95,18 @@ export default function Question({
               <Svg name="shuffle" size={20}></Svg>
             </Button>
           </div>
-          {/* <QuestionMenu hideQuestion={hideQuestionHandler} /> */}
         </div>
       </div>
       <div className="flex items-center">
         <FormInput
           id="form-question-text-input"
           style={{
+            // maxWidth: "600px",
             paddingLeft: 0,
-            backgroundColor: "transparent",
+            // backgroundColor: "transparent",
             paddingBottom: 0,
           }}
-          variant="question"
+          // variant="question"
           value={questionAnswer}
           handleChange={(e) => {
             setQuestionAnswer(e.target.value);
@@ -120,13 +117,14 @@ export default function Question({
               }, 500);
             }
           }}
-          css="bg-white p-0 truncate js-question-text-input"
+          css="p-0 truncate js-question-text-input focus:bg-white border-none"
           placeholder="Start answering here..."
         />
         <QuestionSelectButton
           questionSet={getQuestionSet()}
           toggle={() => setSelectModalOpen(!selectModalOpen)}
         />
+
         <QuestionSelectModal
           close={() => setSelectModalOpen(false)}
           isOpen={selectModalOpen}

@@ -15,10 +15,10 @@ export default function FragmentHeader({
   const renderDate = fragment.date ? renderFragmentDate(fragment.date) : null;
 
   return (
-    <div className="py-1 pl-3 pr-1 flex justify-between items-center bg-offWhite border-b border-lightGray">
+    <div className="py-1 pl-3 pr-1 flex justify-between items-center bg-lightestGray border-b border-lightGray">
       <div
         id="fragment-header-date"
-        className="text-center text-darkGray text-sm font-medium flex cursor-default"
+        className="text-center text-darkGray text-xs uppercase font-bold flex cursor-default"
       >
         {renderDate ? renderDate : "No date"}
       </div>

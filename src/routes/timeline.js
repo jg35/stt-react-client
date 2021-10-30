@@ -78,7 +78,7 @@ export default function Timeline() {
       <Page maxWidth="1920px" headerCss="mb-0" pageContentCss="px-0 md:px-0">
         <CaptureHeader init={!loading} />
 
-        <div className="overflow-hidden py-4 px-2 flex bg-offWhite shadow-inner">
+        <div className="overflow-hidden py-4 px-2 flex shadow-inner">
           {!timeline && <TimelineSkeleton />}
           {data && data.stt_user_by_pk.dob && timeline && (
             <>

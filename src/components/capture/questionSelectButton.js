@@ -9,7 +9,7 @@ export default function QuestionSelectButton({ questionSet, toggle }) {
       <Button
         onClick={toggle}
         variant="minimal"
-        css="relative border-none text-base hover:border-none shadow whitespace-nowrap overflow-hidden"
+        css="relative border-none text-base hover:border-none shadow whitespace-nowrap overflow-hidden bg-white"
         style={{
           paddingLeft: 6,
           paddingRight: 0,

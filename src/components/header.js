@@ -30,7 +30,7 @@ export default function Header({
     dbUser.subscriptionStatus === "IN_TRIAL";
 
   return (
-    <div className={`w-full bg-white border-b border-lightGray ${css}`}>
+    <div className={`w-full bg-white ${css}`}>
       <header className={`px-4 py-2 mx-auto`} style={{ maxWidth }}>
         <Grid autoRows="auto-rows-max" colSpan={[`col-span-6`]}>
           <div className="flex items-center h-full">

@@ -8,7 +8,7 @@ export default function Page({
   minimal = false,
   maxWidth = "1600px",
   scrollable = false,
-  headerCss = "mb-4",
+  headerCss = "mb-4 border-b border-b-2 border-lightGray",
   pageContentCss,
 }) {
   return (

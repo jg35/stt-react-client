@@ -17,7 +17,7 @@ export default function Fragment({
   const { updateUiState } = useContext(UIContext);
   return (
     <div
-      className="rounded-tl-md rounded-br-lg bg-white shadow flex flex-col h-full overflow-hidden"
+      className="rounded-md bg-white shadow flex flex-col h-full overflow-hidden"
       data-fragment-id={fragment.id}
       data-fragment-type={fragment.type}
     >
@@ -40,9 +40,9 @@ export default function Fragment({
 
         {fragment.type === "PHOTO" && <PhotoFragment fragment={fragment} />}
         {fragment.question?.title && (
-          <div className="self-end left-0 bottom-0 w-full h-auto py-1 px-2 bg-offBlack bg-opacity-80 text-white flex ">
-            <Svg name="question" color="white" css="mr-1" size={14} />
-            <span className="truncate">{fragment.question.title}</span>
+          <div className="self-end left-0 bottom-0 w-full h-auto py-1 px-2 bg-lightGray flex">
+            <Svg name="question" css="mr-1" size={14} />
+            <span className="truncate pr-2">{fragment.question.title}</span>
           </div>
         )}
       </div>

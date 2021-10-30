@@ -21,7 +21,7 @@ export default function PhotoFragment({ fragment }) {
     >
       {caption && (
         <>
-          <div className="absolute w-full bottom-0 left-0 py-1 px-2 h-auto bg-offBlack bg-opacity-80 text-white text-center">
+          <div className="absolute w-full bottom-0 left-0 py-1 px-2 h-auto bg-black text-white bg-opacity-50 text-center">
             {caption}
           </div>
         </>

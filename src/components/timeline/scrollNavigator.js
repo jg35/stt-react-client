@@ -96,7 +96,7 @@ function ScrollNavigator({ dob }) {
           return (
             <YearWrap year={year} key={index}>
               <span
-                className={`w-2 h-2 border-2 rounded-full border-gold bg-lightGray`}
+                className={`w-2 h-2 border rounded-full border-gold bg-lightGray`}
               ></span>
             </YearWrap>
           );
