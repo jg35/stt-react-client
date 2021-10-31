@@ -11,6 +11,19 @@ export default function EditableFragment({ fragment, saveFragment }) {
   const [showInfo, setShowInfo] = useState(false);
   let text = useRef(fragment.content);
 
+  let infoPosition;
+  switch (fragment.type) {
+    case "PHOTO":
+      infoPosition = "-top-8";
+      break;
+    case "TEXT":
+      infoPosition = "-top-8";
+      break;
+    case "CHAPTER":
+      infoPosition = "-top-8";
+      break;
+  }
+
   const handleChange = (evt) => {
     if (evt.target.value === "<div><br></div>" || evt.target.value === "<br>") {
       text.current = "";
@@ -42,14 +55,23 @@ export default function EditableFragment({ fragment, saveFragment }) {
       data-preview-fragment-type={fragment.type}
     >
       <div
+        style={{
+          height: "calc(100% + 8px)",
+          zIndex: -1,
+        }}
         className={`${
           showInfo ? "flex" : "hidden"
-        } edit-fragment-info absolute -top-10 h-10 animate-fade-in min-w-full justify-between items-center z-20`}
+        } absolute -top-4 -left-3 h-full border-l border-t border-lightGray w-full rounded-l`}
+      ></div>
+      <div
+        className={`${
+          showInfo ? "flex" : "hidden"
+        } edit-fragment-info absolute animate-fade-in max-w-full min-w-full justify-between items-center h-8 z-20 ${infoPosition}`}
       >
-        <div className="text-gray truncate w-1/2 md:w-2/3">
+        <div className="text-gray truncate bg-white px-2 md:px-4 mr-2 md:mr-4">
           {fragment.question ? fragment.question.title : ""}
         </div>
-        <div className="flex items-center">
+        <div className="flex items-center bg-white pl-2 ml-2 md:ml-4 whitespace-nowrap">
           <Text size="compact" tag="span" css="mr-2 text-gray">
             {renderFragmentDate(fragment.date)}
           </Text>

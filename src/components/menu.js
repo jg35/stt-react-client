@@ -49,7 +49,7 @@ export default function Menu({
     <div id={id} className="relative" ref={menuRef}>
       <Button
         size="compact"
-        css="bg-transparent border-transparent"
+        css="bg-transparent border-transparent hover:bg-transparent hover:border-transparent py-1 md:py-1"
         variant={minimal ? "minimal" : "default"}
         onClick={() => setOpen(!open)}
       >
