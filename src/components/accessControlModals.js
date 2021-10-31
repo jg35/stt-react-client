@@ -45,27 +45,26 @@ export default function AccessControlModals() {
   useEffect(() => {
     if (dbUser) {
       userVerificationCheck(user.emailVerified);
-      const subStatus = dbUser.subscriptionStatus;
-      let paymentState = {
-        subscriptionStatus: dbUser.subscriptionStatus,
-        stripeCustomerId: dbUser.stripeCustomerId,
-      };
-      if (
-        (subStatus === "IN_TRIAL" && hasExpired(dbUser.trialExpiresDate)) ||
-        subStatus === "CANCELLED" ||
-        (subStatus === "CANCEL_AT_PERIOD_END" &&
-          hasExpired(dbUser.subscriptionMeta?.periodEnd, true))
-      ) {
-        paymentState.showModal = true;
-        paymentState.type = "CHOOSE_PLAN";
-      } else if (subStatus === "PAYMENT_FAILED") {
-        paymentState.showModal = true;
-        paymentState.type = "MANAGE_PLAN";
-      }
-      if (paymentState.showModal) {
-        paymentState.intent = "AUTO";
-        updateUiState({ payment: paymentState }, false);
-      }
+      // const subStatus = dbUser.subscriptionStatus;
+      // let paymentState = {
+      //   subscriptionStatus: dbUser.subscriptionStatus,
+      //   stripeCustomerId: dbUser.stripeCustomerId,
+      // };
+      // if (
+      //   subStatus === "CANCELLED" ||
+      //   (subStatus === "CANCEL_AT_PERIOD_END" &&
+      //     hasExpired(dbUser.subscriptionMeta?.periodEnd, true))
+      // ) {
+      //   paymentState.showModal = true;
+      //   paymentState.type = "CHOOSE_PLAN";
+      // } else if (subStatus === "PAYMENT_FAILED") {
+      //   paymentState.showModal = true;
+      //   paymentState.type = "MANAGE_PLAN";
+      // }
+      // if (paymentState.showModal) {
+      //   paymentState.intent = "AUTO";
+      //   updateUiState({ payment: paymentState }, false);
+      // }
 
       setShowUserForm(!dbUser.dob && !dbUser.location);
     }
@@ -75,24 +74,24 @@ export default function AccessControlModals() {
     return null;
   }
 
-  if (uiState.payment.showModal) {
-    return (
-      <UserPaymentForm
-        {...uiState.payment}
-        closeModal={() =>
-          updateUiState({
-            payment: {
-              showModal: false,
-              type: "CHOOSE_PLAN",
-              intent: "AUTO",
-              subscriptionStatus: null,
-              stripeCustomerId: null,
-            },
-          })
-        }
-      />
-    );
-  }
+  // if (uiState.payment.showModal) {
+  //   return (
+  //     <UserPaymentForm
+  //       {...uiState.payment}
+  //       closeModal={() =>
+  //         updateUiState({
+  //           payment: {
+  //             showModal: false,
+  //             type: "CHOOSE_PLAN",
+  //             intent: "AUTO",
+  //             subscriptionStatus: null,
+  //             stripeCustomerId: null,
+  //           },
+  //         })
+  //       }
+  //     />
+  //   );
+  // }
 
   if (uiState.deleteModal.show) {
     return (

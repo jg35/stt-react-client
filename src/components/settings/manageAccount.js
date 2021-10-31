@@ -45,20 +45,13 @@ export default function ManageAccount({ dbUser }) {
 
       <AccountActivation />
 
-      <ManageStripeCustomer
+      {/* <ManageStripeCustomer
         subscriptionStatus={dbUser.subscriptionStatus}
         subscriptionMeta={dbUser.subscriptionMeta}
         stripeCustomerId={dbUser.stripeCustomerId}
-        trialExpiresDate={dbUser.trialExpiresDate}
-      />
+      /> */}
 
       <Title size="compact">Delete your account</Title>
-
-      <Text>
-        {getHTMLTranslation(
-          "components.settings.manageAccount.delete.description"
-        )}
-      </Text>
       <Text css="mb-6">
         {getHTMLTranslation(
           "components.settings.manageAccount.delete.continue"
@@ -116,7 +109,7 @@ export default function ManageAccount({ dbUser }) {
                       handleBlur={handleBlur}
                       handleChange={handleChange}
                       name="confirm"
-                      placeholder={`Enter "Delete my account and all of my data"`}
+                      placeholder={`Delete my account and all of my data`}
                       error={errors.confirm}
                     />
                     <FormError error={errors.confirm} />

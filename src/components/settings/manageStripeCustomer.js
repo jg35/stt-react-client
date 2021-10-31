@@ -1,6 +1,5 @@
 import { Button, Title, Text } from "~/components/_styled";
 import { DateTime } from "luxon";
-import TrialStatus from "~/components/trialStatus";
 import { getHTMLTranslation } from "~/lib/util";
 
 function buildSummary(subscriptionStatus, subscriptionMeta) {
@@ -33,9 +32,9 @@ function buildSummary(subscriptionStatus, subscriptionMeta) {
         [{ key: "NEXT_PAYMENT_DATE", value: nextPaymentDate }]
       );
       break;
-    case "IN_TRIAL":
+    case "FREE":
       planMessage = getHTMLTranslation(
-        "components.settings.manageStripeCustomer.plan.inTrial"
+        "components.settings.manageStripeCustomer.plan.free"
       );
   }
   return (
@@ -49,37 +48,26 @@ export default function ManageStripeCustomer({
   stripeCustomerId,
   subscriptionStatus,
   subscriptionMeta,
-  trialExpiresDate,
 }) {
   return (
     <div className="border-b border-lightGray pb-6 mb-6">
       <Title size="compact">Your subscription</Title>
       <Text>{buildSummary(subscriptionStatus, subscriptionMeta)}</Text>
-      {subscriptionStatus === "IN_TRIAL" ? (
-        <div className="mt-6">
-          <TrialStatus
-            stripeCustomerId={stripeCustomerId}
-            expiry={trialExpiresDate}
-            status={subscriptionStatus}
-            isBillingView
-          />
-        </div>
-      ) : (
-        <form
-          action={`${process.env.REACT_APP_FUNCTIONS_SERVER_URL}/actions/public/stripe/portal`}
-          method="POST"
-        >
-          <input type="hidden" name="customerId" value={stripeCustomerId} />
-          <input
-            type="hidden"
-            name="appId"
-            value={process.env.REACT_APP_HASURA_APP_ID}
-          ></input>
-          <Button type="submit" css="w-full">
-            Manage my subscription
-          </Button>
-        </form>
-      )}
+
+      <form
+        action={`${process.env.REACT_APP_FUNCTIONS_SERVER_URL}/actions/public/stripe/portal`}
+        method="POST"
+      >
+        <input type="hidden" name="customerId" value={stripeCustomerId} />
+        <input
+          type="hidden"
+          name="appId"
+          value={process.env.REACT_APP_HASURA_APP_ID}
+        ></input>
+        <Button type="submit" css="w-full">
+          Manage my subscription
+        </Button>
+      </form>
     </div>
   );
 }

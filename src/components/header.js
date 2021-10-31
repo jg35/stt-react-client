@@ -4,7 +4,6 @@ import { NavLink } from "react-router-dom";
 import Svg from "~/components/svg";
 import { Button, Grid } from "~/components/_styled";
 import MainMenu from "~/components/mainMenu";
-import TrialStatus from "~/components/trialStatus";
 import { UIContext } from "~/app";
 import { AuthContext } from "~/components/authWrap";
 import NotificationMenu from "~/components/notifications/notificationMenu";
@@ -23,11 +22,6 @@ export default function Header({
   } = useContext(AuthContext);
   const isTimeline = useRouteMatch("/");
   const isBilling = useRouteMatch("/settings");
-  const showTrialStatusMessage =
-    !uiState.hideTrialStatus &&
-    !isBilling &&
-    dbUser &&
-    dbUser.subscriptionStatus === "IN_TRIAL";
 
   return (
     <div className={`w-full bg-white ${css}`}>

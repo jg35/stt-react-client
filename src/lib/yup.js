@@ -231,9 +231,9 @@ export const EmailCreateSchema = Yup.object().shape({
 export const DeleteAccountSchema = Yup.object().shape({
   confirm: Yup.string()
     .ensure()
-    .required("Does not match above expression")
+    .required("Does not match required expression")
     .matches(
       /Delete my account and all of my data/,
-      "Does not match above expression"
+      "Does not match required expression"
     ),
 });

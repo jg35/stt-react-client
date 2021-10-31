@@ -5,7 +5,6 @@ export const userFragment = gql`
     id
     location
     dob
-    trialExpiresDate
     stripeCustomerId
     subscriptionStatus
     subscriptionMeta

@@ -48,12 +48,8 @@ export default function UserPaymentForm({
       case "CANCELLED":
       case "CANCEL_AT_PERIOD_END":
         return getHTMLTranslation("components.userPaymentForm.cancelled");
-
       case "PAYMENT_FAILED":
         return getHTMLTranslation("components.userPaymentForm.paymentFailed");
-
-      case "IN_TRIAL":
-        return getHTMLTranslation("components.userPaymentForm.inTrial");
     }
   }
 
