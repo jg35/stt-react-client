@@ -258,34 +258,32 @@ export default function CaptureModal({
             size={getModalSize(item.type)}
             noScroll={item.type !== "PHOTO"}
           >
-            <form
-              id="capture-form"
-              className="h-full"
-              onSubmit={props.handleSubmit}
-            >
-              <Title
-                size="large"
-                css="inline-block"
-                style={{ maxWidth: "calc(100% - 4rem)" }}
+            <div className="flex flex-col relative">
+              <form
+                id="capture-form"
+                className="h-full md:order-2"
+                onSubmit={props.handleSubmit}
               >
-                {formTitle}
-              </Title>
-              {item.type === "EVENT" && <EventForm {...props} />}
+                <Title size="large" css="inline-block md:w-8/12">
+                  {formTitle}
+                </Title>
+                {item.type === "EVENT" && <EventForm {...props} />}
 
-              {item.type === "TEXT" && (
-                <TextForm
-                  {...props}
-                  editContent={!editView}
-                  closeHandler={closeHandler}
-                  setModalSize={(size) => setOverrideSize(size)}
-                />
-              )}
-              {item.type === "CHAPTER" && (
-                <ChapterForm {...props} editContent={!editView} />
-              )}
-              {item.type === "PHOTO" && (
-                <PhotoForm {...props} closeForm={closeHandler} />
-              )}
+                {item.type === "TEXT" && (
+                  <TextForm
+                    {...props}
+                    editContent={!editView}
+                    closeHandler={closeHandler}
+                    setModalSize={(size) => setOverrideSize(size)}
+                  />
+                )}
+                {item.type === "CHAPTER" && (
+                  <ChapterForm {...props} editContent={!editView} />
+                )}
+                {item.type === "PHOTO" && (
+                  <PhotoForm {...props} closeForm={closeHandler} />
+                )}
+              </form>
               <FormActions
                 isValid={props.isValid}
                 formIsDirty={props.dirty}
@@ -293,7 +291,7 @@ export default function CaptureModal({
                 itemId={props.values.id}
                 isSubmitting={props.isSubmitting}
               />
-            </form>
+            </div>
           </Modal>
         );
       }}

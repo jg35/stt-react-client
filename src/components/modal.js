@@ -109,7 +109,7 @@ export default function Modal({
         onClick={(e) => e.stopPropagation()}
       >
         <Card
-          css={`min-h-full pt-6 px-6 pb-6 md:pt-12 relative`}
+          css={`min-h-full pt-6 px-6 pb-6 relative`}
           onKeyUp={(e) => {
             if (e.code === "Escape" && canClose) {
               if (formIsDirty) {
@@ -120,7 +120,7 @@ export default function Modal({
             }
           }}
         >
-          {canClose && (
+          {/* {canClose && (
             <Button
               size="compact"
               css="fixed lg:absolute lg:shadow-none right-4 top-6 md:top-8 md:right-6 lg:top-4 w-auto font-medium rounded-2xl z-40 shadow bg-white"
@@ -135,7 +135,7 @@ export default function Modal({
             >
               Close <Svg name="cancel" size={18} css="ml-1" />
             </Button>
-          )}
+          )} */}
           {children}
         </Card>
 

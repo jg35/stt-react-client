@@ -21,6 +21,7 @@ function DatePart({
   placeholder,
   inputCss = "pl-12 md:pl-14",
   isLast = false,
+  tabIndex,
 }) {
   const [localVal, setLocalVal] = useState(val);
 
@@ -29,24 +30,21 @@ function DatePart({
   }, [val]);
   const inputRef = useRef(null);
   return (
-    <div
-      className={`flex-1 md:flex-none md:w-32 relative mb-2 md:mb-0 ${
-        isLast ? "md:mr-2" : "mr-2"
-      }`}
-    >
+    <div className={`flex-1 relative mr-2`}>
       <span
-        className={`absolute h-full flex items-center text-lg pl-2 md:pl-4`}
+        className={`absolute py-2 h-full text-lg pl-2 text-darkGray`}
         onClick={() => inputRef && inputRef.current && inputRef.current.focus()}
       >
         {label}:
       </span>
       <input
         ref={inputRef}
+        tabIndex={tabIndex}
         autoComplete="off"
         id="dateFinderInput"
         onChange={(e) => setLocalVal(e.target.value)}
         onBlur={() => setVal(localVal)}
-        className={`input h-12 rounded w-full bg-lightestGray focus:bg-lightGray border-0 ${inputCss}`}
+        className={`input w-full ${inputCss}`}
         value={localVal}
         type="text"
         maxLength={maxLength}
@@ -245,45 +243,23 @@ export default function DateInput({
 
   return (
     <div className="relative flex flex-col max-w-xl">
-      <div className="flex justify-between items-center">
-        <FormLabel css="mb-1">{label}</FormLabel>
-        {smartDate && smartDate.isSmartDate && (
-          <span
-            className={`mb-1 uppercase font-bold text-xs cursor-help ${
-              smartDate.exact
-                ? "border-green text-green"
-                : "border-lightBlack text-lightBlack"
-            }`}
-            title={
-              smartDate.exact
-                ? "We set this date automatically because the question relates to a specific day in your life."
-                : "We've suggested this date from the time period you selected, question dates or your approximate age at the time."
-            }
-          >
-            {smartDate.exact ? (
-              <span className="flex block">
-                Auto&nbsp;
-                <Svg name="check" color="green" size="10" />
-              </span>
-            ) : (
-              "Suggested"
-            )}
-          </span>
-        )}
-      </div>
+      <FormLabel css="mb-1">{label}</FormLabel>
 
       <div>
-        <div className="flex rounded p-2 bg-white flex-wrap md:flex-nowrap shadow mb-2">
+        <div className="flex bg-white items-center flex-wrap w-full md:flex-nowrap  mb-2">
           <DatePart
-            key="1"
+            key={1}
+            tabIndex={1}
             label="Year"
             val={yearValue}
             setVal={setYearValue}
             maxLength="4"
             placeholder={dateFinderValues.year || "2000"}
+            // inputCss="pl-12 md:pl-14 rounded-l"
           />
           <DatePart
-            key="2"
+            key={2}
+            tabIndex={2}
             label="Month"
             val={monthValue}
             setVal={setMonthValue}
@@ -292,7 +268,8 @@ export default function DateInput({
             inputCss="pl-16 md:pl-20"
           />
           <DatePart
-            key="3"
+            key={3}
+            tabIndex={3}
             label="Day"
             val={dayValue}
             setVal={setDayValue}
@@ -302,16 +279,15 @@ export default function DateInput({
           />
           {init && (
             <>
-              <div ref={inputRef} className="w-full">
+              <div ref={inputRef}>
                 <Button
                   id="findDateBtn"
                   variant="cta"
-                  // size="compact"
                   title="Find a date"
-                  css="border-offBlack h-12 rounded bg-offBlack"
+                  css="border-offBlack h-10 w-auto rounded-full bg-lightBlack"
                   onClick={() => setDateFinderOpen(!dateFinderOpen)}
                 >
-                  <span className="inline-block font-normal">Find date</span>
+                  <Svg name="calendar" size={14} color="white" />
                 </Button>
               </div>
               <DateFinder
@@ -338,9 +314,34 @@ export default function DateInput({
           )}
         </div>
 
-        <FormCaption variant={formikError || localError ? "error" : "info"}>
-          {formikError || localError || getCaption()}
-        </FormCaption>
+        <div className="flex justify-between">
+          <FormCaption variant={formikError || localError ? "error" : "info"}>
+            {formikError || localError || getCaption()}
+          </FormCaption>
+          {smartDate && smartDate.isSmartDate && (
+            <span
+              className={`mb-1 uppercase font-bold text-xs cursor-help ${
+                smartDate.exact
+                  ? "border-green text-green"
+                  : "border-lightBlack text-lightBlack"
+              }`}
+              title={
+                smartDate.exact
+                  ? "We set this date automatically because the question relates to a specific day in your life."
+                  : "We've suggested this date from the time period you selected, question dates or your approximate age at the time."
+              }
+            >
+              {smartDate.exact ? (
+                <span className="flex block">
+                  Auto&nbsp;
+                  <Svg name="check" color="green" size="10" />
+                </span>
+              ) : (
+                "Suggested"
+              )}
+            </span>
+          )}
+        </div>
       </div>
     </div>
   );

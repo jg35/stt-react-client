@@ -9,23 +9,24 @@ export default function FormActions({
 }) {
   let submitText;
   if (isSubmitting) {
-    submitText = !itemId ? "Adding..." : "Updating...";
+    submitText = !itemId ? "Creating..." : "Saving...";
   } else {
-    submitText = !itemId ? "Add" : "Update";
+    submitText = !itemId ? "Create" : "Save";
   }
   return (
-    <div className="flex justify-end mt-4">
+    <div className="flex justify-end md:absolute top-0 right-0">
       <Button
         disabled={isSubmitting}
-        css="w-full md:w-36 mr-4"
+        css="w-full md:w-28 mr-4 md:mr-2"
         onClick={closeHandler}
       >
-        Cancel
+        Close
       </Button>
       <Button
         type="submit"
         variant="cta"
-        css="w-full md:w-36"
+        form="capture-form"
+        css="w-full md:w-32"
         disabled={!formIsDirty}
         inProgress={isSubmitting}
       >

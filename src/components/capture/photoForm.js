@@ -68,10 +68,16 @@ export default function PhotoForm({
         />
       </FormField>
 
-      <Grid colSpan={["col-span-12 md:col-span-6"]}>
+      <Grid
+        colSpan={[
+          "col-span-12 md:col-span-5 lg:col-span-6",
+          "col-span-12 md:col-span-7 lg:col-span-6",
+        ]}
+      >
         <FormField label="Caption" error={errors.caption}>
           <FormInput
             name="mediaCaption"
+            css="max-w-md"
             placeholder="Add a caption"
             value={values.mediaCaption}
             error={errors.mediaCaption}
@@ -79,7 +85,6 @@ export default function PhotoForm({
             handleChange={handleChange}
           />
         </FormField>
-
         <DatePicker
           smartDate={values.smartDate}
           date={values.date}

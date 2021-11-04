@@ -13,6 +13,7 @@ export default function Button({
   inProgress = false,
   style = {},
   title = "",
+  form = null,
 }) {
   const baseCss = `flex justify-center items-center rounded border-2 duration-200 ease-in w-full ${
     disabled ? "cursor-default opacity-80" : "cursor-pointer"
@@ -35,7 +36,7 @@ export default function Button({
   };
   const sizes = {
     compact: "py-1 px-1.5 text-base",
-    default: "py-1 px-3 md:py-2 text-lg",
+    default: "py-1 px-3 text-lg",
     large: "p-4 text-xl",
   };
 
@@ -53,6 +54,7 @@ export default function Button({
         sizes[size],
         css,
       ])}
+      {...(form ? { form } : {})}
     >
       <InProgress inProgress={inProgress} />
       {children}
