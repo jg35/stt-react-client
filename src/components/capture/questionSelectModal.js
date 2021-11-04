@@ -56,7 +56,7 @@ export default function QuestionSelectModal({
   return (
     <Modal close={close} isOpen={isOpen} size="full">
       <Title>Select a question pack to start answering questions</Title>
-      <div className="shadow-inner py-4 px-4 bg-lightestGray rounded">
+      <div className="shadow-inner py-4 px-4 bg-lightestGray rounded-b -mx-6 -mb-6">
         <QuestionSetRow
           sets={questionSetGroups["about-you"]}
           title="1. About you"

@@ -10,7 +10,7 @@ export default function QuestionSetCard({ set, selectQuestionSet }) {
   return (
     <div className="h-40 my-2 p-1">
       <div
-        className={`bg-lightBlack shadow h-full w-72 flex rounded-md overflow-hidden transition ease-in duration-200 ${
+        className={`bg-lightBlack shadow h-full w-64 md:w-72 flex rounded-md overflow-hidden transition ease-in duration-200 ${
           completed ? "cursor-default" : "cursor-pointer hover:bg-black "
         }`}
         onClick={() => {
@@ -20,7 +20,7 @@ export default function QuestionSetCard({ set, selectQuestionSet }) {
         }}
       >
         <div
-          className={`flex-1 bg-cover bg-center bg-repeat-none filter transition ease-in duration-200 ${
+          className={`flex-1 bg-cover overflow-hidden rounded-l-md bg-center bg-repeat-none filter transition ease-in duration-200 ${
             completed ? "grayscale" : "grayscale-70 hover:grayscale-0"
           }`}
           style={{
