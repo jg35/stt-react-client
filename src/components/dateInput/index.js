@@ -284,7 +284,7 @@ export default function DateInput({
                   id="findDateBtn"
                   variant="cta"
                   title="Find a date"
-                  css="border-offBlack h-10 w-auto rounded-full bg-lightBlack"
+                  css="border-lightBlack h-10 w-10 rounded-full bg-lightBlack"
                   onClick={() => setDateFinderOpen(!dateFinderOpen)}
                 >
                   <Svg name="calendar" size={14} color="white" />
