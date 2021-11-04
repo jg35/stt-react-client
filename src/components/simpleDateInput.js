@@ -35,7 +35,7 @@ export default function SimpleDateInput({ date, label, error, handleChange }) {
       css="w-full"
     >
       <div
-        className={`relative flex flex-wrap md:flex-nowrap w-full border rounded-b md:rounded-r md:rounded-l-none ${
+        className={`relative flex flex-wrap md:flex-nowrap w-full border rounded-none ${
           error ? "border-red" : "border-transparent"
         }`}
       >

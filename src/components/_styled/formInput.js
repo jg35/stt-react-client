@@ -17,7 +17,7 @@ export default function FormInput({
   handleKeyUp = null,
   autoComplete = "off",
 }) {
-  const baseCss = `outline-none w-full transition duration-200 ease-in`;
+  const baseCss = `rounded-none outline-none w-full transition duration-200 ease-in`;
 
   const variants = {
     default: error

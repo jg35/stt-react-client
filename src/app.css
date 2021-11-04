@@ -62,7 +62,7 @@
   }
   .input {
     /* max-width: 40rem; */
-    @apply outline-none bg-white border-b border-lightGray focus:border-gray focus:bg-offWhite py-2 px-3 w-full text-lg transition duration-200 ease-in;
+    @apply outline-none rounded-none bg-white border-b border-lightGray focus:border-gray focus:bg-offWhite py-2 px-3 w-full text-lg transition duration-200 ease-in;
   }
 
   .input--compact {

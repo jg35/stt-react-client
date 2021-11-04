@@ -105,7 +105,7 @@ export default function Question({
             // backgroundColor: "transparent",
             paddingBottom: 0,
           }}
-          // variant="question"
+          variant="question"
           value={questionAnswer}
           handleChange={(e) => {
             setQuestionAnswer(e.target.value);

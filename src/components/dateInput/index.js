@@ -19,7 +19,7 @@ function DatePart({
   label,
   maxLength,
   placeholder,
-  inputCss = "pl-12 md:pl-14",
+  inputCss = "pl-8 md:pl-14",
   isLast = false,
   tabIndex,
 }) {
@@ -35,7 +35,8 @@ function DatePart({
         className={`absolute py-2 h-full text-lg pl-2 text-darkGray`}
         onClick={() => inputRef && inputRef.current && inputRef.current.focus()}
       >
-        {label}:
+        <span className="hidden md:block">{label}:</span>
+        <span className="md:hidden block">{label.slice(0, 1)}:</span>
       </span>
       <input
         ref={inputRef}
@@ -44,7 +45,7 @@ function DatePart({
         id="dateFinderInput"
         onChange={(e) => setLocalVal(e.target.value)}
         onBlur={() => setVal(localVal)}
-        className={`input w-full ${inputCss}`}
+        className={`input rounded-none w-full ${inputCss}`}
         value={localVal}
         type="text"
         maxLength={maxLength}
@@ -254,8 +255,7 @@ export default function DateInput({
             val={yearValue}
             setVal={setYearValue}
             maxLength="4"
-            placeholder={dateFinderValues.year || "2000"}
-            // inputCss="pl-12 md:pl-14 rounded-l"
+            placeholder={dateFinderValues.year || "1999"}
           />
           <DatePart
             key={2}
@@ -264,8 +264,8 @@ export default function DateInput({
             val={monthValue}
             setVal={setMonthValue}
             maxLength="2"
-            placeholder={date.slice(5, 7).replace(/^0/, "") || "1"}
-            inputCss="pl-16 md:pl-20"
+            placeholder={date.slice(5, 7).replace(/^0/, "") || "12"}
+            inputCss="pl-8 md:pl-20"
           />
           <DatePart
             key={3}
@@ -274,7 +274,7 @@ export default function DateInput({
             val={dayValue}
             setVal={setDayValue}
             maxLength="2"
-            placeholder={date.slice(8, 10).replace(/^0/, "") || "1"}
+            placeholder={date.slice(8, 10).replace(/^0/, "") || "31"}
             isLast
           />
           {init && (
