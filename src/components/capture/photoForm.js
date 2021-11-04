@@ -81,7 +81,6 @@ export default function PhotoForm({
         </FormField>
 
         <DatePicker
-          label="Date"
           smartDate={values.smartDate}
           date={values.date}
           error={errors.date}

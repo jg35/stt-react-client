@@ -10,10 +10,10 @@ import {
 } from "~/lib/gql";
 import { refreshToken } from "~/lib/firebase";
 
-import DatePicker from "~/components/dateInput";
+import SimpleDateInput from "~/components/simpleDateInput";
 import CountrySelect from "~/components/countrySelect";
 import FormField from "~/components/formField";
-import { Button, Title, Grid, Tag, FormLabel } from "~/components/_styled";
+import { Button, Title, Grid } from "~/components/_styled";
 import useToastMessage from "~/hooks/useToastMessage";
 
 export default function ManageUser({ dbUser }) {
@@ -71,10 +71,8 @@ export default function ManageUser({ dbUser }) {
             <form id="manage-user-settings-form" onSubmit={handleSubmit}>
               <div>
                 <Grid colSpan={["col-span-12"]}>
-                  <DatePicker
-                    useDateFinder={false}
+                  <SimpleDateInput
                     label="Date of birth"
-                    insideModal={false}
                     error={errors.dob}
                     date={values.dob}
                     handleChange={(newDate) => {

@@ -36,7 +36,6 @@ export default function EventForm({
       </FormField>
 
       <DatePicker
-        label="Date"
         smartDate={values.smartDate}
         error={errors.date}
         date={values.date}

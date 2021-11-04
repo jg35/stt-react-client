@@ -1,5 +1,5 @@
 import { FormInput, FormLabel, Title } from "~/components/_styled";
-import DatePicker from "~/components/dateInput";
+import SimpleDateInput from "~/components/simpleDateInput";
 import FormError from "~/components/formError";
 import { getHTMLTranslation } from "~/lib/util";
 
@@ -44,11 +44,8 @@ export default function PublishOptionsForm({
         <FormError error={errors.author} />
       </div>
 
-      <DatePicker
+      <SimpleDateInput
         label="Publication date"
-        popperPlacement="top-start"
-        insideModal={false}
-        useDateFinder={false}
         date={values.publishedAt}
         error={errors.publishedAt}
         handleChange={(newDate) => {

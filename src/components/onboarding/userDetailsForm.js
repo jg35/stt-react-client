@@ -9,7 +9,7 @@ import { OnboardingSchema } from "~/lib/yup";
 import { ACTION_UPDATE_USER_DETAILS } from "~/lib/gql";
 import FormError from "~/components/formError";
 import CountrySelect from "~/components/countrySelect";
-import DatePicker from "~/components/dateInput";
+import SimpleDateInput from "~/components/simpleDateInput";
 import { Button, FormLabel, Title, Text } from "~/components/_styled";
 import { AuthContext } from "~/components/authWrap";
 import { useEffect } from "react";
@@ -110,12 +110,10 @@ export default function UserDeailsForm() {
               </div>
 
               <div className="mb-6">
-                <DatePicker
+                <SimpleDateInput
                   label="Enter your date of birth"
                   error={errors.dob}
                   date={values.dob}
-                  insideModal={false}
-                  useDateFinder={false}
                   handleChange={(newDate) => {
                     setFieldValue("dob", newDate);
                   }}

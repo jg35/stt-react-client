@@ -27,7 +27,6 @@ export default function ChapterForm({
         </FormField>
       )}
       <DatePicker
-        label="Date"
         smartDate={values.smartDate}
         date={values.date}
         error={errors.date}

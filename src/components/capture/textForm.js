@@ -50,11 +50,11 @@ export default function TextForm({
 
       <Grid colSpan={[`col-span-12 ${!editContent && "col-span-6"}`]}>
         <DatePicker
-          label="Date"
           smartDate={values.smartDate}
           error={errors.date}
           date={values.date}
           handleChange={(newDate) => {
+            console.log("handle the change....");
             setFieldValue("date", newDate);
             setFieldValue("smartDate.isSmartDate", false);
           }}

@@ -55,14 +55,12 @@ function getLevelFromType(type) {
 
 function genSelectionTree(value, rootTree, rawData) {
   let selectionTree = [];
-  const decade = rootTree.items.find((i) => i.date[2] === value[2]);
+  const decade = rootTree.items.find((i) => i.date[2] === value.year[2]);
   const year = decade.items.find(
-    (i) => i.date.slice(2, 4) === value.slice(2, 4)
+    (i) => i.date.slice(2, 4) === value.year.slice(2, 4)
   );
-  if (value.length >= 7) {
-    const month = year.items.find(
-      (i) => i.date.slice(5, 7) === value.slice(5, 7)
-    );
+  if (value.month) {
+    const month = year.items.find((i) => i.date.slice(5, 7) === value.month);
     month.items = getMonthItems(DateTime.fromISO(month.date), rawData);
     selectionTree = [rootTree, decade, year, month];
   } else {
@@ -84,7 +82,6 @@ export default function DateFinder({
 }) {
   const scrollContainer = useRef(null);
   const [expandedDate, setExpandedDate] = useState(null);
-
   const [detailLevel, setDetailLevel] = useState(smartDateDetailLevel || 0);
   const [selectionTree, setSelectionTree] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -95,7 +92,7 @@ export default function DateFinder({
 
   function initDateFinder(timelineData, outsideValue) {
     const baseDataTree = filterFinderData(timelineData);
-    if (outsideValue) {
+    if (outsideValue.year) {
       const [newSelectionTree, detailLevel] = genSelectionTree(
         outsideValue,
         baseDataTree,
@@ -103,8 +100,8 @@ export default function DateFinder({
       );
       setSelectionTree(newSelectionTree);
       setDetailLevel(smartDateDetailLevel || detailLevel);
-      if (outsideValue.length >= 10) {
-        setDate(outsideValue.slice(0, 10));
+      if (value.day) {
+        setDate(`${value.year}-${value.month}-${value.day}`);
         setDateFromOutside(true);
       } else {
         setDateFromOutside(false);
@@ -181,21 +178,35 @@ export default function DateFinder({
                 size="compact"
                 variant="nothing"
                 onClick={() => {
-                  let inputDate;
-
-                  if (dobIso > date) {
+                  let inputDate = date;
+                  if (date < dobIso) {
                     inputDate = dobIso;
-                  } else if (smartDateDetailLevel) {
-                    inputDate = date;
-                  } else if (detailLevel <= 2) {
-                    inputDate = date.slice(0, 4);
-                  } else if (detailLevel === 3 && !dateFromPicker) {
-                    inputDate = date.slice(0, 7);
-                  } else {
-                    inputDate = date;
                   }
-                  onChange(inputDate);
-
+                  const dtDate = DateTime.fromISO(inputDate);
+                  if (
+                    date < dobIso ||
+                    smartDateDetailLevel ||
+                    dateFromPicker ||
+                    detailLevel === 4
+                  ) {
+                    onChange({
+                      year: dtDate.toFormat("yyyy"),
+                      month: dtDate.toFormat("M"),
+                      day: dtDate.toFormat("d"),
+                    });
+                  } else if (detailLevel <= 2) {
+                    onChange({
+                      year: dtDate.toFormat("yyyy"),
+                      month: "",
+                      day: "",
+                    });
+                  } else if (detailLevel === 3) {
+                    onChange({
+                      year: dtDate.toFormat("yyyy"),
+                      month: dtDate.toFormat("M"),
+                      day: "",
+                    });
+                  }
                   setOpen(false);
                 }}
                 css="hover:bg-black text-offWhite w-auto font-medium flex items-center bg-darkGray shadow-xl py-2"
