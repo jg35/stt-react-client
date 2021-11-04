@@ -54,7 +54,6 @@ export default function TextForm({
           error={errors.date}
           date={values.date}
           handleChange={(newDate) => {
-            console.log("handle the change....");
             setFieldValue("date", newDate);
             setFieldValue("smartDate.isSmartDate", false);
           }}

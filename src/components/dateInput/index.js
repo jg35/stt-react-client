@@ -86,7 +86,6 @@ export default function DateInput({
 
   // Initialise date from outside
   useEffect(() => {
-    console.log("date changed");
     if (!init && date) {
       const dt = DateTime.fromISO(date);
       if (dt.isValid) {

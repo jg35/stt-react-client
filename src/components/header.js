@@ -15,7 +15,6 @@ export default function Header({
   css,
   maxWidth,
 }) {
-  console.log("maxWidth", maxWidth);
   const { uiState, updateUiState } = useContext(UIContext);
   const {
     authState: { dbUser },

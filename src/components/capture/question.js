@@ -27,7 +27,6 @@ export default function Question({
     if (questionSet && !questionSet.shuffleOrder.length) {
       // change the category
       questionOptions.forEach((questionSet) => {
-        console.log(questionSet);
         if (questionSet.shuffleOrder.length) {
           setQuestionSetId(questionSet.id);
           setShuffleIndex(0);
