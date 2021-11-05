@@ -272,6 +272,7 @@ export default function CaptureModal({
                 {item.type === "TEXT" && (
                   <TextForm
                     {...props}
+                    isQuestion={!!item.questionId}
                     editContent={!editView}
                     closeHandler={closeHandler}
                     setModalSize={(size) => setOverrideSize(size)}

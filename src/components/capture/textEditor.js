@@ -15,6 +15,7 @@ export default function TextEditor({
   onExpand,
   autoFocus = true,
   height = "h-44 md:h-60",
+  placeholder = "",
 }) {
   const [expanded, setExpanded] = useState(false);
   const [placeholder] = useState(
@@ -39,7 +40,7 @@ export default function TextEditor({
           e.target.value = "";
           e.target.value = val;
         }}
-        placeholder="Write down your memory"
+        placeholder={placeholder}
         className={`focus:outline-none bg-white border-lightGray transition duration-200 ease-in resize-none py-3 px-4 text-lg ${
           error ? "input-error border" : "focus:bg-offWhite"
         } w-full ${height}`}

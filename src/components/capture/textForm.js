@@ -12,6 +12,7 @@ export default function TextForm({
   setFieldValue,
   editContent = true,
   closeHandler,
+  isQuestion,
 }) {
   return (
     <>
@@ -23,6 +24,11 @@ export default function TextForm({
             handleChange={handleChange}
             value={values.content}
             error={errors.content}
+            placeholder={
+              isQuestion
+                ? "When answering questions, try to pinpoint one specific situation or story to answer the question and try not to reference the question itself. This will help to keep your book feeling like a continous narrative."
+                : "Talk about your memory. Try to relate it to a specific time and place."
+            }
             onExpand={(expand) => {
               // if (expand) {
               //   setModalSize("fullscreen");

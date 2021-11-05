@@ -59,25 +59,26 @@ export default function QuestionSelectModal({
       <div className="shadow-inner py-4 px-4 bg-lightestGray rounded-b -mx-6 -mb-6">
         <QuestionSetRow
           sets={questionSetGroups["about-you"]}
-          title="1. About you"
+          title="1. About you and your family"
           selectQuestionSet={selectHandler}
           key={1}
         />
         <QuestionSetRow
           sets={questionSetGroups["life-stages"]}
-          title="2. Life Stages"
+          title="2. Stages of your life"
           selectQuestionSet={selectHandler}
           key={2}
         />
         <QuestionSetRow
-          sets={questionSetGroups["education-&-career"]}
-          title="3. Education & Career"
+          sets={questionSetGroups["education"]}
+          title="3. Education"
           selectQuestionSet={selectHandler}
           key={3}
         />
+        {/* TODO change to adulthood */}
         <QuestionSetRow
-          sets={questionSetGroups["family-&-home"]}
-          title="4. Family & Home"
+          sets={questionSetGroups["adulthood"]}
+          title="4. Adulthood"
           selectQuestionSet={selectHandler}
           key={4}
         />
