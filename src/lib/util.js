@@ -217,7 +217,7 @@ export const getSmartDate = (
       exact = true;
       detailLevel = 3;
     }
-  } else if (suggestedAge) {
+  } else if (suggestedAge !== null) {
     date = getDateOnAge(userDob, suggestedAge);
     detailLevel = 1;
     if (ageExact) {
