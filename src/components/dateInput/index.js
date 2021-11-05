@@ -328,7 +328,7 @@ export default function DateInput({
               title={
                 smartDate.exact
                   ? "We set this date automatically because the question relates to a specific day in your life."
-                  : "We've suggested this date from the time period you selected, question dates or your approximate age at the time."
+                  : "This date is suggested from the time period you selected, question dates or your approximate age at the time."
               }
             >
               {smartDate.exact ? (

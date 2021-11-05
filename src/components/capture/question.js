@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Button, Title, FormInput } from "~/components/_styled";
 import Svg from "~/components/svg";
+import { UIContext } from "~/app";
 import QuestionMenu from "~/components/capture/questionMenu";
 import QuestionSelectButton from "~/components/capture/questionSelectButton";
 import QuestionSelectModal from "~/components/capture/questionSelectModal";
@@ -10,15 +11,18 @@ export default function Question({
   hideQuestionTag,
   openQuestionModal,
 }) {
+  const { uiState, updateUiState } = useContext(UIContext);
   const [currentQuestion, setCurrentQuestion] = useState(null);
-  const [questionSetId, setQuestionSetId] = useState(2);
+  const [questionSetId, setQuestionSetId] = useState(uiState.questionSetId);
   const [questionAnswer, setQuestionAnswer] = useState("");
   const [selectModalOpen, setSelectModalOpen] = useState(false);
   const [shuffleIndex, setShuffleIndex] = useState(0);
 
   function getQuestionSet() {
     return (
-      questionOptions && questionOptions.find((o) => o.id === questionSetId)
+      questionOptions &&
+      (questionOptions.find((o) => o.id === questionSetId) ||
+        questionOptions.find((o) => o.title === "Origins"))
     );
   }
 
@@ -131,6 +135,7 @@ export default function Question({
           questionOptions={questionOptions}
           selectQuestionSet={(id) => {
             setQuestionSetId(id);
+            updateUiState({ questionSetId: id });
           }}
           // TODO toggle instead of hide
           hideQuestion={hideQuestion}

@@ -226,6 +226,10 @@ export const getSmartDate = (
     }
   }
 
+  if (date > DateTime.utc().toISODate()) {
+    date = "";
+  }
+
   return {
     date,
     smartDate: {
