@@ -1,10 +1,3 @@
-import React, { useState } from "react";
-import { Button } from "~/components/_styled";
-import Svg from "~/components/svg";
-import colors from "~/lib/colors";
-
-const placeholders = [];
-
 export default function TextEditor({
   name,
   handleBlur,
@@ -17,11 +10,6 @@ export default function TextEditor({
   height = "h-44 md:h-60",
   placeholder = "",
 }) {
-  const [expanded, setExpanded] = useState(false);
-  const [placeholder] = useState(
-    placeholders[Math.floor(Math.random() * placeholders.length) + 1]
-  );
-
   return (
     <div className="flex-1 relative">
       <textarea
@@ -48,21 +36,6 @@ export default function TextEditor({
         onChange={handleChange}
         value={value}
       />
-      {/* <div className="absolute -right-1 bottom-2">
-        <Button
-          variant="minimal"
-          onClick={() => {
-            const expanding = !expanded;
-            if (expanding) {
-              document.querySelector("#form-text-editor").focus();
-            }
-            onExpand(expanding);
-            setExpanded(expanding);
-          }}
-        >
-          <Svg name="expand" color="offBlack" />
-        </Button>
-      </div> */}
     </div>
   );
 }
