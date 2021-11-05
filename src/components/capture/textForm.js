@@ -2,7 +2,6 @@ import DatePicker from "~/components/dateInput";
 import FormField from "~/components/formField";
 import TextEditor from "~/components/capture/textEditor";
 import { Grid } from "~/components/_styled";
-import { pick } from "lodash";
 
 export default function TextForm({
   handleChange,
@@ -29,13 +28,6 @@ export default function TextForm({
                 ? "When answering questions, try to pinpoint one specific situation or story to answer the question and try not to reference the question itself. This will help to keep your book feeling like a continous narrative."
                 : "Talk about your memory. Try to relate it to a specific time and place."
             }
-            onExpand={(expand) => {
-              // if (expand) {
-              //   setModalSize("fullscreen");
-              // } else {
-              //   setModalSize(null);
-              // }
-            }}
             onKeyUp={(e) => {
               if (
                 values.questionId &&

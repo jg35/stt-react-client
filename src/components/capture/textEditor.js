@@ -5,7 +5,6 @@ export default function TextEditor({
   value,
   onKeyUp,
   error,
-  onExpand,
   autoFocus = true,
   height = "h-44 md:h-60",
   placeholder = "",
@@ -16,14 +15,11 @@ export default function TextEditor({
         id="form-text-editor"
         name={name}
         onKeyUp={(e) => {
-          if (e.key === "Escape") {
-            setExpanded(false);
-            onExpand(false);
-          }
           onKeyUp(e);
         }}
         autoFocus={autoFocus}
         onFocus={function (e) {
+          // TODO - wtf is this crazy shit.
           var val = e.target.value;
           e.target.value = "";
           e.target.value = val;
