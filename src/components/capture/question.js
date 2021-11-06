@@ -83,8 +83,8 @@ export default function Question({
   }
 
   return (
-    <div id="question-panel" className="py-2 px-3 pr-1 border-2 rounded">
-      <div className="flex items-start">
+    <div id="question-panel" className="py-2 px-3 pr-2 border-2 rounded">
+      <div className="flex items-start mb-1">
         <div className="flex-1">
           <Title css="mb-0 w-11/12">{currentQuestion.title}</Title>
         </div>
@@ -95,7 +95,7 @@ export default function Question({
               size="compact"
               onClick={() => shuffleQuestion()}
             >
-              <Svg name="shuffle" size={20}></Svg>
+              <Svg name="shuffle" color="currentColor" size={20}></Svg>
             </Button>
           </div>
         </div>

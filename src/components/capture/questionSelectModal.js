@@ -90,7 +90,7 @@ export default function QuestionSelectModal({
         />
         <QuestionSetRow
           sets={questionSetGroups["advice-&-reflection"]}
-          title="6. Advice & Reflection"
+          title="6. Goals, Reflection & Advice"
           selectQuestionSet={selectHandler}
           key={6}
         />

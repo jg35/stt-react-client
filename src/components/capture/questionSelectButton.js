@@ -5,7 +5,7 @@ import { Button } from "~/components/_styled";
 export default function QuestionSelectButton({ questionSet, toggle }) {
   const url = useGetSignedImageUrl(questionSet.imageUrl);
   return (
-    <div className="px-1" id="question-select-button">
+    <div id="question-select-button">
       <Button
         onClick={toggle}
         variant="minimal"
