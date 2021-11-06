@@ -112,6 +112,9 @@ export default function Question({
           variant="question"
           value={questionAnswer}
           handleChange={(e) => {
+            if (uiState.tutorial.active) {
+              return;
+            }
             setQuestionAnswer(e.target.value);
             if (e.target.value.length > 15) {
               openQuestionModal(e.target.value, currentQuestion);

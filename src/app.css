@@ -146,20 +146,11 @@
 }
 
 #page.tutorial-step-1,
-#page.tutorial-step-11,
-#page.tutorial-step-18,
+#page.tutorial-step-10,
+#page.tutorial-step-16,
 #page.blur {
-  filter: blur(1.5px) grayscale(0.4);
+  filter: blur(2px) grayscale(0.4);
   transition: filter 200ms ease-out;
-}
-
-#page.tutorial-step-4 #shuffle-button-wrapper * {
-  pointer-events: all !important;
-}
-
-#page.tutorial-step-6 #shuffle-button-wrapper,
-#page.tutorial-step-6 #question-category-menu * {
-  pointer-events: all !important;
 }
 
 .user-details-form input {

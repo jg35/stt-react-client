@@ -142,7 +142,7 @@ export default function Tutorial() {
     tutorialStyles += " min-w-full h-40 py-2 px-4 rounded-t-lg";
   } else {
     if (currentStep.xl) {
-      tutorialStyles += " w-96 p-4 h-60";
+      tutorialStyles += " w-96 p-4 h-50";
     } else {
       tutorialStyles += " w-60 p-2 h-auto";
     }
@@ -158,27 +158,15 @@ export default function Tutorial() {
     >
       <div
         ref={tutorialWidgetRefInner}
-        className="flex flex-col justify-between h-full hidden max-w-5xl mx-auto"
+        className="flex flex-col justify-between h-full hidden mx-auto"
       >
-        <div
-          className={`${
-            currentStep.fixed && "md:py-2"
-          } flex justify-between items-center font-medium ${
-            currentStep.xl ? "text-lg" : "text-sm"
-          }`}
-        >
-          <span>{currentStep.title}</span>
-          <span>
+        <div className="text-left text-sm">
+          <span className="text-gray">
             {currentStep.step}/{steps.length}
           </span>
         </div>
         <div>
-          <Text
-            size={currentStep.xl ? "large" : "default"}
-            css={`
-              ${currentStep.xl ? "mt-4" : "mt-2"}
-            `}
-          >
+          <Text css="mt-2">
             {typeof currentStep.body === "function"
               ? currentStep.body(tutorialData, uiState)
               : currentStep.body}

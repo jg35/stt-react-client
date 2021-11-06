@@ -91,7 +91,6 @@ function getModalMaxHeight(addOffset = 0) {
 export const steps = [
   registerStep({
     step: 1,
-    title: "Welcome 👋",
     body: `This tutorial gives you a short introduction to the timeline, so you're ready to start adding things to your book.`,
     nextText: "Start",
     isComplete: (data, uiState) => uiState.tutorial.step > 1,
@@ -100,7 +99,6 @@ export const steps = [
   }),
   registerStep({
     step: 2,
-    title: "Timeline",
     body: `We start in the timeline view. If you ever get lost using the app click here to come back to where you started.`,
     isComplete: (data, uiState) => uiState.tutorial.step > 2,
     placement: "bottom-start",
@@ -112,53 +110,39 @@ export const steps = [
   }),
   registerStep({
     step: 3,
-    title: "Questions",
-    body: `Our questions panel is a great way to start rediscovering old memories. We have over 150 questions to answer about your life - and this list grows every day!`,
+    body: `Answering questions is a great way to start rediscovering old memories. We have over 200 questions to answer about your life and this list grows each day!`,
     isComplete: (data, uiState) => uiState.tutorial.step > 3,
     async: false,
     referenceElSelector: "#question-panel",
   }),
   registerStep({
     step: 4,
-    title: "Questions",
-    body: `The shuffle button lets you start cycling through the questions available.`,
+    body: `To move onto a different question, click the shuffle button.`,
     isComplete: (data, uiState) => uiState.tutorial.step > 4,
     async: false,
-    placement: "bottom",
+    placement: "auto",
     referenceElSelector: "#shuffle-button-wrapper",
   }),
-  // registerStep({
-  //   step: 5,
-  //   title: "Questions",
-  //   body: `Notice each question is tagged. If a tag isn't relevant to you, click on the dots in the corner to open the question menu. There you can hide questions with that tag.`,
-  //   isComplete: (data, uiState) =>
-  //     window.innerWidth < 768 || uiState.tutorial.step > 5,
-  //   async: false,
-  //   placement: "bottom",
-  //   referenceElSelector: "#question-tag",
-  // }),
   registerStep({
-    step: 6,
-    title: "Questions",
-    body: `There are many sets of questions about different areas of your life. You can click on the current question pack to swap it out.`,
-    isComplete: (data, uiState) => uiState.tutorial.step > 6,
+    step: 5,
+    body: `To choose a different set of questions, click here to view other question packs.`,
+    isComplete: (data, uiState) => uiState.tutorial.step > 5,
     placement: "auto",
     async: false,
     referenceElSelector: "#question-select-button",
   }),
   registerStep({
-    step: 7,
-    title: "Questions",
-    body: `When you find a question you like, you can start typing in the text field above to answer your question.`,
-    isComplete: (data, uiState) => uiState.tutorial.step > 7,
+    step: 6,
+    body: `When you find a question you like, begin answering your question by typing in this text field.`,
+    placement: "bottom-start",
+    isComplete: (data, uiState) => uiState.tutorial.step > 6,
     async: false,
     referenceElSelector: "#form-question-text-input",
   }),
   registerStep({
-    step: 8,
-    title: "Timeline",
+    step: 7,
     body: `Here's a question we prepared earlier, now an entry in our timeline. We can see the original question at the bottom of the card.`,
-    isComplete: (data, uiState) => uiState.tutorial.step > 8,
+    isComplete: (data, uiState) => uiState.tutorial.step > 7,
     async: false,
     placement: "top",
     referenceElSelector: "div[data-fragment-id]",
@@ -170,10 +154,9 @@ export const steps = [
     },
   }),
   registerStep({
-    step: 9,
-    title: "Timeline",
-    body: `Other entries are also here - a chapter, another text memory and a chapter. Notice how our chapter and question share the same date.`,
-    isComplete: (data, uiState) => uiState.tutorial.step > 9,
+    step: 8,
+    body: `Other entries are also here - a chapter, another memory and a photo.`,
+    isComplete: (data, uiState) => uiState.tutorial.step > 8,
     async: false,
     placement: "top-start",
     referenceElSelector: "div[data-fragment-id]",
@@ -187,10 +170,9 @@ export const steps = [
     },
   }),
   registerStep({
-    step: 10,
-    title: "Timeline",
-    body: `When things share the same date we can manually reorder them by clicking on one of the directional arrows.`,
-    isComplete: (data, uiState) => uiState.tutorial.step > 10,
+    step: 9,
+    body: `Our question and chapter share the same date. When things share the same date we can manually reorder them by clicking on these arrows.`,
+    isComplete: (data, uiState) => uiState.tutorial.step > 9,
     async: false,
     placement: "top",
     referenceElSelector: "div[data-fragment-id]",
@@ -204,18 +186,16 @@ export const steps = [
     },
   }),
   registerStep({
-    step: 11,
-    title: "Timeline",
-    body: `Your timeline is strictly chronological as this creates the structure for your book. To get things where they need to be you can edit the date.`,
-    isComplete: (data, uiState) => uiState.tutorial.step > 11,
+    step: 10,
+    body: `Your timeline is a strictly chronological document. If a memory is in the wrong place you will need to update the date.`,
+    isComplete: (data, uiState) => uiState.tutorial.step > 10,
     async: false,
     xl: true,
   }),
   registerStep({
-    step: 12,
-    title: "Timeline",
-    body: `To do that, just click on the centre of the timeline card to update it. For other things you can do, click on the three little dots in the corner.`,
-    isComplete: (data, uiState) => uiState.tutorial.step > 12,
+    step: 11,
+    body: `To do that, click on the the card to update it. For other things you can do, click on the little dots in the corner.`,
+    isComplete: (data, uiState) => uiState.tutorial.step > 11,
     async: false,
     placement: "top",
     referenceElSelector: "div[data-fragment-id]",
@@ -227,10 +207,9 @@ export const steps = [
   }),
 
   registerStep({
-    step: 13,
-    title: "Timeline",
-    body: `To add new content, just click on one of these buttons. We'll estimate the date for you, but try to set your own date if you can.`,
-    isComplete: (data, uiState) => uiState.tutorial.step > 13,
+    step: 12,
+    body: `To add new content, just click on one of these buttons.`,
+    isComplete: (data, uiState) => uiState.tutorial.step > 12,
     async: false,
     placement: "top-start",
     preInit: function (data, uiState, updateUiState) {
@@ -248,39 +227,23 @@ export const steps = [
     },
   }),
   registerStep({
+    step: 13,
+    body: (data, uiState) =>
+      `Above our timeline cards are events, simple markers to remind you about things that happened in your lifetime. Blue events are about your own life.`,
+    isComplete: (data, uiState) => uiState.tutorial.step > 13,
+    async: false,
+    placement: "top-start",
+    referenceElSelector: "button[data-user-event-id]",
+    preInit: function (data) {
+      const eventId = data.stt_userEvent[0].id;
+      scrollToEvent(eventId, false);
+    },
+  }),
+  registerStep({
     step: 14,
-    title: "Timeline",
     body: (data, uiState) =>
-      `Above our timeline cards are our events. Events are simple markers to remind you of things that happened in your life around the same time.`,
+      `And here is a world event. They can help to remind you where you were on that day or give you a sense of the trends at the time.`,
     isComplete: (data, uiState) => uiState.tutorial.step > 14,
-    async: false,
-    placement: "top-start",
-    referenceElSelector: "button[data-user-event-id]",
-    preInit: function (data) {
-      const eventId = data.stt_userEvent[0].id;
-      scrollToEvent(eventId, false);
-    },
-  }),
-  registerStep({
-    step: 15,
-    title: "Timeline",
-    body: (data, uiState) =>
-      `The blue events are events you create yourself. Brown events are our world events. Events are not included in your book.`,
-    isComplete: (data, uiState) => uiState.tutorial.step > 15,
-    async: false,
-    placement: "top-start",
-    referenceElSelector: "button[data-user-event-id]",
-    preInit: function (data) {
-      const eventId = data.stt_userEvent[0].id;
-      scrollToEvent(eventId, false);
-    },
-  }),
-  registerStep({
-    step: 16,
-    title: "Timeline",
-    body: (data, uiState) =>
-      `World events might help to remind you exactly where you were on that day, while others might just remind you of the trends at that time.`,
-    isComplete: (data, uiState) => uiState.tutorial.step > 16,
     async: false,
     placement: "top-start",
     referenceElSelector: "button[data-world-event-id]",
@@ -296,87 +259,22 @@ export const steps = [
     },
   }),
   registerStep({
-    step: 17,
-    title: "Timeline",
+    step: 15,
     body: `Finally we can also change the scale of our timeline. Right now it's set to years, but we can also zoom in to see it in seasons and months.`,
-    isComplete: (data, uiState) => uiState.tutorial.step > 17,
+    isComplete: (data, uiState) => uiState.tutorial.step > 15,
     async: false,
     referenceElSelector: "#time-period-selector button",
     placement: "top-start",
   }),
   registerStep({
-    step: 18,
+    step: 16,
     xl: true,
     last: true,
-    title: "The end",
     nextText: "Close tutorial",
-    body: `If you need help with any of the topics covered, look for the help button in the main menu. We'll be there to help you!`,
-    isComplete: (data, uiState) => uiState.tutorial.step > 18,
+    body: `That's all for now. If you need help with any of the topics covered, click on the help button in the main menu and send us a message. We'll be there to help you!`,
+    isComplete: (data, uiState) => uiState.tutorial.step > 16,
     async: false,
   }),
-
-  // registerStep({
-  //   step: 18,
-  //   title: "Editing",
-  //   body: (data, uiState) =>
-  //     `Fantastic, all of the different bits are there in our timeline now. Let’s head over to the edit view now...`,
-  //   placement: "bottom-start",
-  //   isComplete: (data, uiState, pathName) =>
-  //     pathName.includes("edit") || uiState.tutorial.step > 18,
-  //   async: true,
-  //   referenceElSelector: "#nav-item-edit",
-  // }),
-  // registerStep({
-  //   step: 19,
-  //   title: "Editing",
-  //   body: (data, uiState) =>
-  //     `The edit view shows you what your book will look like in it’s final form and makes it easy to make quick edits to your memories`,
-  //   isComplete: (data, uiState) => uiState.tutorial.step > 19,
-  //   placement: "auto",
-  //   referenceElSelector: ".js-preview-scroll-container div",
-  // }),
-  // registerStep({
-  //   step: 20,
-  //   title: "Editing",
-  //   body: (data, uiState) =>
-  //     `Memories in your book are in date order. If something isn't in the right place, just update the date.`,
-  //   isComplete: (data, uiState) => uiState.tutorial.step > 20,
-  //   placement: "auto",
-  //   referenceElSelector: ".js-preview-scroll-container > div",
-  //   nextText: "Okay",
-  // }),
-  // registerStep({
-  //   step: 21,
-  //   title: "Editing",
-  //   body: (data, uiState) =>
-  //     `To edit one of your memories, click into it and start typing. Click outside or press tab to save your changes.`,
-  //   isComplete: (data, uiState) => uiState.tutorial.step > 21,
-  //   nextText: "Okay",
-  //   placement: "auto",
-  //   preInit: function (data) {
-  //     const frag = data.stt_fragment.find((f) => f.type === "TEXT");
-  //     scrollToEditFragment(frag.id);
-  //     this.referenceElSelector = `div[data-preview-fragment-id="${frag.id}"]`;
-  //   },
-  // }),
-  // registerStep({
-  //   step: 22,
-  //   title: "🧠",
-  //   body: (data, uiState) =>
-  //     `In general think of the timeline view as where you capture content for your book, and the edit view as where you do most of your writing.`,
-  //   isComplete: (data, uiState) => uiState.tutorial.step > 22,
-  //   xl: true,
-  //   nextText: "Got it",
-  // }),
-  // registerStep({
-  //   step: 23,
-  //   title: "Publishing",
-  //   body: (data, uiState) =>
-  //     `The only thing left is to publish your book, but let's cross that bridge a bit later!`,
-  //   isComplete: (data, uiState) => uiState.tutorial.step > 23,
-  //   referenceElSelector: "#nav-item-publish",
-  //   nextText: "Finish",
-  // }),
 ];
 
 function findActiveSectionIndex(itemId, isEvent = false) {
