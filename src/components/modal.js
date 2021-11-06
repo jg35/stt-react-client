@@ -120,10 +120,10 @@ export default function Modal({
             }
           }}
         >
-          {/* {canClose && (
+          {canClose && (
             <Button
               size="compact"
-              css="fixed lg:absolute lg:shadow-none right-4 top-6 md:top-8 md:right-6 lg:top-4 w-auto font-medium rounded-2xl z-40 shadow bg-white"
+              css="md:hidden absolute right-4 top-4 rounded-full w-auto shadow z-40 w-10 h-10"
               variant="minimal"
               onClick={() => {
                 if (formIsDirty) {
@@ -133,9 +133,11 @@ export default function Modal({
                 }
               }}
             >
-              Close <Svg name="cancel" size={18} css="ml-1" />
+              <span className="p-1">
+                <Svg name="cancel" size={18} />
+              </span>
             </Button>
-          )} */}
+          )}
           {children}
         </Card>
 

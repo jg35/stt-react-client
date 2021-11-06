@@ -264,7 +264,7 @@ export default function CaptureModal({
                 className="h-full md:order-2"
                 onSubmit={props.handleSubmit}
               >
-                <Title size="large" css="inline-block md:w-8/12">
+                <Title size="large" css="inline-block w-9/12 md:w-8/12">
                   {formTitle}
                 </Title>
                 {item.type === "EVENT" && <EventForm {...props} />}

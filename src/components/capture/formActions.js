@@ -9,9 +9,9 @@ export default function FormActions({
 }) {
   let submitText;
   if (isSubmitting) {
-    submitText = !itemId ? "Creating..." : "Saving...";
+    submitText = "Saving...";
   } else {
-    submitText = !itemId ? "Create" : "Save";
+    submitText = "Save";
   }
   return (
     <div className="flex justify-end md:absolute top-0 right-0">

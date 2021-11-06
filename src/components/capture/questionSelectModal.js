@@ -55,7 +55,9 @@ export default function QuestionSelectModal({
 
   return (
     <Modal close={close} isOpen={isOpen} size="full">
-      <Title>Select a question pack to start answering questions</Title>
+      <Title css="w-9/12 md:w-full">
+        Select a question pack to start answering questions
+      </Title>
       <div className="shadow-inner py-4 px-4 bg-lightestGray rounded-b -mx-6 -mb-6">
         <QuestionSetRow
           sets={questionSetGroups["about-you"]}
@@ -75,7 +77,6 @@ export default function QuestionSelectModal({
           selectQuestionSet={selectHandler}
           key={3}
         />
-        {/* TODO change to adulthood */}
         <QuestionSetRow
           sets={questionSetGroups["adulthood"]}
           title="4. Adulthood"
