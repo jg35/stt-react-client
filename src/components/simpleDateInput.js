@@ -12,7 +12,7 @@ function toISO(date) {
 
 export default function SimpleDateInput({ date, label, error, handleChange }) {
   const [isoValue, setIsoValue] = useState(date);
-  const [inputValue, setInputValue] = useState(fromISO(date));
+  const [inputValue, setInputValue] = useState(date ? fromISO(date) : "");
   // Initialise date from outside
   useEffect(() => {
     if (!isoValue && date) {
@@ -22,9 +22,14 @@ export default function SimpleDateInput({ date, label, error, handleChange }) {
   }, [date]);
 
   useEffect(() => {
-    const isoVal = toISO(inputValue);
-    handleChange(isoVal);
-    setIsoValue(isoVal);
+    if (inputValue) {
+      const isoVal = toISO(inputValue);
+      handleChange(isoVal);
+      setIsoValue(isoVal);
+    } else {
+      handleChange("");
+      setIsoValue("");
+    }
   }, [inputValue]);
 
   return (
