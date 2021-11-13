@@ -1,5 +1,5 @@
 import { DateTime } from "luxon";
-import { sortBy } from "lodash";
+import sortBy from "lodash/sortBy";
 
 function getHemisphere(countryCode) {
   // TODO get lib to calculate this

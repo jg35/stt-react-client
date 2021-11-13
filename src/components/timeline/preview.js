@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useContext } from "react";
-import { debounce } from "lodash";
+import debounce from "lodash/debounce";
 import { scrollToFragment } from "~/lib/timeline";
 import Image from "~/components/image";
 import ChapterNavigator from "~/components/timeline/chapterNavigator";

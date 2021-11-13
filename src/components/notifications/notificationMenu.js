@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import Svg from "~/components/svg";
-import { isEmpty } from "lodash";
+import isEmpty from "lodash/isEmpty";
 import { Text, Button, Title } from "~/components/_styled";
 import useClickOutside from "~/hooks/useClickOutside";
 import AlertCircle from "~/components/alertCircle";

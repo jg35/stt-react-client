@@ -3,7 +3,9 @@ import { useMutation, useLazyQuery } from "@apollo/client";
 import { UIContext } from "~/app";
 import { AuthContext } from "~/components/authWrap";
 import { FETCH_IMAGES, ACTION_S3_GET_SIGNED_URL } from "~/lib/gql";
-import { flatten, get, uniq } from "lodash";
+import flatten from "lodash/flatten";
+import get from "lodash/get";
+import uniq from "lodash/uniq";
 import { photoSizes, coverImageSizes } from "~/lib/imageSizes";
 
 export function useGetSignedImageUrl(path) {

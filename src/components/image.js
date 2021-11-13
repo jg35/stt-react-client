@@ -1,4 +1,4 @@
-import { omit } from "lodash";
+import omit from "lodash/omit";
 import { useGetSignedImageUrl } from "~/hooks/useSignedUrl";
 
 export default function Image(props) {

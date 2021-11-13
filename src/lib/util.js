@@ -3,7 +3,7 @@ import React from "react";
 import tailwindProperties from "~/tailwindProperties.json";
 import translations from "~/translations.json";
 import { overrideTailwindClasses } from "tailwind-override";
-import { uniqueId } from "lodash";
+import uniqueId from "lodash/uniqueId";
 
 export const getTrialDaysRemaining = (trialExpireDate) => {
   const now = DateTime.utc();

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useMutation } from "@apollo/client";
-import { sortBy } from "lodash";
+import sortBy from "lodash/sortBy";
 import { FETCH_EDIT_VIEW, UPDATE_FRAGMENT } from "~/lib/gql";
 import { useCustomQuery } from "~/hooks/useCustomApollo";
 import Page from "~/components/page";

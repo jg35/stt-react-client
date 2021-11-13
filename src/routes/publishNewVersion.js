@@ -2,7 +2,8 @@ import { useEffect, useContext, useState } from "react";
 import { useHistory } from "react-router";
 import { Formik } from "formik";
 import { useMutation, gql } from "@apollo/client";
-import { pick, cloneDeep } from "lodash";
+import pick from "lodash/pick";
+import cloneDeep from "lodash/cloneDeep";
 
 import { useCustomQuery } from "~/hooks/useCustomApollo";
 import { AuthContext } from "~/components/authWrap";

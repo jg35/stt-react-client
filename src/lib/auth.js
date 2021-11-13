@@ -1,4 +1,5 @@
-import firebase from "firebase";
+import firebase from "firebase/app";
+import "firebase/auth";
 const google = new firebase.auth.GoogleAuthProvider();
 const facebook = new firebase.auth.FacebookAuthProvider();
 

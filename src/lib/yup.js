@@ -1,11 +1,10 @@
 import * as Yup from "yup";
-import { capitalize, startCase } from "lodash";
+import capitalize from "lodash/capitalize";
+import startCase from "lodash/startCase";
 import { v4 as uuid } from "uuid";
 import { DateTime } from "luxon";
 
-import { setLocale } from "yup";
-
-setLocale({
+Yup.setLocale({
   mixed: {
     required: ({ path, label }) => {
       return capitalize(`${label || startCase(path)} is required`);

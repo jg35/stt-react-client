@@ -1,7 +1,6 @@
 import DatePicker from "~/components/dateInput";
 import FormField from "~/components/formField";
 import { FormInput } from "~/components/_styled";
-import { pick } from "lodash";
 
 export default function ChapterForm({
   handleChange,

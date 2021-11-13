@@ -7,7 +7,6 @@ import MainMenu from "~/components/mainMenu";
 import { UIContext } from "~/app";
 import { AuthContext } from "~/components/authWrap";
 import NotificationMenu from "~/components/notifications/notificationMenu";
-import { max } from "lodash-es";
 
 export default function Header({
   minimal = false,

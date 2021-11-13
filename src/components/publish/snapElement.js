@@ -3,6 +3,7 @@ import interact from "interactjs";
 import React, { useState, useEffect } from "react";
 
 function Draggable({ children, position, parentRef, maxWidth, css, getRef }) {
+  console.log("css", css);
   return (
     <div
       className={`${css} noselect`}

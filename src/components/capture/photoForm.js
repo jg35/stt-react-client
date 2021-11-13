@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import DatePicker from "~/components/dateInput";
 import { InProgress, FormInput, Grid } from "~/components/_styled";
 import FormField from "~/components/formField";
-import { pick } from "lodash";
 import Image from "~/components/image";
 import Uppy from "~/components/uppy";
 import imageSizes from "~/lib/imageSizes";

@@ -1,7 +1,6 @@
 import ContentEditable from "react-contenteditable";
 import { useRef, useState } from "react";
-import { debounce } from "lodash";
-import colors from "~/lib/colors";
+import debounce from "lodash/debounce";
 import { renderFragmentDate } from "~/lib/util";
 import PhotoFragment from "~/components/edit/photoFragment";
 import FragmentHeaderMenu from "~/components/timeline/fragmentHeaderMenu";

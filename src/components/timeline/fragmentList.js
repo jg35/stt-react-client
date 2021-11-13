@@ -1,6 +1,6 @@
 import React from "react";
-import { useMutation, gql, mutat } from "@apollo/client";
-import { cloneDeep } from "lodash";
+import { useMutation, gql } from "@apollo/client";
+import cloneDeep from "lodash/cloneDeep";
 import Fragment from "~/components/timeline/fragment";
 import { fragmentFragment } from "~/lib/gql/_fragments";
 

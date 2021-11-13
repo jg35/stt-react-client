@@ -1,8 +1,7 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { useMutation } from "@apollo/client";
-import { throttle } from "lodash";
+import throttle from "lodash/throttle";
 import { ACTION_CHECK_HANDLE_AVAILABILITY } from "~/lib/gql";
-import colors from "~/lib/colors";
 import { FormInput, FormCaption, FormLabel } from "~/components/_styled";
 import LoadingSpinner from "~/components/loadingSpinner";
 

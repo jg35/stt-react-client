@@ -99,6 +99,26 @@
   background-color: rgba(0, 0, 0, 0.9) !important;
 }
 
+/* Cover editor shapes */
+.ce-rectangle {
+  width: 100%;
+  height: 50%;
+}
+.ce-square {
+  width: 60%;
+}
+.ce-square:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+.ce-oval {
+  height: 50%;
+  width: 50%;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
 .widget-callout {
   height: 2px;
   background-color: black;

@@ -1,6 +1,5 @@
 import { useRef, useContext, useEffect, useState } from "react";
-import { css } from "@emotion/css";
-import { cloneDeep } from "lodash";
+import cloneDeep from "lodash/cloneDeep";
 import colors from "~/lib/colors";
 import { CoverElementSchema } from "~/lib/yup";
 import { setGoogleFontStyles } from "~/lib/uiManager";
@@ -145,29 +144,8 @@ export default function CoverEditorForm({ values, setFieldValue, setValues }) {
   }
 
   function getImageCss(placement) {
-    switch (placement) {
-      case "rectangle":
-        return css`
-          width: 100%;
-          height: 50%;
-        `;
-      case "oval":
-        return css`
-          height: 50%;
-          width: 50%;
-          border-radius: 50%;
-          overflow: hidden;
-        `;
-      case "square":
-        return css`
-          width: 60%;
-          &:after {
-            content: "";
-            display: block;
-            padding-bottom: 100%;
-          }
-        `;
-    }
+    // See app.css for defs
+    return `ce-${placement}`;
   }
 
   function getImageRelativePosition(

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
-import { debounce, cloneDeep } from "lodash";
+import debounce from "lodash/debounce";
+import cloneDeep from "lodash/cloneDeep";
 import { useCustomQuery } from "~/hooks/useCustomApollo";
 
 import { FETCH_TIMELINE_VIEW } from "~/lib/gql";

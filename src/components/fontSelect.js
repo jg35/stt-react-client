@@ -1,4 +1,3 @@
-import axios from "axios";
 import Select from "react-select";
 import { useEffect, useState, useContext } from "react";
 import { UIContext } from "~/app";
@@ -34,24 +33,26 @@ export default function GoogleFontSelect({
   useEffect(() => {
     // TODO cache this call in a hasura action
     if (availableFontsUrl && !options.length) {
-      axios.get(availableFontsUrl).then(({ data }) => {
-        const fontOptions = data.fonts.reduce((fonts, font, index) => {
-          font.value = font.family;
-          font.label = font.family;
-          if (category === "all" || category === font.category) {
-            const lastFont = fonts[fonts.length - 1];
-            // Don't bother with variations of the same font
-            if (
-              !lastFont ||
-              !lastFont.family.includes(font.value.slice(0, 5))
-            ) {
-              fonts.push(font);
+      fetch(availableFontsUrl)
+        .then((response) => response.json())
+        .then(({ data }) => {
+          const fontOptions = data.fonts.reduce((fonts, font, index) => {
+            font.value = font.family;
+            font.label = font.family;
+            if (category === "all" || category === font.category) {
+              const lastFont = fonts[fonts.length - 1];
+              // Don't bother with variations of the same font
+              if (
+                !lastFont ||
+                !lastFont.family.includes(font.value.slice(0, 5))
+              ) {
+                fonts.push(font);
+              }
             }
-          }
-          return fonts;
-        }, []);
-        setOptions(fontOptions);
-      });
+            return fonts;
+          }, []);
+          setOptions(fontOptions);
+        });
     }
   }, [availableFontsUrl]);
   return (

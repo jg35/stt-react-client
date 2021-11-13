@@ -1,6 +1,6 @@
 import React, { useState, useContext, useRef, useEffect } from "react";
 import { DateTime } from "luxon";
-import { debounce } from "lodash";
+import debounce from "lodash/debounce";
 
 import { UIContext } from "~/app";
 import ChapterNavigator from "~/components/timeline/chapterNavigator";

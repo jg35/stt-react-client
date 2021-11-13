@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { debounce } from "lodash";
+import debounce from "lodash/debounce";
 
 import FragmentList from "~/components/timeline/fragmentList";
 import UserEvent from "~/components/timeline/userEvent";

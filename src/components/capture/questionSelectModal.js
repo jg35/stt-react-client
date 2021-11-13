@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Modal from "~/components/modal";
-import { sortBy } from "lodash";
+import sortBy from "lodash/sortBy";
 import QuestionSetCard from "~/components/capture/questionSetCard";
 import { Title } from "~/components/_styled";
 

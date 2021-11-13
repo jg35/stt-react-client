@@ -3,7 +3,7 @@ import { useLazyQuery } from "@apollo/client";
 import { AuthContext } from "~/components/authWrap";
 import { Button, Text, Grid } from "~/components/_styled";
 import { useHistory } from "react-router";
-import { cloneDeep } from "lodash";
+import cloneDeep from "lodash/cloneDeep";
 
 import { FETCH_TIMELINE_VIEW } from "~/lib/gql";
 import { UIContext } from "~/app";

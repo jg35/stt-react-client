@@ -1,7 +1,6 @@
 import { FormInput } from "~/components/_styled";
 import FormField from "~/components/formField";
 import DatePicker from "~/components/dateInput";
-import { pick } from "lodash";
 
 export default function EventForm({
   handleChange,

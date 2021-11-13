@@ -3,7 +3,8 @@ import { Formik } from "formik";
 import { useMutation, useLazyQuery, gql } from "@apollo/client";
 import useToastMessage from "~/hooks/useToastMessage";
 import { FETCH_QUESTIONS } from "~/lib/gql";
-import { lowerCase, omit } from "lodash";
+import lowerCase from "lodash/lowerCase";
+import omit from "lodash/omit";
 import {
   INSERT_FRAGMENT,
   INSERT_USER_EVENT,

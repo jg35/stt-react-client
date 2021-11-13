@@ -2,7 +2,8 @@ import { motion } from "framer-motion";
 import Svg from "~/components/svg";
 import { Grid, Button, Title, Text } from "~/components/_styled";
 import { DateTime } from "luxon";
-import { sortBy, flatten } from "lodash";
+import sortBy from "lodash/sortBy";
+import flatten from "lodash/flatten";
 import DateFinderEvent from "~/components/dateInput/dateFinderEvent";
 
 function getDate(date = null) {

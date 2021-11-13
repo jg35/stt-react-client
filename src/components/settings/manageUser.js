@@ -1,5 +1,5 @@
 import { Formik } from "formik";
-import { omit } from "lodash";
+import omit from "lodash/omit";
 import { useMutation } from "@apollo/client";
 import { useCustomQuery } from "~/hooks/useCustomApollo";
 import { UserSettingsSchema } from "~/lib/yup";

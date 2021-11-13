@@ -1,6 +1,6 @@
 import { Text } from "~/components/_styled";
 import { getHTMLTranslation } from "~/lib/util";
-import { capitalize } from "lodash";
+import capitalize from "lodash/capitalize";
 
 export default function BookPrivacyStatus({
   isPublic,

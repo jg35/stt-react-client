@@ -1,4 +1,4 @@
-import { upperFirst } from "lodash";
+import upperFirst from "lodash/upperFirst";
 
 export default function FormError({ error, lowercase = false }) {
   return (

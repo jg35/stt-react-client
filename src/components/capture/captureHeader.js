@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useLazyQuery, useMutation } from "@apollo/client";
-import { uniq, shuffle, cloneDeep } from "lodash";
+import uniq from "lodash/uniq";
+import shuffle from "lodash/shuffle";
+import cloneDeep from "lodash/cloneDeep";
 import { SECTION_FETCH_CAPTURE_HEADER, UPDATE_USER } from "~/lib/gql";
-import { Card, Grid } from "~/components/_styled";
+import { Grid } from "~/components/_styled";
 import { getAge, getAgeFromDate, getSmartDate } from "~/lib/util";
 import CaptureHeaderSkeleton from "~/components/capture/captureHeaderSkeleton";
 import { AuthContext } from "~/components/authWrap";
