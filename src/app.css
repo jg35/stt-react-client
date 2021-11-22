@@ -9,6 +9,13 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+  @-moz-document url-prefix() {
+    html,
+    body {
+      scrollbar-width: none;
+      scrollbar-color: transparent transparent;
+    }
+  }
   h1,
   h2,
   h3,
